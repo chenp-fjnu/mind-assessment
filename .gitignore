@@ -1,0 +1,76 @@
+# ========================
+# 依赖
+# ========================
+node_modules/
+.pnp
+.pnp.js
+
+# ========================
+# 构建产物
+# ========================
+dist/
+h5-build/
+unpackage/
+*.tsbuildinfo
+
+# ========================
+# 测试覆盖率
+# ========================
+coverage/
+*.lcov
+.nyc_output/
+
+# ========================
+# 日志
+# ========================
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# ========================
+# 环境变量与密钥
+# ========================
+.env
+.env.local
+.env.*.local
+*.pem
+cert/
+
+# ========================
+# IDE / 编辑器
+# ========================
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+*.swp
+
+# ========================
+# 操作系统
+# ========================
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ========================
+# TRAE 生成的分析报告（过渡性文档）
+# ========================
+.trae-html-share-packages/
+arch-analysis/
+code-review-*/
+project-analysis/
+
+# ========================
+# 其他
+# ========================
+*.local
+*.tmp
+*.bak
+*.cache
