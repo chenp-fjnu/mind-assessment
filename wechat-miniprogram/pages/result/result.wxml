@@ -78,7 +78,12 @@
   <view class="disclaimer">本结果基于自陈量表，仅供自我探索与娱乐参考，不构成医学诊断或专业建议。</view>
 
   <view class="bottom-bar">
-    <button class="btn ghost" bindtap="retest">重新测评</button>
-    <button class="btn home" style="background:{{meta.color}};" bindtap="goHome">返回首页</button>
+    <button class="btn save" bindtap="saveCard">保存结果卡片</button>
+    <view class="btn-row">
+      <button class="btn ghost" bindtap="retest">重新测评</button>
+      <button class="btn home" style="background:{{meta.color}};" bindtap="goHome">返回首页</button>
+    </view>
   </view>
+
+  <canvas type="2d" id="cardCanvas" class="card-canvas"></canvas>
 </view>

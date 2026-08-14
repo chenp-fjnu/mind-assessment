@@ -161,17 +161,34 @@
 }
 .bottom-bar {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   padding: 32rpx 32rpx 48rpx;
 }
+.btn-row {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20rpx;
+}
 .btn {
-  width: 46%;
   height: 88rpx;
   line-height: 88rpx;
   font-size: 30rpx;
   border-radius: 999rpx;
+  width: 100%;
+}
+.btn.save {
+  background: #1e293b;
+  color: #fff;
 }
 .btn.ghost {
   background: #e2e8f0;
   color: #475569;
+  width: 46%;
+}
+.card-canvas {
+  position: fixed;
+  left: -9999rpx;
+  top: 0;
+  width: 600rpx;
+  height: 800rpx;
 }

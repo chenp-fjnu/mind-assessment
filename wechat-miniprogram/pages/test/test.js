@@ -13,6 +13,7 @@ Page({
     qType: 'scale',
     answeredCount: 0,
     optStyle: 'width:23%;',
+    groupLabel: '',
   },
 
   onLoad(query) {
@@ -25,6 +26,14 @@ Page({
     this.dpr = (wx.getWindowInfo ? wx.getWindowInfo().pixelRatio : wx.getSystemInfoSync().pixelRatio) || 2
     this.mod = mod
     this._timer = null
+    const setMeta = {}
+    questions.forEach((qq, i) => {
+      if (!qq.set) return
+      if (!setMeta[qq.set]) setMeta[qq.set] = { total: 0, start: null }
+      setMeta[qq.set].total++
+      if (setMeta[qq.set].start === null) setMeta[qq.set].start = i
+    })
+    this._setMeta = setMeta
     const meta = { id: mod.id, name: mod.name, icon: mod.icon, color: mod.color }
     const answers = questions.map(() => null)
 
@@ -84,12 +93,19 @@ Page({
     else if (n === 8) cols = 4
     const optStyle = 'width:' + (96 / cols).toFixed(2) + '%;'
     const needCanvas = q.type === 'matrix' || !!q.matrix
+    let groupLabel = ''
+    const gs = q.set
+    if (gs && this._setMeta[gs]) {
+      const gm = this._setMeta[gs]
+      groupLabel = '第 ' + gs + ' 组 ' + (i - gm.start + 1) + '/' + gm.total
+    }
     this.setData(
       {
         q,
         qType: q.type,
         progress: Math.round(((i + 1) / this.data.total) * 100),
         optStyle,
+        groupLabel,
       },
       () => {
         if (needCanvas) this.drawFigures()
@@ -179,16 +195,16 @@ Page({
     this.setData({ answers, answeredCount }, () => {
       if (this.data.qType === 'matrix') this.drawFigures()
       this.saveProgress()
-      if (this.data.qType !== 'matrix') this.scheduleNext()
+      this.scheduleNext(this.data.qType === 'matrix' ? 700 : 350)
     })
   },
 
-  scheduleNext() {
+  scheduleNext(delay) {
     if (this._timer) clearTimeout(this._timer)
     this._timer = setTimeout(() => {
       if (this.data.current < this.data.total - 1) this.next()
       else this.submit()
-    }, 350)
+    }, delay || 350)
   },
 
   prev() {
@@ -199,11 +215,30 @@ Page({
 
   next() {
     if (this._timer) clearTimeout(this._timer)
-    if (this.data.current < this.data.total - 1) {
-      this.setData({ current: this.data.current + 1 }, () => this.renderCurrent())
-    } else {
+    const cur = this.data.current
+    if (cur >= this.data.total - 1) {
       this.submit()
+      return
     }
+    const nxt = cur + 1
+    const curSet = this.data.questions[cur].set
+    const nxtSet = this.data.questions[nxt].set
+    this.setData({ current: nxt }, () => this.renderCurrent())
+    if (curSet && nxtSet && curSet !== nxtSet) this.showGroupSummary(curSet)
+  },
+
+  showGroupSummary(set) {
+    const m = this._setMeta[set]
+    if (!m) return
+    let correct = 0
+    for (let i = m.start; i < m.start + m.total; i++) {
+      if (this.data.answers[i] === this.data.questions[i].answer) correct++
+    }
+    wx.showModal({
+      title: set + ' 组完成',
+      content: '本组答对 ' + correct + ' / ' + m.total,
+      showCancel: false,
+    })
   },
 
   saveProgress() {
@@ -226,7 +261,13 @@ Page({
       })
       return
     }
-    this.doSubmit()
+    wx.showModal({
+      title: '提交测评',
+      content: `已完成全部 ${this.data.total} 题，确认提交并查看结果？`,
+      success: (r) => {
+        if (r.confirm) this.doSubmit()
+      },
+    })
   },
 
   doSubmit() {

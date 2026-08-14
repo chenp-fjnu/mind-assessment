@@ -37,6 +37,7 @@ Page({
     const primaryValue = r[primaryField]
     const levelColor = r.levelColor || mod.color
     const descText = r.description || (r.trait && String(r.trait) !== String(primaryValue) ? r.trait : '')
+    const levelText = r.level || '已完成'
 
     const hasBuildGroupList = typeof mod.buildGroupList === 'function'
     const groups = hasBuildGroupList ? safeCall(() => mod.buildGroupList(r, layout)) : []
@@ -68,7 +69,7 @@ Page({
       primarySize,
       primaryLabel: layout.primaryLabel || '测评结果',
       primaryColor: mod.color,
-      levelText: r.level || '',
+      levelText,
       levelColor,
       descText,
       groups: groups || [],
@@ -81,6 +82,73 @@ Page({
       showSubtests: !!(subtests && subtests.length),
     })
     wx.setNavigationBarTitle({ title: mod.name + ' · 结果' })
+  },
+
+  onReady() {
+    this.dpr = (wx.getWindowInfo ? wx.getWindowInfo().pixelRatio : wx.getSystemInfoSync().pixelRatio) || 2
+  },
+
+  saveCard() {
+    wx.showLoading({ title: '生成中' })
+    const dpr = this.dpr || 2
+    wx.createSelectorQuery()
+      .in(this)
+      .select('#cardCanvas')
+      .fields({ node: true, size: true })
+      .exec((res) => {
+        if (!res[0]) {
+          wx.hideLoading()
+          wx.showToast({ title: '生成失败', icon: 'none' })
+          return
+        }
+        const canvas = res[0].node
+        const ctx = canvas.getContext('2d')
+        const W = res[0].width
+        const H = res[0].height
+        canvas.width = W * dpr
+        canvas.height = H * dpr
+        ctx.scale(dpr, dpr)
+        ctx.fillStyle = '#1e293b'
+        ctx.fillRect(0, 0, W, H)
+        ctx.textAlign = 'center'
+        ctx.fillStyle = '#fff'
+        ctx.font = '28px sans-serif'
+        ctx.fillText('心智测评中心', W / 2, 70)
+        ctx.fillStyle = this.data.meta.color
+        ctx.font = '34px sans-serif'
+        ctx.fillText(this.data.meta.name, W / 2, 130)
+        ctx.fillStyle = '#fff'
+        ctx.font = '72px sans-serif'
+        ctx.fillText(this.data.primaryValue, W / 2, 250)
+        ctx.fillStyle = 'rgba(255,255,255,0.8)'
+        ctx.font = '26px sans-serif'
+        ctx.fillText(this.data.primaryLabel, W / 2, 300)
+        ctx.fillStyle = this.data.levelColor
+        ctx.fillRect(W / 2 - 90, 330, 180, 46)
+        ctx.fillStyle = '#fff'
+        ctx.font = '26px sans-serif'
+        ctx.fillText(this.data.levelText, W / 2, 362)
+        const d = new Date()
+        const date = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate()
+        ctx.fillStyle = 'rgba(255,255,255,0.5)'
+        ctx.font = '22px sans-serif'
+        ctx.fillText(date, W / 2, H - 40)
+        wx.canvasToTempFilePath({
+          canvas,
+          success: (r) => {
+            wx.hideLoading()
+            wx.saveImageToPhotosAlbum({
+              filePath: r.tempFilePath,
+              success: () => wx.showToast({ title: '已保存到相册' }),
+              fail: () => wx.showToast({ title: '保存失败', icon: 'none' }),
+            })
+          },
+          fail: () => {
+            wx.hideLoading()
+            wx.showToast({ title: '生成失败', icon: 'none' })
+          },
+        })
+      })
   },
 
   goHome() {
@@ -102,6 +170,7 @@ function safeCall(fn) {
   try {
     return fn()
   } catch (e) {
+    console.warn('[result] build failed:', e)
     return []
   }
 }
