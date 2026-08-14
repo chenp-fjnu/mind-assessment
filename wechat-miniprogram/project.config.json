@@ -1,0 +1,18 @@
+{
+  "description": "心智测评中心 - 原生微信小程序（纯前端）",
+  "packOptions": {
+    "ignore": []
+  },
+  "setting": {
+    "es6": true,
+    "enhance": true,
+    "postcss": true,
+    "minified": true,
+    "newFeature": true
+  },
+  "compileType": "miniprogram",
+  "libVersion": "3.0.0",
+  "appid": "touristappid",
+  "projectname": "mind-assessment",
+  "condition": {}
+}

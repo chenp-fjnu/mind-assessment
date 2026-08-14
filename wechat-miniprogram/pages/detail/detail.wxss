@@ -1,0 +1,92 @@
+.banner {
+  padding: 56rpx 40rpx 48rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #fff;
+}
+.banner-icon {
+  font-size: 80rpx;
+}
+.banner-name {
+  font-size: 40rpx;
+  font-weight: 700;
+  margin-top: 16rpx;
+}
+.banner-short {
+  font-size: 26rpx;
+  opacity: 0.85;
+  margin-top: 8rpx;
+}
+.card.section {
+  margin: 24rpx 32rpx 0;
+  padding: 32rpx;
+}
+.sec-title {
+  font-size: 30rpx;
+  font-weight: 700;
+  color: #1e293b;
+}
+.sec-text {
+  display: block;
+  font-size: 27rpx;
+  color: #475569;
+  line-height: 1.7;
+  margin-top: 16rpx;
+}
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 20rpx;
+}
+.tag {
+  font-size: 23rpx;
+  color: #475569;
+  background: #f1f5f9;
+  padding: 6rpx 18rpx;
+  border-radius: 999rpx;
+  margin: 0 12rpx 12rpx 0;
+}
+.row {
+  display: flex;
+  justify-content: space-around;
+}
+.stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.stat-num {
+  font-size: 40rpx;
+  font-weight: 700;
+  color: #1e293b;
+}
+.stat-label {
+  font-size: 23rpx;
+  color: #94a3b8;
+  margin-top: 6rpx;
+}
+.tip {
+  background: #fffbeb;
+}
+.tip-title {
+  font-size: 27rpx;
+  font-weight: 700;
+  color: #b45309;
+}
+.tip-text {
+  display: block;
+  font-size: 25rpx;
+  color: #92701a;
+  line-height: 1.7;
+  margin-top: 12rpx;
+}
+.bottom-bar {
+  padding: 32rpx;
+  margin-top: 24rpx;
+}
+.start-btn {
+  height: 92rpx;
+  line-height: 92rpx;
+  font-size: 32rpx;
+}

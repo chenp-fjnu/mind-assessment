@@ -1,0 +1,84 @@
+<view class="scroll-page" wx:if="{{meta.name}}">
+  <view class="head" style="background:{{meta.color}};">
+    <text class="head-icon">{{meta.icon}}</text>
+    <text class="head-name">{{meta.name}}</text>
+    <view class="primary-box">
+      <text class="primary-value">{{primaryValue}}</text>
+      <text class="primary-label">{{primaryLabel}}</text>
+    </view>
+    <text wx:if="{{levelText}}" class="level-badge" style="background:{{levelColor}};">{{levelText}}</text>
+    <text wx:if="{{descText}}" class="head-desc">{{descText}}</text>
+  </view>
+
+  <!-- 分组得分 -->
+  <view wx:if="{{showGroups}}" class="card sec">
+    <text class="sec-title">维度得分</text>
+    <view class="group" wx:for="{{groups}}" wx:key="key" wx:for-item="g">
+      <view class="group-head">
+        <text>{{g.label}}</text>
+        <text class="group-num">{{g.display || g.percent + '%'}}</text>
+      </view>
+      <view class="bar">
+        <view class="bar-fill" style="width:{{g.percent}}%;background:{{meta.color}};"></view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 双极维度（MBTI） -->
+  <view wx:if="{{showBipolar}}" class="card sec">
+    <text class="sec-title">类型维度</text>
+    <view class="bipolar" wx:for="{{dims}}" wx:key="key" wx:for-item="d">
+      <text class="bp-name">{{d.leftName}} {{d.rightName}}</text>
+      <view class="bp-bar">
+        <view class="bp-left" style="width:{{d.leftPercent}}%;">{{d.leftPercent}}%</view>
+        <view class="bp-right" style="width:{{d.rightPercent}}%;background:{{meta.color}};">{{d.rightPercent}}%</view>
+      </view>
+      <text class="bp-desc">{{d.dominantDesc}}</text>
+    </view>
+  </view>
+
+  <!-- 量表维度（大五 / 16PF） -->
+  <view wx:if="{{showDims}}" class="card sec">
+    <text class="sec-title">维度剖析</text>
+    <view class="dim" wx:for="{{dims}}" wx:key="key" wx:for-item="d">
+      <view class="dim-head">
+        <text class="dim-name">{{d.name}}</text>
+        <text class="dim-pct">{{d.percent}}%</text>
+      </view>
+      <view class="bar">
+        <view class="bar-fill" style="width:{{d.percent}}%;background:{{meta.color}};"></view>
+      </view>
+      <text wx:if="{{d.text}}" class="dim-text">{{d.text}}</text>
+    </view>
+  </view>
+
+  <!-- 分测验（韦氏） -->
+  <view wx:if="{{showSubtests}}" class="card sec">
+    <text class="sec-title">分测验表现</text>
+    <view class="sub" wx:for="{{subtests}}" wx:key="name" wx:for-item="s">
+      <view class="sub-head">
+        <text>{{s.name}}</text>
+        <text class="sub-num">{{s.correct}}/{{s.total}}</text>
+      </view>
+      <view class="bar">
+        <view class="bar-fill" style="width:{{s.scalePercent}}%;background:{{meta.color}};"></view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 解读 -->
+  <view wx:if="{{interpretations.length}}" class="card sec">
+    <text class="sec-title">结果解读</text>
+    <view class="interp" wx:for="{{interpretations}}" wx:key="title" wx:for-item="it">
+      <text class="interp-title">{{it.title}}</text>
+      <text class="interp-text">{{it.text}}</text>
+    </view>
+  </view>
+
+  <view class="disclaimer">本结果基于自陈量表，仅供自我探索与娱乐参考，不构成医学诊断或专业建议。</view>
+
+  <view class="bottom-bar">
+    <button class="btn ghost" bindtap="retest">重新测评</button>
+    <button class="btn home" style="background:{{meta.color}};" bindtap="goHome">返回首页</button>
+  </view>
+</view>

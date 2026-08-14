@@ -1,0 +1,25 @@
+page,
+view,
+text,
+.scroll-page {
+  min-height: 100vh;
+  background: #f1f5f9;
+  font-family: -apple-system, "PingFang SC", "Helvetica Neue", sans-serif;
+}
+
+.card {
+  background: #fff;
+  border-radius: 24rpx;
+  box-shadow: 0 8rpx 30rpx rgba(15, 23, 42, 0.06);
+}
+
+.btn {
+  border-radius: 999rpx;
+  color: #fff;
+  text-align: center;
+  font-weight: 600;
+}
+
+.muted {
+  color: #64748b;
+}

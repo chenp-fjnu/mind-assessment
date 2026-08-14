@@ -1,0 +1,75 @@
+<view class="scroll-page">
+  <view class="topbar" style="background:{{meta.color}};">
+    <view class="progress-wrap">
+      <view class="progress-bar" style="width:{{progress}}%;"></view>
+    </view>
+    <text class="progress-text">{{current+1}} / {{total}}</text>
+  </view>
+
+  <view class="q-card card">
+    <text class="q-index">第 {{current+1}} 题</text>
+    <text class="q-text">{{q.prompt || '请观察下方图形，选择正确的一项'}}</text>
+
+    <!-- 量表题 -->
+    <view wx:if="{{qType==='scale'}}" class="scale-list">
+      <view
+        class="scale-opt {{answers[current]===idx?'sel':''}}"
+        wx:for="{{q.scale.labels}}"
+        wx:key="idx"
+        wx:for-index="idx"
+        wx:for-item="label"
+        bindtap="selectAnswer"
+        data-index="{{idx}}"
+      >
+        <view class="radio {{answers[current]===idx?'radio-sel':''}}"></view>
+        <text>{{label}}</text>
+      </view>
+    </view>
+
+    <!-- 选择题 -->
+    <view wx:elif="{{qType==='choice'}}" class="choice-list">
+      <view
+        class="choice-opt {{answers[current]===idx?'sel':''}}"
+        wx:for="{{q.options}}"
+        wx:key="idx"
+        wx:for-index="idx"
+        wx:for-item="opt"
+        bindtap="selectAnswer"
+        data-index="{{idx}}"
+      >
+        <text class="opt-key">{{['A','B','C','D','E','F'][idx]}}</text>
+        <text class="opt-text">{{opt}}</text>
+      </view>
+    </view>
+
+    <!-- 矩阵题（SPM） -->
+    <view wx:elif="{{qType==='matrix'}}" class="matrix-wrap">
+      <view class="matrix-box">
+        <canvas type="2d" id="matrixCanvas" class="matrix-canvas"></canvas>
+      </view>
+      <text class="matrix-tip">请选择能补全规律的选项</text>
+      <view class="opt-grid">
+        <view
+          class="opt-cell {{answers[current]===idx?'sel':''}}"
+          wx:for="{{q.options}}"
+          wx:key="idx"
+          wx:for-index="idx"
+          wx:for-item="o"
+          bindtap="selectAnswer"
+          data-index="{{idx}}"
+        >
+          <canvas type="2d" id="opt{{idx}}" class="opt-canvas"></canvas>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="nav-bar">
+    <button class="nav-btn ghost" bindtap="prev" disabled="{{current===0}}">上一题</button>
+    <button class="nav-btn primary" style="background:{{meta.color}};" bindtap="next">
+      {{current===total-1 ? '提交' : '下一题'}}
+    </button>
+  </view>
+
+  <view class="answered-tip">已作答 {{answeredCount}} / {{total}}</view>
+</view>

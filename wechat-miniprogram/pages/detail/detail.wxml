@@ -1,0 +1,39 @@
+<view class="scroll-page" wx:if="{{meta.name}}">
+  <view class="banner" style="background:{{meta.color}};">
+    <text class="banner-icon">{{meta.icon}}</text>
+    <text class="banner-name">{{meta.name}}</text>
+    <text class="banner-short">{{meta.shortName}}</text>
+  </view>
+
+  <view class="card section">
+    <text class="sec-title">测评简介</text>
+    <text class="sec-text">{{meta.desc}}</text>
+    <view class="tags">
+      <text class="tag" wx:for="{{meta.tags}}" wx:key="*this">{{item}}</text>
+    </view>
+  </view>
+
+  <view class="card section row">
+    <view class="stat">
+      <text class="stat-num">{{meta.questionCount}}</text>
+      <text class="stat-label">题目数</text>
+    </view>
+    <view class="stat">
+      <text class="stat-num">{{meta.duration}}</text>
+      <text class="stat-label">分钟</text>
+    </view>
+    <view class="stat">
+      <text class="stat-num">离线</text>
+      <text class="stat-label">无需联网</text>
+    </view>
+  </view>
+
+  <view class="card section tip">
+    <text class="tip-title">温馨提示</text>
+    <text class="tip-text">本测评结果基于自陈量表，仅供自我探索与娱乐参考，不构成任何医学诊断或专业建议。请凭第一直觉作答。</text>
+  </view>
+
+  <view class="bottom-bar">
+    <button class="btn start-btn" style="background:{{meta.color}};" bindtap="start">开始测评</button>
+  </view>
+</view>
