@@ -2,8 +2,14 @@
  * SPM 瑞文标准推理测验模块
  * 适配通用模块接口，内部复用现有 questions.js 与 scoring.js
  */
-const questions = require('../../utils/questions');
 const scoring = require('../../utils/scoring');
+
+// 延迟加载 290KB 题目数据，避免小程序启动时解析拖慢首屏
+let _questions = null;
+function getQuestionsData() {
+  if (!_questions) _questions = require('../../utils/questions');
+  return _questions;
+}
 
 const moduleDef = {
   id: 'spm',
@@ -21,7 +27,7 @@ const moduleDef = {
   questionType: 'matrix',
 
   getQuestions() {
-    return questions.map((q) => ({
+    return getQuestionsData().map((q) => ({
       id: q.id,
       type: 'matrix',
       set: q.set,

@@ -36,9 +36,10 @@ Page({
     const primaryField = layout.primaryField || 'score'
     const primaryValue = r[primaryField]
     const levelColor = r.levelColor || mod.color
-    const descText = r.description || r.trait || ''
+    const descText = r.description || (r.trait && String(r.trait) !== String(primaryValue) ? r.trait : '')
 
-    const groups = typeof mod.buildGroupList === 'function' ? safeCall(() => mod.buildGroupList(r, layout)) : []
+    const hasBuildGroupList = typeof mod.buildGroupList === 'function'
+    const groups = hasBuildGroupList ? safeCall(() => mod.buildGroupList(r, layout)) : []
     const subtests = typeof mod.buildSubtestList === 'function' ? safeCall(() => mod.buildSubtestList(r)) : []
 
     let dims = []
@@ -76,7 +77,7 @@ Page({
       interpretations: interpretations || [],
       showGroups: !!(groups && groups.length),
       showBipolar,
-      showDims: !!(dims && dims.length) && !showBipolar,
+      showDims: !!(dims && dims.length) && !showBipolar && !hasBuildGroupList,
       showSubtests: !!(subtests && subtests.length),
     })
     wx.setNavigationBarTitle({ title: mod.name + ' · 结果' })
