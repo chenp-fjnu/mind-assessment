@@ -37,7 +37,7 @@ Page({
     const primaryValue = r[primaryField]
     const levelColor = r.levelColor || mod.color
     const descText = r.description || (r.trait && String(r.trait) !== String(primaryValue) ? r.trait : '')
-    const levelText = r.level || '已完成'
+    const levelText = r.level && String(r.level) !== String(primaryValue) ? r.level : '已完成'
 
     const hasBuildGroupList = typeof mod.buildGroupList === 'function'
     const groups = hasBuildGroupList ? safeCall(() => mod.buildGroupList(r, layout)) : []

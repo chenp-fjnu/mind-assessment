@@ -272,6 +272,9 @@ Page({
 
   doSubmit() {
     wx.removeStorageSync('ma_progress_' + this.data.meta.id)
+    const layout = this.mod.resultLayout || {}
+    const r = this.mod.computeResult(this.data.answers, this.data.questions)
+    const pv = r[layout.primaryField || 'score']
     const hist = wx.getStorageSync('ma_history') || []
     hist.unshift({
       id: this.data.meta.id,
@@ -279,6 +282,8 @@ Page({
       icon: this.data.meta.icon,
       time: Date.now(),
       answers: this.data.answers,
+      summary: pv == null ? '' : String(pv),
+      level: r.level || '',
     })
     wx.setStorageSync('ma_history', hist.slice(0, 30))
 
