@@ -58,9 +58,13 @@ Page({
         ? safeCall(() => mod.buildInterpretations(r, groups, dims)) || []
         : []
 
+    const pv = primaryValue == null ? '' : String(primaryValue)
+    const primarySize = pv.length <= 4 ? 'big' : pv.length <= 10 ? 'mid' : 'small'
+
     this.setData({
       meta: { id: mod.id, name: mod.name, icon: mod.icon, color: mod.color },
-      primaryValue: primaryValue == null ? '' : String(primaryValue),
+      primaryValue: pv,
+      primarySize,
       primaryLabel: layout.primaryLabel || '测评结果',
       primaryColor: mod.color,
       levelText: r.level || '',
@@ -83,6 +87,13 @@ Page({
   },
   retest() {
     wx.redirectTo({ url: `/pages/test/test?id=${this.data.meta.id}` })
+  },
+
+  onShareAppMessage() {
+    return {
+      title: this.data.meta.name + '测评结果 - 心智测评中心',
+      path: '/pages/index/index',
+    }
   },
 })
 

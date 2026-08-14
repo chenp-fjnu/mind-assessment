@@ -30,4 +30,11 @@ Page({
   start() {
     wx.navigateTo({ url: `/pages/test/test?id=${this.data.id}` })
   },
+
+  onShareAppMessage() {
+    return {
+      title: this.data.meta.name + ' - 心智测评中心',
+      path: '/pages/detail/detail?id=' + this.data.id,
+    }
+  },
 })

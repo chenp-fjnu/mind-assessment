@@ -181,6 +181,8 @@ module.exports = {
       options: q.options,
       answer: q.answer,
       maxScore: q.maxScore,
+      matrix: q.matrix,
+      targetPattern: q.targetPattern,
       timeLimit: 60,
     }));
   },

@@ -3,7 +3,7 @@
     <text class="head-icon">{{meta.icon}}</text>
     <text class="head-name">{{meta.name}}</text>
     <view class="primary-box">
-      <text class="primary-value">{{primaryValue}}</text>
+      <text class="primary-value {{primarySize}}">{{primaryValue}}</text>
       <text class="primary-label">{{primaryLabel}}</text>
     </view>
     <text wx:if="{{levelText}}" class="level-badge" style="background:{{levelColor}};">{{levelText}}</text>

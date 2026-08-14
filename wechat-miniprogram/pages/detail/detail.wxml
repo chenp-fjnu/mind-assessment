@@ -10,6 +10,7 @@
     <text class="sec-text">{{meta.desc}}</text>
     <view class="tags">
       <text class="tag" wx:for="{{meta.tags}}" wx:key="*this">{{item}}</text>
+      <text class="tag free-tag">免费体验</text>
     </view>
   </view>
 

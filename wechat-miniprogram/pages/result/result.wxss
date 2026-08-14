@@ -26,6 +26,13 @@
   word-break: break-all;
   text-align: center;
 }
+.primary-value.mid {
+  font-size: 46rpx;
+}
+.primary-value.small {
+  font-size: 30rpx;
+  font-weight: 700;
+}
 .primary-label {
   font-size: 26rpx;
   opacity: 0.85;

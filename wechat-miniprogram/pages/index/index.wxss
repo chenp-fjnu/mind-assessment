@@ -97,3 +97,46 @@
   font-size: 22rpx;
   padding: 40rpx;
 }
+.history {
+  margin: 24rpx 32rpx 0;
+  padding: 28rpx 32rpx;
+}
+.hist-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8rpx;
+}
+.hist-title {
+  font-size: 28rpx;
+  font-weight: 700;
+  color: #1e293b;
+}
+.hist-clear {
+  font-size: 24rpx;
+  color: #94a3b8;
+}
+.hist-item {
+  display: flex;
+  align-items: center;
+  padding: 18rpx 0;
+  border-top: 2rpx solid #f1f5f9;
+}
+.hist-icon {
+  font-size: 40rpx;
+  margin-right: 20rpx;
+}
+.hist-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.hist-name {
+  font-size: 28rpx;
+  color: #1e293b;
+}
+.hist-time {
+  font-size: 22rpx;
+  color: #94a3b8;
+  margin-top: 4rpx;
+}

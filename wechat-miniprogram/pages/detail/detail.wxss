@@ -47,6 +47,10 @@
   border-radius: 999rpx;
   margin: 0 12rpx 12rpx 0;
 }
+.free-tag {
+  color: #16a34a;
+  background: #dcfce7;
+}
 .row {
   display: flex;
   justify-content: space-around;

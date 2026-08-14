@@ -12,6 +12,7 @@ Page({
     q: null,
     qType: 'scale',
     answeredCount: 0,
+    optStyle: 'width:23%;',
   },
 
   onLoad(query) {
@@ -23,47 +24,83 @@ Page({
     const questions = mod.getQuestions()
     this.dpr = (wx.getWindowInfo ? wx.getWindowInfo().pixelRatio : wx.getSystemInfoSync().pixelRatio) || 2
     this.mod = mod
-    this.setData({
-      meta: {
-        id: mod.id,
-        name: mod.name,
-        icon: mod.icon,
-        color: mod.color,
+    this._timer = null
+    const meta = { id: mod.id, name: mod.name, icon: mod.icon, color: mod.color }
+    const answers = questions.map(() => null)
+
+    this.setData(
+      {
+        meta,
+        questions,
+        answers,
+        total: questions.length,
+        current: 0,
+        answeredCount: 0,
       },
-      questions,
-      answers: questions.map(() => null),
-      total: questions.length,
-      current: 0,
-      answeredCount: 0,
-    })
+      () => {
+        const key = 'ma_progress_' + mod.id
+        const saved = wx.getStorageSync(key)
+        const hasProgress = saved && saved.answers && saved.answers.some((a) => a !== null)
+        if (hasProgress) {
+          wx.showModal({
+            title: '继续测评',
+            content: '发现未完成的「' + mod.name + '」，是否继续上次的进度？',
+            confirmText: '继续',
+            cancelText: '重新开始',
+            success: (r) => {
+              if (r.confirm) {
+                this.setData(
+                  {
+                    answers: saved.answers,
+                    current: saved.current || 0,
+                    answeredCount: saved.answers.filter((a) => a !== null).length,
+                  },
+                  () => this.renderCurrent()
+                )
+              } else {
+                wx.removeStorageSync(key)
+                this.renderCurrent()
+              }
+            },
+            fail: () => this.renderCurrent(),
+          })
+        } else {
+          wx.removeStorageSync(key)
+          this.renderCurrent()
+        }
+      }
+    )
     wx.setNavigationBarTitle({ title: mod.name })
-    this.renderCurrent()
   },
 
   renderCurrent() {
     const i = this.data.current
     const q = this.data.questions[i]
+    const n = (q.options || []).length
+    let cols = 4
+    if (n <= 2) cols = 2
+    else if (n === 3) cols = 3
+    else if (n === 6) cols = 3
+    else if (n === 8) cols = 4
+    const optStyle = 'width:' + (96 / cols).toFixed(2) + '%;'
+    const needCanvas = q.type === 'matrix' || !!q.matrix
     this.setData(
       {
         q,
         qType: q.type,
         progress: Math.round(((i + 1) / this.data.total) * 100),
+        optStyle,
       },
       () => {
-        if (q.type === 'matrix') this.drawFigures()
+        if (needCanvas) this.drawFigures()
       }
     )
   },
 
-  drawFigures() {
-    const q = this.data.q
-    const sel = this.data.answers[this.data.current]
-    const dpr = this.dpr
-    const { drawCell } = require('../../utils/figure')
-
+  ensureCanvas(id, cb) {
     wx.createSelectorQuery()
       .in(this)
-      .select('#matrixCanvas')
+      .select('#' + id)
       .fields({ node: true, size: true })
       .exec((res) => {
         if (!res[0]) return
@@ -71,9 +108,24 @@ Page({
         const ctx = canvas.getContext('2d')
         const W = res[0].width
         const H = res[0].height
-        canvas.width = W * dpr
-        canvas.height = H * dpr
-        ctx.scale(dpr, dpr)
+        if (!W || !H) {
+          setTimeout(() => this.ensureCanvas(id, cb), 60)
+          return
+        }
+        canvas.width = W * this.dpr
+        canvas.height = H * this.dpr
+        ctx.scale(this.dpr, this.dpr)
+        cb(ctx, W, H)
+      })
+  },
+
+  drawFigures() {
+    const q = this.data.q
+    const sel = this.data.answers[this.data.current]
+    const self = this
+
+    if (q.type === 'matrix') {
+      this.ensureCanvas('matrixCanvas', (ctx, W, H) => {
         ctx.clearRect(0, 0, W, H)
         const cell = W / 3
         q.matrix.forEach((row, r) => {
@@ -92,21 +144,8 @@ Page({
           ctx.stroke()
         }
       })
-
-    q.options.forEach((opt, idx) => {
-      wx.createSelectorQuery()
-        .in(this)
-        .select('#opt' + idx)
-        .fields({ node: true, size: true })
-        .exec((res2) => {
-          if (!res2[0]) return
-          const canvas = res2[0].node
-          const ctx = canvas.getContext('2d')
-          const W = res2[0].width
-          const H = res2[0].height
-          canvas.width = W * dpr
-          canvas.height = H * dpr
-          ctx.scale(dpr, dpr)
+      q.options.forEach((opt, idx) => {
+        this.ensureCanvas('opt' + idx, (ctx, W, H) => {
           ctx.clearRect(0, 0, W, H)
           drawCell(ctx, opt, 0, 0, W)
           if (sel === idx) {
@@ -115,7 +154,21 @@ Page({
             ctx.strokeRect(2, 2, W - 4, H - 4)
           }
         })
-    })
+      })
+    }
+
+    if (q.matrix) {
+      this.ensureCanvas('targetCanvas', (ctx, W, H) => {
+        ctx.clearRect(0, 0, W, H)
+        const rows = q.matrix.length
+        const cols = q.matrix[0].length
+        const cw = W / cols
+        const ch = H / rows
+        q.matrix.forEach((row, r) => {
+          row.forEach((c, col) => drawCell(ctx, c, col * cw, r * ch, Math.min(cw, ch)))
+        })
+      })
+    }
   },
 
   selectAnswer(e) {
@@ -125,15 +178,27 @@ Page({
     const answeredCount = answers.filter((a) => a !== null).length
     this.setData({ answers, answeredCount }, () => {
       if (this.data.qType === 'matrix') this.drawFigures()
+      this.saveProgress()
+      if (this.data.qType !== 'matrix') this.scheduleNext()
     })
   },
 
+  scheduleNext() {
+    if (this._timer) clearTimeout(this._timer)
+    this._timer = setTimeout(() => {
+      if (this.data.current < this.data.total - 1) this.next()
+      else this.submit()
+    }, 350)
+  },
+
   prev() {
+    if (this._timer) clearTimeout(this._timer)
     if (this.data.current === 0) return
     this.setData({ current: this.data.current - 1 }, () => this.renderCurrent())
   },
 
   next() {
+    if (this._timer) clearTimeout(this._timer)
     if (this.data.current < this.data.total - 1) {
       this.setData({ current: this.data.current + 1 }, () => this.renderCurrent())
     } else {
@@ -141,7 +206,15 @@ Page({
     }
   },
 
+  saveProgress() {
+    wx.setStorageSync('ma_progress_' + this.data.meta.id, {
+      answers: this.data.answers,
+      current: this.data.current,
+    })
+  },
+
   submit() {
+    if (this._timer) clearTimeout(this._timer)
     const unanswered = this.data.answers.filter((a) => a === null).length
     if (unanswered > 0) {
       wx.showModal({
@@ -157,11 +230,26 @@ Page({
   },
 
   doSubmit() {
-    const app = getApp()
-    app.globalData.lastResult = {
+    wx.removeStorageSync('ma_progress_' + this.data.meta.id)
+    const hist = wx.getStorageSync('ma_history') || []
+    hist.unshift({
       id: this.data.meta.id,
+      name: this.data.meta.name,
+      icon: this.data.meta.icon,
+      time: Date.now(),
       answers: this.data.answers,
-    }
+    })
+    wx.setStorageSync('ma_history', hist.slice(0, 30))
+
+    const app = getApp()
+    app.globalData.lastResult = { id: this.data.meta.id, answers: this.data.answers }
     wx.redirectTo({ url: `/pages/result/result?id=${this.data.meta.id}` })
+  },
+
+  onShareAppMessage() {
+    return {
+      title: this.data.meta.name + ' - 心智测评中心',
+      path: '/pages/detail/detail?id=' + this.data.meta.id,
+    }
   },
 })

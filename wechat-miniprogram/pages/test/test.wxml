@@ -28,6 +28,10 @@
 
     <!-- 选择题 -->
     <view wx:elif="{{qType==='choice'}}" class="choice-list">
+      <view wx:if="{{q.matrix}}" class="target-box">
+        <text class="matrix-tip">目标图案</text>
+        <canvas type="2d" id="targetCanvas" class="target-canvas"></canvas>
+      </view>
       <view
         class="choice-opt {{answers[current]===idx?'sel':''}}"
         wx:for="{{q.options}}"
@@ -51,6 +55,7 @@
       <view class="opt-grid">
         <view
           class="opt-cell {{answers[current]===idx?'sel':''}}"
+          style="{{optStyle}}"
           wx:for="{{q.options}}"
           wx:key="idx"
           wx:for-index="idx"
@@ -71,5 +76,5 @@
     </button>
   </view>
 
-  <view class="answered-tip">已作答 {{answeredCount}} / {{total}}</view>
+  <view class="answered-tip">已作答 {{answeredCount}} / {{total}}（选完后自动跳下一题）</view>
 </view>
