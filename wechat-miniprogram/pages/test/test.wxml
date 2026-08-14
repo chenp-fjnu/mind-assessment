@@ -29,22 +29,54 @@
 
     <!-- 选择题 -->
     <view wx:elif="{{qType==='choice'}}" class="choice-list">
-      <view wx:if="{{q.matrix}}" class="target-box">
-        <text class="matrix-tip">目标图案</text>
-        <canvas type="2d" id="targetCanvas" class="target-canvas"></canvas>
-      </view>
-      <view
-        class="choice-opt {{answers[current]===idx?'sel':''}}"
-        wx:for="{{q.options}}"
-        wx:key="idx"
-        wx:for-index="idx"
-        wx:for-item="opt"
-        bindtap="selectAnswer"
-        data-index="{{idx}}"
-      >
-        <text class="opt-key">{{['A','B','C','D','E','F'][idx]}}</text>
-        <text class="opt-text">{{opt}}</text>
-      </view>
+      <block wx:if="{{q.matrix}}">
+        <view class="target-box">
+          <text class="matrix-tip">目标图案（选出与之相同的选项）</text>
+          <canvas type="2d" id="targetCanvas" class="target-canvas"></canvas>
+        </view>
+        <view wx:if="{{showFigureOptions}}" class="figopt-grid">
+          <view
+            class="figopt-cell {{answers[current]===idx?'sel':''}}"
+            style="{{optStyle}}"
+            wx:for="{{figureOptions}}"
+            wx:key="idx"
+            wx:for-index="idx"
+            bindtap="selectAnswer"
+            data-index="{{idx}}"
+          >
+            <canvas type="2d" id="figopt{{idx}}" class="figopt-canvas"></canvas>
+            <text class="figopt-key">{{['A','B','C','D','E','F'][idx]}}</text>
+          </view>
+        </view>
+        <view wx:else class="choice-list">
+          <view
+            class="choice-opt {{answers[current]===idx?'sel':''}}"
+            wx:for="{{q.options}}"
+            wx:key="idx"
+            wx:for-index="idx"
+            wx:for-item="opt"
+            bindtap="selectAnswer"
+            data-index="{{idx}}"
+          >
+            <text class="opt-key">{{['A','B','C','D','E','F'][idx]}}</text>
+            <text class="opt-text">{{opt}}</text>
+          </view>
+        </view>
+      </block>
+      <block wx:else>
+        <view
+          class="choice-opt {{answers[current]===idx?'sel':''}}"
+          wx:for="{{q.options}}"
+          wx:key="idx"
+          wx:for-index="idx"
+          wx:for-item="opt"
+          bindtap="selectAnswer"
+          data-index="{{idx}}"
+        >
+          <text class="opt-key">{{['A','B','C','D','E','F'][idx]}}</text>
+          <text class="opt-text">{{opt}}</text>
+        </view>
+      </block>
     </view>
 
     <!-- 矩阵题（SPM） -->

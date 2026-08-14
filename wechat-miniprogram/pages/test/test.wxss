@@ -189,6 +189,36 @@
   border-radius: 16rpx;
   padding: 10rpx;
 }
+.figopt-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.figopt-cell {
+  margin-bottom: 20rpx;
+  border: 2rpx solid #e2e8f0;
+  border-radius: 16rpx;
+  background: #fff;
+  padding: 14rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.figopt-cell.sel {
+  border-color: #2563eb;
+}
+.figopt-canvas {
+  width: 160rpx;
+  height: 160rpx;
+  background: #f8fafc;
+  border-radius: 10rpx;
+}
+.figopt-key {
+  font-size: 24rpx;
+  color: #475569;
+  margin-top: 8rpx;
+  font-weight: 600;
+}
 .answered-tip {
   text-align: center;
   color: #94a3b8;
