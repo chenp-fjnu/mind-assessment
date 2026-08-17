@@ -1,0 +1,14 @@
+{
+  "name": "mind-assessment-miniprogram",
+  "version": "1.0.0",
+  "description": "心智测评中心 - 原生微信小程序（纯前端）",
+  "private": true,
+  "scripts": {
+    "test": "node test/smoke.js",
+    "test:simulate": "jest"
+  },
+  "devDependencies": {
+    "@miniprogram/simulate": "^1.7.0",
+    "jest": "^29.7.0"
+  }
+}

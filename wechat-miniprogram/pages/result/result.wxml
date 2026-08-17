@@ -3,7 +3,7 @@
     <text class="head-icon">{{meta.icon}}</text>
     <text class="head-name">{{meta.name}}</text>
     <view class="primary-box">
-      <text class="primary-value {{primarySize}}">{{primaryValue}}</text>
+      <text class="primary-value {{primarySize}}" aria-label="{{primaryLabel}}：{{primaryValue}}{{levelText ? '，' + levelText : ''}}">{{primaryValue}}</text>
       <text class="primary-label">{{primaryLabel}}</text>
     </view>
     <text wx:if="{{levelText}}" class="level-badge" style="background:{{levelColor}};">{{levelText}}</text>
@@ -78,7 +78,7 @@
   <!-- 历史趋势 -->
   <view wx:if="{{showTrend}}" class="card sec">
     <text class="sec-title">历史趋势（近 {{trendValues.length}} 次）</text>
-    <canvas type="2d" id="trendCanvas" class="trend-canvas"></canvas>
+    <canvas type="2d" id="trendCanvas" class="trend-canvas" role="img" aria-label="历史测评趋势折线图"></canvas>
     <text class="trend-delta {{trendDelta>0?'up':(trendDelta<0?'down':'flat')}}">
       较上次 {{trendDelta>0?'↑':(trendDelta<0?'↓':'→')}} {{trendDelta>0?'+':''}}{{trendDelta}}
     </text>
@@ -96,10 +96,10 @@
   <view class="disclaimer">本结果基于自陈量表，仅供自我探索与娱乐参考，不构成医学诊断或专业建议。</view>
 
   <view class="bottom-bar">
-    <button class="btn save" bindtap="saveCard">保存结果卡片</button>
+    <button class="btn save" bindtap="saveCard" aria-label="保存结果卡片到相册">保存结果卡片</button>
     <view class="btn-row">
-      <button class="btn ghost" bindtap="retest">重新测评</button>
-      <button class="btn home" style="background:{{meta.color}};" bindtap="goHome">返回首页</button>
+      <button class="btn ghost" bindtap="retest" aria-label="重新测评">重新测评</button>
+      <button class="btn home" style="background:{{meta.color}};" bindtap="goHome" aria-label="返回首页">返回首页</button>
     </view>
   </view>
 

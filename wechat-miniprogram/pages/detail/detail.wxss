@@ -94,3 +94,35 @@
   line-height: 92rpx;
   font-size: 32rpx;
 }
+
+@media (prefers-color-scheme: dark) {
+  .sec-title {
+    color: var(--text);
+  }
+  .sec-text {
+    color: var(--text2);
+  }
+  .tag {
+    color: var(--text2);
+    background: var(--chip);
+  }
+  .free-tag {
+    color: #4ade80;
+    background: #14331f;
+  }
+  .stat-num {
+    color: var(--text);
+  }
+  .stat-label {
+    color: var(--muted);
+  }
+  .tip {
+    background: #2a2410;
+  }
+  .tip-title {
+    color: #fbbf24;
+  }
+  .tip-text {
+    color: #d6b25e;
+  }
+}

@@ -225,3 +225,78 @@
   font-size: 23rpx;
   padding-bottom: 40rpx;
 }
+
+@media (prefers-color-scheme: dark) {
+  .q-index {
+    color: var(--muted);
+  }
+  .q-text {
+    color: var(--text);
+  }
+  .scale-opt {
+    border-color: var(--border);
+    color: var(--text2);
+  }
+  .scale-opt.sel {
+    border-color: #3b82f6;
+    background: var(--sel-bg);
+    color: var(--sel-text);
+  }
+  .radio {
+    border-color: #475569;
+  }
+  .choice-opt {
+    border-color: var(--border);
+    color: var(--text2);
+  }
+  .choice-opt.sel {
+    border-color: #3b82f6;
+    background: var(--sel-bg);
+  }
+  .opt-key {
+    background: var(--chip);
+    color: var(--text2);
+  }
+  .choice-opt.sel .opt-key {
+    background: #3b82f6;
+    color: #fff;
+  }
+  .matrix-box {
+    background: var(--card);
+    border-color: var(--border);
+  }
+  .matrix-tip {
+    color: var(--muted);
+  }
+  .opt-cell {
+    border-color: var(--border);
+    background: var(--card);
+  }
+  .opt-cell.sel {
+    border-color: #3b82f6;
+  }
+  .nav-btn.ghost {
+    background: var(--border);
+    color: var(--text2);
+  }
+  .target-canvas {
+    background: #1e293b;
+    border-color: var(--border);
+  }
+  .figopt-cell {
+    border-color: var(--border);
+    background: var(--card);
+  }
+  .figopt-cell.sel {
+    border-color: #3b82f6;
+  }
+  .figopt-canvas {
+    background: #1e293b;
+  }
+  .figopt-key {
+    color: var(--text2);
+  }
+  .answered-tip {
+    color: var(--muted);
+  }
+}

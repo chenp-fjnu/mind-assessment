@@ -15,6 +15,8 @@
       wx:key="time"
       bindtap="goHistory"
       data-idx="{{index}}"
+      role="button"
+      aria-label="查看历史测评 {{item.name}}，结果 {{item.summary}}"
     >
       <text class="hist-icon">{{item.icon}}</text>
       <view class="hist-info">
@@ -34,6 +36,8 @@
       wx:for-item="m"
       bindtap="goDetail"
       data-id="{{m.id}}"
+      role="button"
+      aria-label="{{m.name}}，{{m.desc}}，共 {{m.questionCount}} 题，约 {{m.duration}} 分钟"
     >
       <view class="item-icon" style="background:{{m.color}}22;">{{m.icon}}</view>
       <view class="item-body">

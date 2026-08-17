@@ -237,3 +237,63 @@
   width: 600rpx;
   height: 800rpx;
 }
+
+@media (prefers-color-scheme: dark) {
+  .sec-title {
+    color: var(--text);
+  }
+  .group-head,
+  .dim-head,
+  .sub-head {
+    color: var(--text2);
+  }
+  .group-num,
+  .dim-pct,
+  .sub-num {
+    color: var(--muted);
+  }
+  .bar {
+    background: #334155;
+  }
+  .bp-name {
+    color: var(--text2);
+  }
+  .bp-left {
+    background: #475569;
+    color: var(--text);
+  }
+  .bp-desc {
+    color: var(--muted);
+  }
+  .dim-text {
+    color: var(--sub);
+  }
+  .interp-title {
+    color: var(--text);
+  }
+  .interp-text {
+    color: var(--text2);
+  }
+  .disclaimer {
+    color: var(--muted);
+  }
+  .trend-delta.flat {
+    color: var(--sub);
+  }
+  .cat-item {
+    background: var(--chip);
+  }
+  .cat-sum {
+    color: var(--text);
+  }
+  .cat-time {
+    color: var(--muted);
+  }
+  .btn.save {
+    background: #334155;
+  }
+  .btn.ghost {
+    background: var(--border);
+    color: var(--text2);
+  }
+}

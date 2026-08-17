@@ -21,6 +21,8 @@
         wx:for-item="label"
         bindtap="selectAnswer"
         data-index="{{idx}}"
+        role="button"
+        aria-label="选项 {{label}}{{answers[current]===idx?'，已选':''}}"
       >
         <view class="radio {{answers[current]===idx?'radio-sel':''}}"></view>
         <text>{{label}}</text>
@@ -43,8 +45,10 @@
             wx:for-index="idx"
             bindtap="selectAnswer"
             data-index="{{idx}}"
+            role="button"
+            aria-label="图形选项 {{['A','B','C','D','E','F'][idx]}}{{answers[current]===idx?'，已选':''}}"
           >
-            <canvas type="2d" id="figopt{{idx}}" class="figopt-canvas"></canvas>
+            <canvas type="2d" id="figopt{{idx}}" class="figopt-canvas" role="img" aria-label="图形选项 {{['A','B','C','D','E','F'][idx]}} 图案"></canvas>
             <text class="figopt-key">{{['A','B','C','D','E','F'][idx]}}</text>
           </view>
         </view>
@@ -57,6 +61,8 @@
             wx:for-item="opt"
             bindtap="selectAnswer"
             data-index="{{idx}}"
+            role="button"
+            aria-label="选项 {{['A','B','C','D','E','F'][idx]}}：{{opt}}{{answers[current]===idx?'，已选':''}}"
           >
             <text class="opt-key">{{['A','B','C','D','E','F'][idx]}}</text>
             <text class="opt-text">{{opt}}</text>
@@ -72,6 +78,8 @@
           wx:for-item="opt"
           bindtap="selectAnswer"
           data-index="{{idx}}"
+          role="button"
+          aria-label="选项 {{['A','B','C','D','E','F'][idx]}}：{{opt}}{{answers[current]===idx?'，已选':''}}"
         >
           <text class="opt-key">{{['A','B','C','D','E','F'][idx]}}</text>
           <text class="opt-text">{{opt}}</text>
@@ -82,7 +90,7 @@
     <!-- 矩阵题（SPM） -->
     <view wx:elif="{{qType==='matrix'}}" class="matrix-wrap">
       <view class="matrix-box">
-        <canvas type="2d" id="matrixCanvas" class="matrix-canvas"></canvas>
+        <canvas type="2d" id="matrixCanvas" class="matrix-canvas" role="img" aria-label="图形规律题目"></canvas>
       </view>
       <text class="matrix-tip">请选择能补全规律的选项</text>
       <view class="opt-grid">
@@ -95,16 +103,18 @@
           wx:for-item="o"
           bindtap="selectAnswer"
           data-index="{{idx}}"
+          role="button"
+          aria-label="选项 {{['A','B','C','D','E','F'][idx]}}{{answers[current]===idx?'，已选':''}}"
         >
-          <canvas type="2d" id="opt{{idx}}" class="opt-canvas"></canvas>
+          <canvas type="2d" id="opt{{idx}}" class="opt-canvas" role="img" aria-label="选项 {{['A','B','C','D','E','F'][idx]}} 图案"></canvas>
         </view>
       </view>
     </view>
   </view>
 
   <view class="nav-bar">
-    <button class="nav-btn ghost" bindtap="prev" disabled="{{current===0}}">上一题</button>
-    <button class="nav-btn primary" style="background:{{meta.color}};" bindtap="next">
+    <button class="nav-btn ghost" bindtap="prev" disabled="{{current===0}}" aria-label="上一题">上一题</button>
+    <button class="nav-btn primary" style="background:{{meta.color}};" bindtap="next" aria-label="{{current===total-1 ? '提交测评' : '下一题'}}">
       {{current===total-1 ? '提交' : '下一题'}}
     </button>
   </view>

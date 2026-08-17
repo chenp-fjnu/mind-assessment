@@ -140,3 +140,47 @@
   color: #94a3b8;
   margin-top: 4rpx;
 }
+
+@media (prefers-color-scheme: dark) {
+  .group-title {
+    color: var(--text2);
+  }
+  .item-name {
+    color: var(--text);
+  }
+  .badge-free {
+    color: #4ade80;
+    background: #14331f;
+  }
+  .badge-paid {
+    color: #fbbf24;
+    background: #3a2c0a;
+  }
+  .item-desc {
+    color: var(--sub);
+  }
+  .item-meta {
+    color: var(--muted);
+  }
+  .arrow {
+    color: #475569;
+  }
+  .footer {
+    color: var(--muted);
+  }
+  .hist-title {
+    color: var(--text);
+  }
+  .hist-clear {
+    color: var(--muted);
+  }
+  .hist-item {
+    border-top-color: var(--border);
+  }
+  .hist-name {
+    color: var(--text);
+  }
+  .hist-time {
+    color: var(--muted);
+  }
+}

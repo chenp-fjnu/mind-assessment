@@ -3,12 +3,40 @@ view,
 text,
 .scroll-page {
   min-height: 100vh;
-  background: #f1f5f9;
+  background: var(--bg);
   font-family: -apple-system, "PingFang SC", "Helvetica Neue", sans-serif;
 }
 
+page {
+  --bg: #f1f5f9;
+  --card: #fff;
+  --text: #1e293b;
+  --text2: #475569;
+  --sub: #64748b;
+  --muted: #94a3b8;
+  --border: #e2e8f0;
+  --chip: #f1f5f9;
+  --sel-bg: #eff6ff;
+  --sel-text: #1d4ed8;
+}
+
+@media (prefers-color-scheme: dark) {
+  page {
+    --bg: #0f172a;
+    --card: #1e293b;
+    --text: #e2e8f0;
+    --text2: #cbd5e1;
+    --sub: #94a3b8;
+    --muted: #64748b;
+    --border: #334155;
+    --chip: #334155;
+    --sel-bg: #1e3a5f;
+    --sel-text: #93c5fd;
+  }
+}
+
 .card {
-  background: #fff;
+  background: var(--card);
   border-radius: 24rpx;
   box-shadow: 0 8rpx 30rpx rgba(15, 23, 42, 0.06);
 }
@@ -21,5 +49,5 @@ text,
 }
 
 .muted {
-  color: #64748b;
+  color: var(--sub);
 }

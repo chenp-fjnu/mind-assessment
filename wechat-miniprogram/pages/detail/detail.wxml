@@ -35,6 +35,6 @@
   </view>
 
   <view class="bottom-bar">
-    <button class="btn start-btn" style="background:{{meta.color}};" bindtap="start">开始测评</button>
+    <button class="btn start-btn" style="background:{{meta.color}};" bindtap="start" aria-label="开始测评：{{meta.name}}">开始测评</button>
   </view>
 </view>
