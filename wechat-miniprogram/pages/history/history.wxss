@@ -1,0 +1,95 @@
+.bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 32rpx 40rpx 8rpx;
+}
+.title {
+  font-size: 36rpx;
+  font-weight: 700;
+  color: var(--text);
+}
+.clear {
+  font-size: 26rpx;
+  color: var(--muted);
+}
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 160rpx 40rpx;
+}
+.empty-icon {
+  font-size: 96rpx;
+}
+.empty-text {
+  font-size: 30rpx;
+  color: var(--text2);
+  margin-top: 24rpx;
+  font-weight: 600;
+}
+.empty-sub {
+  font-size: 24rpx;
+  color: var(--muted);
+  margin-top: 12rpx;
+}
+.list {
+  padding: 16rpx 32rpx 48rpx;
+}
+.hist-card {
+  display: flex;
+  align-items: center;
+  padding: 28rpx;
+  margin-bottom: 20rpx;
+}
+.h-icon {
+  font-size: 48rpx;
+  margin-right: 22rpx;
+  flex-shrink: 0;
+}
+.h-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.h-head {
+  display: flex;
+  align-items: center;
+}
+.h-name {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: var(--text);
+}
+.h-level {
+  font-size: 22rpx;
+  color: #fff;
+  background: #2563eb;
+  padding: 2rpx 14rpx;
+  border-radius: 999rpx;
+  margin-left: 14rpx;
+}
+.h-sum {
+  font-size: 25rpx;
+  color: var(--text2);
+  margin-top: 8rpx;
+}
+.h-time {
+  font-size: 22rpx;
+  color: var(--muted);
+  margin-top: 4rpx;
+}
+.h-del {
+  font-size: 24rpx;
+  color: #dc2626;
+  padding: 8rpx 16rpx;
+  margin-left: 12rpx;
+  flex-shrink: 0;
+}
+
+@media (prefers-color-scheme: dark) {
+  .h-level {
+    background: #3b82f6;
+  }
+}

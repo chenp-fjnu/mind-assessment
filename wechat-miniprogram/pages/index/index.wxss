@@ -112,6 +112,15 @@
   font-weight: 700;
   color: #1e293b;
 }
+.hist-actions {
+  display: flex;
+  align-items: center;
+}
+.hist-all {
+  font-size: 24rpx;
+  color: #475569;
+  margin-right: 20rpx;
+}
 .hist-clear {
   font-size: 24rpx;
   color: #94a3b8;
@@ -173,6 +182,9 @@
   }
   .hist-clear {
     color: var(--muted);
+  }
+  .hist-all {
+    color: var(--text2);
   }
   .hist-item {
     border-top-color: var(--border);

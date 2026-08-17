@@ -7,7 +7,10 @@
   <view wx:if="{{history.length}}" class="card history">
     <view class="hist-head">
       <text class="hist-title">最近测评</text>
-      <text class="hist-clear" bindtap="clearHistory">清空</text>
+      <view class="hist-actions">
+        <text class="hist-all" bindtap="goAllHistory">全部 ›</text>
+        <text class="hist-clear" bindtap="clearHistory">清空</text>
+      </view>
     </view>
     <view
       class="hist-item"

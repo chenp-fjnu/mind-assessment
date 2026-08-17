@@ -3,7 +3,8 @@
     "pages/index/index",
     "pages/detail/detail",
     "pages/test/test",
-    "pages/result/result"
+    "pages/result/result",
+    "pages/history/history"
   ],
   "window": {
     "navigationBarTextStyle": "white",

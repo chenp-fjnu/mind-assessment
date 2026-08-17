@@ -50,6 +50,9 @@ Page({
     getApp().globalData.lastResult = { id: item.id, answers: item.answers }
     wx.navigateTo({ url: `/pages/result/result?id=${item.id}` })
   },
+  goAllHistory() {
+    wx.navigateTo({ url: '/pages/history/history' })
+  },
   clearHistory() {
     wx.showModal({
       title: '清空记录',
