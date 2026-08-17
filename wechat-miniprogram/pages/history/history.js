@@ -18,25 +18,39 @@ function fmt(ts) {
 
 Page({
   data: {
+    all: [],
     list: [],
+    filters: [],
+    active: '',
   },
   onShow() {
     this.load()
   },
   load() {
     const hist = wx.getStorageSync('ma_history') || []
-    this.setData({
-      list: hist.map((h) => ({
-        id: h.id,
-        name: h.name,
-        icon: h.icon,
-        summary: h.summary || '',
-        level: h.level || '',
-        time: h.time,
-        timeText: fmt(h.time),
-        answers: h.answers,
-      })),
+    const all = hist.map((h) => ({
+      id: h.id,
+      name: h.name,
+      icon: h.icon,
+      summary: h.summary || '',
+      level: h.level || '',
+      time: h.time,
+      timeText: fmt(h.time),
+      answers: h.answers,
+    }))
+    const map = {}
+    all.forEach((h) => {
+      if (!map[h.id]) map[h.id] = { id: h.id, name: h.name, icon: h.icon }
     })
+    const filters = [{ id: '', name: '全部', icon: '🗂' }].concat(Object.keys(map).map((k) => map[k]))
+    const active = this.data.active
+    const list = active ? all.filter((h) => h.id === active) : all
+    this.setData({ all, filters, list })
+  },
+  onFilter(e) {
+    const id = e.currentTarget.dataset.id
+    const list = id ? this.data.all.filter((h) => h.id === id) : this.data.all
+    this.setData({ active: id, list })
   },
   open(e) {
     const idx = e.currentTarget.dataset.idx
@@ -57,6 +71,7 @@ Page({
         const hist = wx.getStorageSync('ma_history') || []
         const next = hist.filter((h) => h.time !== item.time)
         wx.setStorageSync('ma_history', next)
+        this.setData({ active: '' })
         this.load()
       },
     })
@@ -69,7 +84,7 @@ Page({
       success: (r) => {
         if (r.confirm) {
           wx.removeStorageSync('ma_history')
-          this.setData({ list: [] })
+          this.setData({ all: [], list: [], filters: [], active: '' })
         }
       },
     })

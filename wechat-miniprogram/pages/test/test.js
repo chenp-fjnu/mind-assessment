@@ -103,11 +103,11 @@ Page({
     let figureOptions = []
     let targetMatrix = null
     const cand = q.candidates
-    const blockTarget = cand && cand.length ? cand[q.answer] : q.matrix || this.patternToMatrix(q.targetPattern)
-    if (q.type === 'choice' && blockTarget && q.answer != null) {
+    const blockTarget = cand && cand.length ? cand[q.answer] : q.matrix
+    if (q.type === 'choice' && blockTarget && q.answer != null && cand && cand.length) {
       targetMatrix = blockTarget
       showFigureOptions = true
-      figureOptions = cand && cand.length ? cand : this.buildBlockOptions(blockTarget, q.answer, (q.options || []).length)
+      figureOptions = cand
     }
     this.setData(
       {
@@ -331,82 +331,5 @@ Page({
       title: this.data.meta.name + ' - 心智测评中心',
       path: '/pages/detail/detail?id=' + this.data.meta.id,
     }
-  },
-
-  // ===== 韦氏积木题：用目标图案生成 4 个候选图形（含正确项） =====
-  cell(color, shape) {
-    return {
-      bg: null,
-      shapes: [{ type: shape || 'square', size: 80, color: color, fill: 'solid', rotation: 0, count: 1 }],
-    }
-  },
-  patternToMatrix(tp) {
-    const R = '#dc2626'
-    const B = '#2563eb'
-    const G = '#16a34a'
-    const Y = '#d97706'
-    const W_ = '#ffffff'
-    switch (tp) {
-      case 'red-white-checker':
-        return [[this.cell(R), this.cell(W_)], [this.cell(W_), this.cell(R)]]
-      case '对角A':
-      case '对角B':
-      case '对角C':
-      case '对角D':
-        return [[this.cell(R), this.cell(B)], [this.cell(B), this.cell(R)]]
-      case '三角组合':
-        return [[this.cell(R, 'triangle'), this.cell(B, 'triangle')], [this.cell(G, 'triangle'), this.cell(Y, 'triangle')]]
-      case '四色田字格':
-      case '嵌套方块':
-        return [[this.cell(R), this.cell(B)], [this.cell(G), this.cell(Y)]]
-      default:
-        return null
-    }
-  },
-  rotateGrid(g) {
-    const R = g.length
-    const C = g[0].length
-    const out = []
-    for (let r = 0; r < R; r++) {
-      out.push([])
-      for (let c = 0; c < C; c++) out[r].push(g[C - 1 - c][r])
-    }
-    return out
-  },
-  mirrorGrid(g) {
-    return g.map((row) => row.slice().reverse())
-  },
-  transposeGrid(g) {
-    const R = g.length
-    const C = g[0].length
-    const out = []
-    for (let r = 0; r < C; r++) {
-      out.push([])
-      for (let c = 0; c < R; c++) out[r].push(g[c][r])
-    }
-    return out
-  },
-  buildBlockOptions(target, answer, n) {
-    if (!n || n < 2) n = 4
-    const pool = [
-      target,
-      this.rotateGrid(target),
-      this.rotateGrid(this.rotateGrid(target)),
-      this.mirrorGrid(target),
-      this.transposeGrid(target),
-    ]
-    const opts = new Array(n)
-    opts[answer] = target
-    let pi = 0
-    for (let i = 0; i < n; i++) {
-      if (i === answer) continue
-      let v
-      do {
-        v = pool[1 + (pi % (pool.length - 1))]
-        pi++
-      } while (v === target)
-      opts[i] = v
-    }
-    return opts
   },
 })

@@ -36,6 +36,33 @@
 .list {
   padding: 16rpx 32rpx 48rpx;
 }
+.filter-bar {
+  white-space: nowrap;
+  padding: 8rpx 24rpx 4rpx;
+}
+.chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 12rpx 26rpx;
+  margin-right: 16rpx;
+  background: var(--chip);
+  color: var(--text2);
+  border-radius: 999rpx;
+  font-size: 25rpx;
+}
+.chip.on {
+  background: #2563eb;
+  color: #fff;
+}
+.chip-icon {
+  margin-right: 8rpx;
+}
+
+@media (prefers-color-scheme: dark) {
+  .chip.on {
+    background: #3b82f6;
+  }
+}
 .hist-card {
   display: flex;
   align-items: center;
