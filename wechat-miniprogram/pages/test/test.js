@@ -102,11 +102,12 @@ Page({
     let showFigureOptions = false
     let figureOptions = []
     let targetMatrix = null
-    const blockTarget = q.matrix || this.patternToMatrix(q.targetPattern)
+    const cand = q.candidates
+    const blockTarget = cand && cand.length ? cand[q.answer] : q.matrix || this.patternToMatrix(q.targetPattern)
     if (q.type === 'choice' && blockTarget && q.answer != null) {
       targetMatrix = blockTarget
       showFigureOptions = true
-      figureOptions = this.buildBlockOptions(targetMatrix, q.answer, (q.options || []).length)
+      figureOptions = cand && cand.length ? cand : this.buildBlockOptions(blockTarget, q.answer, (q.options || []).length)
     }
     this.setData(
       {

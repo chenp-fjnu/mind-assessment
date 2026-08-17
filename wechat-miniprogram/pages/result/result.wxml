@@ -75,6 +75,24 @@
     </view>
   </view>
 
+  <!-- 历史趋势 -->
+  <view wx:if="{{showTrend}}" class="card sec">
+    <text class="sec-title">历史趋势（近 {{trendValues.length}} 次）</text>
+    <canvas type="2d" id="trendCanvas" class="trend-canvas"></canvas>
+    <text class="trend-delta {{trendDelta>0?'up':(trendDelta<0?'down':'flat')}}">
+      较上次 {{trendDelta>0?'↑':(trendDelta<0?'↓':'→')}} {{trendDelta>0?'+':''}}{{trendDelta}}
+    </text>
+  </view>
+  <view wx:elif="{{catList.length}}" class="card sec">
+    <text class="sec-title">历史记录（共 {{catList.length}} 次）</text>
+    <view class="cat-list">
+      <view class="cat-item" wx:for="{{catList}}" wx:key="timeText" wx:for-item="c">
+        <text class="cat-sum">{{c.summary}}</text>
+        <text class="cat-time">{{c.timeText}}</text>
+      </view>
+    </view>
+  </view>
+
   <view class="disclaimer">本结果基于自陈量表，仅供自我探索与娱乐参考，不构成医学诊断或专业建议。</view>
 
   <view class="bottom-bar">

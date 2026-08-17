@@ -15,6 +15,22 @@
  *       言语智商 VIQ、操作智商 PIQ、总智商 FSIQ（M=100, SD=15）
  */
 
+// 积木题候选图形构造辅助
+const R = '#dc2626'
+const W = '#ffffff'
+const B = '#2563eb'
+const G = '#16a34a'
+const Y = '#d97706'
+function sq(color) {
+  return { bg: null, shapes: [{ type: 'square', size: 80, color: color, fill: 'solid', rotation: 0, count: 1 }] }
+}
+function tri(color) {
+  return { bg: null, shapes: [{ type: 'triangle', size: 80, color: color, fill: 'solid', rotation: 0, count: 1 }] }
+}
+function g2(a, b, c, d) {
+  return [[a, b], [c, d]]
+}
+
 const QUESTIONS = [
   // ===== 词汇 Vocabulary (5题) =====
   { id: 'WCH-01', subtest: '词汇', domain: 'verbal', text: '"苹果"是什么？',
@@ -53,17 +69,24 @@ const QUESTIONS = [
     options: ['20', '24', '32', '18'], answer: 2, maxScore: 2 },
 
   // ===== 积木 Block Design (5题) - 用图形矩阵表示 =====
+  // 真实候选图形数据：candidates[answer] 即为与目标一致的图案，其余为同主题干扰项
   { id: 'WCH-16', subtest: '积木', domain: 'performance', text: '哪个选项能拼出目标图案？（红白方块组合）',
     options: ['图案A', '图案B', '图案C', '图案D'], answer: 0, maxScore: 2,
-    matrix: [[{bg:null,shapes:[{type:'square',size:80,color:'#dc2626',fill:'solid',count:1}]},{bg:null,shapes:[{type:'square',size:80,color:'#fff',fill:'solid',count:1}]}],[{bg:null,shapes:[{type:'square',size:80,color:'#fff',fill:'solid',count:1}]},{bg:null,shapes:[{type:'square',size:80,color:'#dc2626',fill:'solid',count:1}]}]], targetPattern: 'red-white-checker' },
+    matrix: [[sq(R), sq(W)], [sq(W), sq(R)]],
+    targetPattern: 'red-white-checker',
+    candidates: [g2(sq(R), sq(W), sq(W), sq(R)), g2(sq(R), sq(R), sq(W), sq(W)), g2(sq(W), sq(W), sq(R), sq(R)), g2(sq(R), sq(W), sq(R), sq(W))] },
   { id: 'WCH-17', subtest: '积木', domain: 'performance', text: '目标图案为对角分割，选正确选项：',
-    options: ['对角A', '对角B', '对角C', '对角D'], answer: 1, maxScore: 2 },
+    options: ['对角A', '对角B', '对角C', '对角D'], answer: 1, maxScore: 2,
+    candidates: [g2(sq(R), sq(R), sq(B), sq(B)), g2(sq(R), sq(B), sq(B), sq(R)), g2(sq(B), sq(R), sq(R), sq(B)), g2(sq(R), sq(B), sq(R), sq(B))] },
   { id: 'WCH-18', subtest: '积木', domain: 'performance', text: '目标图案为三角组合，选正确选项：',
-    options: ['三角A', '三角B', '三角C', '三角D'], answer: 2, maxScore: 2 },
+    options: ['三角A', '三角B', '三角C', '三角D'], answer: 2, maxScore: 2,
+    candidates: [g2(tri(R), tri(R), tri(B), tri(B)), g2(tri(R), tri(G), tri(B), tri(Y)), g2(tri(R), tri(B), tri(G), tri(Y)), g2(tri(Y), tri(R), tri(B), tri(G))] },
   { id: 'WCH-19', subtest: '积木', domain: 'performance', text: '目标图案为四色田字格，选正确选项：',
-    options: ['田字A', '田字B', '田字C', '田字D'], answer: 0, maxScore: 2 },
-  { id: 'WCH-20', subtest: '积木', domain: 'performance', text: '目标图案为嵌套方块，选正确选项：',
-    options: ['嵌套A', '嵌套B', '嵌套C', '嵌套D'], answer: 1, maxScore: 2 },
+    options: ['田字A', '田字B', '田字C', '田字D'], answer: 0, maxScore: 2,
+    candidates: [g2(sq(R), sq(B), sq(G), sq(Y)), g2(sq(R), sq(G), sq(B), sq(Y)), g2(sq(B), sq(R), sq(Y), sq(G)), g2(sq(R), sq(Y), sq(B), sq(G))] },
+  { id: 'WCH-20', subtest: '积木', domain: 'performance', text: '目标图案为嵌套方块（外红内蓝），选正确选项：',
+    options: ['嵌套A', '嵌套B', '嵌套C', '嵌套D'], answer: 1, maxScore: 2,
+    candidates: [g2(sq(B), sq(R), sq(R), sq(B)), g2(sq(R), sq(B), sq(B), sq(R)), g2(sq(R), sq(R), sq(B), sq(B)), g2(sq(R), sq(B), sq(R), sq(B))] },
 
   // ===== 矩阵推理 Matrix Reasoning (5题) =====
   { id: 'WCH-21', subtest: '矩阵推理', domain: 'performance', text: '补全图形规律：圆形→方形→？',
@@ -182,6 +205,7 @@ module.exports = {
       answer: q.answer,
       maxScore: q.maxScore,
       matrix: q.matrix,
+      candidates: q.candidates,
       targetPattern: q.targetPattern,
       timeLimit: 60,
     }));

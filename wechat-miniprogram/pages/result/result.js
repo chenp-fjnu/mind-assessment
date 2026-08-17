@@ -29,6 +29,7 @@ Page({
     }
     const mod = getModule(id)
     if (!mod) return
+    this.dpr = (wx.getWindowInfo ? wx.getWindowInfo().pixelRatio : wx.getSystemInfoSync().pixelRatio) || 2
     const questions = mod.getQuestions()
     const r = mod.computeResult(saved.answers, questions)
     const layout = mod.resultLayout || {}
@@ -60,6 +61,30 @@ Page({
         ? safeCall(() => mod.buildInterpretations(r, groups, dims)) || []
         : []
 
+    // 同一量表的历史趋势
+    const fmt = (ts) => {
+      const d = new Date(ts)
+      const p = (n) => (n < 10 ? '0' + n : '' + n)
+      return p(d.getMonth() + 1) + '-' + p(d.getDate())
+    }
+    const sameId = (wx.getStorageSync('ma_history') || [])
+      .filter((h) => h.id === id)
+      .sort((a, b) => a.time - b.time)
+    let showTrend = false
+    let trendValues = []
+    let trendDelta = 0
+    let catList = []
+    const numericItems = sameId
+      .map((h) => ({ raw: String(h.summary || ''), num: parseFloat(h.summary) }))
+      .filter((x) => /^\d+(\.\d+)?$/.test(x.raw))
+    if (numericItems.length >= 2) {
+      showTrend = true
+      trendValues = numericItems.map((x) => x.num)
+      trendDelta = trendValues[trendValues.length - 1] - trendValues[trendValues.length - 2]
+    } else if (sameId.length >= 2) {
+      catList = sameId.map((h) => ({ summary: String(h.summary || ''), timeText: fmt(h.time) }))
+    }
+
     const pv = primaryValue == null ? '' : String(primaryValue)
     const primarySize = pv.length <= 4 ? 'big' : pv.length <= 10 ? 'mid' : 'small'
 
@@ -80,8 +105,77 @@ Page({
       showBipolar,
       showDims: !!(dims && dims.length) && !showBipolar && !hasBuildGroupList,
       showSubtests: !!(subtests && subtests.length),
+      showTrend,
+      trendValues,
+      trendDelta,
+      catList,
+    }, () => {
+      if (this.data.showTrend) this.drawTrend()
     })
     wx.setNavigationBarTitle({ title: mod.name + ' · 结果' })
+  },
+
+  drawTrend() {
+    if (!this.data.showTrend) return
+    const dpr = this.dpr || 2
+    wx.createSelectorQuery()
+      .in(this)
+      .select('#trendCanvas')
+      .fields({ node: true, size: true })
+      .exec((res) => {
+        if (!res[0]) return
+        const canvas = res[0].node
+        const ctx = canvas.getContext('2d')
+        const W = res[0].width
+        const H = res[0].height
+        canvas.width = W * dpr
+        canvas.height = H * dpr
+        ctx.scale(dpr, dpr)
+        ctx.clearRect(0, 0, W, H)
+        const vals = this.data.trendValues
+        const color = this.data.meta.color
+        const pad = 26
+        const cw = W - pad * 2
+        const ch = H - pad * 2
+        let min = Math.min.apply(null, vals)
+        let max = Math.max.apply(null, vals)
+        if (min === max) {
+          min -= 1
+          max += 1
+        }
+        const range = max - min
+        const n = vals.length
+        const xAt = (i) => pad + (n === 1 ? cw / 2 : (cw * i) / (n - 1))
+        const yAt = (v) => pad + ch - ((v - min) / range) * ch
+        ctx.strokeStyle = '#e2e8f0'
+        ctx.lineWidth = 1
+        ctx.beginPath()
+        ctx.moveTo(pad, pad + ch)
+        ctx.lineTo(pad + cw, pad + ch)
+        ctx.stroke()
+        ctx.strokeStyle = color
+        ctx.lineWidth = 3
+        ctx.beginPath()
+        vals.forEach((v, i) => {
+          const x = xAt(i)
+          const y = yAt(v)
+          if (i === 0) ctx.moveTo(x, y)
+          else ctx.lineTo(x, y)
+        })
+        ctx.stroke()
+        ctx.textAlign = 'center'
+        ctx.font = '20px sans-serif'
+        vals.forEach((v, i) => {
+          const x = xAt(i)
+          const y = yAt(v)
+          ctx.fillStyle = color
+          ctx.beginPath()
+          ctx.arc(x, y, 5, 0, Math.PI * 2)
+          ctx.fill()
+          ctx.fillStyle = '#475569'
+          ctx.fillText(String(v), x, y - 12)
+        })
+      })
   },
 
   onReady() {
