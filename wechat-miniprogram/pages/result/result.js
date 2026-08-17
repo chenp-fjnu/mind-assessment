@@ -1,4 +1,5 @@
 const { getModule } = require('../../utils/registry')
+const { computeTrend } = require('../../utils/trend')
 
 Page({
   data: {
@@ -31,10 +32,22 @@ Page({
     if (!mod) return
     this.dpr = (wx.getWindowInfo ? wx.getWindowInfo().pixelRatio : wx.getSystemInfoSync().pixelRatio) || 2
     const questions = mod.getQuestions()
-    const r = mod.computeResult(saved.answers, questions)
     const layout = mod.resultLayout || {}
-
     const primaryField = layout.primaryField || 'score'
+
+    let r
+    try {
+      r = mod.computeResult(saved.answers, questions)
+    } catch (e) {
+      console.warn('[result] computeResult failed:', e)
+      r = {}
+    }
+    if (r == null || r[primaryField] === undefined) {
+      r = r || {}
+      r[primaryField] = '—'
+      r.description = r.description || '结果解析失败，请重新测评'
+    }
+
     const primaryValue = r[primaryField]
     const levelColor = r.levelColor || mod.color
     const descText = r.description || (r.trait && String(r.trait) !== String(primaryValue) ? r.trait : '')
@@ -61,29 +74,13 @@ Page({
         ? safeCall(() => mod.buildInterpretations(r, groups, dims)) || []
         : []
 
-    // 同一量表的历史趋势
-    const fmt = (ts) => {
-      const d = new Date(ts)
-      const p = (n) => (n < 10 ? '0' + n : '' + n)
-      return p(d.getMonth() + 1) + '-' + p(d.getDate())
-    }
-    const sameId = (wx.getStorageSync('ma_history') || [])
-      .filter((h) => h.id === id)
-      .sort((a, b) => a.time - b.time)
-    let showTrend = false
-    let trendValues = []
-    let trendDelta = 0
-    let catList = []
-    const numericItems = sameId
-      .map((h) => ({ raw: String(h.summary || ''), num: parseFloat(h.summary) }))
-      .filter((x) => /^\d+(\.\d+)?$/.test(x.raw))
-    if (numericItems.length >= 2) {
-      showTrend = true
-      trendValues = numericItems.map((x) => x.num)
-      trendDelta = trendValues[trendValues.length - 1] - trendValues[trendValues.length - 2]
-    } else if (sameId.length >= 2) {
-      catList = sameId.map((h) => ({ summary: String(h.summary || ''), timeText: fmt(h.time) }))
-    }
+    // 同一量表的历史趋势（计算逻辑抽离至 utils/trend.js，便于单测）
+    const t = computeTrend(wx.getStorageSync('ma_history'), id)
+    const showTrend = t.showTrend
+    const trendValues = t.trendValues
+    const trendDelta = t.trendDelta
+    const catList = t.catList
+    const trendDates = t.trendDates
 
     const pv = primaryValue == null ? '' : String(primaryValue)
     const primarySize = pv.length <= 4 ? 'big' : pv.length <= 10 ? 'mid' : 'small'
@@ -109,6 +106,7 @@ Page({
       trendValues,
       trendDelta,
       catList,
+      trendDates,
     }, () => {
       if (this.data.showTrend) this.drawTrend()
     })
@@ -175,6 +173,14 @@ Page({
           ctx.fillStyle = '#475569'
           ctx.fillText(String(v), x, y - 12)
         })
+        // x 轴日期标签（点数较少时绘制，避免拥挤）
+        if (trendDates && trendDates.length === vals.length && vals.length <= 8) {
+          ctx.fillStyle = '#94a3b8'
+          ctx.font = '15px sans-serif'
+          vals.forEach((v, i) => {
+            ctx.fillText(trendDates[i], xAt(i), H - 6)
+          })
+        }
       })
   },
 

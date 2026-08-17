@@ -22,7 +22,6 @@ Page({
         questionCount: mod.questionCount,
         color: mod.color,
         tags: mod.tag || [],
-        type: mod.questionType,
       },
     })
     wx.setNavigationBarTitle({ title: mod.name })

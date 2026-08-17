@@ -73,5 +73,21 @@ for (let i = 15; i < 20; i++) {
   )
 }
 
+// 趋势计算（已抽离至 utils/trend.js，便于单测）
+const { computeTrend } = require('../utils/trend')
+const hist = [
+  { id: 'spm', summary: '120', time: 1000 },
+  { id: 'spm', summary: '130', time: 2000 },
+  { id: 'mbti', summary: 'INFP', time: 1500 },
+  { id: 'mbti', summary: 'ESTJ', time: 2500 },
+]
+const tn = computeTrend(hist, 'spm')
+check('trend 数值型 showTrend', tn.showTrend === true)
+check('trend 数值型 values', JSON.stringify(tn.trendValues) === '[120,130]')
+check('trend 数值型 delta', tn.trendDelta === 10)
+check('trend 数值型 dates', tn.trendDates.length === 2)
+const tc = computeTrend(hist, 'mbti')
+check('trend 类型型 catList', tc.catList.length === 2 && tc.showTrend === false)
+
 console.log('\n冒烟测试完成：通过 ' + pass + '，失败 ' + fail)
 process.exit(fail ? 1 : 0)

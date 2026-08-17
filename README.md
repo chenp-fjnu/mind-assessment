@@ -2,6 +2,8 @@
 
 多平台心理测评与认知训练应用，基于 **UniApp + Vue 3** 跨平台框架，一套代码同时构建 **微信小程序** 与 **H5 网页版**。
 
+> 📱 **另有独立原生小程序**：`wechat-miniprogram/` 目录是基于原生微信小程序的**纯前端**实现（无后端、无网络请求，数据存本地），集成同样 14 套量表，详见 [`wechat-miniprogram/README.md`](wechat-miniprogram/README.md)。
+
 ## 项目结构
 
 ```
