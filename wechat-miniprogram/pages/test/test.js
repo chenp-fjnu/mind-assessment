@@ -328,7 +328,7 @@ Page({
 
   onShareAppMessage() {
     return {
-      title: this.data.meta.name + ' - 心智测评中心',
+      title: this.data.meta.name + ' - 心智探索局',
       path: '/pages/detail/detail?id=' + this.data.meta.id,
     }
   },

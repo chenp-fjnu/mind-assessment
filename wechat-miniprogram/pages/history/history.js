@@ -89,4 +89,15 @@ Page({
       },
     })
   },
+  exportAll() {
+    const all = wx.getStorageSync('ma_history') || []
+    if (!all.length) {
+      wx.showToast({ title: '暂无记录', icon: 'none' })
+      return
+    }
+    wx.setClipboardData({
+      data: JSON.stringify(all, null, 2),
+      success: () => wx.showToast({ title: '已复制到剪贴板', icon: 'none' }),
+    })
+  },
 })

@@ -14,6 +14,8 @@ Page({
     dims: [],
     subtests: [],
     interpretations: [],
+    testedTime: '',
+    retestGap: '',
     showGroups: false,
     showBipolar: false,
     showDims: false,
@@ -30,6 +32,25 @@ Page({
     }
     const mod = getModule(id)
     if (!mod) return
+
+    // 测评时间 / 距上次重测间隔
+    const p2 = (n) => (n < 10 ? '0' + n : '' + n)
+    const myHist = (wx.getStorageSync('ma_history') || [])
+      .filter((h) => h.id === id)
+      .sort((a, b) => b.time - a.time)
+    let testedTime = ''
+    let retestGap = ''
+    if (myHist.length) {
+      const t = new Date(myHist[0].time)
+      testedTime =
+        t.getFullYear() + '-' + p2(t.getMonth() + 1) + '-' + p2(t.getDate()) +
+        ' ' + p2(t.getHours()) + ':' + p2(t.getMinutes())
+      if (myHist.length >= 2) {
+        const gap = Math.round((myHist[0].time - myHist[1].time) / 86400000)
+        retestGap = gap <= 0 ? '今天' : gap + ' 天前'
+      }
+    }
+
     this.dpr = (wx.getWindowInfo ? wx.getWindowInfo().pixelRatio : wx.getSystemInfoSync().pixelRatio) || 2
     const questions = mod.getQuestions()
     const layout = mod.resultLayout || {}
@@ -107,6 +128,8 @@ Page({
       trendDelta,
       catList,
       trendDates,
+      testedTime,
+      retestGap,
     }, () => {
       if (this.data.showTrend) this.drawTrend()
     })
@@ -213,7 +236,7 @@ Page({
         ctx.textAlign = 'center'
         ctx.fillStyle = '#fff'
         ctx.font = '28px sans-serif'
-        ctx.fillText('心智测评中心', W / 2, 70)
+        ctx.fillText('心智探索局', W / 2, 70)
         ctx.fillStyle = this.data.meta.color
         ctx.font = '34px sans-serif'
         ctx.fillText(this.data.meta.name, W / 2, 130)
@@ -260,7 +283,7 @@ Page({
 
   onShareAppMessage() {
     return {
-      title: this.data.meta.name + '测评结果 - 心智测评中心',
+      title: this.data.meta.name + '测评结果 - 心智探索局',
       path: '/pages/index/index',
     }
   },

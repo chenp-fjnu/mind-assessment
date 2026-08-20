@@ -1,7 +1,7 @@
 {
   "name": "mind-assessment-miniprogram",
   "version": "1.0.0",
-  "description": "心智测评中心 - 原生微信小程序（纯前端）",
+  "description": "心智探索局",
   "private": true,
   "scripts": {
     "test": "node test/smoke.js",

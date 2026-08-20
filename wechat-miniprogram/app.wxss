@@ -1,6 +1,10 @@
-page,
-view,
-text,
+page {
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, "PingFang SC", "Helvetica Neue", sans-serif;
+}
+
 .scroll-page {
   min-height: 100vh;
   background: var(--bg);

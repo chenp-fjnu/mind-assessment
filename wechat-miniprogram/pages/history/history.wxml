@@ -1,7 +1,10 @@
 <view class="scroll-page">
   <view class="bar">
     <text class="title">测评记录</text>
-    <text wx:if="{{list.length}}" class="clear" bindtap="clearAll" aria-label="清空全部记录">清空</text>
+    <view class="bar-actions">
+      <text wx:if="{{list.length}}" class="export" bindtap="exportAll" aria-label="导出全部记录">导出</text>
+      <text wx:if="{{list.length}}" class="clear" bindtap="clearAll" aria-label="清空全部记录">清空</text>
+    </view>
   </view>
 
   <scroll-view wx:if="{{filters.length > 1}}" class="filter-bar" scroll-x="true">
@@ -50,4 +53,6 @@
       <text class="h-del" catchtap="deleteOne" data-idx="{{idx}}" aria-label="删除该记录">删除</text>
     </view>
   </view>
+
+  <view class="brand-foot">心智探索局 · 认识自己，从一次测评开始</view>
 </view>

@@ -52,6 +52,22 @@
   line-height: 1.6;
   max-width: 90%;
 }
+.test-meta {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 20rpx 32rpx 0;
+}
+.test-time {
+  font-size: 23rpx;
+  color: #64748b;
+}
+.test-gap {
+  font-size: 23rpx;
+  color: #64748b;
+  margin-left: 20rpx;
+}
 .card.sec {
   margin: 24rpx 32rpx 0;
   padding: 32rpx;
@@ -158,6 +174,12 @@
   text-align: center;
   padding: 32rpx 40rpx 0;
   line-height: 1.6;
+}
+.brand-foot {
+  text-align: center;
+  color: #94a3b8;
+  font-size: 22rpx;
+  padding: 24rpx 40rpx 40rpx;
 }
 .trend-canvas {
   width: 100%;
@@ -275,6 +297,13 @@
     color: var(--text2);
   }
   .disclaimer {
+    color: var(--muted);
+  }
+  .brand-foot {
+    color: var(--muted);
+  }
+  .test-time,
+  .test-gap {
     color: var(--muted);
   }
   .trend-delta.flat {

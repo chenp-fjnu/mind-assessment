@@ -10,6 +10,11 @@
     <text wx:if="{{descText}}" class="head-desc">{{descText}}</text>
   </view>
 
+  <view wx:if="{{testedTime}}" class="test-meta">
+    <text class="test-time">测评于 {{testedTime}}</text>
+    <text wx:if="{{retestGap}}" class="test-gap">距上次重测 {{retestGap}}</text>
+  </view>
+
   <!-- 分组得分 -->
   <view wx:if="{{showGroups}}" class="card sec">
     <text class="sec-title">维度得分</text>
@@ -94,6 +99,8 @@
   </view>
 
   <view class="disclaimer">本结果基于自陈量表，仅供自我探索与娱乐参考，不构成医学诊断或专业建议。</view>
+
+  <view class="brand-foot">心智探索局 · 认识自己，从一次测评开始</view>
 
   <view class="bottom-bar">
     <button class="btn save" bindtap="saveCard" aria-label="保存结果卡片到相册">保存结果卡片</button>

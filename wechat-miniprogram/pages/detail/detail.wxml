@@ -10,8 +10,35 @@
     <text class="sec-text">{{meta.desc}}</text>
     <view class="tags">
       <text class="tag" wx:for="{{meta.tags}}" wx:key="*this">{{item}}</text>
-      <text class="tag free-tag">免费体验</text>
+      <text wx:if="{{meta.paid}}" class="tag paid-tag">¥{{meta.price}} 付费</text>
+      <text wx:else class="tag free-tag">免费体验</text>
     </view>
+  </view>
+
+  <view wx:if="{{history.count}}" class="card section">
+    <text class="sec-title">历史成绩</text>
+    <view class="hist-row">
+      <view class="hist-col">
+        <text class="hist-col-num">{{history.last.summary}}</text>
+        <text class="hist-col-label">上次结果</text>
+      </view>
+      <view wx:if="{{history.best}}" class="hist-col">
+        <text class="hist-col-num">{{history.best.summary}}</text>
+        <text class="hist-col-label">历史最佳</text>
+      </view>
+      <view class="hist-col">
+        <text class="hist-col-num">{{history.count}}</text>
+        <text class="hist-col-label">测评次数</text>
+      </view>
+    </view>
+  </view>
+
+  <view wx:if="{{resume}}" class="card section resume">
+    <view class="resume-info">
+      <text class="resume-title">你有一份未完成的测评</text>
+      <text class="resume-sub">进度 {{resume.percent}}%（{{resume.answered}}/{{resume.total}} 题）</text>
+    </view>
+    <button class="btn resume-btn" style="background:{{meta.color}};" bindtap="resumeTest" aria-label="继续测评：{{meta.name}}">继续测评</button>
   </view>
 
   <view class="card section row">
@@ -37,4 +64,6 @@
   <view class="bottom-bar">
     <button class="btn start-btn" style="background:{{meta.color}};" bindtap="start" aria-label="开始测评：{{meta.name}}">开始测评</button>
   </view>
+
+  <view class="brand-foot">心智探索局 · 认识自己，从一次测评开始</view>
 </view>
