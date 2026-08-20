@@ -1,34 +1,30 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" role="img" aria-label="心智探索局 Mind Quest logo">
   <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+    <linearGradient id="tile" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0" stop-color="#1e293b"/>
-      <stop offset="1" stop-color="#7c3aed"/>
+      <stop offset="0.55" stop-color="#7c3aed"/>
+      <stop offset="1" stop-color="#c026d3"/>
     </linearGradient>
-    <clipPath id="tile">
-      <rect width="512" height="512" rx="112"/>
+    <clipPath id="clip">
+      <rect width="512" height="512" rx="120"/>
     </clipPath>
   </defs>
 
-  <g clip-path="url(#tile)">
-    <rect width="512" height="512" fill="url(#bg)"/>
-    <circle cx="256" cy="256" r="170" fill="#ffffff" opacity="0.06"/>
+  <g clip-path="url(#clip)">
+    <rect width="512" height="512" fill="url(#tile)"/>
+    <circle cx="140" cy="110" r="300" fill="#ffffff" opacity="0.10"/>
 
-    <!-- 罗盘表盘 -->
-    <circle cx="256" cy="256" r="132" fill="#ffffff"/>
-    <circle cx="256" cy="256" r="120" fill="none" stroke="#ddd6fe" stroke-width="6"/>
+    <!-- 轨道环 -->
+    <circle cx="256" cy="256" r="152" fill="none" stroke="#ffffff" stroke-opacity="0.28" stroke-width="6"/>
+    <!-- 轨道上的探索点 -->
+    <circle cx="387" cy="179" r="11" fill="#ffffff"/>
 
-    <!-- 四方位刻度 -->
-    <g fill="#7c3aed">
-      <circle cx="256" cy="140" r="11"/>
-      <circle cx="372" cy="256" r="11"/>
-      <circle cx="256" cy="372" r="11"/>
-      <circle cx="140" cy="256" r="11"/>
-    </g>
-
-    <!-- 指针 -->
-    <polygon points="256,152 230,256 282,256" fill="#7c3aed"/>
-    <polygon points="256,360 230,256 282,256" fill="#a78bfa"/>
-    <circle cx="256" cy="256" r="20" fill="#1e293b"/>
-    <circle cx="256" cy="256" r="9" fill="#ffffff"/>
+    <!-- 火花微光 -->
+    <polygon points="256,118 292,224 398,256 292,288 256,394 220,288 114,256 220,224"
+             fill="#ffffff" opacity="0.16"/>
+    <!-- 主标记：四角灵感火花 -->
+    <polygon points="256,136 288,224 376,256 288,288 256,376 224,288 136,256 224,224"
+             fill="#ffffff"/>
+    <circle cx="256" cy="256" r="17" fill="#7c3aed"/>
   </g>
 </svg>
