@@ -39,32 +39,6 @@
     <text class="empty-search-text">没有找到匹配的量表</text>
   </view>
 
-  <view wx:if="{{history.length}}" class="card history">
-    <view class="hist-head">
-      <text class="hist-title">最近测评</text>
-      <view class="hist-actions">
-        <text class="hist-all" bindtap="goAllHistory">全部 ›</text>
-        <text class="hist-clear" bindtap="clearHistory" role="button" aria-label="清空历史记录">清空</text>
-      </view>
-    </view>
-    <view
-      class="hist-item"
-      wx:for="{{history}}"
-      wx:key="time"
-      bindtap="goHistory"
-      data-idx="{{index}}"
-      role="button"
-      aria-label="查看历史测评 {{item.name}}，结果 {{item.summary}}"
-    >
-      <text class="hist-icon">{{item.icon}}</text>
-      <view class="hist-info">
-        <text class="hist-name">{{item.name}}</text>
-        <text class="hist-time">{{item.timeText}} · {{item.summary}}{{item.level ? ' · ' + item.level : ''}}</text>
-      </view>
-      <text class="arrow">›</text>
-    </view>
-  </view>
-
   <view class="group" wx:for="{{groups}}" wx:key="type" wx:for-item="g">
     <view class="group-title">{{g.label}}</view>
     <view

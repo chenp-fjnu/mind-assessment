@@ -3,12 +3,14 @@ page {
   background: var(--bg);
   color: var(--text);
   font-family: -apple-system, "PingFang SC", "Helvetica Neue", sans-serif;
+  overflow-x: hidden;
 }
 
 .scroll-page {
   min-height: 100vh;
   background: var(--bg);
   font-family: -apple-system, "PingFang SC", "Helvetica Neue", sans-serif;
+  overflow-x: hidden;
 }
 
 page {

@@ -267,8 +267,8 @@
 }
 .card-canvas {
   position: fixed;
-  left: -9999rpx;
-  top: 0;
+  top: -9999rpx;
+  left: 0;
   width: 600rpx;
   height: 800rpx;
 }

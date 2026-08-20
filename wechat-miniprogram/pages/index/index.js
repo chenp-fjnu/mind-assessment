@@ -1,11 +1,5 @@
 const { getMetaList, TYPE_LABELS, modulesByType } = require('../../utils/registry')
 
-function fmtTime(ts) {
-  const d = new Date(ts)
-  const p = (n) => (n < 10 ? '0' + n : '' + n)
-  return p(d.getMonth() + 1) + '-' + p(d.getDate()) + ' ' + p(d.getHours()) + ':' + p(d.getMinutes())
-}
-
 // 将 #RRGGBB 转为带透明度的 rgba，兼容所有基础库（避免 8 位 hex 兼容性问题）
 function hexToRgba(hex, alpha) {
   const m = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex || '')
@@ -54,7 +48,6 @@ Page({
     allModules: [],
     keyword: '',
     activeType: '',
-    history: [],
   },
   onLoad() {
     const allModules = buildModuleList()
@@ -62,10 +55,6 @@ Page({
       .filter((t) => allModules.some((m) => m.type === t))
       .map((t) => ({ type: t, label: TYPE_LABELS[t] }))
     this.setData({ allModules, types, groups: buildGroups(allModules) })
-    this.loadHistory()
-  },
-  onShow() {
-    this.loadHistory()
   },
   applyFilter() {
     const { allModules, keyword, activeType } = this.data
@@ -86,37 +75,14 @@ Page({
   onType(e) {
     this.setData({ activeType: e.currentTarget.dataset.type }, () => this.applyFilter())
   },
-  loadHistory() {
-    const hist = wx.getStorageSync('ma_history') || []
-    this.setData({ history: hist.slice(0, 5).map((h) => ({ ...h, timeText: fmtTime(h.time) })) })
-  },
   goDetail(e) {
     const id = e.currentTarget.dataset.id
     wx.navigateTo({ url: `/pages/detail/detail?id=${id}` })
-  },
-  goHistory(e) {
-    const idx = e.currentTarget.dataset.idx
-    const item = this.data.history[idx]
-    if (!item) return
-    getApp().globalData.lastResult = { id: item.id, answers: item.answers }
-    wx.navigateTo({ url: `/pages/result/result?id=${item.id}` })
   },
   goAllHistory() {
     wx.switchTab({ url: '/pages/history/history' })
   },
   goAbout() {
     wx.switchTab({ url: '/pages/about/about' })
-  },
-  clearHistory() {
-    wx.showModal({
-      title: '清空记录',
-      content: '确定清空所有历史测评记录吗？',
-      success: (r) => {
-        if (r.confirm) {
-          wx.removeStorageSync('ma_history')
-          this.setData({ history: [] })
-        }
-      },
-    })
   },
 })

@@ -20,9 +20,9 @@
     "backgroundColor": "#ffffff",
     "borderStyle": "black",
     "list": [
-      { "pagePath": "pages/index/index", "text": "首页" },
-      { "pagePath": "pages/history/history", "text": "记录" },
-      { "pagePath": "pages/about/about", "text": "关于" }
+      { "pagePath": "pages/index/index", "text": "首页", "iconPath": "assets/tabicons/home.png", "selectedIconPath": "assets/tabicons/home_on.png" },
+      { "pagePath": "pages/history/history", "text": "记录", "iconPath": "assets/tabicons/record.png", "selectedIconPath": "assets/tabicons/record_on.png" },
+      { "pagePath": "pages/about/about", "text": "关于", "iconPath": "assets/tabicons/about.png", "selectedIconPath": "assets/tabicons/about_on.png" }
     ]
   },
   "style": "v2",
