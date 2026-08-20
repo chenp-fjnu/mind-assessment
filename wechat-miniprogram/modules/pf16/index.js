@@ -155,8 +155,8 @@ module.exports = {
   color: '#be185d',
   duration: 20,
   questionCount: 48,
-  paid: true,
-  price: 9.9,
+  paid: false,
+  price: 0,
   tag: ['人格', '性格', '16因素'],
   questionType: 'scale',
 

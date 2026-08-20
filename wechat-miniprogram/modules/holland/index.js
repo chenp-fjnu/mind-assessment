@@ -140,8 +140,8 @@ module.exports = {
   color: '#059669',
   duration: 15,
   questionCount: 48,
-  paid: true,
-  price: 9.9,
+  paid: false,
+  price: 0,
   tag: ['职业', '兴趣', 'RIASEC'],
   questionType: 'scale',
 

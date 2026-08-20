@@ -189,8 +189,8 @@ module.exports = {
   color: '#0d9488',
   duration: 25,
   questionCount: 30,
-  paid: true,
-  price: 12.9,
+  paid: false,
+  price: 0,
   tag: ['智力', '言语', '操作', '综合'],
   questionType: 'choice',
 

@@ -21,8 +21,8 @@ const moduleDef = {
   color: '#1e3a8a',
   duration: 40,
   questionCount: 60,
-  paid: true,
-  price: 9.9,
+  paid: false,
+  price: 0,
   tag: ['智力', '图形', '非言语'],
   questionType: 'matrix',
 
