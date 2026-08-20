@@ -2,7 +2,7 @@
   <view class="hero">
     <text class="hero-title">心智探索局</text>
     <text class="hero-sub">认识自己，从一次测评开始</text>
-    <text class="hero-tag">14 套专业量表 · 纯前端离线测评</text>
+    <text class="hero-tag">14 套专业量表</text>
   </view>
 
   <view class="search-bar">
