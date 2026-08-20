@@ -1,4 +1,4 @@
-const { MODULES, TYPE_LABELS, modulesByType } = require('../../utils/registry')
+const { getMetaList, TYPE_LABELS, modulesByType } = require('../../utils/registry')
 
 function fmtTime(ts) {
   const d = new Date(ts)
@@ -17,7 +17,7 @@ function hexToRgba(hex, alpha) {
 }
 
 function buildModuleList() {
-  return MODULES.map((m) => ({
+  return getMetaList().map((m) => ({
     id: m.id,
     type: m.type,
     icon: m.icon,
@@ -102,10 +102,10 @@ Page({
     wx.navigateTo({ url: `/pages/result/result?id=${item.id}` })
   },
   goAllHistory() {
-    wx.navigateTo({ url: '/pages/history/history' })
+    wx.switchTab({ url: '/pages/history/history' })
   },
   goAbout() {
-    wx.navigateTo({ url: '/pages/about/about' })
+    wx.switchTab({ url: '/pages/about/about' })
   },
   clearHistory() {
     wx.showModal({

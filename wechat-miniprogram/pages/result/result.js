@@ -43,7 +43,8 @@ Page({
       const hist = (wx.getStorageSync('ma_history') || [])
         .filter((h) => h.id === id)
         .sort((a, b) => b.time - a.time)
-      if (hist.length && hist[0].answers) {
+      const qn = mod.getQuestions().length
+      if (hist.length && hist[0].answers && hist[0].answers.length === qn) {
         saved = { id, answers: hist[0].answers }
       }
     }
@@ -87,6 +88,17 @@ Page({
       r[primaryField] = '—'
       r.description = r.description || '结果解析失败，请重新测评'
     }
+
+    let timeText = ''
+    if (r.totalTime != null && !isNaN(r.totalTime)) {
+      const sec = Math.round(r.totalTime / 1000)
+      timeText = sec >= 60 ? Math.floor(sec / 60) + ' 分 ' + (sec % 60) + ' 秒' : sec + ' 秒'
+    }
+    const NOTE_MAP = {
+      spm: '本题为原创图形推理练习，按正确率换算近似推理水平，非标准化智力常模，仅供能力练习参考。',
+      wechsler: '本题为原创分测验图形题，按正确率换算近似量表分，非标准化常模，仅供能力练习参考。',
+    }
+    const noteText = NOTE_MAP[mod.id] || ''
 
     const primaryValue = r[primaryField]
     const levelColor = r.levelColor || mod.color
@@ -159,8 +171,13 @@ Page({
       trendDates,
       testedTime,
       retestGap,
+      timeText,
+      noteText,
     }, () => {
       if (this.data.showTrend) this.drawTrend()
+      this.drawCardToTemp((path) => {
+        if (path) this._shareImage = path
+      })
     })
     wx.setNavigationBarTitle({ title: mod.name + ' · 结果' })
   },
@@ -287,6 +304,33 @@ Page({
         ctx.fillStyle = this.data.levelColorText
         ctx.font = '26px sans-serif'
         ctx.fillText(this.data.levelText, W / 2, 362)
+        // 维度条形（最多 8 个，仅含 percent 的维度）
+        const dims = this.data.dims || []
+        if (dims.length) {
+          const startY = 430
+          const rowH = 40
+          const maxRows = Math.min(dims.length, 8)
+          ctx.textAlign = 'left'
+          for (let i = 0; i < maxRows; i++) {
+            const d0 = dims[i]
+            if (d0.percent == null) continue
+            const y = startY + i * rowH
+            ctx.fillStyle = 'rgba(255,255,255,0.85)'
+            ctx.font = '20px sans-serif'
+            ctx.fillText((d0.name || '').slice(0, 6), 40, y)
+            const barX = 170
+            const barW = 300
+            ctx.fillStyle = 'rgba(255,255,255,0.18)'
+            ctx.fillRect(barX, y - 14, barW, 14)
+            ctx.fillStyle = this.data.meta.color
+            ctx.fillRect(barX, y - 14, (barW * Math.min(100, d0.percent || 0)) / 100, 14)
+            ctx.fillStyle = 'rgba(255,255,255,0.7)'
+            ctx.textAlign = 'right'
+            ctx.fillText((d0.percent || 0) + '%', barX + barW + 40, y)
+            ctx.textAlign = 'left'
+          }
+          ctx.textAlign = 'center'
+        }
         const d = new Date()
         const date = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate()
         ctx.fillStyle = 'rgba(255,255,255,0.5)'

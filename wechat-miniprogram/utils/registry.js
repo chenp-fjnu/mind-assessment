@@ -1,19 +1,22 @@
-const mbti = require('../modules/mbti/index')
-const big5 = require('../modules/big5/index')
-const epq = require('../modules/epq/index')
-const disc = require('../modules/disc/index')
-const pf16 = require('../modules/pf16/index')
-const sds = require('../modules/sds/index')
-const sas = require('../modules/sas/index')
-const gad7 = require('../modules/gad7/index')
-const dass21 = require('../modules/dass21/index')
-const ses = require('../modules/ses/index')
-const las = require('../modules/las/index')
-const holland = require('../modules/holland/index')
-const spm = require('../modules/spm/index')
-const wechsler = require('../modules/wechsler/index')
+// 模块注册表：按需懒加载，避免启动即加载全部题库
+const MODULE_PATHS = {
+  mbti: '../modules/mbti/index',
+  big5: '../modules/big5/index',
+  epq: '../modules/epq/index',
+  disc: '../modules/disc/index',
+  pf16: '../modules/pf16/index',
+  sds: '../modules/sds/index',
+  sas: '../modules/sas/index',
+  gad7: '../modules/gad7/index',
+  dass21: '../modules/dass21/index',
+  ses: '../modules/ses/index',
+  las: '../modules/las/index',
+  holland: '../modules/holland/index',
+  spm: '../modules/spm/index',
+  wechsler: '../modules/wechsler/index',
+}
 
-const MODULES = [mbti, big5, epq, disc, pf16, sds, sas, gad7, dass21, ses, las, holland, spm, wechsler]
+const MODULES_META = require('./modules-meta')
 
 const TYPE_LABELS = {
   personality: '人格性格',
@@ -23,17 +26,31 @@ const TYPE_LABELS = {
   self: '自我认知',
 }
 
+const _cache = {}
+
+// 懒加载：仅在打开具体测评时才 require 对应模块（含其题库）
 function getModule(id) {
-  return MODULES.find((m) => m.id === id)
+  if (!id) return null
+  if (!_cache[id]) {
+    const p = MODULE_PATHS[id]
+    if (!p) return null
+    _cache[id] = require(p)
+  }
+  return _cache[id]
+}
+
+// 首页/分类列表只需轻量元数据，不触发题库加载
+function getMetaList() {
+  return MODULES_META
 }
 
 function modulesByType() {
   const map = {}
-  MODULES.forEach((m) => {
+  MODULES_META.forEach((m) => {
     if (!map[m.type]) map[m.type] = []
     map[m.type].push(m)
   })
   return map
 }
 
-module.exports = { MODULES, TYPE_LABELS, getModule, modulesByType }
+module.exports = { getModule, getMetaList, modulesByType, TYPE_LABELS, MODULE_PATHS }

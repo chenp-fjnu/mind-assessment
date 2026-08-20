@@ -14,6 +14,17 @@
     "backgroundColor": "#f1f5f9",
     "backgroundTextStyle": "dark"
   },
+  "tabBar": {
+    "color": "#64748b",
+    "selectedColor": "#7c3aed",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "black",
+    "list": [
+      { "pagePath": "pages/index/index", "text": "首页" },
+      { "pagePath": "pages/history/history", "text": "记录" },
+      { "pagePath": "pages/about/about", "text": "关于" }
+    ]
+  },
   "style": "v2",
   "lazyCodeLoading": "requiredComponents",
   "sitemapLocation": "sitemap.json"

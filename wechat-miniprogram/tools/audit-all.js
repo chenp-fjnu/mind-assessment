@@ -2,12 +2,13 @@
  * 全量审计：对所有 14 个测评模块检查题目与答案的完整性/一致性。
  * 运行：node tools/audit-all.js
  */
-const { MODULES } = require('../utils/registry')
+const { getMetaList, getModule } = require('../utils/registry')
 
 function run() {
   let fail = 0
   const report = []
-  for (const m of MODULES) {
+  for (const meta of getMetaList()) {
+    const m = getModule(meta.id)
     const issues = []
     let qs
     try {

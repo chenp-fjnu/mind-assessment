@@ -2,7 +2,7 @@
  * Jest 单元测试（无需小程序运行时，直接校验模块评分逻辑）。
  * 运行：npm install && npm run test:simulate
  */
-const { MODULES, getModule } = require('../utils/registry')
+const { getMetaList, getModule } = require('../utils/registry')
 
 function pickAnswer(q) {
   if (q.answer != null) return q.answer
@@ -13,7 +13,7 @@ function pickAnswer(q) {
 }
 
 describe('量表模块评分', () => {
-  MODULES.forEach((meta) => {
+  getMetaList().forEach((meta) => {
     test(`${meta.id} 评分链路不报错且返回结果字段`, () => {
       const mod = getModule(meta.id)
       const questions = mod.getQuestions()

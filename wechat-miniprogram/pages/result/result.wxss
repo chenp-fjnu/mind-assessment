@@ -175,6 +175,16 @@
   padding: 32rpx 40rpx 0;
   line-height: 1.6;
 }
+.note-box {
+  margin: 20rpx 32rpx 0;
+  padding: 22rpx 26rpx;
+  background: #fff7ed;
+  border: 2rpx solid #fed7aa;
+  border-radius: 16rpx;
+  font-size: 23rpx;
+  color: #9a3412;
+  line-height: 1.6;
+}
 .brand-foot {
   text-align: center;
   color: #64748b;
@@ -333,6 +343,11 @@
   }
   .disclaimer {
     color: var(--muted);
+  }
+  .note-box {
+    background: #2a1c0e;
+    border-color: #5b3a16;
+    color: #f0b27a;
   }
   .brand-foot {
     color: var(--muted);

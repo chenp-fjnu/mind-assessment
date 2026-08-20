@@ -5,6 +5,7 @@
     </view>
     <text class="progress-text">{{current+1}} / {{total}}</text>
     <text wx:if="{{groupLabel}}" class="group-label">{{groupLabel}}</text>
+    <text wx:if="{{hasTimeLimit}}" class="group-label time-left">⏱ {{timeLeft}}s</text>
   </view>
 
   <view class="q-card card">

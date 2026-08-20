@@ -2,7 +2,7 @@
  * 纯 Node 冒烟测试：校验 14 个量表模块的评分链路不报错。
  * 运行：node test/smoke.js   （无需安装任何依赖）
  */
-const { MODULES, getModule } = require('../utils/registry')
+const { getMetaList, getModule } = require('../utils/registry')
 
 let pass = 0
 let fail = 0
@@ -24,7 +24,7 @@ function pickAnswer(q) {
   return 0
 }
 
-MODULES.forEach((meta) => {
+getMetaList().forEach((meta) => {
   const mod = getModule(meta.id)
   try {
     const questions = mod.getQuestions()
@@ -43,7 +43,9 @@ MODULES.forEach((meta) => {
     const hasBuildGroupList = typeof mod.buildGroupList === 'function'
     const groups = hasBuildGroupList ? mod.buildGroupList(r, layout) : []
     let dims = []
-    if (typeof mod.buildDimensionList === 'function') {
+    if (typeof mod.buildScaleDimensionList === 'function') {
+      dims = mod.buildScaleDimensionList(r) || []
+    } else if (typeof mod.buildDimensionList === 'function') {
       dims = mod.buildDimensionList(r) || []
     } else if (r.dimensions) {
       dims = Object.keys(r.dimensions).map((k) => {

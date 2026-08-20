@@ -15,6 +15,8 @@ Page({
     answeredCount: 0,
     optStyle: 'width:23%;',
     groupLabel: '',
+    hasTimeLimit: false,
+    timeLeft: 0,
   },
 
   onLoad(query) {
@@ -87,8 +89,10 @@ Page({
 
   renderCurrent() {
     this._qStart = Date.now()
+    this.stopCountdown()
     const i = this.data.current
     const q = this.data.questions[i]
+    this.startCountdown(q)
     const n = (q.options || []).length
     let cols = 4
     if (n <= 2) cols = 2
@@ -239,6 +243,7 @@ Page({
     const answeredCount = answers.filter((a) => a !== null).length
     this.setData({ answers, answeredCount }, () => {
       if (this.data.qType === 'matrix') this.drawFigures()
+      this.stopCountdown()
       this.saveProgress()
       this.scheduleNext(this.data.qType === 'matrix' ? 700 : 350)
     })
@@ -259,15 +264,43 @@ Page({
     this._qStart = now
   },
 
+  stopCountdown() {
+    if (this._timer2) {
+      clearInterval(this._timer2)
+      this._timer2 = null
+    }
+  },
+
+  startCountdown(q) {
+    this.stopCountdown()
+    if (!q || !q.timeLimit) {
+      this.setData({ hasTimeLimit: false, timeLeft: 0 })
+      return
+    }
+    this.setData({ hasTimeLimit: true, timeLeft: q.timeLimit })
+    this._qDeadline = Date.now() + q.timeLimit * 1000
+    this._timer2 = setInterval(() => {
+      const left = Math.max(0, Math.round((this._qDeadline - Date.now()) / 1000))
+      this.setData({ timeLeft: left })
+      if (left <= 0) {
+        this.stopCountdown()
+        if (this.data.current < this.data.total - 1) this.next()
+        else this.submit()
+      }
+    }, 250)
+  },
+
   prev() {
     if (this._timer) clearTimeout(this._timer)
     if (this.data.current === 0) return
+    this.stopCountdown()
     this.markTime()
     this.setData({ current: this.data.current - 1 }, () => this.renderCurrent())
   },
 
   next() {
     if (this._timer) clearTimeout(this._timer)
+    this.stopCountdown()
     this.markTime()
     const cur = this.data.current
     if (cur >= this.data.total - 1) {
@@ -308,6 +341,7 @@ Page({
 
   submit() {
     if (this._timer) clearTimeout(this._timer)
+    this.stopCountdown()
     this.markTime()
     const isLast = this.data.current === this.data.total - 1
     const curSet = this.data.questions[this.data.current] && this.data.questions[this.data.current].set
@@ -339,6 +373,7 @@ Page({
     if (this._submitting) return
     this._submitting = true
     if (this._timer) clearTimeout(this._timer)
+    this.stopCountdown()
     this.markTime()
     wx.removeStorageSync('ma_progress_' + this.data.meta.id)
     const layout = this.mod.resultLayout || {}
@@ -351,6 +386,7 @@ Page({
       icon: this.data.meta.icon,
       time: Date.now(),
       answers: this.data.answers,
+      qcount: this.data.total,
       summary: pv == null ? '' : String(pv),
       level: r.level || '',
     })
@@ -363,6 +399,7 @@ Page({
 
   onUnload() {
     this._submitting = false
+    this.stopCountdown()
   },
 
   onShareAppMessage() {
