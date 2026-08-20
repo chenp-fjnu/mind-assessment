@@ -104,7 +104,7 @@
 }
 .hist-col-label {
   font-size: 22rpx;
-  color: #94a3b8;
+  color: #64748b;
   margin-top: 6rpx;
 }
 .row {
@@ -123,7 +123,7 @@
 }
 .stat-label {
   font-size: 23rpx;
-  color: #94a3b8;
+  color: #64748b;
   margin-top: 6rpx;
 }
 .tip {
@@ -152,9 +152,42 @@
 }
 .brand-foot {
   text-align: center;
-  color: #94a3b8;
+  color: #64748b;
   font-size: 22rpx;
   padding: 32rpx;
+}
+
+.invalid {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0 60rpx;
+  background: var(--bg);
+}
+.invalid-icon {
+  font-size: 96rpx;
+}
+.invalid-title {
+  font-size: 34rpx;
+  font-weight: 700;
+  color: var(--text);
+  margin-top: 24rpx;
+}
+.invalid-sub {
+  font-size: 25rpx;
+  color: var(--muted);
+  margin-top: 12rpx;
+  text-align: center;
+}
+.invalid .btn.home {
+  margin-top: 40rpx;
+  width: 60%;
+  height: 88rpx;
+  line-height: 88rpx;
+  font-size: 30rpx;
+  border-radius: 999rpx;
 }
 
 @media (prefers-color-scheme: dark) {

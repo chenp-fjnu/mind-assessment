@@ -50,7 +50,7 @@
         <text class="h-sum">结果：{{h.summary}}</text>
         <text class="h-time">{{h.timeText}}</text>
       </view>
-      <text class="h-del" catchtap="deleteOne" data-idx="{{idx}}" aria-label="删除该记录">删除</text>
+      <text class="h-del" catchtap="deleteOne" data-idx="{{idx}}" role="button" aria-label="删除该记录">删除</text>
     </view>
   </view>
 

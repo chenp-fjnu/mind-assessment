@@ -15,7 +15,7 @@
       bindinput="onSearch"
       confirm-type="search"
     />
-    <text wx:if="{{keyword}}" class="search-clear" bindtap="clearSearch">✕</text>
+    <text wx:if="{{keyword}}" class="search-clear" bindtap="clearSearch" role="button" aria-label="清除搜索">✕</text>
   </view>
 
   <scroll-view class="type-bar" scroll-x="true">
@@ -44,7 +44,7 @@
       <text class="hist-title">最近测评</text>
       <view class="hist-actions">
         <text class="hist-all" bindtap="goAllHistory">全部 ›</text>
-        <text class="hist-clear" bindtap="clearHistory">清空</text>
+        <text class="hist-clear" bindtap="clearHistory" role="button" aria-label="清空历史记录">清空</text>
       </view>
     </view>
     <view
@@ -96,4 +96,5 @@
   </view>
 
   <view class="footer">结果仅供自我探索与娱乐，不构成医学诊断</view>
+  <view class="about-link" bindtap="goAbout" role="button" aria-label="关于心智探索局与方法论">关于心智探索局 ›</view>
 </view>

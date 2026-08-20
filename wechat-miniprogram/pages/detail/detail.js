@@ -1,16 +1,18 @@
 const { getModule } = require('../../utils/registry')
+const { readableTextColor } = require('../../utils/color')
 
 Page({
   data: {
     id: '',
     meta: {},
+    invalid: false,
     resume: null,
     history: { count: 0 },
   },
   onLoad(query) {
     const mod = getModule(query.id)
     if (!mod) {
-      wx.showToast({ title: '未找到测评', icon: 'none' })
+      this.setData({ invalid: true })
       return
     }
     this.setData({
@@ -23,6 +25,7 @@ Page({
         duration: mod.duration,
         questionCount: mod.questionCount,
         color: mod.color,
+        colorText: readableTextColor(mod.color),
         paid: mod.paid,
         price: mod.price,
         tags: mod.tag || [],
@@ -59,6 +62,9 @@ Page({
   },
   resumeTest() {
     wx.navigateTo({ url: `/pages/test/test?id=${this.data.id}` })
+  },
+  goHome() {
+    wx.reLaunch({ url: '/pages/index/index' })
   },
 
   onShareAppMessage() {

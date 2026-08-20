@@ -1,9 +1,12 @@
 const { getModule } = require('../../utils/registry')
 const { computeTrend } = require('../../utils/trend')
+const { readableTextColor } = require('../../utils/color')
+const { isDark } = require('../../utils/theme')
 
 Page({
   data: {
     meta: {},
+    invalid: false,
     primaryValue: '',
     primaryLabel: '',
     primaryColor: '#2563eb',
@@ -24,14 +27,30 @@ Page({
 
   onLoad(query) {
     const app = getApp()
-    const saved = app.globalData.lastResult
-    const id = query.id || (saved && saved.id)
-    if (!id || !saved) {
-      wx.showToast({ title: '暂无结果', icon: 'none' })
+    let saved = app.globalData.lastResult
+    let id = query.id || (saved && saved.id)
+    if (!id) {
+      this.setData({ invalid: true })
       return
     }
     const mod = getModule(id)
-    if (!mod) return
+    if (!mod) {
+      this.setData({ invalid: true })
+      return
+    }
+    // 冷启动 / 直接进入兜底：从最近历史恢复答案
+    if (!saved || !saved.answers) {
+      const hist = (wx.getStorageSync('ma_history') || [])
+        .filter((h) => h.id === id)
+        .sort((a, b) => b.time - a.time)
+      if (hist.length && hist[0].answers) {
+        saved = { id, answers: hist[0].answers }
+      }
+    }
+    if (!saved || !saved.answers) {
+      this.setData({ invalid: true })
+      return
+    }
 
     // 测评时间 / 距上次重测间隔
     const p2 = (n) => (n < 10 ? '0' + n : '' + n)
@@ -80,7 +99,10 @@ Page({
 
     let dims = []
     let showBipolar = false
-    if (typeof mod.buildDimensionList === 'function') {
+    if (typeof mod.buildScaleDimensionList === 'function') {
+      dims = safeCall(() => mod.buildScaleDimensionList(r)) || []
+      showBipolar = !!(dims && dims[0] && dims[0].leftPercent !== undefined)
+    } else if (typeof mod.buildDimensionList === 'function') {
       dims = safeCall(() => mod.buildDimensionList(r)) || []
       showBipolar = !!(dims && dims[0] && dims[0].leftPercent !== undefined)
     } else if (r.dimensions) {
@@ -107,13 +129,20 @@ Page({
     const primarySize = pv.length <= 4 ? 'big' : pv.length <= 10 ? 'mid' : 'small'
 
     this.setData({
-      meta: { id: mod.id, name: mod.name, icon: mod.icon, color: mod.color },
+      meta: {
+        id: mod.id,
+        name: mod.name,
+        icon: mod.icon,
+        color: mod.color,
+        colorText: readableTextColor(mod.color),
+      },
       primaryValue: pv,
       primarySize,
       primaryLabel: layout.primaryLabel || '测评结果',
       primaryColor: mod.color,
       levelText,
       levelColor,
+      levelColorText: readableTextColor(levelColor),
       descText,
       groups: groups || [],
       dims: dims || [],
@@ -139,6 +168,10 @@ Page({
   drawTrend() {
     if (!this.data.showTrend) return
     const dpr = this.dpr || 2
+    const dark = isDark()
+    const gridColor = dark ? '#334155' : '#e2e8f0'
+    const labelColor = dark ? '#cbd5e1' : '#475569'
+    const dateColor = dark ? '#94a3b8' : '#64748b'
     wx.createSelectorQuery()
       .in(this)
       .select('#trendCanvas')
@@ -168,7 +201,7 @@ Page({
         const n = vals.length
         const xAt = (i) => pad + (n === 1 ? cw / 2 : (cw * i) / (n - 1))
         const yAt = (v) => pad + ch - ((v - min) / range) * ch
-        ctx.strokeStyle = '#e2e8f0'
+        ctx.strokeStyle = gridColor
         ctx.lineWidth = 1
         ctx.beginPath()
         ctx.moveTo(pad, pad + ch)
@@ -193,12 +226,12 @@ Page({
           ctx.beginPath()
           ctx.arc(x, y, 5, 0, Math.PI * 2)
           ctx.fill()
-          ctx.fillStyle = '#475569'
+          ctx.fillStyle = labelColor
           ctx.fillText(String(v), x, y - 12)
         })
         // x 轴日期标签（点数较少时绘制，避免拥挤）
         if (trendDates && trendDates.length === vals.length && vals.length <= 8) {
-          ctx.fillStyle = '#94a3b8'
+          ctx.fillStyle = dateColor
           ctx.font = '15px sans-serif'
           vals.forEach((v, i) => {
             ctx.fillText(trendDates[i], xAt(i), H - 6)
@@ -209,10 +242,14 @@ Page({
 
   onReady() {
     this.dpr = (wx.getWindowInfo ? wx.getWindowInfo().pixelRatio : wx.getSystemInfoSync().pixelRatio) || 2
+    if (this.data.meta && this.data.meta.name) {
+      this.drawCardToTemp((path) => {
+        if (path) this._shareImage = path
+      })
+    }
   },
 
-  saveCard() {
-    wx.showLoading({ title: '生成中' })
+  drawCardToTemp(done) {
     const dpr = this.dpr || 2
     wx.createSelectorQuery()
       .in(this)
@@ -220,8 +257,7 @@ Page({
       .fields({ node: true, size: true })
       .exec((res) => {
         if (!res[0]) {
-          wx.hideLoading()
-          wx.showToast({ title: '生成失败', icon: 'none' })
+          done(null)
           return
         }
         const canvas = res[0].node
@@ -248,7 +284,7 @@ Page({
         ctx.fillText(this.data.primaryLabel, W / 2, 300)
         ctx.fillStyle = this.data.levelColor
         ctx.fillRect(W / 2 - 90, 330, 180, 46)
-        ctx.fillStyle = '#fff'
+        ctx.fillStyle = this.data.levelColorText
         ctx.font = '26px sans-serif'
         ctx.fillText(this.data.levelText, W / 2, 362)
         const d = new Date()
@@ -258,20 +294,39 @@ Page({
         ctx.fillText(date, W / 2, H - 40)
         wx.canvasToTempFilePath({
           canvas,
-          success: (r) => {
-            wx.hideLoading()
-            wx.saveImageToPhotosAlbum({
-              filePath: r.tempFilePath,
-              success: () => wx.showToast({ title: '已保存到相册' }),
-              fail: () => wx.showToast({ title: '保存失败', icon: 'none' }),
-            })
-          },
-          fail: () => {
-            wx.hideLoading()
-            wx.showToast({ title: '生成失败', icon: 'none' })
-          },
+          success: (r) => done(r.tempFilePath),
+          fail: () => done(null),
         })
       })
+  },
+
+  saveCard() {
+    wx.showLoading({ title: '生成中' })
+    this.drawCardToTemp((path) => {
+      wx.hideLoading()
+      if (!path) {
+        wx.showToast({ title: '生成失败', icon: 'none' })
+        return
+      }
+      wx.saveImageToPhotosAlbum({
+        filePath: path,
+        success: () => wx.showToast({ title: '已保存到相册' }),
+        fail: (err) => {
+          if (err && /auth|deny/i.test(err.errMsg || '')) {
+            wx.showModal({
+              title: '需要相册权限',
+              content: '请在设置中允许保存到相册',
+              confirmText: '去设置',
+              success: (r) => {
+                if (r.confirm) wx.openSetting()
+              },
+            })
+          } else {
+            wx.showToast({ title: '保存失败', icon: 'none' })
+          }
+        },
+      })
+    })
   },
 
   goHome() {
@@ -285,6 +340,7 @@ Page({
     return {
       title: this.data.meta.name + '测评结果 - 心智探索局',
       path: '/pages/index/index',
+      imageUrl: this._shareImage || '',
     }
   },
 })

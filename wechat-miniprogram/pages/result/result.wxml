@@ -1,12 +1,19 @@
-<view class="scroll-page" wx:if="{{meta.name}}">
-  <view class="head" style="background:{{meta.color}};">
+<view wx:if="{{invalid}}" class="invalid">
+  <text class="invalid-icon">🧭</text>
+  <text class="invalid-title">暂无测评结果</text>
+  <text class="invalid-sub">请先在首页选择一个量表完成测评</text>
+  <button class="btn home" style="background:{{meta.color || '#7c3aed'}};color:{{meta.colorText || '#fff'}};" bindtap="goHome" aria-label="返回首页">返回首页</button>
+</view>
+
+<view class="scroll-page" wx:elif="{{meta.name}}">
+  <view class="head" style="background:{{meta.color}};color:{{meta.colorText}};">
     <text class="head-icon">{{meta.icon}}</text>
     <text class="head-name">{{meta.name}}</text>
     <view class="primary-box">
       <text class="primary-value {{primarySize}}" aria-label="{{primaryLabel}}：{{primaryValue}}{{levelText ? '，' + levelText : ''}}">{{primaryValue}}</text>
       <text class="primary-label">{{primaryLabel}}</text>
     </view>
-    <text wx:if="{{levelText}}" class="level-badge" style="background:{{levelColor}};">{{levelText}}</text>
+    <text wx:if="{{levelText}}" class="level-badge" style="background:{{levelColor}};color:{{levelColorText}};">{{levelText}}</text>
     <text wx:if="{{descText}}" class="head-desc">{{descText}}</text>
   </view>
 
@@ -36,7 +43,7 @@
       <text class="bp-name">{{d.leftName}} {{d.rightName}}</text>
       <view class="bp-bar">
         <view class="bp-left" style="width:{{d.leftPercent}}%;">{{d.leftPercent}}%</view>
-        <view class="bp-right" style="width:{{d.rightPercent}}%;background:{{meta.color}};">{{d.rightPercent}}%</view>
+        <view class="bp-right" style="width:{{d.rightPercent}}%;background:{{meta.color}};color:{{meta.colorText}};">{{d.rightPercent}}%</view>
       </view>
       <text class="bp-desc">{{d.dominantDesc}}</text>
     </view>
@@ -106,7 +113,7 @@
     <button class="btn save" bindtap="saveCard" aria-label="保存结果卡片到相册">保存结果卡片</button>
     <view class="btn-row">
       <button class="btn ghost" bindtap="retest" aria-label="重新测评">重新测评</button>
-      <button class="btn home" style="background:{{meta.color}};" bindtap="goHome" aria-label="返回首页">返回首页</button>
+      <button class="btn home" style="background:{{meta.color}};color:{{meta.colorText}};" bindtap="goHome" aria-label="返回首页">返回首页</button>
     </view>
   </view>
 

@@ -1,5 +1,5 @@
 <view class="scroll-page">
-  <view class="topbar" style="background:{{meta.color}};">
+  <view class="topbar" style="background:{{meta.color}};color:{{meta.colorText}};">
     <view class="progress-wrap">
       <view class="progress-bar" style="width:{{progress}}%;"></view>
     </view>
@@ -114,7 +114,7 @@
 
   <view class="nav-bar">
     <button class="nav-btn ghost" bindtap="prev" disabled="{{current===0}}" aria-label="上一题">上一题</button>
-    <button class="nav-btn primary" style="background:{{meta.color}};" bindtap="next" aria-label="{{current===total-1 ? '提交测评' : '下一题'}}">
+    <button class="nav-btn primary" style="background:{{meta.color}};color:{{meta.colorText}};" bindtap="next" aria-label="{{current===total-1 ? '提交测评' : '下一题'}}">
       {{current===total-1 ? '提交' : '下一题'}}
     </button>
   </view>

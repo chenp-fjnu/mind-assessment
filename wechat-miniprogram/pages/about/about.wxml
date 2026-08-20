@@ -1,0 +1,33 @@
+<view class="scroll-page">
+  <view class="hero">
+    <text class="hero-title">关于心智探索局</text>
+    <text class="hero-sub">认识自己，从一次测评开始</text>
+  </view>
+
+  <view class="card section">
+    <text class="sec-title">我们做什么</text>
+    <text class="sec-text">心智探索局是一款纯本地、离线的心理测评小程序，覆盖人格、情绪、智力、职业兴趣与自我认知五大类共 14 套量表。所有题目、计分与结果均在你的设备本地完成，无需联网、不上传任何数据。</text>
+  </view>
+
+  <view class="card section">
+    <text class="sec-title">方法论说明</text>
+    <text class="sec-text">· 自陈量表：以标准化李克特量表收集你的主观作答，按各维度计分并给出剖面解读。\n· 图形推理：基于矩阵推理与分测验模式，按正确率换算近似量表分 / 智商区间。\n· 趋势追踪：同一量表多次测评可在结果页查看历史趋势。</text>
+    <text class="sec-note">本程序的计分方式参考公开心理测量学方法实现，但并非各量表的官方标准化施测与常模，结果仅供自我探索与学习参考。</text>
+  </view>
+
+  <view class="card section">
+    <text class="sec-title">题库来源</text>
+    <view class="src" wx:for="{{sources}}" wx:key="name" wx:for-item="s">
+      <text class="src-name">{{s.name}}</text>
+      <text class="src-desc">{{s.desc}}</text>
+    </view>
+  </view>
+
+  <view class="card section tip">
+    <text class="sec-title">免责声明</text>
+    <text class="sec-text">本小程序结果基于自陈量表与图形推理，题目部分参考公开心理量表题库整理，仅供自我探索与娱乐参考，非标准化临床诊断工具，不构成任何医学、心理或专业建议。如有心理困扰，请寻求专业机构与持证人员帮助。</text>
+  </view>
+
+  <button class="btn home" bindtap="goHome" aria-label="返回首页">返回首页</button>
+  <view class="brand-foot">心智探索局 · 认识自己，从一次测评开始</view>
+</view>

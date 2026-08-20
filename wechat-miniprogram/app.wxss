@@ -17,11 +17,12 @@ page {
   --text: #1e293b;
   --text2: #475569;
   --sub: #64748b;
-  --muted: #94a3b8;
+  --muted: #64748b;
   --border: #e2e8f0;
   --chip: #f1f5f9;
   --sel-bg: #eff6ff;
   --sel-text: #1d4ed8;
+  --primary: #7c3aed;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -58,4 +59,8 @@ page {
 
 .muted {
   color: var(--sub);
+}
+
+button::after {
+  border: none;
 }

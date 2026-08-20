@@ -1,5 +1,12 @@
-<view class="scroll-page" wx:if="{{meta.name}}">
-  <view class="banner" style="background:{{meta.color}};">
+<view wx:if="{{invalid}}" class="invalid">
+  <text class="invalid-icon">🧭</text>
+  <text class="invalid-title">未找到该测评</text>
+  <text class="invalid-sub">请返回首页重新选择</text>
+  <button class="btn home" style="background:{{meta.color || '#7c3aed'}};color:{{meta.colorText || '#fff'}};" bindtap="goHome" aria-label="返回首页">返回首页</button>
+</view>
+
+<view class="scroll-page" wx:elif="{{meta.name}}">
+  <view class="banner" style="background:{{meta.color}};color:{{meta.colorText}};">
     <text class="banner-icon">{{meta.icon}}</text>
     <text class="banner-name">{{meta.name}}</text>
     <text class="banner-short">{{meta.shortName}}</text>
@@ -38,7 +45,7 @@
       <text class="resume-title">你有一份未完成的测评</text>
       <text class="resume-sub">进度 {{resume.percent}}%（{{resume.answered}}/{{resume.total}} 题）</text>
     </view>
-    <button class="btn resume-btn" style="background:{{meta.color}};" bindtap="resumeTest" aria-label="继续测评：{{meta.name}}">继续测评</button>
+    <button class="btn resume-btn" style="background:{{meta.color}};color:{{meta.colorText}};" bindtap="resumeTest" aria-label="继续测评：{{meta.name}}">继续测评</button>
   </view>
 
   <view class="card section row">
@@ -62,7 +69,7 @@
   </view>
 
   <view class="bottom-bar">
-    <button class="btn start-btn" style="background:{{meta.color}};" bindtap="start" aria-label="开始测评：{{meta.name}}">开始测评</button>
+    <button class="btn start-btn" style="background:{{meta.color}};color:{{meta.colorText}};" bindtap="start" aria-label="开始测评：{{meta.name}}">开始测评</button>
   </view>
 
   <view class="brand-foot">心智探索局 · 认识自己，从一次测评开始</view>

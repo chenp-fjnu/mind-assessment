@@ -1,5 +1,6 @@
 const { getModule } = require('../../utils/registry')
 const { drawCell } = require('../../utils/figure')
+const { readableTextColor } = require('../../utils/color')
 
 Page({
   data: {
@@ -34,8 +35,10 @@ Page({
       if (setMeta[qq.set].start === null) setMeta[qq.set].start = i
     })
     this._setMeta = setMeta
-    const meta = { id: mod.id, name: mod.name, icon: mod.icon, color: mod.color }
+    const meta = { id: mod.id, name: mod.name, icon: mod.icon, color: mod.color, colorText: readableTextColor(mod.color) }
     const answers = questions.map(() => null)
+    this._timings = questions.map(() => 0)
+    this._qStart = Date.now()
 
     this.setData(
       {
@@ -83,6 +86,7 @@ Page({
   },
 
   renderCurrent() {
+    this._qStart = Date.now()
     const i = this.data.current
     const q = this.data.questions[i]
     const n = (q.options || []).length
@@ -248,14 +252,23 @@ Page({
     }, delay || 350)
   },
 
+  markTime() {
+    const i = this.data.current
+    const now = Date.now()
+    this._timings[i] = (this._timings[i] || 0) + (now - (this._qStart || now))
+    this._qStart = now
+  },
+
   prev() {
     if (this._timer) clearTimeout(this._timer)
     if (this.data.current === 0) return
+    this.markTime()
     this.setData({ current: this.data.current - 1 }, () => this.renderCurrent())
   },
 
   next() {
     if (this._timer) clearTimeout(this._timer)
+    this.markTime()
     const cur = this.data.current
     if (cur >= this.data.total - 1) {
       this.submit()
@@ -268,17 +281,21 @@ Page({
     if (curSet && nxtSet && curSet !== nxtSet) this.showGroupSummary(curSet)
   },
 
-  showGroupSummary(set) {
+  showGroupSummary(set, cb) {
     const m = this._setMeta[set]
-    if (!m) return
+    if (!m) {
+      cb && cb()
+      return
+    }
     let correct = 0
     for (let i = m.start; i < m.start + m.total; i++) {
-      if (this.data.answers[i] === this.data.questions[i].answer) correct++
+      if (this.data.answers[i] != null && this.data.answers[i] === this.data.questions[i].answer) correct++
     }
     wx.showModal({
       title: set + ' 组完成',
       content: '本组答对 ' + correct + ' / ' + m.total,
       showCancel: false,
+      success: () => cb && cb(),
     })
   },
 
@@ -291,13 +308,20 @@ Page({
 
   submit() {
     if (this._timer) clearTimeout(this._timer)
+    this.markTime()
+    const isLast = this.data.current === this.data.total - 1
+    const curSet = this.data.questions[this.data.current] && this.data.questions[this.data.current].set
     const unanswered = this.data.answers.filter((a) => a === null).length
+    const proceed = () => {
+      if (isLast && curSet) this.showGroupSummary(curSet, () => this.doSubmit())
+      else this.doSubmit()
+    }
     if (unanswered > 0) {
       wx.showModal({
         title: '还有题目未作答',
-        content: `剩余 ${unanswered} 题未作答，提交后将按未完成处理。确定提交？`,
+        content: `剩余 ${unanswered} 题未作答，未答题目将按量表默认分值计入，确定提交？`,
         success: (r) => {
-          if (r.confirm) this.doSubmit()
+          if (r.confirm) proceed()
         },
       })
       return
@@ -306,15 +330,19 @@ Page({
       title: '提交测评',
       content: `已完成全部 ${this.data.total} 题，确认提交并查看结果？`,
       success: (r) => {
-        if (r.confirm) this.doSubmit()
+        if (r.confirm) proceed()
       },
     })
   },
 
   doSubmit() {
+    if (this._submitting) return
+    this._submitting = true
+    if (this._timer) clearTimeout(this._timer)
+    this.markTime()
     wx.removeStorageSync('ma_progress_' + this.data.meta.id)
     const layout = this.mod.resultLayout || {}
-    const r = this.mod.computeResult(this.data.answers, this.data.questions)
+    const r = this.mod.computeResult(this.data.answers, this.data.questions, this._timings)
     const pv = r[layout.primaryField || 'score']
     const hist = wx.getStorageSync('ma_history') || []
     hist.unshift({
@@ -330,7 +358,11 @@ Page({
 
     const app = getApp()
     app.globalData.lastResult = { id: this.data.meta.id, answers: this.data.answers }
-    wx.redirectTo({ url: `/pages/result/result?id=${this.data.meta.id}` })
+    wx.reLaunch({ url: `/pages/result/result?id=${this.data.meta.id}` })
+  },
+
+  onUnload() {
+    this._submitting = false
   },
 
   onShareAppMessage() {

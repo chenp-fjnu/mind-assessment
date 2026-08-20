@@ -104,6 +104,9 @@ Page({
   goAllHistory() {
     wx.navigateTo({ url: '/pages/history/history' })
   },
+  goAbout() {
+    wx.navigateTo({ url: '/pages/about/about' })
+  },
   clearHistory() {
     wx.showModal({
       title: '清空记录',

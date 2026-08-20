@@ -91,7 +91,7 @@
   display: flex;
   align-items: center;
   font-size: 23rpx;
-  color: #94a3b8;
+  color: #64748b;
   margin-top: 12rpx;
 }
 .dot {
@@ -160,13 +160,19 @@
 .empty-search-text {
   margin-top: 16rpx;
   font-size: 26rpx;
-  color: #94a3b8;
+  color: #64748b;
 }
 .footer {
   text-align: center;
-  color: #94a3b8;
+  color: #64748b;
   font-size: 22rpx;
-  padding: 40rpx;
+  padding: 40rpx 40rpx 0;
+}
+.about-link {
+  text-align: center;
+  color: #7c3aed;
+  font-size: 25rpx;
+  padding: 16rpx 40rpx 40rpx;
 }
 .history {
   margin: 24rpx 32rpx 0;
@@ -194,7 +200,7 @@
 }
 .hist-clear {
   font-size: 24rpx;
-  color: #94a3b8;
+  color: #64748b;
 }
 .hist-item {
   display: flex;
@@ -217,7 +223,7 @@
 }
 .hist-time {
   font-size: 22rpx;
-  color: #94a3b8;
+  color: #64748b;
   margin-top: 4rpx;
 }
 
