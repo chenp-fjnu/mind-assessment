@@ -128,11 +128,13 @@ Page({
 
   ensureCanvas(id, cb) {
     wx.createSelectorQuery()
-      .in(this)
       .select('#' + id)
       .fields({ node: true, size: true })
       .exec((res) => {
-        if (!res[0]) return
+        if (!res[0]) {
+          setTimeout(() => this.ensureCanvas(id, cb), 60)
+          return
+        }
         const canvas = res[0].node
         const ctx = canvas.getContext('2d')
         const W = res[0].width
@@ -156,27 +158,32 @@ Page({
     if (q.type === 'matrix') {
       this.ensureCanvas('matrixCanvas', (ctx, W, H) => {
         ctx.clearRect(0, 0, W, H)
-        const cell = W / 3
+        const N = q.matrix.length
+        const side = Math.min(W, H)
+        const cell = side / N
+        const offX = (W - side) / 2
+        const offY = (H - side) / 2
         q.matrix.forEach((row, r) => {
-          row.forEach((c, col) => drawCell(ctx, c, col * cell, r * cell, cell))
+          row.forEach((c, col) => drawCell(ctx, c, offX + col * cell, offY + r * cell, cell))
         })
         ctx.strokeStyle = '#e2e8f0'
         ctx.lineWidth = 1
-        for (let i = 1; i < 3; i++) {
+        for (let i = 1; i < N; i++) {
           ctx.beginPath()
-          ctx.moveTo(i * cell, 0)
-          ctx.lineTo(i * cell, H)
+          ctx.moveTo(offX + i * cell, offY)
+          ctx.lineTo(offX + i * cell, offY + side)
           ctx.stroke()
           ctx.beginPath()
-          ctx.moveTo(0, i * cell)
-          ctx.lineTo(W, i * cell)
+          ctx.moveTo(offX, offY + i * cell)
+          ctx.lineTo(offX + side, offY + i * cell)
           ctx.stroke()
         }
       })
       q.options.forEach((opt, idx) => {
         this.ensureCanvas('opt' + idx, (ctx, W, H) => {
           ctx.clearRect(0, 0, W, H)
-          drawCell(ctx, opt, 0, 0, W)
+          const s = Math.min(W, H)
+          drawCell(ctx, opt, (W - s) / 2, (H - s) / 2, s)
           if (sel === idx) {
             ctx.strokeStyle = '#2563eb'
             ctx.lineWidth = 4

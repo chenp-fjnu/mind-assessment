@@ -97,7 +97,7 @@ function computeResult(answers, qs) {
       reverse: reverse.sum,
     },
     groupDetails: {
-      positive: { ...positive, name: '正向自我评价', max: 24 },
+      positive: { ...positive, name: '正向自我评价', max: 20 },
       reverse: { ...reverse, name: '负向自我评价（反向计分）', max: 20 },
     },
     items,

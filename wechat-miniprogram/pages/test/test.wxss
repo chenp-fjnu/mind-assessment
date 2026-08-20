@@ -266,7 +266,7 @@
     color: #fff;
   }
   .matrix-box {
-    background: var(--card);
+    background: #fff;
     border-color: var(--border);
   }
   .matrix-tip {
@@ -274,7 +274,7 @@
   }
   .opt-cell {
     border-color: var(--border);
-    background: var(--card);
+    background: #fff;
   }
   .opt-cell.sel {
     border-color: #3b82f6;
@@ -284,18 +284,18 @@
     color: var(--text2);
   }
   .target-canvas {
-    background: #1e293b;
+    background: #fff;
     border-color: var(--border);
   }
   .figopt-cell {
     border-color: var(--border);
-    background: var(--card);
+    background: #fff;
   }
   .figopt-cell.sel {
     border-color: #3b82f6;
   }
   .figopt-canvas {
-    background: #1e293b;
+    background: #fff;
   }
   .figopt-key {
     color: var(--text2);
