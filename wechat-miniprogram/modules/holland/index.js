@@ -35,67 +35,72 @@ const TYPE_CAREER = {
   C: { careers: '会计、审计、行政、档案管理、程序员、质检员', advice: '可发挥组织规范优势，选择财务、行政、数据、质量等领域。' },
 };
 
-// 48 题：每维度 8 题，均为正向计分
+// 48 题（真实题本）：每维度 8 题，均为正向计分。
+// 题源：Liao, H-Y., Armstrong, P. I., & Rounds, J. (2008).
+// "Development and initial validation of public domain basic interest markers."
+// Journal of Vocational Behavior, 73, 159-183.（公开领域 RIASEC 题项，亦见
+// Open-Source Psychometrics Project 的 Holland Code 测试）。
+// 说明：以下为受版权保护的原始题项的中文翻译，仅供学习研究使用，相关权利归原作者所有。
 const QUESTIONS = [
-  // R 现实型 (8题)
-  { id: 'HOL-01', dim: 'R', text: '我喜欢修理电器或机械。' },
-  { id: 'HOL-02', dim: 'R', text: '我喜欢使用工具动手制作物品。' },
-  { id: 'HOL-03', dim: 'R', text: '我喜欢户外活动或体力劳动。' },
-  { id: 'HOL-04', dim: 'R', text: '我喜欢操作机器和设备。' },
-  { id: 'HOL-05', dim: 'R', text: '我喜欢种植花草或饲养动物。' },
-  { id: 'HOL-06', dim: 'R', text: '我喜欢拆解并组装各种物件。' },
-  { id: 'HOL-07', dim: 'R', text: '我倾向于通过动手实践来学习新事物。' },
-  { id: 'HOL-08', dim: 'R', text: '我喜欢从事需要体力或技术的工作。' },
+  // R 现实型 (8题) — Realistic
+  { id: 'HOL-01', dim: 'R', text: '在发货前检验零部件的质量。' },
+  { id: 'HOL-02', dim: 'R', text: '砌砖或铺设瓷砖。' },
+  { id: 'HOL-03', dim: 'R', text: '在海上石油钻井平台上工作。' },
+  { id: 'HOL-04', dim: 'R', text: '装配电子零件。' },
+  { id: 'HOL-05', dim: 'R', text: '在工厂操作磨床。' },
+  { id: 'HOL-06', dim: 'R', text: '修理破损的水龙头。' },
+  { id: 'HOL-07', dim: 'R', text: '在工厂组装产品。' },
+  { id: 'HOL-08', dim: 'R', text: '安装房屋的地板。' },
 
-  // I 研究型 (8题)
-  { id: 'HOL-09', dim: 'I', text: '我喜欢研究科学问题。' },
-  { id: 'HOL-10', dim: 'I', text: '我喜欢分析复杂的数据和现象。' },
-  { id: 'HOL-11', dim: 'I', text: '我喜欢阅读学术或专业书籍。' },
-  { id: 'HOL-12', dim: 'I', text: '我喜欢探索事物背后的原理和规律。' },
-  { id: 'HOL-13', dim: 'I', text: '我喜欢独立思考并解决抽象问题。' },
-  { id: 'HOL-14', dim: 'I', text: '我对科学实验和研究感兴趣。' },
-  { id: 'HOL-15', dim: 'I', text: '我喜欢提出假设并加以验证。' },
-  { id: 'HOL-16', dim: 'I', text: '我享受钻研难题的过程。' },
+  // I 研究型 (8题) — Investigative
+  { id: 'HOL-09', dim: 'I', text: '研究人体的结构。' },
+  { id: 'HOL-10', dim: 'I', text: '研究动物的行为。' },
+  { id: 'HOL-11', dim: 'I', text: '对植物或动物进行研究。' },
+  { id: 'HOL-12', dim: 'I', text: '开发新的医疗方法或治疗程序。' },
+  { id: 'HOL-13', dim: 'I', text: '进行生物学研究。' },
+  { id: 'HOL-14', dim: 'I', text: '研究鲸鱼及其他海洋生物。' },
+  { id: 'HOL-15', dim: 'I', text: '在生物学实验室工作。' },
+  { id: 'HOL-16', dim: 'I', text: '绘制海底地图。' },
 
-  // A 艺术型 (8题)
-  { id: 'HOL-17', dim: 'A', text: '我喜欢绘画、写作或音乐创作。' },
-  { id: 'HOL-18', dim: 'A', text: '我喜欢通过艺术方式表达自我。' },
-  { id: 'HOL-19', dim: 'A', text: '我欣赏富有创意和美感的事物。' },
-  { id: 'HOL-20', dim: 'A', text: '我喜欢参加文艺演出或艺术展览。' },
-  { id: 'HOL-21', dim: 'A', text: '我常有不拘一格的创意想法。' },
-  { id: 'HOL-22', dim: 'A', text: '我喜欢设计或装饰环境。' },
-  { id: 'HOL-23', dim: 'A', text: '我享受即兴创作的过程。' },
-  { id: 'HOL-24', dim: 'A', text: '我倾向于在自由灵活的环境中工作。' },
+  // A 艺术型 (8题) — Artistic
+  { id: 'HOL-17', dim: 'A', text: '指挥一个合唱团。' },
+  { id: 'HOL-18', dim: 'A', text: '执导一部戏剧。' },
+  { id: 'HOL-19', dim: 'A', text: '为杂志设计美术作品。' },
+  { id: 'HOL-20', dim: 'A', text: '写一首歌。' },
+  { id: 'HOL-21', dim: 'A', text: '写书或剧本。' },
+  { id: 'HOL-22', dim: 'A', text: '演奏一种乐器。' },
+  { id: 'HOL-23', dim: 'A', text: '为电影或电视节目表演特技。' },
+  { id: 'HOL-24', dim: 'A', text: '为戏剧设计布景。' },
 
-  // S 社会型 (8题)
-  { id: 'HOL-25', dim: 'S', text: '我喜欢帮助他人解决困难。' },
-  { id: 'HOL-26', dim: 'S', text: '我乐于教导和培训别人。' },
-  { id: 'HOL-27', dim: 'S', text: '我喜欢参与志愿服务或公益活动。' },
-  { id: 'HOL-28', dim: 'S', text: '我擅长倾听和安慰他人。' },
-  { id: 'HOL-29', dim: 'S', text: '我喜欢与人合作完成团队任务。' },
-  { id: 'HOL-30', dim: 'S', text: '我关心他人的成长与福祉。' },
-  { id: 'HOL-31', dim: 'S', text: '我享受为他人提供服务。' },
-  { id: 'HOL-32', dim: 'S', text: '我倾向于在人际互动中获得满足。' },
+  // S 社会型 (8题) — Social
+  { id: 'HOL-25', dim: 'S', text: '为人们提供职业指导。' },
+  { id: 'HOL-26', dim: 'S', text: '在非营利组织做志愿工作。' },
+  { id: 'HOL-27', dim: 'S', text: '帮助有药物或酒精问题的人。' },
+  { id: 'HOL-28', dim: 'S', text: '教个人一套锻炼方法。' },
+  { id: 'HOL-29', dim: 'S', text: '帮助有家庭问题的人。' },
+  { id: 'HOL-30', dim: 'S', text: '在夏令营监督儿童的活动。' },
+  { id: 'HOL-31', dim: 'S', text: '教儿童阅读。' },
+  { id: 'HOL-32', dim: 'S', text: '帮助老年人进行日常活动。' },
 
-  // E 企业型 (8题)
-  { id: 'HOL-33', dim: 'E', text: '我喜欢说服别人接受我的观点。' },
-  { id: 'HOL-34', dim: 'E', text: '我喜欢组织和领导团队。' },
-  { id: 'HOL-35', dim: 'E', text: '我乐于制定计划并推动执行。' },
-  { id: 'HOL-36', dim: 'E', text: '我喜欢参与竞争并争取胜利。' },
-  { id: 'HOL-37', dim: 'E', text: '我擅长推销产品或想法。' },
-  { id: 'HOL-38', dim: 'E', text: '我喜欢承担管理责任。' },
-  { id: 'HOL-39', dim: 'E', text: '我享受影响和带动他人的过程。' },
-  { id: 'HOL-40', dim: 'E', text: '我倾向于追求成就和社会地位。' },
+  // E 企业型 (8题) — Enterprising
+  { id: 'HOL-33', dim: 'E', text: '向个人出售餐饮连锁的加盟权。' },
+  { id: 'HOL-34', dim: 'E', text: '在百货商店销售商品。' },
+  { id: 'HOL-35', dim: 'E', text: '管理一家酒店的运营。' },
+  { id: 'HOL-36', dim: 'E', text: '经营一家美容院或理发店。' },
+  { id: 'HOL-37', dim: 'E', text: '管理大公司内的一个部门。' },
+  { id: 'HOL-38', dim: 'E', text: '管理一家服装店。' },
+  { id: 'HOL-39', dim: 'E', text: '销售房屋（房产）。' },
+  { id: 'HOL-40', dim: 'E', text: '经营一家玩具店。' },
 
-  // C 常规型 (8题)
-  { id: 'HOL-41', dim: 'C', text: '我喜欢有条理、规则明确的工作。' },
-  { id: 'HOL-42', dim: 'C', text: '我擅长整理和归档资料。' },
-  { id: 'HOL-43', dim: 'C', text: '我喜欢按照既定流程和标准做事。' },
-  { id: 'HOL-44', dim: 'C', text: '我注重细节和准确性。' },
-  { id: 'HOL-45', dim: 'C', text: '我喜欢处理数据和记录信息。' },
-  { id: 'HOL-46', dim: 'C', text: '我乐于维护秩序和规范。' },
-  { id: 'HOL-47', dim: 'C', text: '我喜欢制作计划表和时间表。' },
-  { id: 'HOL-48', dim: 'C', text: '我倾向于在稳定可预期的环境中工作。' },
+  // C 常规型 (8题) — Conventional
+  { id: 'HOL-41', dim: 'C', text: '为办公室开具每月的工资支票。' },
+  { id: 'HOL-42', dim: 'C', text: '用手持电脑盘点物资库存。' },
+  { id: 'HOL-43', dim: 'C', text: '用计算机程序生成客户账单。' },
+  { id: 'HOL-44', dim: 'C', text: '维护员工档案。' },
+  { id: 'HOL-45', dim: 'C', text: '计算并记录统计数据及其他数值资料。' },
+  { id: 'HOL-46', dim: 'C', text: '操作计算器。' },
+  { id: 'HOL-47', dim: 'C', text: '处理客户的银行交易。' },
+  { id: 'HOL-48', dim: 'C', text: '保存发货与收货记录。' },
 ];
 
 function computeResult(answers, qs) {

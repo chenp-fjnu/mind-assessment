@@ -1,7 +1,7 @@
 /**
- * 16PF 卡特尔 16 种人格因素问卷（简化版 48 题）
+ * 16PF 卡特尔 16 种人格因素问卷（扩展版 160 题）
  *
- * 完整 16PF 共 187 题，此处简化为每因素 3 题，共 48 题：
+ * 完整 16PF 共 187 题，此处采用公开领域 IPIP 16PF 初步量表，每因素 10 题，共 160 题：
  *   A  乐群性 (Warmth)             — 热情 vs 冷漠
  *   B  聪慧性 (Reasoning)           — 善于抽象思考
  *   C  稳定性 (Emotional Stability) — 情绪成熟 vs 易波动
@@ -44,72 +44,188 @@ const FACTORS = {
   Q4: { name: '紧张性', en: 'Tension',             low: '轻松平静，身心松弛。',                        high: '紧张焦虑，常处于驱动状态。' },
 };
 
-// 每因素 3 题，共 48 题
+// 每因素 10 题，共 160 题
+// 题目来源于公开领域的 IPIP 16PF 初步量表（公有领域，https://ipip.ori.org/new16PFKey.htm），
+// 该量表由 Lewis Goldberg 将 IPIP 题库项目按与 16PF 各因子的相关性进行键控，
+// 亦被 openpsychometrics.org 的 16PF 测试所采用。此处翻译为简体中文。
+// 正向键控（agree=高分）reverse:false；负向键控（agree=低分）reverse:true。
 const QUESTIONS = [
-  // A 乐群性
-  { id: 'PF-01', factor: 'A', reverse: false, text: '我喜欢参加人多热闹的聚会。' },
-  { id: 'PF-02', factor: 'A', reverse: false, text: '我很容易和陌生人打开话题。' },
-  { id: 'PF-03', factor: 'A', reverse: true,  text: '独处比社交更让我感到自在。' },
-  // B 聪慧性
-  { id: 'PF-04', factor: 'B', reverse: false, text: '我善于理解复杂的抽象概念。' },
-  { id: 'PF-05', factor: 'B', reverse: false, text: '我喜欢思考需要逻辑推理的问题。' },
-  { id: 'PF-06', factor: 'B', reverse: true,  text: '我更愿意处理具体实际的事务而非理论。' },
-  // C 稳定性
-  { id: 'PF-07', factor: 'C', reverse: false, text: '遇到突发状况我能保持冷静。' },
-  { id: 'PF-08', factor: 'C', reverse: true,  text: '我的情绪常常起伏不定。' },
-  { id: 'PF-09', factor: 'C', reverse: false, text: '挫折后我能很快调整好心态。' },
-  // E 恃强性
-  { id: 'PF-10', factor: 'E', reverse: false, text: '我在讨论中常坚持自己的观点。' },
-  { id: 'PF-11', factor: 'E', reverse: true,  text: '我更愿意顺从他人的意见。' },
-  { id: 'PF-12', factor: 'E', reverse: false, text: '我天生有领导他人的倾向。' },
-  // F 兴奋性
-  { id: 'PF-13', factor: 'F', reverse: false, text: '我说话做事风风火火，充满活力。' },
-  { id: 'PF-14', factor: 'F', reverse: true,  text: '我为人严肃，不苟言笑。' },
-  { id: 'PF-15', factor: 'F', reverse: false, text: '我能在聚会中活跃气氛。' },
-  // G 有恒性
-  { id: 'PF-16', factor: 'G', reverse: false, text: '我做事讲究规矩和原则。' },
-  { id: 'PF-17', factor: 'G', reverse: false, text: '我会坚持完成承诺过的事。' },
-  { id: 'PF-18', factor: 'G', reverse: true,  text: '规则是死的，应灵活变通。' },
-  // H 敢为性
-  { id: 'PF-19', factor: 'H', reverse: false, text: '我敢于在众人面前表达观点。' },
-  { id: 'PF-20', factor: 'H', reverse: true,  text: '陌生场合让我感到拘谨不安。' },
-  { id: 'PF-21', factor: 'H', reverse: false, text: '面对新环境我主动融入。' },
-  // I 敏感性
-  { id: 'PF-22', factor: 'I', reverse: false, text: '我很容易被艺术作品打动。' },
-  { id: 'PF-23', factor: 'I', reverse: true,  text: '我做决定时很少受情感影响。' },
-  { id: 'PF-24', factor: 'I', reverse: false, text: '我能敏锐感知他人的情绪变化。' },
-  // L 怀疑性
-  { id: 'PF-25', factor: 'L', reverse: false, text: '我对他人的动机常持怀疑态度。' },
-  { id: 'PF-26', factor: 'L', reverse: true,  text: '我倾向于相信别人的善意。' },
-  { id: 'PF-27', factor: 'L', reverse: false, text: '我觉得别人常在背后议论我。' },
-  // M 幻想性
-  { id: 'PF-28', factor: 'M', reverse: false, text: '我常沉浸于想象和幻想之中。' },
-  { id: 'PF-29', factor: 'M', reverse: true,  text: '我做事关注现实，不胡思乱想。' },
-  { id: 'PF-30', factor: 'M', reverse: false, text: '我喜欢天马行空地构思创意。' },
-  // N 世故性
-  { id: 'PF-31', factor: 'N', reverse: false, text: '我懂得在不同场合说合适的话。' },
-  { id: 'PF-32', factor: 'N', reverse: true,  text: '我心直口快，有话直说。' },
-  { id: 'PF-33', factor: 'N', reverse: false, text: '我能洞察他人的真实意图。' },
-  // O 忧虑性
-  { id: 'PF-34', factor: 'O', reverse: false, text: '我常为自己的不足感到忧虑。' },
-  { id: 'PF-35', factor: 'O', reverse: true,  text: '我对自己的能力充满信心。' },
-  { id: 'PF-36', factor: 'O', reverse: false, text: '我容易陷入自我怀疑。' },
-  // Q1 实验性
-  { id: 'PF-37', factor: 'Q1', reverse: false, text: '我乐于尝试新的生活方式。' },
-  { id: 'PF-38', factor: 'Q1', reverse: true,  text: '我尊重传统和既有的做法。' },
-  { id: 'PF-39', factor: 'Q1', reverse: false, text: '我支持打破常规的改革。' },
-  // Q2 独立性
-  { id: 'PF-40', factor: 'Q2', reverse: false, text: '我习惯独立思考和做决定。' },
-  { id: 'PF-41', factor: 'Q2', reverse: true,  text: '我做事喜欢征求他人意见。' },
-  { id: 'PF-42', factor: 'Q2', reverse: false, text: '独处时我的效率更高。' },
-  // Q3 自律性
-  { id: 'PF-43', factor: 'Q3', reverse: false, text: '我对自己有严格的要求。' },
-  { id: 'PF-44', factor: 'Q3', reverse: true,  text: '我做事比较随性，不喜约束。' },
-  { id: 'PF-45', factor: 'Q3', reverse: false, text: '我能控制冲动，按计划行事。' },
-  // Q4 紧张性
-  { id: 'PF-46', factor: 'Q4', reverse: false, text: '我常感到时间紧迫、压力很大。' },
-  { id: 'PF-47', factor: 'Q4', reverse: true,  text: '我大多数时候感到放松自在。' },
-  { id: 'PF-48', factor: 'Q4', reverse: false, text: '我容易因小事而烦躁不安。' },
+  // A 乐群性 (Warmth)
+  { id: 'PF-01', factor: 'A', reverse: false, text: '我懂得如何安慰他人。' },
+  { id: 'PF-02', factor: 'A', reverse: false, text: '我喜欢把人们聚到一起。' },
+  { id: 'PF-03', factor: 'A', reverse: false, text: '我能感受到他人的情绪。' },
+  { id: 'PF-04', factor: 'A', reverse: false, text: '我对他人的生活感兴趣。' },
+  { id: 'PF-05', factor: 'A', reverse: false, text: '我能让他人振作起来。' },
+  { id: 'PF-06', factor: 'A', reverse: false, text: '我能让别人感到轻松自在。' },
+  { id: 'PF-07', factor: 'A', reverse: false, text: '我愿意花时间陪伴他人。' },
+  { id: 'PF-08', factor: 'A', reverse: true,  text: '我不喜欢卷入他人的麻烦中。' },
+  { id: 'PF-09', factor: 'A', reverse: true,  text: '我对别人并不真正感兴趣。' },
+  { id: 'PF-10', factor: 'A', reverse: true,  text: '我尽量不去想那些需要帮助的人。' },
+  // B 聪慧性 (Reasoning)
+  { id: 'PF-11', factor: 'B', reverse: false, text: '我能提出有见地的见解。' },
+  { id: 'PF-12', factor: 'B', reverse: false, text: '我知道很多问题的答案。' },
+  { id: 'PF-13', factor: 'B', reverse: false, text: '我倾向于分析事物。' },
+  { id: 'PF-14', factor: 'B', reverse: false, text: '我善于动脑筋。' },
+  { id: 'PF-15', factor: 'B', reverse: false, text: '我学东西很快。' },
+  { id: 'PF-16', factor: 'B', reverse: false, text: '我能反驳他人的论点。' },
+  { id: 'PF-17', factor: 'B', reverse: false, text: '行动前我会先反思。' },
+  { id: 'PF-18', factor: 'B', reverse: true,  text: '我认为自己只是个普通人。' },
+  { id: 'PF-19', factor: 'B', reverse: true,  text: '我很容易感到困惑。' },
+  { id: 'PF-20', factor: 'B', reverse: true,  text: '我知道自己并非特殊的人。' },
+  // C 稳定性 (Emotional Stability)
+  { id: 'PF-21', factor: 'C', reverse: false, text: '我很少感到沮丧。' },
+  { id: 'PF-22', factor: 'C', reverse: false, text: '我对自己感到坦然自在。' },
+  { id: 'PF-23', factor: 'C', reverse: false, text: '我能很快从挫折中恢复。' },
+  { id: 'PF-24', factor: 'C', reverse: false, text: '大多数时候我很放松。' },
+  { id: 'PF-25', factor: 'C', reverse: false, text: '我不容易感到挫败。' },
+  { id: 'PF-26', factor: 'C', reverse: true,  text: '我的情绪波动很频繁。' },
+  { id: 'PF-27', factor: 'C', reverse: true,  text: '我经常感到沮丧。' },
+  { id: 'PF-28', factor: 'C', reverse: true,  text: '我不太喜欢自己。' },
+  { id: 'PF-29', factor: 'C', reverse: true,  text: '我常感到绝望。' },
+  { id: 'PF-30', factor: 'C', reverse: true,  text: '我很容易被泄气。' },
+  // E 恃强性 (Dominance)
+  { id: 'PF-31', factor: 'E', reverse: false, text: '我习惯掌控局面。' },
+  { id: 'PF-32', factor: 'E', reverse: false, text: '我想成为负责人。' },
+  { id: 'PF-33', factor: 'E', reverse: false, text: '我会说出自己的想法。' },
+  { id: 'PF-34', factor: 'E', reverse: false, text: '我不怕提出批评。' },
+  { id: 'PF-35', factor: 'E', reverse: false, text: '我会主动控制事情。' },
+  { id: 'PF-36', factor: 'E', reverse: false, text: '我能够采取强硬措施。' },
+  { id: 'PF-37', factor: 'E', reverse: true,  text: '我会等别人来带头。' },
+  { id: 'PF-38', factor: 'E', reverse: true,  text: '我从不质疑事情。' },
+  { id: 'PF-39', factor: 'E', reverse: true,  text: '我让别人来做决定。' },
+  { id: 'PF-40', factor: 'E', reverse: true,  text: '我任由别人摆布。' },
+  // F 兴奋性 (Liveliness)
+  { id: 'PF-41', factor: 'F', reverse: false, text: '我是聚会的活跃核心。' },
+  { id: 'PF-42', factor: 'F', reverse: false, text: '我喜欢大型聚会。' },
+  { id: 'PF-43', factor: 'F', reverse: false, text: '我经常开玩笑。' },
+  { id: 'PF-44', factor: 'F', reverse: false, text: '我享受身处热闹的人群。' },
+  { id: 'PF-45', factor: 'F', reverse: false, text: '我能逗朋友们开心。' },
+  { id: 'PF-46', factor: 'F', reverse: false, text: '我有时会表现得疯狂放肆。' },
+  { id: 'PF-47', factor: 'F', reverse: true,  text: '我很少开玩笑。' },
+  { id: 'PF-48', factor: 'F', reverse: true,  text: '我不喜欢拥挤的场合。' },
+  { id: 'PF-49', factor: 'F', reverse: true,  text: '听到玩笑我总是最后才笑。' },
+  { id: 'PF-50', factor: 'F', reverse: true,  text: '我不喜欢吵闹的音乐。' },
+  // G 有恒性 (Rule-Consciousness)
+  { id: 'PF-51', factor: 'G', reverse: false, text: '我认为法律应当严格执行。' },
+  { id: 'PF-52', factor: 'G', reverse: false, text: '我尽量遵守规则。' },
+  { id: 'PF-53', factor: 'G', reverse: false, text: '我相信唯一真正的信仰。' },
+  { id: 'PF-54', factor: 'G', reverse: false, text: '我尊重权威。' },
+  { id: 'PF-55', factor: 'G', reverse: false, text: '我愿在国歌奏响时起身站立。' },
+  { id: 'PF-56', factor: 'G', reverse: true,  text: '我抗拒权威。' },
+  { id: 'PF-57', factor: 'G', reverse: true,  text: '我会破坏规则。' },
+  { id: 'PF-58', factor: 'G', reverse: true,  text: '我会说脏话。' },
+  { id: 'PF-59', factor: 'G', reverse: true,  text: '我反对权威。' },
+  { id: 'PF-60', factor: 'G', reverse: true,  text: '我知道如何钻规则的空子。' },
+  // H 敢为性 (Social Boldness)
+  { id: 'PF-61', factor: 'H', reverse: false, text: '我在人群之中感到自在。' },
+  { id: 'PF-62', factor: 'H', reverse: false, text: '在聚会上我会和很多人交谈。' },
+  { id: 'PF-63', factor: 'H', reverse: false, text: '我不介意成为关注的中心。' },
+  { id: 'PF-64', factor: 'H', reverse: false, text: '我很容易交到朋友。' },
+  { id: 'PF-65', factor: 'H', reverse: false, text: '我会主动开启话题。' },
+  { id: 'PF-66', factor: 'H', reverse: true,  text: '我觉得主动接近别人很困难。' },
+  { id: 'PF-67', factor: 'H', reverse: true,  text: '在别人身边我常感到不自在。' },
+  { id: 'PF-68', factor: 'H', reverse: true,  text: '我没什么话可说。' },
+  { id: 'PF-69', factor: 'H', reverse: true,  text: '在陌生人面前我很安静。' },
+  { id: 'PF-70', factor: 'H', reverse: true,  text: '我习惯待在幕后。' },
+  // I 敏感性 (Sensitivity)
+  { id: 'PF-71', factor: 'I', reverse: false, text: '我喜欢阅读。' },
+  { id: 'PF-72', factor: 'I', reverse: false, text: '我喜欢和别人讨论电影与书籍。' },
+  { id: 'PF-73', factor: 'I', reverse: false, text: '我读很多书。' },
+  { id: 'PF-74', factor: 'I', reverse: false, text: '我不喜欢动作片。' },
+  { id: 'PF-75', factor: 'I', reverse: false, text: '看电影时我会流泪。' },
+  { id: 'PF-76', factor: 'I', reverse: false, text: '我喜爱花朵。' },
+  { id: 'PF-77', factor: 'I', reverse: true,  text: '我不喜欢看舞蹈表演。' },
+  { id: 'PF-78', factor: 'I', reverse: true,  text: '我不喜欢诗歌。' },
+  { id: 'PF-79', factor: 'I', reverse: true,  text: '我不喜欢小说类作品。' },
+  { id: 'PF-80', factor: 'I', reverse: true,  text: '我很少注意到自己的情绪反应。' },
+  // L 怀疑性 (Vigilance)
+  { id: 'PF-81', factor: 'L', reverse: false, text: '我很难原谅别人。' },
+  { id: 'PF-82', factor: 'L', reverse: false, text: '我怀疑他人隐藏的动机。' },
+  { id: 'PF-83', factor: 'L', reverse: false, text: '我对他人保持警惕。' },
+  { id: 'PF-84', factor: 'L', reverse: false, text: '我不信任别人。' },
+  { id: 'PF-85', factor: 'L', reverse: false, text: '我相信人们很少说出全部真相。' },
+  { id: 'PF-86', factor: 'L', reverse: false, text: '我相信人性本恶。' },
+  { id: 'PF-87', factor: 'L', reverse: true,  text: '我相信别人说的话。' },
+  { id: 'PF-88', factor: 'L', reverse: true,  text: '我信任他人。' },
+  { id: 'PF-89', factor: 'L', reverse: true,  text: '我相信他人心怀善意。' },
+  { id: 'PF-90', factor: 'L', reverse: true,  text: '我相信人本质上是道德的。' },
+  // M 幻想性 (Abstractedness)
+  { id: 'PF-91', factor: 'M', reverse: false, text: '我会做些别人觉得奇怪的事。' },
+  { id: 'PF-92', factor: 'M', reverse: false, text: '我喜欢陷入沉思。' },
+  { id: 'PF-93', factor: 'M', reverse: false, text: '我享受天马行空的幻想。' },
+  { id: 'PF-94', factor: 'M', reverse: false, text: '我爱做白日梦。' },
+  { id: 'PF-95', factor: 'M', reverse: false, text: '我常不随大流，逆流而行。' },
+  { id: 'PF-96', factor: 'M', reverse: false, text: '我常持有反常的立场。' },
+  { id: 'PF-97', factor: 'M', reverse: false, text: '我会做一些出人意料的事。' },
+  { id: 'PF-98', factor: 'M', reverse: true,  text: '我按部就班地做事。' },
+  { id: 'PF-99', factor: 'M', reverse: true,  text: '我很少做白日梦。' },
+  { id: 'PF-100', factor: 'M', reverse: true,  text: '我很少陷入沉思。' },
+  // N 世故性 (Privateness)
+  { id: 'PF-101', factor: 'N', reverse: false, text: '我很少透露自己的事。' },
+  { id: 'PF-102', factor: 'N', reverse: false, text: '我难以被了解。' },
+  { id: 'PF-103', factor: 'N', reverse: false, text: '我不怎么说话。' },
+  { id: 'PF-104', factor: 'N', reverse: false, text: '我把感情憋在心里。' },
+  { id: 'PF-105', factor: 'N', reverse: false, text: '我守着自己的想法不外露。' },
+  { id: 'PF-106', factor: 'N', reverse: true,  text: '我对他人敞开自己。' },
+  { id: 'PF-107', factor: 'N', reverse: true,  text: '我毫不掩饰自己的感受。' },
+  { id: 'PF-108', factor: 'N', reverse: true,  text: '我会吐露内心的想法。' },
+  { id: 'PF-109', factor: 'N', reverse: true,  text: '我会表露自己的情绪。' },
+  { id: 'PF-110', factor: 'N', reverse: true,  text: '我愿意谈论自己。' },
+  // O 忧虑性 (Apprehension)
+  { id: 'PF-111', factor: 'O', reverse: false, text: '我害怕自己会做错事。' },
+  { id: 'PF-112', factor: 'O', reverse: false, text: '我很容易感到受威胁。' },
+  { id: 'PF-113', factor: 'O', reverse: false, text: '我很容易受伤。' },
+  { id: 'PF-114', factor: 'O', reverse: false, text: '我会为各种事情担忧。' },
+  { id: 'PF-115', factor: 'O', reverse: false, text: '我会花时间回想过去的错误。' },
+  { id: 'PF-116', factor: 'O', reverse: false, text: '我说"不"的时候会感到内疚。' },
+  { id: 'PF-117', factor: 'O', reverse: false, text: '挫折令我难以承受。' },
+  { id: 'PF-118', factor: 'O', reverse: true,  text: '我不为已经发生的事担忧。' },
+  { id: 'PF-119', factor: 'O', reverse: true,  text: '我不太容易被事情困扰。' },
+  { id: 'PF-120', factor: 'O', reverse: true,  text: '我不会让别人使我泄气。' },
+  // Q1 实验性 (Openness to Change)
+  { id: 'PF-121', factor: 'Q1', reverse: false, text: '我相信艺术很重要。' },
+  { id: 'PF-122', factor: 'Q1', reverse: false, text: '我爱想出做事的新方法。' },
+  { id: 'PF-123', factor: 'Q1', reverse: false, text: '我喜欢听新的想法。' },
+  { id: 'PF-124', factor: 'Q1', reverse: false, text: '我会把谈话提升到更高层次。' },
+  { id: 'PF-125', factor: 'Q1', reverse: false, text: '比起例行公事，我更喜欢变化。' },
+  { id: 'PF-126', factor: 'Q1', reverse: true,  text: '我回避哲学讨论。' },
+  { id: 'PF-127', factor: 'Q1', reverse: true,  text: '我很少去探究事物更深层的意义。' },
+  { id: 'PF-128', factor: 'Q1', reverse: true,  text: '我对理论讨论不感兴趣。' },
+  { id: 'PF-129', factor: 'Q1', reverse: true,  text: '我对抽象概念不感兴趣。' },
+  { id: 'PF-130', factor: 'Q1', reverse: true,  text: '我尽量避开复杂的人。' },
+  // Q2 独立性 (Self-Reliance)
+  { id: 'PF-131', factor: 'Q2', reverse: false, text: '我希望独处。' },
+  { id: 'PF-132', factor: 'Q2', reverse: false, text: '我更喜欢自己做事。' },
+  { id: 'PF-133', factor: 'Q2', reverse: false, text: '我享受独自度过的时光。' },
+  { id: 'PF-134', factor: 'Q2', reverse: false, text: '我寻求安静。' },
+  { id: 'PF-135', factor: 'Q2', reverse: false, text: '我不介意一个人吃饭。' },
+  { id: 'PF-136', factor: 'Q2', reverse: false, text: '我享受宁静。' },
+  { id: 'PF-137', factor: 'Q2', reverse: false, text: '我享受自己的隐私。' },
+  { id: 'PF-138', factor: 'Q2', reverse: true,  text: '我享受成为群体的一员。' },
+  { id: 'PF-139', factor: 'Q2', reverse: true,  text: '我享受团队合作。' },
+  { id: 'PF-140', factor: 'Q2', reverse: true,  text: '我离不开他人的陪伴。' },
+  // Q3 自律性 (Perfectionism)
+  { id: 'PF-141', factor: 'Q3', reverse: false, text: '我希望一切"恰到好处"。' },
+  { id: 'PF-142', factor: 'Q3', reverse: false, text: '我马上就把杂务做完。' },
+  { id: 'PF-143', factor: 'Q3', reverse: false, text: '我喜欢条理有序。' },
+  { id: 'PF-144', factor: 'Q3', reverse: false, text: '我会一直做到尽善尽美。' },
+  { id: 'PF-145', factor: 'Q3', reverse: false, text: '我对工作要求严格。' },
+  { id: 'PF-146', factor: 'Q3', reverse: true,  text: '乱糟糟的人不会让我困扰。' },
+  { id: 'PF-147', factor: 'Q3', reverse: true,  text: '我不被混乱所困扰。' },
+  { id: 'PF-148', factor: 'Q3', reverse: true,  text: '我的房间一团糟。' },
+  { id: 'PF-149', factor: 'Q3', reverse: true,  text: '我把东西随处乱放。' },
+  { id: 'PF-150', factor: 'Q3', reverse: true,  text: '我会拖延不愉快的任务。' },
+  // Q4 紧张性 (Tension)
+  { id: 'PF-151', factor: 'Q4', reverse: false, text: '我很容易烦躁。' },
+  { id: 'PF-152', factor: 'Q4', reverse: false, text: '我很容易生气。' },
+  { id: 'PF-153', factor: 'Q4', reverse: false, text: '我很快就对人下判断。' },
+  { id: 'PF-154', factor: 'Q4', reverse: false, text: '别人的错误会让我恼火。' },
+  { id: 'PF-155', factor: 'Q4', reverse: false, text: '我很容易被惹恼。' },
+  { id: 'PF-156', factor: 'Q4', reverse: false, text: '我受不了被人反驳。' },
+  { id: 'PF-157', factor: 'Q4', reverse: false, text: '我以貌取人。' },
+  { id: 'PF-158', factor: 'Q4', reverse: true,  text: '我不易被惹恼。' },
+  { id: 'PF-159', factor: 'Q4', reverse: true,  text: '我尽量原谅并忘却。' },
+  { id: 'PF-160', factor: 'Q4', reverse: true,  text: '我对每个人都说好话。' },
 ];
 
 function computeResult(answers, qs) {
@@ -154,7 +270,7 @@ module.exports = {
   icon: '🎯',
   color: '#be185d',
   duration: 20,
-  questionCount: 48,
+  questionCount: 160,
   paid: false,
   price: 0,
   tag: ['人格', '性格', '16因素'],

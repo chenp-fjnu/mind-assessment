@@ -1,7 +1,7 @@
 /**
  * 韦氏成人智力测验模块（简化版 WAIS-Lite）
  *
- * 完整 WAIS-IV 含 15 个分测验，此处简化为 6 个核心子测验，每个 5 题，共 30 题：
+ * 完整 WAIS-IV 含 15 个分测验，此处简化为 6 个核心子测验，每个 8 题，共 48 题：
  *   言语类：
  *     - 词汇（Vocabulary）：解释词语含义
  *     - 相似性（Similarities）：找出共同点
@@ -111,6 +111,57 @@ const QUESTIONS = [
     options: ['1-3-5-7-9', '9-7-5-3-1', '1-5-3-7-9', '1-3-7-5-9'], answer: 0, maxScore: 2 },
   { id: 'WCH-30', subtest: '数字广度', domain: 'performance', text: '倒序复述：6-4-9-1（应回答 1-9-4-6）',
     options: ['6-4-9-1', '1-9-4-6', '6-1-9-4', '4-6-1-9'], answer: 1, maxScore: 2 },
+
+  // ===== 词汇 Vocabulary（扩充 +3） =====
+  { id: 'WCH-31', subtest: '词汇', domain: 'verbal', text: '"钢笔"是什么？',
+    options: ['一种书写工具', '一种乐器', '一种食物', '一种交通工具'], answer: 0, maxScore: 2 },
+  { id: 'WCH-32', subtest: '词汇', domain: 'verbal', text: '"诚实"的意思最接近：',
+    options: ['说谎', '言行一致、不欺骗', '粗鲁', '吝啬'], answer: 1, maxScore: 2 },
+  { id: 'WCH-33', subtest: '词汇', domain: 'verbal', text: '"光合作用"指：',
+    options: ['植物利用光能制造养分', '动物呼吸', '水结成冰', '金属生锈'], answer: 0, maxScore: 2 },
+
+  // ===== 相似性 Similarities（扩充 +3） =====
+  { id: 'WCH-34', subtest: '相似性', domain: 'verbal', text: '苹果和橘子的相似之处是：',
+    options: ['都是水果', '都是动物', '都是金属', '都是气体'], answer: 0, maxScore: 2 },
+  { id: 'WCH-35', subtest: '相似性', domain: 'verbal', text: '诗歌和绘画的相似之处是：',
+    options: ['都是艺术表达形式', '都是运动', '都是食物', '都是科学'], answer: 0, maxScore: 2 },
+  { id: 'WCH-36', subtest: '相似性', domain: 'verbal', text: '医生和护士的相似之处是：',
+    options: ['都从事医疗照护', '都教书', '都种地', '都修车'], answer: 0, maxScore: 2 },
+
+  // ===== 算术 Arithmetic（扩充 +3） =====
+  { id: 'WCH-37', subtest: '算术', domain: 'verbal', text: '买 4 支笔，每支 3 元，共多少元？',
+    options: ['12', '15', '7', '9'], answer: 0, maxScore: 2 },
+  { id: 'WCH-38', subtest: '算术', domain: 'verbal', text: '36 ÷ 6 = ?',
+    options: ['6', '5', '7', '8'], answer: 0, maxScore: 2 },
+  { id: 'WCH-39', subtest: '算术', domain: 'verbal', text: '一个盒子有 3 排，每排 4 个，共几个？',
+    options: ['12', '7', '9', '15'], answer: 0, maxScore: 2 },
+
+  // ===== 积木 Block Design（扩充 +3） =====
+  { id: 'WCH-40', subtest: '积木', domain: 'performance', text: '目标图案为上红下蓝，选正确选项：',
+    options: ['上下A', '上下B', '上下C', '上下D'], answer: 0, maxScore: 2,
+    candidates: [g2(sq(R), sq(R), sq(B), sq(B)), g2(sq(B), sq(B), sq(R), sq(R)), g2(sq(R), sq(B), sq(R), sq(B)), g2(sq(B), sq(R), sq(B), sq(R))] },
+  { id: 'WCH-41', subtest: '积木', domain: 'performance', text: '目标图案为左绿右黄，选正确选项：',
+    options: ['左右A', '左右B', '左右C', '左右D'], answer: 0, maxScore: 2,
+    candidates: [g2(sq(G), sq(Y), sq(G), sq(Y)), g2(sq(Y), sq(G), sq(Y), sq(G)), g2(sq(G), sq(G), sq(Y), sq(Y)), g2(sq(Y), sq(Y), sq(G), sq(G))] },
+  { id: 'WCH-42', subtest: '积木', domain: 'performance', text: '目标图案为四格同蓝，选正确选项：',
+    options: ['纯蓝A', '纯蓝B', '纯蓝C', '纯蓝D'], answer: 0, maxScore: 2,
+    candidates: [g2(sq(B), sq(B), sq(B), sq(B)), g2(sq(R), sq(R), sq(R), sq(R)), g2(sq(G), sq(G), sq(G), sq(G)), g2(sq(Y), sq(Y), sq(Y), sq(Y))] },
+
+  // ===== 矩阵推理 Matrix Reasoning（扩充 +3） =====
+  { id: 'WCH-43', subtest: '矩阵推理', domain: 'performance', text: '序列：三角形,方形,三角形,方形,?',
+    options: ['三角形', '方形', '圆形', '星形'], answer: 0, maxScore: 2 },
+  { id: 'WCH-44', subtest: '矩阵推理', domain: 'performance', text: '点数序列：2,4,6,8,?',
+    options: ['9', '10', '12', '14'], answer: 1, maxScore: 2 },
+  { id: 'WCH-45', subtest: '矩阵推理', domain: 'performance', text: '字母序列：A,C,E,G,?',
+    options: ['H', 'I', 'J', 'K'], answer: 1, maxScore: 2 },
+
+  // ===== 数字广度 Digit Span（扩充 +3） =====
+  { id: 'WCH-46', subtest: '数字广度', domain: 'performance', text: '正序复述：2-5-8',
+    options: ['2-5-8', '8-5-2', '5-2-8', '2-8-5'], answer: 0, maxScore: 2 },
+  { id: 'WCH-47', subtest: '数字广度', domain: 'performance', text: '倒序复述：3-6-9（应回答 9-6-3）',
+    options: ['3-6-9', '9-6-3', '6-9-3', '3-9-6'], answer: 1, maxScore: 2 },
+  { id: 'WCH-48', subtest: '数字广度', domain: 'performance', text: '正序复述：7-1-4-2',
+    options: ['7-1-4-2', '2-4-1-7', '7-4-1-2', '1-7-2-4'], answer: 0, maxScore: 2 },
 ];
 
 const SUBTESTS = ['词汇', '相似性', '算术', '积木', '矩阵推理', '数字广度'];
@@ -188,7 +239,7 @@ module.exports = {
   icon: '📐',
   color: '#0d9488',
   duration: 25,
-  questionCount: 30,
+  questionCount: 48,
   paid: false,
   price: 0,
   tag: ['智力', '言语', '操作', '综合'],
@@ -217,8 +268,8 @@ module.exports = {
     return Object.entries(r.groups).map(([k, v]) => ({
       key: k,
       label: layout.groupLabels[k] || k,
-      percent: Math.round((v / 15) * 100),
-      display: `${v}/15`,
+      percent: Math.round((v / 24) * 100),
+      display: `${v}/24`,
       isScale: false,
     }));
   },
