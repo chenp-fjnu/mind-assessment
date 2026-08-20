@@ -125,8 +125,13 @@ function drawRecord(c) {
 function drawAbout(c) {
   const px = newPx()
   circleOutline(px, 40, 38, 22, c)
-  fillRect(px, 38, 30, 42, 54, c)
-  setPx(px, 40, 22, c)
+  // i 的点：明显的实心圆，避免单像素丢失
+  for (let a = 0; a < 360; a += 2) {
+    const rad = (a * Math.PI) / 180
+    fillRect(px, Math.round(40 + Math.cos(rad) * 4), Math.round(25 + Math.sin(rad) * 4), Math.round(40 + Math.cos(rad) * 4), Math.round(25 + Math.sin(rad) * 4), c)
+  }
+  // i 的竖线（加粗）
+  fillRect(px, 37, 33, 43, 54, c)
   return px
 }
 
