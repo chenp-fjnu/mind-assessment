@@ -80,14 +80,17 @@ function makeItem(set, N, idx, gi, kind) {
   const b = base()
   let ruleFn, varying, ruleDesc
   if (kind === 'prog') {
-    const attr = pick(['shape', 'color', 'rotation', 'count'].concat(N === 2 ? ['fill'] : []))
+    // 注意：不使用 rotation 作为变化属性——圆形/方形等旋转对称图形不同旋转角视觉完全相同，
+    // 会导致“选项/规律重复、答案不唯一”。仅用形状/颜色/计数/填充（均视觉可辨）。
+    const attr = pick(['shape', 'color', 'count'].concat(N === 2 ? ['fill'] : []))
     const seq = seqFor(attr, N)
     const dir = pick(['row', 'col'])
     ruleFn = progRule(attr, seq, dir, b)
     varying = [attr]
     ruleDesc = `${attr} 沿${dir === 'col' ? '列' : '行'}递进`
   } else {
-    const attrs = shuffle(['shape', 'color', 'rotation', 'count']).slice(0, 2)
+    // 同上：组合规则也只用视觉可辨属性（形状/颜色/计数），避免旋转对称导致重复
+    const attrs = shuffle(['shape', 'color', 'count']).slice(0, 2)
     const [aX, aY] = attrs
     const seqX = seqFor(aX, N)
     const seqY = seqFor(aY, N)
@@ -122,9 +125,10 @@ function makeItem(set, N, idx, gi, kind) {
     const key = JSON.stringify(cell)
     if (!seen.has(key)) { seen.add(key); opts.push(cell) }
   }
+  // 兜底补满选项：只用视觉可辨属性，绝不用 rotation（旋转对称图形不同转角看起来相同）
   while (opts.length < 6) {
     const v = { ...correct }
-    const a = pick(['shape', 'color', 'rotation', 'count', 'fill'])
+    const a = pick(['shape', 'color', 'fill', 'count'])
     v[a] = otherAttr(a, correct[a])
     const cell = cellOf(v)
     const key = JSON.stringify(cell)

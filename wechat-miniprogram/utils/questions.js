@@ -1,6 +1,6 @@
 /**
  * SPM 题目数据（由 tools/gen-spm.js 重新生成，保证每题 6 个选项、答案唯一且符合图形规律）
- * 生成时间：2026-08-20T08:52:27.094Z
+ * 生成时间：2026-08-21T08:08:37.059Z
  * 题目数：60（A/B/C/D/E 各 12 题）
  * 图形结构：{ bg, shapes: [{ type, size, color, rotation, fill, count }] }
  * 约定：matrix 为 N×N，右下角单元格（最后一行最后一列）为空，需从 options 中补全。
@@ -68,23 +68,10 @@ module.exports = [
           {
             "type": "triangle",
             "size": 80,
-            "color": "#d97706",
-            "rotation": 0,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "triangle",
-            "size": 80,
-            "color": "#d97706",
+            "color": "#dc2626",
             "rotation": 180,
             "fill": "solid",
-            "count": 2
+            "count": 1
           }
         ]
       },
@@ -110,7 +97,7 @@ module.exports = [
             "color": "#d97706",
             "rotation": 180,
             "fill": "solid",
-            "count": 1
+            "count": 3
           }
         ]
       },
@@ -118,10 +105,10 @@ module.exports = [
         "bg": null,
         "shapes": [
           {
-            "type": "triangle",
+            "type": "star",
             "size": 80,
             "color": "#d97706",
-            "rotation": 270,
+            "rotation": 180,
             "fill": "solid",
             "count": 1
           }
@@ -139,9 +126,22 @@ module.exports = [
             "count": 1
           }
         ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "triangle",
+            "size": 80,
+            "color": "#d97706",
+            "rotation": 180,
+            "fill": "solid",
+            "count": 1
+          }
+        ]
       }
     ],
-    "answer": 3,
+    "answer": 5,
     "timeLimit": 40
   },
   {
@@ -149,7 +149,7 @@ module.exports = [
     "set": "A",
     "indexInSet": 2,
     "globalIndex": 2,
-    "rule": "rotation 沿行递进",
+    "rule": "color 沿列递进",
     "matrix": [
       [
         {
@@ -158,7 +158,7 @@ module.exports = [
             {
               "type": "diamond",
               "size": 80,
-              "color": "#1f2937",
+              "color": "#16a34a",
               "rotation": 0,
               "fill": "solid",
               "count": 1
@@ -171,7 +171,7 @@ module.exports = [
             {
               "type": "diamond",
               "size": 80,
-              "color": "#1f2937",
+              "color": "#d97706",
               "rotation": 0,
               "fill": "solid",
               "count": 1
@@ -186,8 +186,8 @@ module.exports = [
             {
               "type": "diamond",
               "size": 80,
-              "color": "#1f2937",
-              "rotation": 90,
+              "color": "#16a34a",
+              "rotation": 0,
               "fill": "solid",
               "count": 1
             }
@@ -206,8 +206,47 @@ module.exports = [
           {
             "type": "diamond",
             "size": 80,
-            "color": "#1f2937",
-            "rotation": 180,
+            "color": "#d97706",
+            "rotation": 0,
+            "fill": "solid",
+            "count": 3
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "diamond",
+            "size": 80,
+            "color": "#16a34a",
+            "rotation": 0,
+            "fill": "solid",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "diamond",
+            "size": 80,
+            "color": "#2563eb",
+            "rotation": 0,
+            "fill": "solid",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "diamond",
+            "size": 80,
+            "color": "#dc2626",
+            "rotation": 0,
             "fill": "solid",
             "count": 1
           }
@@ -232,47 +271,8 @@ module.exports = [
           {
             "type": "diamond",
             "size": 80,
-            "color": "#1f2937",
-            "rotation": 270,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "diamond",
-            "size": 80,
-            "color": "#1f2937",
-            "rotation": 90,
-            "fill": "solid",
-            "count": 3
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "circle",
-            "size": 80,
-            "color": "#1f2937",
-            "rotation": 90,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "diamond",
-            "size": 80,
-            "color": "#1f2937",
-            "rotation": 90,
+            "color": "#d97706",
+            "rotation": 0,
             "fill": "solid",
             "count": 1
           }
@@ -287,1110 +287,6 @@ module.exports = [
     "set": "A",
     "indexInSet": 3,
     "globalIndex": 3,
-    "rule": "count 沿列递进",
-    "matrix": [
-      [
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "triangle",
-              "size": 80,
-              "color": "#dc2626",
-              "rotation": 90,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "triangle",
-              "size": 80,
-              "color": "#dc2626",
-              "rotation": 90,
-              "fill": "solid",
-              "count": 2
-            }
-          ]
-        }
-      ],
-      [
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "triangle",
-              "size": 80,
-              "color": "#dc2626",
-              "rotation": 90,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": []
-        }
-      ]
-    ],
-    "options": [
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "triangle",
-            "size": 80,
-            "color": "#dc2626",
-            "rotation": 90,
-            "fill": "solid",
-            "count": 3
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "triangle",
-            "size": 80,
-            "color": "#dc2626",
-            "rotation": 0,
-            "fill": "solid",
-            "count": 2
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "triangle",
-            "size": 80,
-            "color": "#dc2626",
-            "rotation": 90,
-            "fill": "solid",
-            "count": 2
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "triangle",
-            "size": 80,
-            "color": "#dc2626",
-            "rotation": 90,
-            "fill": "hollow",
-            "count": 2
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "triangle",
-            "size": 80,
-            "color": "#dc2626",
-            "rotation": 90,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "triangle",
-            "size": 80,
-            "color": "#dc2626",
-            "rotation": 180,
-            "fill": "solid",
-            "count": 2
-          }
-        ]
-      }
-    ],
-    "answer": 2,
-    "timeLimit": 40
-  },
-  {
-    "id": "SPM-004",
-    "set": "A",
-    "indexInSet": 4,
-    "globalIndex": 4,
-    "rule": "count 沿列递进",
-    "matrix": [
-      [
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "circle",
-              "size": 80,
-              "color": "#d97706",
-              "rotation": 90,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "circle",
-              "size": 80,
-              "color": "#d97706",
-              "rotation": 90,
-              "fill": "solid",
-              "count": 2
-            }
-          ]
-        }
-      ],
-      [
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "circle",
-              "size": 80,
-              "color": "#d97706",
-              "rotation": 90,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": []
-        }
-      ]
-    ],
-    "options": [
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "circle",
-            "size": 80,
-            "color": "#d97706",
-            "rotation": 90,
-            "fill": "hollow",
-            "count": 2
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "circle",
-            "size": 80,
-            "color": "#d97706",
-            "rotation": 270,
-            "fill": "solid",
-            "count": 2
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "circle",
-            "size": 80,
-            "color": "#d97706",
-            "rotation": 90,
-            "fill": "solid",
-            "count": 3
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "circle",
-            "size": 80,
-            "color": "#d97706",
-            "rotation": 90,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "circle",
-            "size": 80,
-            "color": "#d97706",
-            "rotation": 90,
-            "fill": "solid",
-            "count": 2
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "circle",
-            "size": 80,
-            "color": "#d97706",
-            "rotation": 0,
-            "fill": "solid",
-            "count": 2
-          }
-        ]
-      }
-    ],
-    "answer": 4,
-    "timeLimit": 40
-  },
-  {
-    "id": "SPM-005",
-    "set": "A",
-    "indexInSet": 5,
-    "globalIndex": 5,
-    "rule": "shape 沿行递进",
-    "matrix": [
-      [
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "hexagon",
-              "size": 80,
-              "color": "#dc2626",
-              "rotation": 0,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "hexagon",
-              "size": 80,
-              "color": "#dc2626",
-              "rotation": 0,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        }
-      ],
-      [
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "diamond",
-              "size": 80,
-              "color": "#dc2626",
-              "rotation": 0,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": []
-        }
-      ]
-    ],
-    "options": [
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "hexagon",
-            "size": 80,
-            "color": "#dc2626",
-            "rotation": 0,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "diamond",
-            "size": 80,
-            "color": "#dc2626",
-            "rotation": 0,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "star",
-            "size": 80,
-            "color": "#dc2626",
-            "rotation": 0,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "triangle",
-            "size": 80,
-            "color": "#dc2626",
-            "rotation": 0,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "square",
-            "size": 80,
-            "color": "#dc2626",
-            "rotation": 0,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "circle",
-            "size": 80,
-            "color": "#dc2626",
-            "rotation": 0,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      }
-    ],
-    "answer": 1,
-    "timeLimit": 40
-  },
-  {
-    "id": "SPM-006",
-    "set": "A",
-    "indexInSet": 6,
-    "globalIndex": 6,
-    "rule": "rotation 沿列递进",
-    "matrix": [
-      [
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "star",
-              "size": 80,
-              "color": "#1f2937",
-              "rotation": 0,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "star",
-              "size": 80,
-              "color": "#1f2937",
-              "rotation": 90,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        }
-      ],
-      [
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "star",
-              "size": 80,
-              "color": "#1f2937",
-              "rotation": 0,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": []
-        }
-      ]
-    ],
-    "options": [
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "star",
-            "size": 80,
-            "color": "#1f2937",
-            "rotation": 0,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "star",
-            "size": 80,
-            "color": "#1f2937",
-            "rotation": 180,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "star",
-            "size": 80,
-            "color": "#dc2626",
-            "rotation": 90,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "star",
-            "size": 80,
-            "color": "#1f2937",
-            "rotation": 270,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "star",
-            "size": 80,
-            "color": "#1f2937",
-            "rotation": 90,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "star",
-            "size": 80,
-            "color": "#1f2937",
-            "rotation": 90,
-            "fill": "solid",
-            "count": 2
-          }
-        ]
-      }
-    ],
-    "answer": 4,
-    "timeLimit": 40
-  },
-  {
-    "id": "SPM-007",
-    "set": "A",
-    "indexInSet": 7,
-    "globalIndex": 7,
-    "rule": "shape 沿列递进",
-    "matrix": [
-      [
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "square",
-              "size": 80,
-              "color": "#16a34a",
-              "rotation": 90,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "hexagon",
-              "size": 80,
-              "color": "#16a34a",
-              "rotation": 90,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        }
-      ],
-      [
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "square",
-              "size": 80,
-              "color": "#16a34a",
-              "rotation": 90,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": []
-        }
-      ]
-    ],
-    "options": [
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "square",
-            "size": 80,
-            "color": "#16a34a",
-            "rotation": 90,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "circle",
-            "size": 80,
-            "color": "#16a34a",
-            "rotation": 90,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "diamond",
-            "size": 80,
-            "color": "#16a34a",
-            "rotation": 90,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "star",
-            "size": 80,
-            "color": "#16a34a",
-            "rotation": 90,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "hexagon",
-            "size": 80,
-            "color": "#16a34a",
-            "rotation": 90,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "triangle",
-            "size": 80,
-            "color": "#16a34a",
-            "rotation": 90,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      }
-    ],
-    "answer": 4,
-    "timeLimit": 40
-  },
-  {
-    "id": "SPM-008",
-    "set": "A",
-    "indexInSet": 8,
-    "globalIndex": 8,
-    "rule": "count 沿行递进",
-    "matrix": [
-      [
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "diamond",
-              "size": 80,
-              "color": "#16a34a",
-              "rotation": 270,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "diamond",
-              "size": 80,
-              "color": "#16a34a",
-              "rotation": 270,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        }
-      ],
-      [
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "diamond",
-              "size": 80,
-              "color": "#16a34a",
-              "rotation": 270,
-              "fill": "solid",
-              "count": 2
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": []
-        }
-      ]
-    ],
-    "options": [
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "diamond",
-            "size": 80,
-            "color": "#16a34a",
-            "rotation": 180,
-            "fill": "solid",
-            "count": 2
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "square",
-            "size": 80,
-            "color": "#16a34a",
-            "rotation": 270,
-            "fill": "solid",
-            "count": 2
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "diamond",
-            "size": 80,
-            "color": "#16a34a",
-            "rotation": 270,
-            "fill": "hollow",
-            "count": 2
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "diamond",
-            "size": 80,
-            "color": "#16a34a",
-            "rotation": 270,
-            "fill": "solid",
-            "count": 2
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "diamond",
-            "size": 80,
-            "color": "#16a34a",
-            "rotation": 270,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "diamond",
-            "size": 80,
-            "color": "#16a34a",
-            "rotation": 270,
-            "fill": "solid",
-            "count": 3
-          }
-        ]
-      }
-    ],
-    "answer": 3,
-    "timeLimit": 40
-  },
-  {
-    "id": "SPM-009",
-    "set": "A",
-    "indexInSet": 9,
-    "globalIndex": 9,
-    "rule": "color 沿行递进",
-    "matrix": [
-      [
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "diamond",
-              "size": 80,
-              "color": "#2563eb",
-              "rotation": 180,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "diamond",
-              "size": 80,
-              "color": "#2563eb",
-              "rotation": 180,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        }
-      ],
-      [
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "diamond",
-              "size": 80,
-              "color": "#d97706",
-              "rotation": 180,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": []
-        }
-      ]
-    ],
-    "options": [
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "diamond",
-            "size": 80,
-            "color": "#d97706",
-            "rotation": 180,
-            "fill": "solid",
-            "count": 2
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "diamond",
-            "size": 80,
-            "color": "#2563eb",
-            "rotation": 180,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "diamond",
-            "size": 80,
-            "color": "#d97706",
-            "rotation": 180,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "diamond",
-            "size": 80,
-            "color": "#16a34a",
-            "rotation": 180,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "diamond",
-            "size": 80,
-            "color": "#1f2937",
-            "rotation": 180,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "diamond",
-            "size": 80,
-            "color": "#dc2626",
-            "rotation": 180,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      }
-    ],
-    "answer": 2,
-    "timeLimit": 40
-  },
-  {
-    "id": "SPM-010",
-    "set": "A",
-    "indexInSet": 10,
-    "globalIndex": 10,
-    "rule": "rotation 沿行递进",
-    "matrix": [
-      [
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "triangle",
-              "size": 80,
-              "color": "#d97706",
-              "rotation": 0,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "triangle",
-              "size": 80,
-              "color": "#d97706",
-              "rotation": 0,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        }
-      ],
-      [
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "triangle",
-              "size": 80,
-              "color": "#d97706",
-              "rotation": 90,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": []
-        }
-      ]
-    ],
-    "options": [
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "triangle",
-            "size": 80,
-            "color": "#d97706",
-            "rotation": 180,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "triangle",
-            "size": 80,
-            "color": "#d97706",
-            "rotation": 90,
-            "fill": "hollow",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "triangle",
-            "size": 80,
-            "color": "#d97706",
-            "rotation": 270,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "triangle",
-            "size": 80,
-            "color": "#d97706",
-            "rotation": 90,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "triangle",
-            "size": 80,
-            "color": "#d97706",
-            "rotation": 90,
-            "fill": "solid",
-            "count": 2
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "triangle",
-            "size": 80,
-            "color": "#d97706",
-            "rotation": 0,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      }
-    ],
-    "answer": 3,
-    "timeLimit": 40
-  },
-  {
-    "id": "SPM-011",
-    "set": "A",
-    "indexInSet": 11,
-    "globalIndex": 11,
     "rule": "color 沿列递进",
     "matrix": [
       [
@@ -1413,6 +309,282 @@ module.exports = [
             {
               "type": "star",
               "size": 80,
+              "color": "#dc2626",
+              "rotation": 270,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        }
+      ],
+      [
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "star",
+              "size": 80,
+              "color": "#2563eb",
+              "rotation": 270,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": []
+        }
+      ]
+    ],
+    "options": [
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "star",
+            "size": 80,
+            "color": "#2563eb",
+            "rotation": 270,
+            "fill": "solid",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "star",
+            "size": 80,
+            "color": "#16a34a",
+            "rotation": 270,
+            "fill": "solid",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "star",
+            "size": 80,
+            "color": "#dc2626",
+            "rotation": 270,
+            "fill": "solid",
+            "count": 2
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "star",
+            "size": 80,
+            "color": "#1f2937",
+            "rotation": 270,
+            "fill": "solid",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "star",
+            "size": 80,
+            "color": "#d97706",
+            "rotation": 270,
+            "fill": "solid",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "star",
+            "size": 80,
+            "color": "#dc2626",
+            "rotation": 270,
+            "fill": "solid",
+            "count": 1
+          }
+        ]
+      }
+    ],
+    "answer": 5,
+    "timeLimit": 40
+  },
+  {
+    "id": "SPM-004",
+    "set": "A",
+    "indexInSet": 4,
+    "globalIndex": 4,
+    "rule": "shape 沿行递进",
+    "matrix": [
+      [
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "square",
+              "size": 80,
+              "color": "#dc2626",
+              "rotation": 90,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "square",
+              "size": 80,
+              "color": "#dc2626",
+              "rotation": 90,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        }
+      ],
+      [
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "hexagon",
+              "size": 80,
+              "color": "#dc2626",
+              "rotation": 90,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": []
+        }
+      ]
+    ],
+    "options": [
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "circle",
+            "size": 80,
+            "color": "#dc2626",
+            "rotation": 90,
+            "fill": "solid",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "diamond",
+            "size": 80,
+            "color": "#dc2626",
+            "rotation": 90,
+            "fill": "solid",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "hexagon",
+            "size": 80,
+            "color": "#dc2626",
+            "rotation": 90,
+            "fill": "solid",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "star",
+            "size": 80,
+            "color": "#dc2626",
+            "rotation": 90,
+            "fill": "solid",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "triangle",
+            "size": 80,
+            "color": "#dc2626",
+            "rotation": 90,
+            "fill": "solid",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "square",
+            "size": 80,
+            "color": "#dc2626",
+            "rotation": 90,
+            "fill": "solid",
+            "count": 1
+          }
+        ]
+      }
+    ],
+    "answer": 2,
+    "timeLimit": 40
+  },
+  {
+    "id": "SPM-005",
+    "set": "A",
+    "indexInSet": 5,
+    "globalIndex": 5,
+    "rule": "color 沿列递进",
+    "matrix": [
+      [
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "hexagon",
+              "size": 80,
+              "color": "#16a34a",
+              "rotation": 270,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "hexagon",
+              "size": 80,
               "color": "#d97706",
               "rotation": 270,
               "fill": "solid",
@@ -1426,9 +598,9 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "star",
+              "type": "hexagon",
               "size": 80,
-              "color": "#2563eb",
+              "color": "#16a34a",
               "rotation": 270,
               "fill": "solid",
               "count": 1
@@ -1446,7 +618,7 @@ module.exports = [
         "bg": null,
         "shapes": [
           {
-            "type": "star",
+            "type": "hexagon",
             "size": 80,
             "color": "#dc2626",
             "rotation": 270,
@@ -1459,135 +631,10 @@ module.exports = [
         "bg": null,
         "shapes": [
           {
-            "type": "star",
-            "size": 80,
-            "color": "#d97706",
-            "rotation": 180,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "star",
-            "size": 80,
-            "color": "#2563eb",
-            "rotation": 270,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "star",
+            "type": "hexagon",
             "size": 80,
             "color": "#d97706",
             "rotation": 270,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "star",
-            "size": 80,
-            "color": "#1f2937",
-            "rotation": 270,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "star",
-            "size": 80,
-            "color": "#16a34a",
-            "rotation": 270,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      }
-    ],
-    "answer": 3,
-    "timeLimit": 40
-  },
-  {
-    "id": "SPM-012",
-    "set": "A",
-    "indexInSet": 12,
-    "globalIndex": 12,
-    "rule": "fill 沿行递进",
-    "matrix": [
-      [
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "star",
-              "size": 80,
-              "color": "#2563eb",
-              "rotation": 90,
-              "fill": "hollow",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "star",
-              "size": 80,
-              "color": "#2563eb",
-              "rotation": 90,
-              "fill": "hollow",
-              "count": 1
-            }
-          ]
-        }
-      ],
-      [
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "star",
-              "size": 80,
-              "color": "#2563eb",
-              "rotation": 90,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": []
-        }
-      ]
-    ],
-    "options": [
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "star",
-            "size": 80,
-            "color": "#2563eb",
-            "rotation": 90,
             "fill": "hollow",
             "count": 1
           }
@@ -1597,35 +644,9 @@ module.exports = [
         "bg": null,
         "shapes": [
           {
-            "type": "star",
+            "type": "hexagon",
             "size": 80,
-            "color": "#1f2937",
-            "rotation": 90,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "star",
-            "size": 80,
-            "color": "#2563eb",
-            "rotation": 90,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "star",
-            "size": 80,
-            "color": "#2563eb",
+            "color": "#16a34a",
             "rotation": 270,
             "fill": "solid",
             "count": 1
@@ -1636,10 +657,10 @@ module.exports = [
         "bg": null,
         "shapes": [
           {
-            "type": "star",
+            "type": "hexagon",
             "size": 80,
-            "color": "#dc2626",
-            "rotation": 90,
+            "color": "#d97706",
+            "rotation": 270,
             "fill": "solid",
             "count": 1
           }
@@ -1649,150 +670,10 @@ module.exports = [
         "bg": null,
         "shapes": [
           {
-            "type": "star",
+            "type": "hexagon",
             "size": 80,
-            "color": "#2563eb",
-            "rotation": 0,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      }
-    ],
-    "answer": 2,
-    "timeLimit": 40
-  },
-  {
-    "id": "SPM-013",
-    "set": "B",
-    "indexInSet": 1,
-    "globalIndex": 13,
-    "rule": "shape 沿行递进",
-    "matrix": [
-      [
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "star",
-              "size": 80,
-              "color": "#2563eb",
-              "rotation": 0,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "star",
-              "size": 80,
-              "color": "#2563eb",
-              "rotation": 0,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "star",
-              "size": 80,
-              "color": "#2563eb",
-              "rotation": 0,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        }
-      ],
-      [
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "circle",
-              "size": 80,
-              "color": "#2563eb",
-              "rotation": 0,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "circle",
-              "size": 80,
-              "color": "#2563eb",
-              "rotation": 0,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "circle",
-              "size": 80,
-              "color": "#2563eb",
-              "rotation": 0,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        }
-      ],
-      [
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "diamond",
-              "size": 80,
-              "color": "#2563eb",
-              "rotation": 0,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "diamond",
-              "size": 80,
-              "color": "#2563eb",
-              "rotation": 0,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": []
-        }
-      ]
-    ],
-    "options": [
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "star",
-            "size": 80,
-            "color": "#2563eb",
-            "rotation": 0,
+            "color": "#1f2937",
+            "rotation": 270,
             "fill": "solid",
             "count": 1
           }
@@ -1805,6 +686,217 @@ module.exports = [
             "type": "hexagon",
             "size": 80,
             "color": "#2563eb",
+            "rotation": 270,
+            "fill": "solid",
+            "count": 1
+          }
+        ]
+      }
+    ],
+    "answer": 3,
+    "timeLimit": 40
+  },
+  {
+    "id": "SPM-006",
+    "set": "A",
+    "indexInSet": 6,
+    "globalIndex": 6,
+    "rule": "fill 沿行递进",
+    "matrix": [
+      [
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "square",
+              "size": 80,
+              "color": "#16a34a",
+              "rotation": 180,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "square",
+              "size": 80,
+              "color": "#16a34a",
+              "rotation": 180,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        }
+      ],
+      [
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "square",
+              "size": 80,
+              "color": "#16a34a",
+              "rotation": 180,
+              "fill": "hollow",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": []
+        }
+      ]
+    ],
+    "options": [
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "square",
+            "size": 80,
+            "color": "#1f2937",
+            "rotation": 180,
+            "fill": "hollow",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "square",
+            "size": 80,
+            "color": "#16a34a",
+            "rotation": 180,
+            "fill": "hollow",
+            "count": 3
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "square",
+            "size": 80,
+            "color": "#d97706",
+            "rotation": 180,
+            "fill": "hollow",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "square",
+            "size": 80,
+            "color": "#16a34a",
+            "rotation": 180,
+            "fill": "solid",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "square",
+            "size": 80,
+            "color": "#16a34a",
+            "rotation": 180,
+            "fill": "hollow",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "square",
+            "size": 80,
+            "color": "#2563eb",
+            "rotation": 180,
+            "fill": "hollow",
+            "count": 1
+          }
+        ]
+      }
+    ],
+    "answer": 4,
+    "timeLimit": 40
+  },
+  {
+    "id": "SPM-007",
+    "set": "A",
+    "indexInSet": 7,
+    "globalIndex": 7,
+    "rule": "count 沿行递进",
+    "matrix": [
+      [
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "triangle",
+              "size": 80,
+              "color": "#d97706",
+              "rotation": 0,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "triangle",
+              "size": 80,
+              "color": "#d97706",
+              "rotation": 0,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        }
+      ],
+      [
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "triangle",
+              "size": 80,
+              "color": "#d97706",
+              "rotation": 0,
+              "fill": "solid",
+              "count": 2
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": []
+        }
+      ]
+    ],
+    "options": [
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "triangle",
+            "size": 80,
+            "color": "#d97706",
             "rotation": 0,
             "fill": "solid",
             "count": 1
@@ -1817,10 +909,135 @@ module.exports = [
           {
             "type": "triangle",
             "size": 80,
-            "color": "#2563eb",
+            "color": "#d97706",
             "rotation": 0,
             "fill": "solid",
-            "count": 1
+            "count": 3
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "triangle",
+            "size": 80,
+            "color": "#16a34a",
+            "rotation": 0,
+            "fill": "solid",
+            "count": 2
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "triangle",
+            "size": 80,
+            "color": "#d97706",
+            "rotation": 0,
+            "fill": "solid",
+            "count": 2
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "diamond",
+            "size": 80,
+            "color": "#d97706",
+            "rotation": 0,
+            "fill": "solid",
+            "count": 2
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "triangle",
+            "size": 80,
+            "color": "#d97706",
+            "rotation": 0,
+            "fill": "hollow",
+            "count": 2
+          }
+        ]
+      }
+    ],
+    "answer": 3,
+    "timeLimit": 40
+  },
+  {
+    "id": "SPM-008",
+    "set": "A",
+    "indexInSet": 8,
+    "globalIndex": 8,
+    "rule": "count 沿行递进",
+    "matrix": [
+      [
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "diamond",
+              "size": 80,
+              "color": "#d97706",
+              "rotation": 90,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "diamond",
+              "size": 80,
+              "color": "#d97706",
+              "rotation": 90,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        }
+      ],
+      [
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "diamond",
+              "size": 80,
+              "color": "#d97706",
+              "rotation": 90,
+              "fill": "solid",
+              "count": 2
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": []
+        }
+      ]
+    ],
+    "options": [
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "diamond",
+            "size": 80,
+            "color": "#d97706",
+            "rotation": 90,
+            "fill": "solid",
+            "count": 3
           }
         ]
       },
@@ -1830,8 +1047,34 @@ module.exports = [
           {
             "type": "circle",
             "size": 80,
-            "color": "#2563eb",
-            "rotation": 0,
+            "color": "#d97706",
+            "rotation": 90,
+            "fill": "solid",
+            "count": 2
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "diamond",
+            "size": 80,
+            "color": "#1f2937",
+            "rotation": 90,
+            "fill": "solid",
+            "count": 2
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "diamond",
+            "size": 80,
+            "color": "#d97706",
+            "rotation": 90,
             "fill": "solid",
             "count": 1
           }
@@ -1843,7 +1086,119 @@ module.exports = [
           {
             "type": "diamond",
             "size": 80,
-            "color": "#2563eb",
+            "color": "#d97706",
+            "rotation": 90,
+            "fill": "hollow",
+            "count": 2
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "diamond",
+            "size": 80,
+            "color": "#d97706",
+            "rotation": 90,
+            "fill": "solid",
+            "count": 2
+          }
+        ]
+      }
+    ],
+    "answer": 5,
+    "timeLimit": 40
+  },
+  {
+    "id": "SPM-009",
+    "set": "A",
+    "indexInSet": 9,
+    "globalIndex": 9,
+    "rule": "fill 沿行递进",
+    "matrix": [
+      [
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "square",
+              "size": 80,
+              "color": "#dc2626",
+              "rotation": 0,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "square",
+              "size": 80,
+              "color": "#dc2626",
+              "rotation": 0,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        }
+      ],
+      [
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "square",
+              "size": 80,
+              "color": "#dc2626",
+              "rotation": 0,
+              "fill": "hollow",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": []
+        }
+      ]
+    ],
+    "options": [
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "circle",
+            "size": 80,
+            "color": "#dc2626",
+            "rotation": 0,
+            "fill": "hollow",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "square",
+            "size": 80,
+            "color": "#dc2626",
+            "rotation": 0,
+            "fill": "hollow",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "square",
+            "size": 80,
+            "color": "#dc2626",
             "rotation": 0,
             "fill": "solid",
             "count": 1
@@ -1856,33 +1211,197 @@ module.exports = [
           {
             "type": "square",
             "size": 80,
-            "color": "#2563eb",
+            "color": "#1f2937",
             "rotation": 0,
-            "fill": "solid",
+            "fill": "hollow",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "square",
+            "size": 80,
+            "color": "#dc2626",
+            "rotation": 0,
+            "fill": "hollow",
+            "count": 3
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "square",
+            "size": 80,
+            "color": "#d97706",
+            "rotation": 0,
+            "fill": "hollow",
             "count": 1
           }
         ]
       }
     ],
-    "answer": 4,
+    "answer": 1,
     "timeLimit": 40
   },
   {
-    "id": "SPM-014",
-    "set": "B",
-    "indexInSet": 2,
-    "globalIndex": 14,
-    "rule": "rotation 沿列递进",
+    "id": "SPM-010",
+    "set": "A",
+    "indexInSet": 10,
+    "globalIndex": 10,
+    "rule": "fill 沿列递进",
     "matrix": [
       [
         {
           "bg": null,
           "shapes": [
             {
-              "type": "diamond",
+              "type": "square",
+              "size": 80,
+              "color": "#16a34a",
+              "rotation": 180,
+              "fill": "hollow",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "square",
+              "size": 80,
+              "color": "#16a34a",
+              "rotation": 180,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        }
+      ],
+      [
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "square",
+              "size": 80,
+              "color": "#16a34a",
+              "rotation": 180,
+              "fill": "hollow",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": []
+        }
+      ]
+    ],
+    "options": [
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "square",
+            "size": 80,
+            "color": "#16a34a",
+            "rotation": 180,
+            "fill": "solid",
+            "count": 2
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "square",
+            "size": 80,
+            "color": "#1f2937",
+            "rotation": 180,
+            "fill": "solid",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "square",
+            "size": 80,
+            "color": "#16a34a",
+            "rotation": 180,
+            "fill": "solid",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "diamond",
+            "size": 80,
+            "color": "#16a34a",
+            "rotation": 180,
+            "fill": "solid",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "square",
+            "size": 80,
+            "color": "#16a34a",
+            "rotation": 180,
+            "fill": "hollow",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "square",
+            "size": 80,
+            "color": "#d97706",
+            "rotation": 180,
+            "fill": "solid",
+            "count": 1
+          }
+        ]
+      }
+    ],
+    "answer": 2,
+    "timeLimit": 40
+  },
+  {
+    "id": "SPM-011",
+    "set": "A",
+    "indexInSet": 11,
+    "globalIndex": 11,
+    "rule": "color 沿行递进",
+    "matrix": [
+      [
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "square",
               "size": 80,
               "color": "#dc2626",
-              "rotation": 0,
+              "rotation": 180,
               "fill": "solid",
               "count": 1
             }
@@ -1892,20 +1411,7 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "diamond",
-              "size": 80,
-              "color": "#dc2626",
-              "rotation": 90,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "diamond",
+              "type": "square",
               "size": 80,
               "color": "#dc2626",
               "rotation": 180,
@@ -1920,10 +1426,10 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "diamond",
+              "type": "square",
               "size": 80,
-              "color": "#dc2626",
-              "rotation": 0,
+              "color": "#d97706",
+              "rotation": 180,
               "fill": "solid",
               "count": 1
             }
@@ -1931,11 +1437,108 @@ module.exports = [
         },
         {
           "bg": null,
+          "shapes": []
+        }
+      ]
+    ],
+    "options": [
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "square",
+            "size": 80,
+            "color": "#d97706",
+            "rotation": 180,
+            "fill": "solid",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "square",
+            "size": 80,
+            "color": "#1f2937",
+            "rotation": 180,
+            "fill": "solid",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "square",
+            "size": 80,
+            "color": "#16a34a",
+            "rotation": 180,
+            "fill": "solid",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "square",
+            "size": 80,
+            "color": "#2563eb",
+            "rotation": 180,
+            "fill": "solid",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "square",
+            "size": 80,
+            "color": "#dc2626",
+            "rotation": 180,
+            "fill": "solid",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "square",
+            "size": 80,
+            "color": "#d97706",
+            "rotation": 180,
+            "fill": "solid",
+            "count": 3
+          }
+        ]
+      }
+    ],
+    "answer": 0,
+    "timeLimit": 40
+  },
+  {
+    "id": "SPM-012",
+    "set": "A",
+    "indexInSet": 12,
+    "globalIndex": 12,
+    "rule": "color 沿行递进",
+    "matrix": [
+      [
+        {
+          "bg": null,
           "shapes": [
             {
-              "type": "diamond",
+              "type": "square",
               "size": 80,
-              "color": "#dc2626",
+              "color": "#d97706",
               "rotation": 90,
               "fill": "solid",
               "count": 1
@@ -1946,10 +1549,10 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "diamond",
+              "type": "square",
               "size": 80,
-              "color": "#dc2626",
-              "rotation": 180,
+              "color": "#d97706",
+              "rotation": 90,
               "fill": "solid",
               "count": 1
             }
@@ -1961,20 +1564,7 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "diamond",
-              "size": 80,
-              "color": "#dc2626",
-              "rotation": 0,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "diamond",
+              "type": "square",
               "size": 80,
               "color": "#dc2626",
               "rotation": 90,
@@ -1994,7 +1584,264 @@ module.exports = [
         "bg": null,
         "shapes": [
           {
-            "type": "diamond",
+            "type": "square",
+            "size": 80,
+            "color": "#16a34a",
+            "rotation": 90,
+            "fill": "solid",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "square",
+            "size": 80,
+            "color": "#2563eb",
+            "rotation": 90,
+            "fill": "solid",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "circle",
+            "size": 80,
+            "color": "#dc2626",
+            "rotation": 90,
+            "fill": "solid",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "square",
+            "size": 80,
+            "color": "#d97706",
+            "rotation": 90,
+            "fill": "solid",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "square",
+            "size": 80,
+            "color": "#dc2626",
+            "rotation": 90,
+            "fill": "solid",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "square",
+            "size": 80,
+            "color": "#1f2937",
+            "rotation": 90,
+            "fill": "solid",
+            "count": 1
+          }
+        ]
+      }
+    ],
+    "answer": 4,
+    "timeLimit": 40
+  },
+  {
+    "id": "SPM-013",
+    "set": "B",
+    "indexInSet": 1,
+    "globalIndex": 13,
+    "rule": "shape 沿列递进",
+    "matrix": [
+      [
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "triangle",
+              "size": 80,
+              "color": "#d97706",
+              "rotation": 180,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "diamond",
+              "size": 80,
+              "color": "#d97706",
+              "rotation": 180,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "hexagon",
+              "size": 80,
+              "color": "#d97706",
+              "rotation": 180,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        }
+      ],
+      [
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "triangle",
+              "size": 80,
+              "color": "#d97706",
+              "rotation": 180,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "diamond",
+              "size": 80,
+              "color": "#d97706",
+              "rotation": 180,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "hexagon",
+              "size": 80,
+              "color": "#d97706",
+              "rotation": 180,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        }
+      ],
+      [
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "triangle",
+              "size": 80,
+              "color": "#d97706",
+              "rotation": 180,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "diamond",
+              "size": 80,
+              "color": "#d97706",
+              "rotation": 180,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": []
+        }
+      ]
+    ],
+    "options": [
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "square",
+            "size": 80,
+            "color": "#d97706",
+            "rotation": 180,
+            "fill": "solid",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "star",
+            "size": 80,
+            "color": "#d97706",
+            "rotation": 180,
+            "fill": "solid",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "triangle",
+            "size": 80,
+            "color": "#d97706",
+            "rotation": 180,
+            "fill": "solid",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "hexagon",
+            "size": 80,
+            "color": "#d97706",
+            "rotation": 180,
+            "fill": "solid",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "circle",
             "size": 80,
             "color": "#d97706",
             "rotation": 180,
@@ -2009,33 +1856,147 @@ module.exports = [
           {
             "type": "diamond",
             "size": 80,
-            "color": "#dc2626",
-            "rotation": 0,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "triangle",
-            "size": 80,
-            "color": "#dc2626",
+            "color": "#d97706",
             "rotation": 180,
             "fill": "solid",
             "count": 1
           }
         ]
-      },
+      }
+    ],
+    "answer": 3,
+    "timeLimit": 40
+  },
+  {
+    "id": "SPM-014",
+    "set": "B",
+    "indexInSet": 2,
+    "globalIndex": 14,
+    "rule": "count 沿行递进",
+    "matrix": [
+      [
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "diamond",
+              "size": 80,
+              "color": "#d97706",
+              "rotation": 270,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "diamond",
+              "size": 80,
+              "color": "#d97706",
+              "rotation": 270,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "diamond",
+              "size": 80,
+              "color": "#d97706",
+              "rotation": 270,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        }
+      ],
+      [
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "diamond",
+              "size": 80,
+              "color": "#d97706",
+              "rotation": 270,
+              "fill": "solid",
+              "count": 2
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "diamond",
+              "size": 80,
+              "color": "#d97706",
+              "rotation": 270,
+              "fill": "solid",
+              "count": 2
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "diamond",
+              "size": 80,
+              "color": "#d97706",
+              "rotation": 270,
+              "fill": "solid",
+              "count": 2
+            }
+          ]
+        }
+      ],
+      [
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "diamond",
+              "size": 80,
+              "color": "#d97706",
+              "rotation": 270,
+              "fill": "solid",
+              "count": 3
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "diamond",
+              "size": 80,
+              "color": "#d97706",
+              "rotation": 270,
+              "fill": "solid",
+              "count": 3
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": []
+        }
+      ]
+    ],
+    "options": [
       {
         "bg": null,
         "shapes": [
           {
             "type": "diamond",
             "size": 80,
-            "color": "#dc2626",
+            "color": "#d97706",
             "rotation": 270,
             "fill": "solid",
             "count": 1
@@ -2048,10 +2009,36 @@ module.exports = [
           {
             "type": "diamond",
             "size": 80,
-            "color": "#dc2626",
-            "rotation": 90,
+            "color": "#d97706",
+            "rotation": 270,
             "fill": "solid",
-            "count": 1
+            "count": 2
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "hexagon",
+            "size": 80,
+            "color": "#d97706",
+            "rotation": 270,
+            "fill": "solid",
+            "count": 3
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "star",
+            "size": 80,
+            "color": "#d97706",
+            "rotation": 270,
+            "fill": "solid",
+            "count": 3
           }
         ]
       },
@@ -2061,10 +2048,23 @@ module.exports = [
           {
             "type": "diamond",
             "size": 80,
-            "color": "#dc2626",
-            "rotation": 180,
+            "color": "#d97706",
+            "rotation": 270,
+            "fill": "hollow",
+            "count": 3
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "diamond",
+            "size": 80,
+            "color": "#d97706",
+            "rotation": 270,
             "fill": "solid",
-            "count": 1
+            "count": 3
           }
         ]
       }
@@ -2077,17 +2077,17 @@ module.exports = [
     "set": "B",
     "indexInSet": 3,
     "globalIndex": 15,
-    "rule": "rotation 沿列递进",
+    "rule": "shape 沿列递进",
     "matrix": [
       [
         {
           "bg": null,
           "shapes": [
             {
-              "type": "circle",
+              "type": "triangle",
               "size": 80,
-              "color": "#16a34a",
-              "rotation": 0,
+              "color": "#2563eb",
+              "rotation": 180,
               "fill": "solid",
               "count": 1
             }
@@ -2097,10 +2097,10 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "circle",
+              "type": "star",
               "size": 80,
-              "color": "#16a34a",
-              "rotation": 90,
+              "color": "#2563eb",
+              "rotation": 180,
               "fill": "solid",
               "count": 1
             }
@@ -2110,9 +2110,9 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "circle",
+              "type": "square",
               "size": 80,
-              "color": "#16a34a",
+              "color": "#2563eb",
               "rotation": 180,
               "fill": "solid",
               "count": 1
@@ -2125,10 +2125,10 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "circle",
+              "type": "triangle",
               "size": 80,
-              "color": "#16a34a",
-              "rotation": 0,
+              "color": "#2563eb",
+              "rotation": 180,
               "fill": "solid",
               "count": 1
             }
@@ -2138,10 +2138,10 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "circle",
+              "type": "star",
               "size": 80,
-              "color": "#16a34a",
-              "rotation": 90,
+              "color": "#2563eb",
+              "rotation": 180,
               "fill": "solid",
               "count": 1
             }
@@ -2151,9 +2151,9 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "circle",
+              "type": "square",
               "size": 80,
-              "color": "#16a34a",
+              "color": "#2563eb",
               "rotation": 180,
               "fill": "solid",
               "count": 1
@@ -2166,10 +2166,10 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "circle",
+              "type": "triangle",
               "size": 80,
-              "color": "#16a34a",
-              "rotation": 0,
+              "color": "#2563eb",
+              "rotation": 180,
               "fill": "solid",
               "count": 1
             }
@@ -2179,10 +2179,10 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "circle",
+              "type": "star",
               "size": 80,
-              "color": "#16a34a",
-              "rotation": 90,
+              "color": "#2563eb",
+              "rotation": 180,
               "fill": "solid",
               "count": 1
             }
@@ -2199,48 +2199,9 @@ module.exports = [
         "bg": null,
         "shapes": [
           {
-            "type": "circle",
+            "type": "diamond",
             "size": 80,
-            "color": "#16a34a",
-            "rotation": 90,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "circle",
-            "size": 80,
-            "color": "#16a34a",
-            "rotation": 0,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "circle",
-            "size": 80,
-            "color": "#d97706",
-            "rotation": 180,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "circle",
-            "size": 80,
-            "color": "#16a34a",
+            "color": "#2563eb",
             "rotation": 180,
             "fill": "solid",
             "count": 1
@@ -2253,7 +2214,7 @@ module.exports = [
           {
             "type": "square",
             "size": 80,
-            "color": "#16a34a",
+            "color": "#2563eb",
             "rotation": 180,
             "fill": "solid",
             "count": 1
@@ -2266,15 +2227,54 @@ module.exports = [
           {
             "type": "circle",
             "size": 80,
-            "color": "#16a34a",
-            "rotation": 270,
+            "color": "#2563eb",
+            "rotation": 180,
+            "fill": "solid",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "triangle",
+            "size": 80,
+            "color": "#2563eb",
+            "rotation": 180,
+            "fill": "solid",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "hexagon",
+            "size": 80,
+            "color": "#2563eb",
+            "rotation": 180,
+            "fill": "solid",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "star",
+            "size": 80,
+            "color": "#2563eb",
+            "rotation": 180,
             "fill": "solid",
             "count": 1
           }
         ]
       }
     ],
-    "answer": 3,
+    "answer": 1,
     "timeLimit": 40
   },
   {
@@ -2282,17 +2282,17 @@ module.exports = [
     "set": "B",
     "indexInSet": 4,
     "globalIndex": 16,
-    "rule": "shape 沿行递进",
+    "rule": "count 沿行递进",
     "matrix": [
       [
         {
           "bg": null,
           "shapes": [
             {
-              "type": "triangle",
+              "type": "star",
               "size": 80,
-              "color": "#dc2626",
-              "rotation": 0,
+              "color": "#1f2937",
+              "rotation": 270,
               "fill": "solid",
               "count": 1
             }
@@ -2302,10 +2302,10 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "triangle",
+              "type": "star",
               "size": 80,
-              "color": "#dc2626",
-              "rotation": 0,
+              "color": "#1f2937",
+              "rotation": 270,
               "fill": "solid",
               "count": 1
             }
@@ -2315,10 +2315,10 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "triangle",
+              "type": "star",
               "size": 80,
-              "color": "#dc2626",
-              "rotation": 0,
+              "color": "#1f2937",
+              "rotation": 270,
               "fill": "solid",
               "count": 1
             }
@@ -2330,12 +2330,12 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "square",
+              "type": "star",
               "size": 80,
-              "color": "#dc2626",
-              "rotation": 0,
+              "color": "#1f2937",
+              "rotation": 270,
               "fill": "solid",
-              "count": 1
+              "count": 2
             }
           ]
         },
@@ -2343,12 +2343,12 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "square",
+              "type": "star",
               "size": 80,
-              "color": "#dc2626",
-              "rotation": 0,
+              "color": "#1f2937",
+              "rotation": 270,
               "fill": "solid",
-              "count": 1
+              "count": 2
             }
           ]
         },
@@ -2356,12 +2356,12 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "square",
+              "type": "star",
               "size": 80,
-              "color": "#dc2626",
-              "rotation": 0,
+              "color": "#1f2937",
+              "rotation": 270,
               "fill": "solid",
-              "count": 1
+              "count": 2
             }
           ]
         }
@@ -2371,12 +2371,12 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "hexagon",
+              "type": "star",
               "size": 80,
-              "color": "#dc2626",
-              "rotation": 0,
+              "color": "#1f2937",
+              "rotation": 270,
               "fill": "solid",
-              "count": 1
+              "count": 3
             }
           ]
         },
@@ -2384,12 +2384,12 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "hexagon",
+              "type": "star",
               "size": 80,
-              "color": "#dc2626",
-              "rotation": 0,
+              "color": "#1f2937",
+              "rotation": 270,
               "fill": "solid",
-              "count": 1
+              "count": 3
             }
           ]
         },
@@ -2406,10 +2406,10 @@ module.exports = [
           {
             "type": "star",
             "size": 80,
-            "color": "#dc2626",
-            "rotation": 0,
-            "fill": "solid",
-            "count": 1
+            "color": "#1f2937",
+            "rotation": 270,
+            "fill": "hollow",
+            "count": 3
           }
         ]
       },
@@ -2417,23 +2417,10 @@ module.exports = [
         "bg": null,
         "shapes": [
           {
-            "type": "triangle",
+            "type": "star",
             "size": 80,
-            "color": "#dc2626",
-            "rotation": 0,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "diamond",
-            "size": 80,
-            "color": "#dc2626",
-            "rotation": 0,
+            "color": "#1f2937",
+            "rotation": 270,
             "fill": "solid",
             "count": 1
           }
@@ -2445,10 +2432,10 @@ module.exports = [
           {
             "type": "hexagon",
             "size": 80,
-            "color": "#dc2626",
-            "rotation": 0,
+            "color": "#1f2937",
+            "rotation": 270,
             "fill": "solid",
-            "count": 1
+            "count": 3
           }
         ]
       },
@@ -2456,12 +2443,12 @@ module.exports = [
         "bg": null,
         "shapes": [
           {
-            "type": "circle",
+            "type": "star",
             "size": 80,
-            "color": "#dc2626",
-            "rotation": 0,
+            "color": "#1f2937",
+            "rotation": 270,
             "fill": "solid",
-            "count": 1
+            "count": 3
           }
         ]
       },
@@ -2469,12 +2456,25 @@ module.exports = [
         "bg": null,
         "shapes": [
           {
-            "type": "square",
+            "type": "diamond",
             "size": 80,
-            "color": "#dc2626",
-            "rotation": 0,
+            "color": "#1f2937",
+            "rotation": 270,
             "fill": "solid",
-            "count": 1
+            "count": 3
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "star",
+            "size": 80,
+            "color": "#1f2937",
+            "rotation": 270,
+            "fill": "solid",
+            "count": 2
           }
         ]
       }
@@ -2494,9 +2494,9 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "star",
+              "type": "hexagon",
               "size": 80,
-              "color": "#2563eb",
+              "color": "#d97706",
               "rotation": 180,
               "fill": "solid",
               "count": 1
@@ -2507,9 +2507,9 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "star",
+              "type": "hexagon",
               "size": 80,
-              "color": "#2563eb",
+              "color": "#d97706",
               "rotation": 180,
               "fill": "solid",
               "count": 1
@@ -2520,9 +2520,9 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "star",
+              "type": "hexagon",
               "size": 80,
-              "color": "#2563eb",
+              "color": "#d97706",
               "rotation": 180,
               "fill": "solid",
               "count": 1
@@ -2535,9 +2535,9 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "star",
+              "type": "hexagon",
               "size": 80,
-              "color": "#2563eb",
+              "color": "#d97706",
               "rotation": 180,
               "fill": "solid",
               "count": 2
@@ -2548,9 +2548,9 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "star",
+              "type": "hexagon",
               "size": 80,
-              "color": "#2563eb",
+              "color": "#d97706",
               "rotation": 180,
               "fill": "solid",
               "count": 2
@@ -2561,9 +2561,9 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "star",
+              "type": "hexagon",
               "size": 80,
-              "color": "#2563eb",
+              "color": "#d97706",
               "rotation": 180,
               "fill": "solid",
               "count": 2
@@ -2576,9 +2576,9 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "star",
+              "type": "hexagon",
               "size": 80,
-              "color": "#2563eb",
+              "color": "#d97706",
               "rotation": 180,
               "fill": "solid",
               "count": 3
@@ -2589,9 +2589,9 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "star",
+              "type": "hexagon",
               "size": 80,
-              "color": "#2563eb",
+              "color": "#d97706",
               "rotation": 180,
               "fill": "solid",
               "count": 3
@@ -2609,12 +2609,12 @@ module.exports = [
         "bg": null,
         "shapes": [
           {
-            "type": "star",
+            "type": "hexagon",
             "size": 80,
             "color": "#2563eb",
             "rotation": 180,
             "fill": "solid",
-            "count": 2
+            "count": 3
           }
         ]
       },
@@ -2623,6 +2623,45 @@ module.exports = [
         "shapes": [
           {
             "type": "star",
+            "size": 80,
+            "color": "#d97706",
+            "rotation": 180,
+            "fill": "solid",
+            "count": 3
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "hexagon",
+            "size": 80,
+            "color": "#d97706",
+            "rotation": 180,
+            "fill": "solid",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "hexagon",
+            "size": 80,
+            "color": "#d97706",
+            "rotation": 180,
+            "fill": "solid",
+            "count": 3
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "hexagon",
             "size": 80,
             "color": "#1f2937",
             "rotation": 180,
@@ -2635,256 +2674,12 @@ module.exports = [
         "bg": null,
         "shapes": [
           {
-            "type": "star",
-            "size": 80,
-            "color": "#2563eb",
-            "rotation": 180,
-            "fill": "solid",
-            "count": 3
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "star",
-            "size": 80,
-            "color": "#2563eb",
-            "rotation": 180,
-            "fill": "hollow",
-            "count": 3
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "star",
-            "size": 80,
-            "color": "#2563eb",
-            "rotation": 180,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
             "type": "hexagon",
             "size": 80,
-            "color": "#2563eb",
-            "rotation": 180,
-            "fill": "solid",
-            "count": 3
-          }
-        ]
-      }
-    ],
-    "answer": 2,
-    "timeLimit": 40
-  },
-  {
-    "id": "SPM-018",
-    "set": "B",
-    "indexInSet": 6,
-    "globalIndex": 18,
-    "rule": "rotation 沿列递进",
-    "matrix": [
-      [
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "square",
-              "size": 80,
-              "color": "#d97706",
-              "rotation": 0,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "square",
-              "size": 80,
-              "color": "#d97706",
-              "rotation": 90,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "square",
-              "size": 80,
-              "color": "#d97706",
-              "rotation": 180,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        }
-      ],
-      [
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "square",
-              "size": 80,
-              "color": "#d97706",
-              "rotation": 0,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "square",
-              "size": 80,
-              "color": "#d97706",
-              "rotation": 90,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "square",
-              "size": 80,
-              "color": "#d97706",
-              "rotation": 180,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        }
-      ],
-      [
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "square",
-              "size": 80,
-              "color": "#d97706",
-              "rotation": 0,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "square",
-              "size": 80,
-              "color": "#d97706",
-              "rotation": 90,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": []
-        }
-      ]
-    ],
-    "options": [
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "square",
-            "size": 80,
-            "color": "#d97706",
-            "rotation": 180,
-            "fill": "hollow",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "square",
-            "size": 80,
-            "color": "#2563eb",
-            "rotation": 180,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "square",
-            "size": 80,
-            "color": "#d97706",
-            "rotation": 90,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "square",
-            "size": 80,
             "color": "#d97706",
             "rotation": 180,
             "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "square",
-            "size": 80,
-            "color": "#d97706",
-            "rotation": 270,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "square",
-            "size": 80,
-            "color": "#d97706",
-            "rotation": 0,
-            "fill": "solid",
-            "count": 1
+            "count": 2
           }
         ]
       }
@@ -2893,10 +2688,10 @@ module.exports = [
     "timeLimit": 40
   },
   {
-    "id": "SPM-019",
+    "id": "SPM-018",
     "set": "B",
-    "indexInSet": 7,
-    "globalIndex": 19,
+    "indexInSet": 6,
+    "globalIndex": 18,
     "rule": "count 沿列递进",
     "matrix": [
       [
@@ -2904,9 +2699,9 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "triangle",
+              "type": "diamond",
               "size": 80,
-              "color": "#2563eb",
+              "color": "#dc2626",
               "rotation": 270,
               "fill": "solid",
               "count": 1
@@ -2917,9 +2712,9 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "triangle",
+              "type": "diamond",
               "size": 80,
-              "color": "#2563eb",
+              "color": "#dc2626",
               "rotation": 270,
               "fill": "solid",
               "count": 2
@@ -2930,9 +2725,9 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "triangle",
+              "type": "diamond",
               "size": 80,
-              "color": "#2563eb",
+              "color": "#dc2626",
               "rotation": 270,
               "fill": "solid",
               "count": 3
@@ -2945,9 +2740,9 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "triangle",
+              "type": "diamond",
               "size": 80,
-              "color": "#2563eb",
+              "color": "#dc2626",
               "rotation": 270,
               "fill": "solid",
               "count": 1
@@ -2958,9 +2753,9 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "triangle",
+              "type": "diamond",
               "size": 80,
-              "color": "#2563eb",
+              "color": "#dc2626",
               "rotation": 270,
               "fill": "solid",
               "count": 2
@@ -2971,9 +2766,9 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "triangle",
+              "type": "diamond",
               "size": 80,
-              "color": "#2563eb",
+              "color": "#dc2626",
               "rotation": 270,
               "fill": "solid",
               "count": 3
@@ -2986,9 +2781,9 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "triangle",
+              "type": "diamond",
               "size": 80,
-              "color": "#2563eb",
+              "color": "#dc2626",
               "rotation": 270,
               "fill": "solid",
               "count": 1
@@ -2999,9 +2794,9 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "triangle",
+              "type": "diamond",
               "size": 80,
-              "color": "#2563eb",
+              "color": "#dc2626",
               "rotation": 270,
               "fill": "solid",
               "count": 2
@@ -3019,35 +2814,9 @@ module.exports = [
         "bg": null,
         "shapes": [
           {
-            "type": "triangle",
+            "type": "diamond",
             "size": 80,
-            "color": "#2563eb",
-            "rotation": 270,
-            "fill": "solid",
-            "count": 3
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "triangle",
-            "size": 80,
-            "color": "#2563eb",
-            "rotation": 90,
-            "fill": "solid",
-            "count": 3
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "triangle",
-            "size": 80,
-            "color": "#2563eb",
+            "color": "#dc2626",
             "rotation": 270,
             "fill": "hollow",
             "count": 3
@@ -3058,7 +2827,33 @@ module.exports = [
         "bg": null,
         "shapes": [
           {
-            "type": "triangle",
+            "type": "diamond",
+            "size": 80,
+            "color": "#1f2937",
+            "rotation": 270,
+            "fill": "solid",
+            "count": 3
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "diamond",
+            "size": 80,
+            "color": "#dc2626",
+            "rotation": 270,
+            "fill": "solid",
+            "count": 2
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "star",
             "size": 80,
             "color": "#dc2626",
             "rotation": 270,
@@ -3071,12 +2866,12 @@ module.exports = [
         "bg": null,
         "shapes": [
           {
-            "type": "triangle",
+            "type": "diamond",
             "size": 80,
-            "color": "#2563eb",
+            "color": "#dc2626",
             "rotation": 270,
             "fill": "solid",
-            "count": 2
+            "count": 1
           }
         ]
       },
@@ -3084,35 +2879,35 @@ module.exports = [
         "bg": null,
         "shapes": [
           {
-            "type": "triangle",
+            "type": "diamond",
             "size": 80,
-            "color": "#2563eb",
+            "color": "#dc2626",
             "rotation": 270,
             "fill": "solid",
-            "count": 1
+            "count": 3
           }
         ]
       }
     ],
-    "answer": 0,
+    "answer": 5,
     "timeLimit": 40
   },
   {
-    "id": "SPM-020",
+    "id": "SPM-019",
     "set": "B",
-    "indexInSet": 8,
-    "globalIndex": 20,
-    "rule": "shape 沿列递进",
+    "indexInSet": 7,
+    "globalIndex": 19,
+    "rule": "color 沿列递进",
     "matrix": [
       [
         {
           "bg": null,
           "shapes": [
             {
-              "type": "hexagon",
+              "type": "triangle",
               "size": 80,
               "color": "#d97706",
-              "rotation": 180,
+              "rotation": 90,
               "fill": "solid",
               "count": 1
             }
@@ -3122,10 +2917,10 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "diamond",
+              "type": "triangle",
               "size": 80,
-              "color": "#d97706",
-              "rotation": 180,
+              "color": "#2563eb",
+              "rotation": 90,
               "fill": "solid",
               "count": 1
             }
@@ -3135,10 +2930,10 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "square",
+              "type": "triangle",
               "size": 80,
-              "color": "#d97706",
-              "rotation": 180,
+              "color": "#dc2626",
+              "rotation": 90,
               "fill": "solid",
               "count": 1
             }
@@ -3150,10 +2945,10 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "hexagon",
+              "type": "triangle",
               "size": 80,
               "color": "#d97706",
-              "rotation": 180,
+              "rotation": 90,
               "fill": "solid",
               "count": 1
             }
@@ -3163,10 +2958,10 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "diamond",
+              "type": "triangle",
               "size": 80,
-              "color": "#d97706",
-              "rotation": 180,
+              "color": "#2563eb",
+              "rotation": 90,
               "fill": "solid",
               "count": 1
             }
@@ -3176,10 +2971,10 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "square",
+              "type": "triangle",
               "size": 80,
-              "color": "#d97706",
-              "rotation": 180,
+              "color": "#dc2626",
+              "rotation": 90,
               "fill": "solid",
               "count": 1
             }
@@ -3191,10 +2986,10 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "hexagon",
+              "type": "triangle",
               "size": 80,
               "color": "#d97706",
-              "rotation": 180,
+              "rotation": 90,
               "fill": "solid",
               "count": 1
             }
@@ -3204,10 +2999,10 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "diamond",
+              "type": "triangle",
               "size": 80,
-              "color": "#d97706",
-              "rotation": 180,
+              "color": "#2563eb",
+              "rotation": 90,
               "fill": "solid",
               "count": 1
             }
@@ -3224,49 +3019,10 @@ module.exports = [
         "bg": null,
         "shapes": [
           {
-            "type": "hexagon",
+            "type": "triangle",
             "size": 80,
-            "color": "#d97706",
-            "rotation": 180,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "star",
-            "size": 80,
-            "color": "#d97706",
-            "rotation": 180,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "circle",
-            "size": 80,
-            "color": "#d97706",
-            "rotation": 180,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "square",
-            "size": 80,
-            "color": "#d97706",
-            "rotation": 180,
+            "color": "#1f2937",
+            "rotation": 90,
             "fill": "solid",
             "count": 1
           }
@@ -3279,7 +3035,7 @@ module.exports = [
             "type": "triangle",
             "size": 80,
             "color": "#d97706",
-            "rotation": 180,
+            "rotation": 90,
             "fill": "solid",
             "count": 1
           }
@@ -3289,10 +3045,49 @@ module.exports = [
         "bg": null,
         "shapes": [
           {
-            "type": "diamond",
+            "type": "triangle",
             "size": 80,
-            "color": "#d97706",
-            "rotation": 180,
+            "color": "#2563eb",
+            "rotation": 90,
+            "fill": "solid",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "triangle",
+            "size": 80,
+            "color": "#dc2626",
+            "rotation": 90,
+            "fill": "solid",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "circle",
+            "size": 80,
+            "color": "#dc2626",
+            "rotation": 90,
+            "fill": "solid",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "triangle",
+            "size": 80,
+            "color": "#16a34a",
+            "rotation": 90,
             "fill": "solid",
             "count": 1
           }
@@ -3303,21 +3098,21 @@ module.exports = [
     "timeLimit": 40
   },
   {
-    "id": "SPM-021",
+    "id": "SPM-020",
     "set": "B",
-    "indexInSet": 9,
-    "globalIndex": 21,
-    "rule": "shape 沿行递进",
+    "indexInSet": 8,
+    "globalIndex": 20,
+    "rule": "count 沿行递进",
     "matrix": [
       [
         {
           "bg": null,
           "shapes": [
             {
-              "type": "circle",
+              "type": "triangle",
               "size": 80,
-              "color": "#2563eb",
-              "rotation": 180,
+              "color": "#1f2937",
+              "rotation": 90,
               "fill": "solid",
               "count": 1
             }
@@ -3327,10 +3122,10 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "circle",
+              "type": "triangle",
               "size": 80,
-              "color": "#2563eb",
-              "rotation": 180,
+              "color": "#1f2937",
+              "rotation": 90,
               "fill": "solid",
               "count": 1
             }
@@ -3340,10 +3135,10 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "circle",
+              "type": "triangle",
               "size": 80,
-              "color": "#2563eb",
-              "rotation": 180,
+              "color": "#1f2937",
+              "rotation": 90,
               "fill": "solid",
               "count": 1
             }
@@ -3355,10 +3150,174 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "diamond",
+              "type": "triangle",
               "size": 80,
-              "color": "#2563eb",
-              "rotation": 180,
+              "color": "#1f2937",
+              "rotation": 90,
+              "fill": "solid",
+              "count": 2
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "triangle",
+              "size": 80,
+              "color": "#1f2937",
+              "rotation": 90,
+              "fill": "solid",
+              "count": 2
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "triangle",
+              "size": 80,
+              "color": "#1f2937",
+              "rotation": 90,
+              "fill": "solid",
+              "count": 2
+            }
+          ]
+        }
+      ],
+      [
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "triangle",
+              "size": 80,
+              "color": "#1f2937",
+              "rotation": 90,
+              "fill": "solid",
+              "count": 3
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "triangle",
+              "size": 80,
+              "color": "#1f2937",
+              "rotation": 90,
+              "fill": "solid",
+              "count": 3
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": []
+        }
+      ]
+    ],
+    "options": [
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "triangle",
+            "size": 80,
+            "color": "#1f2937",
+            "rotation": 90,
+            "fill": "solid",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "triangle",
+            "size": 80,
+            "color": "#1f2937",
+            "rotation": 90,
+            "fill": "solid",
+            "count": 3
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "triangle",
+            "size": 80,
+            "color": "#1f2937",
+            "rotation": 90,
+            "fill": "solid",
+            "count": 2
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "diamond",
+            "size": 80,
+            "color": "#1f2937",
+            "rotation": 90,
+            "fill": "solid",
+            "count": 3
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "triangle",
+            "size": 80,
+            "color": "#16a34a",
+            "rotation": 90,
+            "fill": "solid",
+            "count": 3
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "triangle",
+            "size": 80,
+            "color": "#1f2937",
+            "rotation": 90,
+            "fill": "hollow",
+            "count": 3
+          }
+        ]
+      }
+    ],
+    "answer": 1,
+    "timeLimit": 40
+  },
+  {
+    "id": "SPM-021",
+    "set": "B",
+    "indexInSet": 9,
+    "globalIndex": 21,
+    "rule": "color 沿行递进",
+    "matrix": [
+      [
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "triangle",
+              "size": 80,
+              "color": "#dc2626",
+              "rotation": 270,
               "fill": "solid",
               "count": 1
             }
@@ -3368,10 +3327,10 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "diamond",
+              "type": "triangle",
               "size": 80,
-              "color": "#2563eb",
-              "rotation": 180,
+              "color": "#dc2626",
+              "rotation": 270,
               "fill": "solid",
               "count": 1
             }
@@ -3381,10 +3340,10 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "diamond",
+              "type": "triangle",
               "size": 80,
-              "color": "#2563eb",
-              "rotation": 180,
+              "color": "#dc2626",
+              "rotation": 270,
               "fill": "solid",
               "count": 1
             }
@@ -3396,10 +3355,10 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "square",
+              "type": "triangle",
               "size": 80,
-              "color": "#2563eb",
-              "rotation": 180,
+              "color": "#16a34a",
+              "rotation": 270,
               "fill": "solid",
               "count": 1
             }
@@ -3409,10 +3368,51 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "square",
+              "type": "triangle",
               "size": 80,
-              "color": "#2563eb",
-              "rotation": 180,
+              "color": "#16a34a",
+              "rotation": 270,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "triangle",
+              "size": 80,
+              "color": "#16a34a",
+              "rotation": 270,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        }
+      ],
+      [
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "triangle",
+              "size": 80,
+              "color": "#1f2937",
+              "rotation": 270,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "triangle",
+              "size": 80,
+              "color": "#1f2937",
+              "rotation": 270,
               "fill": "solid",
               "count": 1
             }
@@ -3429,11 +3429,11 @@ module.exports = [
         "bg": null,
         "shapes": [
           {
-            "type": "circle",
+            "type": "triangle",
             "size": 80,
-            "color": "#2563eb",
-            "rotation": 180,
-            "fill": "solid",
+            "color": "#1f2937",
+            "rotation": 270,
+            "fill": "hollow",
             "count": 1
           }
         ]
@@ -3442,23 +3442,10 @@ module.exports = [
         "bg": null,
         "shapes": [
           {
-            "type": "square",
+            "type": "triangle",
             "size": 80,
-            "color": "#2563eb",
-            "rotation": 180,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "hexagon",
-            "size": 80,
-            "color": "#2563eb",
-            "rotation": 180,
+            "color": "#1f2937",
+            "rotation": 270,
             "fill": "solid",
             "count": 1
           }
@@ -3471,7 +3458,7 @@ module.exports = [
             "type": "triangle",
             "size": 80,
             "color": "#2563eb",
-            "rotation": 180,
+            "rotation": 270,
             "fill": "solid",
             "count": 1
           }
@@ -3481,10 +3468,10 @@ module.exports = [
         "bg": null,
         "shapes": [
           {
-            "type": "diamond",
+            "type": "triangle",
             "size": 80,
-            "color": "#2563eb",
-            "rotation": 180,
+            "color": "#dc2626",
+            "rotation": 270,
             "fill": "solid",
             "count": 1
           }
@@ -3494,10 +3481,23 @@ module.exports = [
         "bg": null,
         "shapes": [
           {
-            "type": "star",
+            "type": "triangle",
             "size": 80,
-            "color": "#2563eb",
-            "rotation": 180,
+            "color": "#d97706",
+            "rotation": 270,
+            "fill": "solid",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "triangle",
+            "size": 80,
+            "color": "#16a34a",
+            "rotation": 270,
             "fill": "solid",
             "count": 1
           }
@@ -3512,417 +3512,7 @@ module.exports = [
     "set": "B",
     "indexInSet": 10,
     "globalIndex": 22,
-    "rule": "shape 沿列递进",
-    "matrix": [
-      [
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "triangle",
-              "size": 80,
-              "color": "#dc2626",
-              "rotation": 90,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "diamond",
-              "size": 80,
-              "color": "#dc2626",
-              "rotation": 90,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "circle",
-              "size": 80,
-              "color": "#dc2626",
-              "rotation": 90,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        }
-      ],
-      [
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "triangle",
-              "size": 80,
-              "color": "#dc2626",
-              "rotation": 90,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "diamond",
-              "size": 80,
-              "color": "#dc2626",
-              "rotation": 90,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "circle",
-              "size": 80,
-              "color": "#dc2626",
-              "rotation": 90,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        }
-      ],
-      [
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "triangle",
-              "size": 80,
-              "color": "#dc2626",
-              "rotation": 90,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "diamond",
-              "size": 80,
-              "color": "#dc2626",
-              "rotation": 90,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": []
-        }
-      ]
-    ],
-    "options": [
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "triangle",
-            "size": 80,
-            "color": "#dc2626",
-            "rotation": 90,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "square",
-            "size": 80,
-            "color": "#dc2626",
-            "rotation": 90,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "star",
-            "size": 80,
-            "color": "#dc2626",
-            "rotation": 90,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "circle",
-            "size": 80,
-            "color": "#dc2626",
-            "rotation": 90,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "diamond",
-            "size": 80,
-            "color": "#dc2626",
-            "rotation": 90,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "hexagon",
-            "size": 80,
-            "color": "#dc2626",
-            "rotation": 90,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      }
-    ],
-    "answer": 3,
-    "timeLimit": 40
-  },
-  {
-    "id": "SPM-023",
-    "set": "B",
-    "indexInSet": 11,
-    "globalIndex": 23,
-    "rule": "shape 沿行递进",
-    "matrix": [
-      [
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "square",
-              "size": 80,
-              "color": "#dc2626",
-              "rotation": 90,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "square",
-              "size": 80,
-              "color": "#dc2626",
-              "rotation": 90,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "square",
-              "size": 80,
-              "color": "#dc2626",
-              "rotation": 90,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        }
-      ],
-      [
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "diamond",
-              "size": 80,
-              "color": "#dc2626",
-              "rotation": 90,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "diamond",
-              "size": 80,
-              "color": "#dc2626",
-              "rotation": 90,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "diamond",
-              "size": 80,
-              "color": "#dc2626",
-              "rotation": 90,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        }
-      ],
-      [
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "circle",
-              "size": 80,
-              "color": "#dc2626",
-              "rotation": 90,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "circle",
-              "size": 80,
-              "color": "#dc2626",
-              "rotation": 90,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": []
-        }
-      ]
-    ],
-    "options": [
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "circle",
-            "size": 80,
-            "color": "#dc2626",
-            "rotation": 90,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "star",
-            "size": 80,
-            "color": "#dc2626",
-            "rotation": 90,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "square",
-            "size": 80,
-            "color": "#dc2626",
-            "rotation": 90,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "diamond",
-            "size": 80,
-            "color": "#dc2626",
-            "rotation": 90,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "hexagon",
-            "size": 80,
-            "color": "#dc2626",
-            "rotation": 90,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "triangle",
-            "size": 80,
-            "color": "#dc2626",
-            "rotation": 90,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      }
-    ],
-    "answer": 0,
-    "timeLimit": 40
-  },
-  {
-    "id": "SPM-024",
-    "set": "B",
-    "indexInSet": 12,
-    "globalIndex": 24,
-    "rule": "color 沿行递进",
+    "rule": "count 沿列递进",
     "matrix": [
       [
         {
@@ -3931,8 +3521,8 @@ module.exports = [
             {
               "type": "hexagon",
               "size": 80,
-              "color": "#16a34a",
-              "rotation": 270,
+              "color": "#dc2626",
+              "rotation": 90,
               "fill": "solid",
               "count": 1
             }
@@ -3944,10 +3534,10 @@ module.exports = [
             {
               "type": "hexagon",
               "size": 80,
-              "color": "#16a34a",
-              "rotation": 270,
+              "color": "#dc2626",
+              "rotation": 90,
               "fill": "solid",
-              "count": 1
+              "count": 2
             }
           ]
         },
@@ -3957,10 +3547,10 @@ module.exports = [
             {
               "type": "hexagon",
               "size": 80,
-              "color": "#16a34a",
-              "rotation": 270,
+              "color": "#dc2626",
+              "rotation": 90,
               "fill": "solid",
-              "count": 1
+              "count": 3
             }
           ]
         }
@@ -3972,8 +3562,8 @@ module.exports = [
             {
               "type": "hexagon",
               "size": 80,
-              "color": "#2563eb",
-              "rotation": 270,
+              "color": "#dc2626",
+              "rotation": 90,
               "fill": "solid",
               "count": 1
             }
@@ -3985,10 +3575,10 @@ module.exports = [
             {
               "type": "hexagon",
               "size": 80,
-              "color": "#2563eb",
-              "rotation": 270,
+              "color": "#dc2626",
+              "rotation": 90,
               "fill": "solid",
-              "count": 1
+              "count": 2
             }
           ]
         },
@@ -3998,10 +3588,10 @@ module.exports = [
             {
               "type": "hexagon",
               "size": 80,
-              "color": "#2563eb",
-              "rotation": 270,
+              "color": "#dc2626",
+              "rotation": 90,
               "fill": "solid",
-              "count": 1
+              "count": 3
             }
           ]
         }
@@ -4013,8 +3603,8 @@ module.exports = [
             {
               "type": "hexagon",
               "size": 80,
-              "color": "#1f2937",
-              "rotation": 270,
+              "color": "#dc2626",
+              "rotation": 90,
               "fill": "solid",
               "count": 1
             }
@@ -4026,10 +3616,10 @@ module.exports = [
             {
               "type": "hexagon",
               "size": 80,
-              "color": "#1f2937",
-              "rotation": 270,
+              "color": "#dc2626",
+              "rotation": 90,
               "fill": "solid",
-              "count": 1
+              "count": 2
             }
           ]
         },
@@ -4046,62 +3636,10 @@ module.exports = [
           {
             "type": "hexagon",
             "size": 80,
-            "color": "#1f2937",
-            "rotation": 270,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "hexagon",
-            "size": 80,
-            "color": "#16a34a",
-            "rotation": 270,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "hexagon",
-            "size": 80,
             "color": "#dc2626",
-            "rotation": 270,
+            "rotation": 90,
             "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "hexagon",
-            "size": 80,
-            "color": "#1f2937",
-            "rotation": 180,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "hexagon",
-            "size": 80,
-            "color": "#d97706",
-            "rotation": 270,
-            "fill": "solid",
-            "count": 1
+            "count": 2
           }
         ]
       },
@@ -4112,22 +3650,74 @@ module.exports = [
             "type": "hexagon",
             "size": 80,
             "color": "#2563eb",
-            "rotation": 270,
+            "rotation": 90,
+            "fill": "solid",
+            "count": 3
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "hexagon",
+            "size": 80,
+            "color": "#dc2626",
+            "rotation": 90,
+            "fill": "solid",
+            "count": 3
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "hexagon",
+            "size": 80,
+            "color": "#dc2626",
+            "rotation": 90,
+            "fill": "hollow",
+            "count": 3
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "star",
+            "size": 80,
+            "color": "#dc2626",
+            "rotation": 90,
+            "fill": "solid",
+            "count": 3
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "hexagon",
+            "size": 80,
+            "color": "#dc2626",
+            "rotation": 90,
             "fill": "solid",
             "count": 1
           }
         ]
       }
     ],
-    "answer": 0,
+    "answer": 2,
     "timeLimit": 40
   },
   {
-    "id": "SPM-025",
-    "set": "C",
-    "indexInSet": 1,
-    "globalIndex": 25,
-    "rule": "shape(行)+count(列)",
+    "id": "SPM-023",
+    "set": "B",
+    "indexInSet": 11,
+    "globalIndex": 23,
+    "rule": "count 沿行递进",
     "matrix": [
       [
         {
@@ -4136,8 +3726,8 @@ module.exports = [
             {
               "type": "triangle",
               "size": 80,
-              "color": "#1f2937",
-              "rotation": 180,
+              "color": "#16a34a",
+              "rotation": 90,
               "fill": "solid",
               "count": 1
             }
@@ -4149,8 +3739,36 @@ module.exports = [
             {
               "type": "triangle",
               "size": 80,
-              "color": "#1f2937",
-              "rotation": 180,
+              "color": "#16a34a",
+              "rotation": 90,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "triangle",
+              "size": 80,
+              "color": "#16a34a",
+              "rotation": 90,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        }
+      ],
+      [
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "triangle",
+              "size": 80,
+              "color": "#16a34a",
+              "rotation": 90,
               "fill": "solid",
               "count": 2
             }
@@ -4162,36 +3780,8 @@ module.exports = [
             {
               "type": "triangle",
               "size": 80,
-              "color": "#1f2937",
-              "rotation": 180,
-              "fill": "solid",
-              "count": 3
-            }
-          ]
-        }
-      ],
-      [
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "square",
-              "size": 80,
-              "color": "#1f2937",
-              "rotation": 180,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "square",
-              "size": 80,
-              "color": "#1f2937",
-              "rotation": 180,
+              "color": "#16a34a",
+              "rotation": 90,
               "fill": "solid",
               "count": 2
             }
@@ -4201,12 +3791,12 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "square",
+              "type": "triangle",
               "size": 80,
-              "color": "#1f2937",
-              "rotation": 180,
+              "color": "#16a34a",
+              "rotation": 90,
               "fill": "solid",
-              "count": 3
+              "count": 2
             }
           ]
         }
@@ -4216,12 +3806,12 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "hexagon",
+              "type": "triangle",
               "size": 80,
-              "color": "#1f2937",
-              "rotation": 180,
+              "color": "#16a34a",
+              "rotation": 90,
               "fill": "solid",
-              "count": 1
+              "count": 3
             }
           ]
         },
@@ -4229,12 +3819,12 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "hexagon",
+              "type": "triangle",
               "size": 80,
-              "color": "#1f2937",
-              "rotation": 180,
+              "color": "#16a34a",
+              "rotation": 90,
               "fill": "solid",
-              "count": 2
+              "count": 3
             }
           ]
         },
@@ -4249,7 +3839,430 @@ module.exports = [
         "bg": null,
         "shapes": [
           {
-            "type": "hexagon",
+            "type": "triangle",
+            "size": 80,
+            "color": "#16a34a",
+            "rotation": 90,
+            "fill": "solid",
+            "count": 2
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "triangle",
+            "size": 80,
+            "color": "#16a34a",
+            "rotation": 90,
+            "fill": "solid",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "circle",
+            "size": 80,
+            "color": "#16a34a",
+            "rotation": 90,
+            "fill": "solid",
+            "count": 3
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "triangle",
+            "size": 80,
+            "color": "#16a34a",
+            "rotation": 90,
+            "fill": "solid",
+            "count": 3
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "triangle",
+            "size": 80,
+            "color": "#16a34a",
+            "rotation": 90,
+            "fill": "hollow",
+            "count": 3
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "diamond",
+            "size": 80,
+            "color": "#16a34a",
+            "rotation": 90,
+            "fill": "solid",
+            "count": 3
+          }
+        ]
+      }
+    ],
+    "answer": 3,
+    "timeLimit": 40
+  },
+  {
+    "id": "SPM-024",
+    "set": "B",
+    "indexInSet": 12,
+    "globalIndex": 24,
+    "rule": "color 沿列递进",
+    "matrix": [
+      [
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "square",
+              "size": 80,
+              "color": "#16a34a",
+              "rotation": 90,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "square",
+              "size": 80,
+              "color": "#d97706",
+              "rotation": 90,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "square",
+              "size": 80,
+              "color": "#dc2626",
+              "rotation": 90,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        }
+      ],
+      [
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "square",
+              "size": 80,
+              "color": "#16a34a",
+              "rotation": 90,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "square",
+              "size": 80,
+              "color": "#d97706",
+              "rotation": 90,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "square",
+              "size": 80,
+              "color": "#dc2626",
+              "rotation": 90,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        }
+      ],
+      [
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "square",
+              "size": 80,
+              "color": "#16a34a",
+              "rotation": 90,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "square",
+              "size": 80,
+              "color": "#d97706",
+              "rotation": 90,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": []
+        }
+      ]
+    ],
+    "options": [
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "square",
+            "size": 80,
+            "color": "#2563eb",
+            "rotation": 90,
+            "fill": "solid",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "square",
+            "size": 80,
+            "color": "#dc2626",
+            "rotation": 90,
+            "fill": "solid",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "square",
+            "size": 80,
+            "color": "#dc2626",
+            "rotation": 90,
+            "fill": "solid",
+            "count": 2
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "square",
+            "size": 80,
+            "color": "#16a34a",
+            "rotation": 90,
+            "fill": "solid",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "square",
+            "size": 80,
+            "color": "#1f2937",
+            "rotation": 90,
+            "fill": "solid",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "square",
+            "size": 80,
+            "color": "#d97706",
+            "rotation": 90,
+            "fill": "solid",
+            "count": 1
+          }
+        ]
+      }
+    ],
+    "answer": 1,
+    "timeLimit": 40
+  },
+  {
+    "id": "SPM-025",
+    "set": "C",
+    "indexInSet": 1,
+    "globalIndex": 25,
+    "rule": "color(列)+count(行)",
+    "matrix": [
+      [
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "triangle",
+              "size": 80,
+              "color": "#16a34a",
+              "rotation": 180,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "triangle",
+              "size": 80,
+              "color": "#1f2937",
+              "rotation": 180,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "triangle",
+              "size": 80,
+              "color": "#d97706",
+              "rotation": 180,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        }
+      ],
+      [
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "triangle",
+              "size": 80,
+              "color": "#16a34a",
+              "rotation": 180,
+              "fill": "solid",
+              "count": 2
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "triangle",
+              "size": 80,
+              "color": "#1f2937",
+              "rotation": 180,
+              "fill": "solid",
+              "count": 2
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "triangle",
+              "size": 80,
+              "color": "#d97706",
+              "rotation": 180,
+              "fill": "solid",
+              "count": 2
+            }
+          ]
+        }
+      ],
+      [
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "triangle",
+              "size": 80,
+              "color": "#16a34a",
+              "rotation": 180,
+              "fill": "solid",
+              "count": 3
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "triangle",
+              "size": 80,
+              "color": "#1f2937",
+              "rotation": 180,
+              "fill": "solid",
+              "count": 3
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": []
+        }
+      ]
+    ],
+    "options": [
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "triangle",
+            "size": 80,
+            "color": "#d97706",
+            "rotation": 180,
+            "fill": "solid",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "triangle",
             "size": 80,
             "color": "#1f2937",
             "rotation": 180,
@@ -4262,10 +4275,241 @@ module.exports = [
         "bg": null,
         "shapes": [
           {
+            "type": "triangle",
+            "size": 80,
+            "color": "#d97706",
+            "rotation": 180,
+            "fill": "solid",
+            "count": 2
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "triangle",
+            "size": 80,
+            "color": "#dc2626",
+            "rotation": 180,
+            "fill": "solid",
+            "count": 3
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "triangle",
+            "size": 80,
+            "color": "#2563eb",
+            "rotation": 180,
+            "fill": "solid",
+            "count": 3
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "triangle",
+            "size": 80,
+            "color": "#d97706",
+            "rotation": 180,
+            "fill": "solid",
+            "count": 3
+          }
+        ]
+      }
+    ],
+    "answer": 5,
+    "timeLimit": 40
+  },
+  {
+    "id": "SPM-026",
+    "set": "C",
+    "indexInSet": 2,
+    "globalIndex": 26,
+    "rule": "color(行)+shape(行)",
+    "matrix": [
+      [
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "circle",
+              "size": 80,
+              "color": "#16a34a",
+              "rotation": 0,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "circle",
+              "size": 80,
+              "color": "#16a34a",
+              "rotation": 0,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "circle",
+              "size": 80,
+              "color": "#16a34a",
+              "rotation": 0,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        }
+      ],
+      [
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "star",
+              "size": 80,
+              "color": "#d97706",
+              "rotation": 0,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "star",
+              "size": 80,
+              "color": "#d97706",
+              "rotation": 0,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "star",
+              "size": 80,
+              "color": "#d97706",
+              "rotation": 0,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        }
+      ],
+      [
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "square",
+              "size": 80,
+              "color": "#1f2937",
+              "rotation": 0,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "square",
+              "size": 80,
+              "color": "#1f2937",
+              "rotation": 0,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": []
+        }
+      ]
+    ],
+    "options": [
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "square",
+            "size": 80,
+            "color": "#2563eb",
+            "rotation": 0,
+            "fill": "solid",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "square",
+            "size": 80,
+            "color": "#1f2937",
+            "rotation": 0,
+            "fill": "solid",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
             "type": "hexagon",
             "size": 80,
             "color": "#1f2937",
-            "rotation": 180,
+            "rotation": 0,
+            "fill": "solid",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "square",
+            "size": 80,
+            "color": "#d97706",
+            "rotation": 0,
+            "fill": "solid",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "star",
+            "size": 80,
+            "color": "#1f2937",
+            "rotation": 0,
             "fill": "solid",
             "count": 1
           }
@@ -4278,253 +4522,9 @@ module.exports = [
             "type": "circle",
             "size": 80,
             "color": "#1f2937",
-            "rotation": 180,
-            "fill": "solid",
-            "count": 3
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "hexagon",
-            "size": 80,
-            "color": "#1f2937",
-            "rotation": 180,
-            "fill": "solid",
-            "count": 2
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "triangle",
-            "size": 80,
-            "color": "#1f2937",
-            "rotation": 180,
-            "fill": "solid",
-            "count": 3
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "diamond",
-            "size": 80,
-            "color": "#1f2937",
-            "rotation": 180,
-            "fill": "solid",
-            "count": 3
-          }
-        ]
-      }
-    ],
-    "answer": 0,
-    "timeLimit": 40
-  },
-  {
-    "id": "SPM-026",
-    "set": "C",
-    "indexInSet": 2,
-    "globalIndex": 26,
-    "rule": "shape(行)+count(列)",
-    "matrix": [
-      [
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "diamond",
-              "size": 80,
-              "color": "#1f2937",
-              "rotation": 270,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "diamond",
-              "size": 80,
-              "color": "#1f2937",
-              "rotation": 270,
-              "fill": "solid",
-              "count": 2
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "diamond",
-              "size": 80,
-              "color": "#1f2937",
-              "rotation": 270,
-              "fill": "solid",
-              "count": 3
-            }
-          ]
-        }
-      ],
-      [
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "triangle",
-              "size": 80,
-              "color": "#1f2937",
-              "rotation": 270,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "triangle",
-              "size": 80,
-              "color": "#1f2937",
-              "rotation": 270,
-              "fill": "solid",
-              "count": 2
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "triangle",
-              "size": 80,
-              "color": "#1f2937",
-              "rotation": 270,
-              "fill": "solid",
-              "count": 3
-            }
-          ]
-        }
-      ],
-      [
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "hexagon",
-              "size": 80,
-              "color": "#1f2937",
-              "rotation": 270,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "hexagon",
-              "size": 80,
-              "color": "#1f2937",
-              "rotation": 270,
-              "fill": "solid",
-              "count": 2
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": []
-        }
-      ]
-    ],
-    "options": [
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "hexagon",
-            "size": 80,
-            "color": "#1f2937",
-            "rotation": 270,
+            "rotation": 0,
             "fill": "solid",
             "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "hexagon",
-            "size": 80,
-            "color": "#1f2937",
-            "rotation": 270,
-            "fill": "solid",
-            "count": 3
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "star",
-            "size": 80,
-            "color": "#1f2937",
-            "rotation": 270,
-            "fill": "solid",
-            "count": 3
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "triangle",
-            "size": 80,
-            "color": "#1f2937",
-            "rotation": 270,
-            "fill": "solid",
-            "count": 3
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "hexagon",
-            "size": 80,
-            "color": "#1f2937",
-            "rotation": 270,
-            "fill": "solid",
-            "count": 2
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "square",
-            "size": 80,
-            "color": "#1f2937",
-            "rotation": 270,
-            "fill": "solid",
-            "count": 3
           }
         ]
       }
@@ -4537,17 +4537,30 @@ module.exports = [
     "set": "C",
     "indexInSet": 3,
     "globalIndex": 27,
-    "rule": "rotation(列)+shape(行)",
+    "rule": "shape(列)+color(列)",
     "matrix": [
       [
         {
           "bg": null,
           "shapes": [
             {
-              "type": "triangle",
+              "type": "diamond",
               "size": 80,
-              "color": "#2563eb",
-              "rotation": 0,
+              "color": "#16a34a",
+              "rotation": 180,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "hexagon",
+              "size": 80,
+              "color": "#d97706",
+              "rotation": 180,
               "fill": "solid",
               "count": 1
             }
@@ -4559,20 +4572,7 @@ module.exports = [
             {
               "type": "triangle",
               "size": 80,
-              "color": "#2563eb",
-              "rotation": 90,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "triangle",
-              "size": 80,
-              "color": "#2563eb",
+              "color": "#dc2626",
               "rotation": 180,
               "fill": "solid",
               "count": 1
@@ -4585,10 +4585,10 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "circle",
+              "type": "diamond",
               "size": 80,
-              "color": "#2563eb",
-              "rotation": 0,
+              "color": "#16a34a",
+              "rotation": 180,
               "fill": "solid",
               "count": 1
             }
@@ -4598,10 +4598,10 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "circle",
+              "type": "hexagon",
               "size": 80,
-              "color": "#2563eb",
-              "rotation": 90,
+              "color": "#d97706",
+              "rotation": 180,
               "fill": "solid",
               "count": 1
             }
@@ -4611,9 +4611,9 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "circle",
+              "type": "triangle",
               "size": 80,
-              "color": "#2563eb",
+              "color": "#dc2626",
               "rotation": 180,
               "fill": "solid",
               "count": 1
@@ -4626,10 +4626,10 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "star",
+              "type": "diamond",
               "size": 80,
-              "color": "#2563eb",
-              "rotation": 0,
+              "color": "#16a34a",
+              "rotation": 180,
               "fill": "solid",
               "count": 1
             }
@@ -4639,10 +4639,10 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "star",
+              "type": "hexagon",
               "size": 80,
-              "color": "#2563eb",
-              "rotation": 90,
+              "color": "#d97706",
+              "rotation": 180,
               "fill": "solid",
               "count": 1
             }
@@ -4659,9 +4659,9 @@ module.exports = [
         "bg": null,
         "shapes": [
           {
-            "type": "circle",
+            "type": "star",
             "size": 80,
-            "color": "#2563eb",
+            "color": "#dc2626",
             "rotation": 180,
             "fill": "solid",
             "count": 1
@@ -4672,22 +4672,9 @@ module.exports = [
         "bg": null,
         "shapes": [
           {
-            "type": "star",
+            "type": "diamond",
             "size": 80,
-            "color": "#2563eb",
-            "rotation": 0,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "star",
-            "size": 80,
-            "color": "#2563eb",
+            "color": "#dc2626",
             "rotation": 180,
             "fill": "solid",
             "count": 1
@@ -4700,6 +4687,32 @@ module.exports = [
           {
             "type": "square",
             "size": 80,
+            "color": "#dc2626",
+            "rotation": 180,
+            "fill": "solid",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "triangle",
+            "size": 80,
+            "color": "#dc2626",
+            "rotation": 180,
+            "fill": "solid",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "triangle",
+            "size": 80,
             "color": "#2563eb",
             "rotation": 180,
             "fill": "solid",
@@ -4711,30 +4724,17 @@ module.exports = [
         "bg": null,
         "shapes": [
           {
-            "type": "star",
+            "type": "triangle",
             "size": 80,
-            "color": "#2563eb",
-            "rotation": 270,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "star",
-            "size": 80,
-            "color": "#2563eb",
-            "rotation": 90,
+            "color": "#1f2937",
+            "rotation": 180,
             "fill": "solid",
             "count": 1
           }
         ]
       }
     ],
-    "answer": 2,
+    "answer": 3,
     "timeLimit": 40
   },
   {
@@ -4742,7 +4742,7 @@ module.exports = [
     "set": "C",
     "indexInSet": 4,
     "globalIndex": 28,
-    "rule": "rotation(行)+shape(列)",
+    "rule": "count(行)+color(列)",
     "matrix": [
       [
         {
@@ -4751,48 +4751,20 @@ module.exports = [
             {
               "type": "circle",
               "size": 80,
-              "color": "#2563eb",
-              "rotation": 0,
+              "color": "#1f2937",
+              "rotation": 90,
               "fill": "solid",
               "count": 1
             }
           ]
         },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "star",
-              "size": 80,
-              "color": "#2563eb",
-              "rotation": 0,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "square",
-              "size": 80,
-              "color": "#2563eb",
-              "rotation": 0,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        }
-      ],
-      [
         {
           "bg": null,
           "shapes": [
             {
               "type": "circle",
               "size": 80,
-              "color": "#2563eb",
+              "color": "#d97706",
               "rotation": 90,
               "fill": "solid",
               "count": 1
@@ -4803,20 +4775,7 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "star",
-              "size": 80,
-              "color": "#2563eb",
-              "rotation": 90,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "square",
+              "type": "circle",
               "size": 80,
               "color": "#2563eb",
               "rotation": 90,
@@ -4833,10 +4792,10 @@ module.exports = [
             {
               "type": "circle",
               "size": 80,
-              "color": "#2563eb",
-              "rotation": 180,
+              "color": "#1f2937",
+              "rotation": 90,
               "fill": "solid",
-              "count": 1
+              "count": 2
             }
           ]
         },
@@ -4844,12 +4803,53 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "star",
+              "type": "circle",
+              "size": 80,
+              "color": "#d97706",
+              "rotation": 90,
+              "fill": "solid",
+              "count": 2
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "circle",
               "size": 80,
               "color": "#2563eb",
-              "rotation": 180,
+              "rotation": 90,
               "fill": "solid",
-              "count": 1
+              "count": 2
+            }
+          ]
+        }
+      ],
+      [
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "circle",
+              "size": 80,
+              "color": "#1f2937",
+              "rotation": 90,
+              "fill": "solid",
+              "count": 3
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "circle",
+              "size": 80,
+              "color": "#d97706",
+              "rotation": 90,
+              "fill": "solid",
+              "count": 3
             }
           ]
         },
@@ -4864,12 +4864,12 @@ module.exports = [
         "bg": null,
         "shapes": [
           {
-            "type": "triangle",
+            "type": "circle",
             "size": 80,
-            "color": "#2563eb",
-            "rotation": 180,
+            "color": "#16a34a",
+            "rotation": 90,
             "fill": "solid",
-            "count": 1
+            "count": 3
           }
         ]
       },
@@ -4877,12 +4877,12 @@ module.exports = [
         "bg": null,
         "shapes": [
           {
-            "type": "square",
+            "type": "circle",
             "size": 80,
-            "color": "#2563eb",
-            "rotation": 180,
+            "color": "#dc2626",
+            "rotation": 90,
             "fill": "solid",
-            "count": 1
+            "count": 3
           }
         ]
       },
@@ -4890,12 +4890,12 @@ module.exports = [
         "bg": null,
         "shapes": [
           {
-            "type": "square",
+            "type": "circle",
             "size": 80,
             "color": "#2563eb",
-            "rotation": 0,
+            "rotation": 90,
             "fill": "solid",
-            "count": 1
+            "count": 2
           }
         ]
       },
@@ -4903,7 +4903,7 @@ module.exports = [
         "bg": null,
         "shapes": [
           {
-            "type": "square",
+            "type": "circle",
             "size": 80,
             "color": "#2563eb",
             "rotation": 90,
@@ -4916,12 +4916,12 @@ module.exports = [
         "bg": null,
         "shapes": [
           {
-            "type": "star",
+            "type": "circle",
             "size": 80,
-            "color": "#2563eb",
-            "rotation": 180,
+            "color": "#1f2937",
+            "rotation": 90,
             "fill": "solid",
-            "count": 1
+            "count": 3
           }
         ]
       },
@@ -4932,14 +4932,14 @@ module.exports = [
             "type": "circle",
             "size": 80,
             "color": "#2563eb",
-            "rotation": 180,
+            "rotation": 90,
             "fill": "solid",
-            "count": 1
+            "count": 3
           }
         ]
       }
     ],
-    "answer": 1,
+    "answer": 5,
     "timeLimit": 40
   },
   {
@@ -4947,14 +4947,14 @@ module.exports = [
     "set": "C",
     "indexInSet": 5,
     "globalIndex": 29,
-    "rule": "shape(行)+color(列)",
+    "rule": "color(列)+count(列)",
     "matrix": [
       [
         {
           "bg": null,
           "shapes": [
             {
-              "type": "diamond",
+              "type": "triangle",
               "size": 80,
               "color": "#dc2626",
               "rotation": 0,
@@ -4967,12 +4967,12 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "diamond",
+              "type": "triangle",
               "size": 80,
-              "color": "#1f2937",
+              "color": "#d97706",
               "rotation": 0,
               "fill": "solid",
-              "count": 1
+              "count": 2
             }
           ]
         },
@@ -4980,12 +4980,12 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "diamond",
+              "type": "triangle",
               "size": 80,
-              "color": "#d97706",
+              "color": "#1f2937",
               "rotation": 0,
               "fill": "solid",
-              "count": 1
+              "count": 3
             }
           ]
         }
@@ -4995,7 +4995,7 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "circle",
+              "type": "triangle",
               "size": 80,
               "color": "#dc2626",
               "rotation": 0,
@@ -5008,12 +5008,12 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "circle",
+              "type": "triangle",
               "size": 80,
-              "color": "#1f2937",
+              "color": "#d97706",
               "rotation": 0,
               "fill": "solid",
-              "count": 1
+              "count": 2
             }
           ]
         },
@@ -5021,12 +5021,12 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "circle",
+              "type": "triangle",
               "size": 80,
-              "color": "#d97706",
+              "color": "#1f2937",
               "rotation": 0,
               "fill": "solid",
-              "count": 1
+              "count": 3
             }
           ]
         }
@@ -5036,7 +5036,7 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "square",
+              "type": "triangle",
               "size": 80,
               "color": "#dc2626",
               "rotation": 0,
@@ -5049,12 +5049,12 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "square",
+              "type": "triangle",
               "size": 80,
-              "color": "#1f2937",
+              "color": "#d97706",
               "rotation": 0,
               "fill": "solid",
-              "count": 1
+              "count": 2
             }
           ]
         },
@@ -5069,38 +5069,12 @@ module.exports = [
         "bg": null,
         "shapes": [
           {
-            "type": "square",
+            "type": "triangle",
             "size": 80,
-            "color": "#16a34a",
+            "color": "#dc2626",
             "rotation": 0,
             "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "star",
-            "size": 80,
-            "color": "#d97706",
-            "rotation": 0,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "square",
-            "size": 80,
-            "color": "#2563eb",
-            "rotation": 0,
-            "fill": "solid",
-            "count": 1
+            "count": 3
           }
         ]
       },
@@ -5113,7 +5087,7 @@ module.exports = [
             "color": "#d97706",
             "rotation": 0,
             "fill": "solid",
-            "count": 1
+            "count": 3
           }
         ]
       },
@@ -5121,9 +5095,35 @@ module.exports = [
         "bg": null,
         "shapes": [
           {
-            "type": "square",
+            "type": "triangle",
             "size": 80,
-            "color": "#d97706",
+            "color": "#16a34a",
+            "rotation": 0,
+            "fill": "solid",
+            "count": 3
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "triangle",
+            "size": 80,
+            "color": "#1f2937",
+            "rotation": 0,
+            "fill": "solid",
+            "count": 2
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "triangle",
+            "size": 80,
+            "color": "#1f2937",
             "rotation": 0,
             "fill": "solid",
             "count": 1
@@ -5134,17 +5134,17 @@ module.exports = [
         "bg": null,
         "shapes": [
           {
-            "type": "hexagon",
+            "type": "triangle",
             "size": 80,
-            "color": "#d97706",
+            "color": "#1f2937",
             "rotation": 0,
             "fill": "solid",
-            "count": 1
+            "count": 3
           }
         ]
       }
     ],
-    "answer": 4,
+    "answer": 5,
     "timeLimit": 40
   },
   {
@@ -5152,834 +5152,14 @@ module.exports = [
     "set": "C",
     "indexInSet": 6,
     "globalIndex": 30,
-    "rule": "shape(行)+color(行)",
+    "rule": "shape(列)+count(列)",
     "matrix": [
       [
         {
           "bg": null,
           "shapes": [
             {
-              "type": "hexagon",
-              "size": 80,
-              "color": "#1f2937",
-              "rotation": 0,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "hexagon",
-              "size": 80,
-              "color": "#1f2937",
-              "rotation": 0,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "hexagon",
-              "size": 80,
-              "color": "#1f2937",
-              "rotation": 0,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        }
-      ],
-      [
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "diamond",
-              "size": 80,
-              "color": "#dc2626",
-              "rotation": 0,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "diamond",
-              "size": 80,
-              "color": "#dc2626",
-              "rotation": 0,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "diamond",
-              "size": 80,
-              "color": "#dc2626",
-              "rotation": 0,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        }
-      ],
-      [
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "circle",
-              "size": 80,
-              "color": "#16a34a",
-              "rotation": 0,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "circle",
-              "size": 80,
-              "color": "#16a34a",
-              "rotation": 0,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": []
-        }
-      ]
-    ],
-    "options": [
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "square",
-            "size": 80,
-            "color": "#16a34a",
-            "rotation": 0,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "circle",
-            "size": 80,
-            "color": "#2563eb",
-            "rotation": 0,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "star",
-            "size": 80,
-            "color": "#16a34a",
-            "rotation": 0,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "hexagon",
-            "size": 80,
-            "color": "#16a34a",
-            "rotation": 0,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "circle",
-            "size": 80,
-            "color": "#16a34a",
-            "rotation": 0,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "circle",
-            "size": 80,
-            "color": "#dc2626",
-            "rotation": 0,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      }
-    ],
-    "answer": 4,
-    "timeLimit": 40
-  },
-  {
-    "id": "SPM-031",
-    "set": "C",
-    "indexInSet": 7,
-    "globalIndex": 31,
-    "rule": "rotation(列)+count(列)",
-    "matrix": [
-      [
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "diamond",
-              "size": 80,
-              "color": "#dc2626",
-              "rotation": 0,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "diamond",
-              "size": 80,
-              "color": "#dc2626",
-              "rotation": 90,
-              "fill": "solid",
-              "count": 2
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "diamond",
-              "size": 80,
-              "color": "#dc2626",
-              "rotation": 180,
-              "fill": "solid",
-              "count": 3
-            }
-          ]
-        }
-      ],
-      [
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "diamond",
-              "size": 80,
-              "color": "#dc2626",
-              "rotation": 0,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "diamond",
-              "size": 80,
-              "color": "#dc2626",
-              "rotation": 90,
-              "fill": "solid",
-              "count": 2
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "diamond",
-              "size": 80,
-              "color": "#dc2626",
-              "rotation": 180,
-              "fill": "solid",
-              "count": 3
-            }
-          ]
-        }
-      ],
-      [
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "diamond",
-              "size": 80,
-              "color": "#dc2626",
-              "rotation": 0,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "diamond",
-              "size": 80,
-              "color": "#dc2626",
-              "rotation": 90,
-              "fill": "solid",
-              "count": 2
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": []
-        }
-      ]
-    ],
-    "options": [
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "diamond",
-            "size": 80,
-            "color": "#dc2626",
-            "rotation": 180,
-            "fill": "solid",
-            "count": 3
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "diamond",
-            "size": 80,
-            "color": "#dc2626",
-            "rotation": 270,
-            "fill": "solid",
-            "count": 3
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "diamond",
-            "size": 80,
-            "color": "#dc2626",
-            "rotation": 180,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "diamond",
-            "size": 80,
-            "color": "#dc2626",
-            "rotation": 0,
-            "fill": "solid",
-            "count": 3
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "diamond",
-            "size": 80,
-            "color": "#dc2626",
-            "rotation": 90,
-            "fill": "solid",
-            "count": 3
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "diamond",
-            "size": 80,
-            "color": "#dc2626",
-            "rotation": 180,
-            "fill": "solid",
-            "count": 2
-          }
-        ]
-      }
-    ],
-    "answer": 0,
-    "timeLimit": 40
-  },
-  {
-    "id": "SPM-032",
-    "set": "C",
-    "indexInSet": 8,
-    "globalIndex": 32,
-    "rule": "count(行)+rotation(列)",
-    "matrix": [
-      [
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "hexagon",
-              "size": 80,
-              "color": "#d97706",
-              "rotation": 0,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "hexagon",
-              "size": 80,
-              "color": "#d97706",
-              "rotation": 90,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "hexagon",
-              "size": 80,
-              "color": "#d97706",
-              "rotation": 180,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        }
-      ],
-      [
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "hexagon",
-              "size": 80,
-              "color": "#d97706",
-              "rotation": 0,
-              "fill": "solid",
-              "count": 2
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "hexagon",
-              "size": 80,
-              "color": "#d97706",
-              "rotation": 90,
-              "fill": "solid",
-              "count": 2
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "hexagon",
-              "size": 80,
-              "color": "#d97706",
-              "rotation": 180,
-              "fill": "solid",
-              "count": 2
-            }
-          ]
-        }
-      ],
-      [
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "hexagon",
-              "size": 80,
-              "color": "#d97706",
-              "rotation": 0,
-              "fill": "solid",
-              "count": 3
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "hexagon",
-              "size": 80,
-              "color": "#d97706",
-              "rotation": 90,
-              "fill": "solid",
-              "count": 3
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": []
-        }
-      ]
-    ],
-    "options": [
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "hexagon",
-            "size": 80,
-            "color": "#d97706",
-            "rotation": 270,
-            "fill": "solid",
-            "count": 3
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "hexagon",
-            "size": 80,
-            "color": "#d97706",
-            "rotation": 180,
-            "fill": "solid",
-            "count": 2
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "hexagon",
-            "size": 80,
-            "color": "#d97706",
-            "rotation": 180,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "hexagon",
-            "size": 80,
-            "color": "#d97706",
-            "rotation": 90,
-            "fill": "solid",
-            "count": 3
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "hexagon",
-            "size": 80,
-            "color": "#d97706",
-            "rotation": 180,
-            "fill": "solid",
-            "count": 3
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "hexagon",
-            "size": 80,
-            "color": "#d97706",
-            "rotation": 0,
-            "fill": "solid",
-            "count": 3
-          }
-        ]
-      }
-    ],
-    "answer": 4,
-    "timeLimit": 40
-  },
-  {
-    "id": "SPM-033",
-    "set": "C",
-    "indexInSet": 9,
-    "globalIndex": 33,
-    "rule": "rotation(列)+shape(列)",
-    "matrix": [
-      [
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "diamond",
-              "size": 80,
-              "color": "#d97706",
-              "rotation": 0,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "star",
-              "size": 80,
-              "color": "#d97706",
-              "rotation": 90,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "circle",
-              "size": 80,
-              "color": "#d97706",
-              "rotation": 180,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        }
-      ],
-      [
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "diamond",
-              "size": 80,
-              "color": "#d97706",
-              "rotation": 0,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "star",
-              "size": 80,
-              "color": "#d97706",
-              "rotation": 90,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "circle",
-              "size": 80,
-              "color": "#d97706",
-              "rotation": 180,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        }
-      ],
-      [
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "diamond",
-              "size": 80,
-              "color": "#d97706",
-              "rotation": 0,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "star",
-              "size": 80,
-              "color": "#d97706",
-              "rotation": 90,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": []
-        }
-      ]
-    ],
-    "options": [
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "circle",
-            "size": 80,
-            "color": "#d97706",
-            "rotation": 270,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "circle",
-            "size": 80,
-            "color": "#d97706",
-            "rotation": 90,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "star",
-            "size": 80,
-            "color": "#d97706",
-            "rotation": 180,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "diamond",
-            "size": 80,
-            "color": "#d97706",
-            "rotation": 180,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "circle",
-            "size": 80,
-            "color": "#d97706",
-            "rotation": 180,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "circle",
-            "size": 80,
-            "color": "#d97706",
-            "rotation": 0,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      }
-    ],
-    "answer": 4,
-    "timeLimit": 40
-  },
-  {
-    "id": "SPM-034",
-    "set": "C",
-    "indexInSet": 10,
-    "globalIndex": 34,
-    "rule": "shape(行)+count(行)",
-    "matrix": [
-      [
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "diamond",
+              "type": "square",
               "size": 80,
               "color": "#d97706",
               "rotation": 180,
@@ -5992,35 +5172,7 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "diamond",
-              "size": 80,
-              "color": "#d97706",
-              "rotation": 180,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "diamond",
-              "size": 80,
-              "color": "#d97706",
-              "rotation": 180,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        }
-      ],
-      [
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "triangle",
+              "type": "hexagon",
               "size": 80,
               "color": "#d97706",
               "rotation": 180,
@@ -6038,6 +5190,34 @@ module.exports = [
               "color": "#d97706",
               "rotation": 180,
               "fill": "solid",
+              "count": 3
+            }
+          ]
+        }
+      ],
+      [
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "square",
+              "size": 80,
+              "color": "#d97706",
+              "rotation": 180,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "hexagon",
+              "size": 80,
+              "color": "#d97706",
+              "rotation": 180,
+              "fill": "solid",
               "count": 2
             }
           ]
@@ -6051,7 +5231,7 @@ module.exports = [
               "color": "#d97706",
               "rotation": 180,
               "fill": "solid",
-              "count": 2
+              "count": 3
             }
           ]
         }
@@ -6061,12 +5241,12 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "hexagon",
+              "type": "square",
               "size": 80,
               "color": "#d97706",
               "rotation": 180,
               "fill": "solid",
-              "count": 3
+              "count": 1
             }
           ]
         },
@@ -6079,7 +5259,7 @@ module.exports = [
               "color": "#d97706",
               "rotation": 180,
               "fill": "solid",
-              "count": 3
+              "count": 2
             }
           ]
         },
@@ -6090,45 +5270,6 @@ module.exports = [
       ]
     ],
     "options": [
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "hexagon",
-            "size": 80,
-            "color": "#d97706",
-            "rotation": 180,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "hexagon",
-            "size": 80,
-            "color": "#d97706",
-            "rotation": 180,
-            "fill": "solid",
-            "count": 3
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "hexagon",
-            "size": 80,
-            "color": "#d97706",
-            "rotation": 180,
-            "fill": "solid",
-            "count": 2
-          }
-        ]
-      },
       {
         "bg": null,
         "shapes": [
@@ -6146,19 +5287,6 @@ module.exports = [
         "bg": null,
         "shapes": [
           {
-            "type": "diamond",
-            "size": 80,
-            "color": "#d97706",
-            "rotation": 180,
-            "fill": "solid",
-            "count": 3
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
             "type": "star",
             "size": 80,
             "color": "#d97706",
@@ -6167,144 +5295,17 @@ module.exports = [
             "count": 3
           }
         ]
-      }
-    ],
-    "answer": 1,
-    "timeLimit": 40
-  },
-  {
-    "id": "SPM-035",
-    "set": "C",
-    "indexInSet": 11,
-    "globalIndex": 35,
-    "rule": "rotation(行)+count(行)",
-    "matrix": [
-      [
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "hexagon",
-              "size": 80,
-              "color": "#dc2626",
-              "rotation": 0,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "hexagon",
-              "size": 80,
-              "color": "#dc2626",
-              "rotation": 0,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "hexagon",
-              "size": 80,
-              "color": "#dc2626",
-              "rotation": 0,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        }
-      ],
-      [
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "hexagon",
-              "size": 80,
-              "color": "#dc2626",
-              "rotation": 90,
-              "fill": "solid",
-              "count": 2
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "hexagon",
-              "size": 80,
-              "color": "#dc2626",
-              "rotation": 90,
-              "fill": "solid",
-              "count": 2
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "hexagon",
-              "size": 80,
-              "color": "#dc2626",
-              "rotation": 90,
-              "fill": "solid",
-              "count": 2
-            }
-          ]
-        }
-      ],
-      [
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "hexagon",
-              "size": 80,
-              "color": "#dc2626",
-              "rotation": 180,
-              "fill": "solid",
-              "count": 3
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "hexagon",
-              "size": 80,
-              "color": "#dc2626",
-              "rotation": 180,
-              "fill": "solid",
-              "count": 3
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": []
-        }
-      ]
-    ],
-    "options": [
+      },
       {
         "bg": null,
         "shapes": [
           {
-            "type": "hexagon",
+            "type": "triangle",
             "size": 80,
-            "color": "#dc2626",
+            "color": "#d97706",
             "rotation": 180,
             "fill": "solid",
-            "count": 1
+            "count": 3
           }
         ]
       },
@@ -6312,9 +5313,9 @@ module.exports = [
         "bg": null,
         "shapes": [
           {
-            "type": "hexagon",
+            "type": "triangle",
             "size": 80,
-            "color": "#dc2626",
+            "color": "#d97706",
             "rotation": 180,
             "fill": "solid",
             "count": 2
@@ -6325,12 +5326,12 @@ module.exports = [
         "bg": null,
         "shapes": [
           {
-            "type": "hexagon",
+            "type": "triangle",
             "size": 80,
-            "color": "#dc2626",
+            "color": "#d97706",
             "rotation": 180,
             "fill": "solid",
-            "count": 3
+            "count": 1
           }
         ]
       },
@@ -6338,36 +5339,10 @@ module.exports = [
         "bg": null,
         "shapes": [
           {
-            "type": "hexagon",
+            "type": "circle",
             "size": 80,
-            "color": "#dc2626",
-            "rotation": 270,
-            "fill": "solid",
-            "count": 3
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "hexagon",
-            "size": 80,
-            "color": "#dc2626",
-            "rotation": 90,
-            "fill": "solid",
-            "count": 3
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "hexagon",
-            "size": 80,
-            "color": "#dc2626",
-            "rotation": 0,
+            "color": "#d97706",
+            "rotation": 180,
             "fill": "solid",
             "count": 3
           }
@@ -6378,21 +5353,21 @@ module.exports = [
     "timeLimit": 40
   },
   {
-    "id": "SPM-036",
+    "id": "SPM-031",
     "set": "C",
-    "indexInSet": 12,
-    "globalIndex": 36,
-    "rule": "count(列)+rotation(列)",
+    "indexInSet": 7,
+    "globalIndex": 31,
+    "rule": "count(列)+shape(列)",
     "matrix": [
       [
         {
           "bg": null,
           "shapes": [
             {
-              "type": "circle",
+              "type": "hexagon",
               "size": 80,
-              "color": "#1f2937",
-              "rotation": 0,
+              "color": "#16a34a",
+              "rotation": 270,
               "fill": "solid",
               "count": 1
             }
@@ -6404,8 +5379,8 @@ module.exports = [
             {
               "type": "circle",
               "size": 80,
-              "color": "#1f2937",
-              "rotation": 90,
+              "color": "#16a34a",
+              "rotation": 270,
               "fill": "solid",
               "count": 2
             }
@@ -6415,10 +5390,10 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "circle",
+              "type": "diamond",
               "size": 80,
-              "color": "#1f2937",
-              "rotation": 180,
+              "color": "#16a34a",
+              "rotation": 270,
               "fill": "solid",
               "count": 3
             }
@@ -6430,10 +5405,10 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "circle",
+              "type": "hexagon",
               "size": 80,
-              "color": "#1f2937",
-              "rotation": 0,
+              "color": "#16a34a",
+              "rotation": 270,
               "fill": "solid",
               "count": 1
             }
@@ -6445,8 +5420,8 @@ module.exports = [
             {
               "type": "circle",
               "size": 80,
-              "color": "#1f2937",
-              "rotation": 90,
+              "color": "#16a34a",
+              "rotation": 270,
               "fill": "solid",
               "count": 2
             }
@@ -6456,10 +5431,10 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "circle",
+              "type": "diamond",
               "size": 80,
-              "color": "#1f2937",
-              "rotation": 180,
+              "color": "#16a34a",
+              "rotation": 270,
               "fill": "solid",
               "count": 3
             }
@@ -6471,10 +5446,10 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "circle",
+              "type": "hexagon",
               "size": 80,
-              "color": "#1f2937",
-              "rotation": 0,
+              "color": "#16a34a",
+              "rotation": 270,
               "fill": "solid",
               "count": 1
             }
@@ -6486,8 +5461,8 @@ module.exports = [
             {
               "type": "circle",
               "size": 80,
-              "color": "#1f2937",
-              "rotation": 90,
+              "color": "#16a34a",
+              "rotation": 270,
               "fill": "solid",
               "count": 2
             }
@@ -6504,23 +5479,10 @@ module.exports = [
         "bg": null,
         "shapes": [
           {
-            "type": "circle",
+            "type": "square",
             "size": 80,
-            "color": "#1f2937",
-            "rotation": 180,
-            "fill": "solid",
-            "count": 2
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "circle",
-            "size": 80,
-            "color": "#1f2937",
-            "rotation": 90,
+            "color": "#16a34a",
+            "rotation": 270,
             "fill": "solid",
             "count": 3
           }
@@ -6530,12 +5492,12 @@ module.exports = [
         "bg": null,
         "shapes": [
           {
-            "type": "circle",
+            "type": "diamond",
             "size": 80,
-            "color": "#1f2937",
-            "rotation": 180,
+            "color": "#16a34a",
+            "rotation": 270,
             "fill": "solid",
-            "count": 1
+            "count": 2
           }
         ]
       },
@@ -6543,9 +5505,22 @@ module.exports = [
         "bg": null,
         "shapes": [
           {
-            "type": "circle",
+            "type": "hexagon",
             "size": 80,
-            "color": "#1f2937",
+            "color": "#16a34a",
+            "rotation": 270,
+            "fill": "solid",
+            "count": 3
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "diamond",
+            "size": 80,
+            "color": "#16a34a",
             "rotation": 270,
             "fill": "solid",
             "count": 3
@@ -6558,215 +5533,10 @@ module.exports = [
           {
             "type": "circle",
             "size": 80,
-            "color": "#1f2937",
-            "rotation": 180,
+            "color": "#16a34a",
+            "rotation": 270,
             "fill": "solid",
             "count": 3
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "circle",
-            "size": 80,
-            "color": "#1f2937",
-            "rotation": 0,
-            "fill": "solid",
-            "count": 3
-          }
-        ]
-      }
-    ],
-    "answer": 4,
-    "timeLimit": 40
-  },
-  {
-    "id": "SPM-037",
-    "set": "D",
-    "indexInSet": 1,
-    "globalIndex": 37,
-    "rule": "rotation(列)+shape(行)",
-    "matrix": [
-      [
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "triangle",
-              "size": 80,
-              "color": "#16a34a",
-              "rotation": 0,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "triangle",
-              "size": 80,
-              "color": "#16a34a",
-              "rotation": 90,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "triangle",
-              "size": 80,
-              "color": "#16a34a",
-              "rotation": 180,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        }
-      ],
-      [
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "hexagon",
-              "size": 80,
-              "color": "#16a34a",
-              "rotation": 0,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "hexagon",
-              "size": 80,
-              "color": "#16a34a",
-              "rotation": 90,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "hexagon",
-              "size": 80,
-              "color": "#16a34a",
-              "rotation": 180,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        }
-      ],
-      [
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "diamond",
-              "size": 80,
-              "color": "#16a34a",
-              "rotation": 0,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "diamond",
-              "size": 80,
-              "color": "#16a34a",
-              "rotation": 90,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": []
-        }
-      ]
-    ],
-    "options": [
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "diamond",
-            "size": 80,
-            "color": "#16a34a",
-            "rotation": 90,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "triangle",
-            "size": 80,
-            "color": "#16a34a",
-            "rotation": 180,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "star",
-            "size": 80,
-            "color": "#16a34a",
-            "rotation": 180,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "diamond",
-            "size": 80,
-            "color": "#16a34a",
-            "rotation": 180,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "circle",
-            "size": 80,
-            "color": "#16a34a",
-            "rotation": 180,
-            "fill": "solid",
-            "count": 1
           }
         ]
       },
@@ -6788,61 +5558,20 @@ module.exports = [
     "timeLimit": 40
   },
   {
-    "id": "SPM-038",
-    "set": "D",
-    "indexInSet": 2,
-    "globalIndex": 38,
-    "rule": "count(列)+rotation(行)",
+    "id": "SPM-032",
+    "set": "C",
+    "indexInSet": 8,
+    "globalIndex": 32,
+    "rule": "count(列)+shape(列)",
     "matrix": [
       [
         {
           "bg": null,
           "shapes": [
             {
-              "type": "triangle",
+              "type": "diamond",
               "size": 80,
-              "color": "#2563eb",
-              "rotation": 0,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "triangle",
-              "size": 80,
-              "color": "#2563eb",
-              "rotation": 0,
-              "fill": "solid",
-              "count": 2
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "triangle",
-              "size": 80,
-              "color": "#2563eb",
-              "rotation": 0,
-              "fill": "solid",
-              "count": 3
-            }
-          ]
-        }
-      ],
-      [
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "triangle",
-              "size": 80,
-              "color": "#2563eb",
+              "color": "#dc2626",
               "rotation": 90,
               "fill": "solid",
               "count": 1
@@ -6853,9 +5582,9 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "triangle",
+              "type": "circle",
               "size": 80,
-              "color": "#2563eb",
+              "color": "#dc2626",
               "rotation": 90,
               "fill": "solid",
               "count": 2
@@ -6866,9 +5595,9 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "triangle",
+              "type": "square",
               "size": 80,
-              "color": "#2563eb",
+              "color": "#dc2626",
               "rotation": 90,
               "fill": "solid",
               "count": 3
@@ -6881,10 +5610,10 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "triangle",
+              "type": "diamond",
               "size": 80,
-              "color": "#2563eb",
-              "rotation": 180,
+              "color": "#dc2626",
+              "rotation": 90,
               "fill": "solid",
               "count": 1
             }
@@ -6894,10 +5623,51 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "triangle",
+              "type": "circle",
               "size": 80,
-              "color": "#2563eb",
-              "rotation": 180,
+              "color": "#dc2626",
+              "rotation": 90,
+              "fill": "solid",
+              "count": 2
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "square",
+              "size": 80,
+              "color": "#dc2626",
+              "rotation": 90,
+              "fill": "solid",
+              "count": 3
+            }
+          ]
+        }
+      ],
+      [
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "diamond",
+              "size": 80,
+              "color": "#dc2626",
+              "rotation": 90,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "circle",
+              "size": 80,
+              "color": "#dc2626",
+              "rotation": 90,
               "fill": "solid",
               "count": 2
             }
@@ -6914,12 +5684,12 @@ module.exports = [
         "bg": null,
         "shapes": [
           {
-            "type": "triangle",
+            "type": "square",
             "size": 80,
-            "color": "#2563eb",
-            "rotation": 180,
+            "color": "#dc2626",
+            "rotation": 90,
             "fill": "solid",
-            "count": 1
+            "count": 2
           }
         ]
       },
@@ -6929,7 +5699,7 @@ module.exports = [
           {
             "type": "triangle",
             "size": 80,
-            "color": "#2563eb",
+            "color": "#dc2626",
             "rotation": 90,
             "fill": "solid",
             "count": 3
@@ -6940,23 +5710,10 @@ module.exports = [
         "bg": null,
         "shapes": [
           {
-            "type": "triangle",
+            "type": "circle",
             "size": 80,
-            "color": "#2563eb",
-            "rotation": 180,
-            "fill": "solid",
-            "count": 2
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "triangle",
-            "size": 80,
-            "color": "#2563eb",
-            "rotation": 0,
+            "color": "#dc2626",
+            "rotation": 90,
             "fill": "solid",
             "count": 3
           }
@@ -6966,10 +5723,23 @@ module.exports = [
         "bg": null,
         "shapes": [
           {
-            "type": "triangle",
+            "type": "square",
             "size": 80,
-            "color": "#2563eb",
-            "rotation": 180,
+            "color": "#dc2626",
+            "rotation": 90,
+            "fill": "solid",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "star",
+            "size": 80,
+            "color": "#dc2626",
+            "rotation": 90,
             "fill": "solid",
             "count": 3
           }
@@ -6979,32 +5749,455 @@ module.exports = [
         "bg": null,
         "shapes": [
           {
-            "type": "triangle",
+            "type": "square",
             "size": 80,
-            "color": "#2563eb",
-            "rotation": 270,
+            "color": "#dc2626",
+            "rotation": 90,
             "fill": "solid",
             "count": 3
           }
         ]
       }
     ],
-    "answer": 4,
+    "answer": 5,
     "timeLimit": 40
   },
   {
-    "id": "SPM-039",
-    "set": "D",
-    "indexInSet": 3,
-    "globalIndex": 39,
-    "rule": "count(行)+color(列)",
+    "id": "SPM-033",
+    "set": "C",
+    "indexInSet": 9,
+    "globalIndex": 33,
+    "rule": "shape(列)+color(行)",
     "matrix": [
       [
         {
           "bg": null,
           "shapes": [
             {
-              "type": "triangle",
+              "type": "square",
+              "size": 80,
+              "color": "#dc2626",
+              "rotation": 270,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "hexagon",
+              "size": 80,
+              "color": "#dc2626",
+              "rotation": 270,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "diamond",
+              "size": 80,
+              "color": "#dc2626",
+              "rotation": 270,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        }
+      ],
+      [
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "square",
+              "size": 80,
+              "color": "#d97706",
+              "rotation": 270,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "hexagon",
+              "size": 80,
+              "color": "#d97706",
+              "rotation": 270,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "diamond",
+              "size": 80,
+              "color": "#d97706",
+              "rotation": 270,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        }
+      ],
+      [
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "square",
+              "size": 80,
+              "color": "#2563eb",
+              "rotation": 270,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "hexagon",
+              "size": 80,
+              "color": "#2563eb",
+              "rotation": 270,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": []
+        }
+      ]
+    ],
+    "options": [
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "diamond",
+            "size": 80,
+            "color": "#d97706",
+            "rotation": 270,
+            "fill": "solid",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "circle",
+            "size": 80,
+            "color": "#2563eb",
+            "rotation": 270,
+            "fill": "solid",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "diamond",
+            "size": 80,
+            "color": "#1f2937",
+            "rotation": 270,
+            "fill": "solid",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "diamond",
+            "size": 80,
+            "color": "#dc2626",
+            "rotation": 270,
+            "fill": "solid",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "star",
+            "size": 80,
+            "color": "#2563eb",
+            "rotation": 270,
+            "fill": "solid",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "diamond",
+            "size": 80,
+            "color": "#2563eb",
+            "rotation": 270,
+            "fill": "solid",
+            "count": 1
+          }
+        ]
+      }
+    ],
+    "answer": 5,
+    "timeLimit": 40
+  },
+  {
+    "id": "SPM-034",
+    "set": "C",
+    "indexInSet": 10,
+    "globalIndex": 34,
+    "rule": "color(列)+shape(行)",
+    "matrix": [
+      [
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "square",
+              "size": 80,
+              "color": "#d97706",
+              "rotation": 180,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "square",
+              "size": 80,
+              "color": "#dc2626",
+              "rotation": 180,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "square",
+              "size": 80,
+              "color": "#2563eb",
+              "rotation": 180,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        }
+      ],
+      [
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "diamond",
+              "size": 80,
+              "color": "#d97706",
+              "rotation": 180,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "diamond",
+              "size": 80,
+              "color": "#dc2626",
+              "rotation": 180,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "diamond",
+              "size": 80,
+              "color": "#2563eb",
+              "rotation": 180,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        }
+      ],
+      [
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "star",
+              "size": 80,
+              "color": "#d97706",
+              "rotation": 180,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "star",
+              "size": 80,
+              "color": "#dc2626",
+              "rotation": 180,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": []
+        }
+      ]
+    ],
+    "options": [
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "star",
+            "size": 80,
+            "color": "#2563eb",
+            "rotation": 180,
+            "fill": "solid",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "star",
+            "size": 80,
+            "color": "#dc2626",
+            "rotation": 180,
+            "fill": "solid",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "circle",
+            "size": 80,
+            "color": "#2563eb",
+            "rotation": 180,
+            "fill": "solid",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "hexagon",
+            "size": 80,
+            "color": "#2563eb",
+            "rotation": 180,
+            "fill": "solid",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "star",
+            "size": 80,
+            "color": "#1f2937",
+            "rotation": 180,
+            "fill": "solid",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "triangle",
+            "size": 80,
+            "color": "#2563eb",
+            "rotation": 180,
+            "fill": "solid",
+            "count": 1
+          }
+        ]
+      }
+    ],
+    "answer": 0,
+    "timeLimit": 40
+  },
+  {
+    "id": "SPM-035",
+    "set": "C",
+    "indexInSet": 11,
+    "globalIndex": 35,
+    "rule": "color(列)+shape(列)",
+    "matrix": [
+      [
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "circle",
+              "size": 80,
+              "color": "#d97706",
+              "rotation": 0,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "diamond",
               "size": 80,
               "color": "#2563eb",
               "rotation": 0,
@@ -7020,19 +6213,6 @@ module.exports = [
               "type": "triangle",
               "size": 80,
               "color": "#dc2626",
-              "rotation": 0,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "triangle",
-              "size": 80,
-              "color": "#d97706",
               "rotation": 0,
               "fill": "solid",
               "count": 1
@@ -7045,12 +6225,25 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "triangle",
+              "type": "circle",
+              "size": 80,
+              "color": "#d97706",
+              "rotation": 0,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "diamond",
               "size": 80,
               "color": "#2563eb",
               "rotation": 0,
               "fill": "solid",
-              "count": 2
+              "count": 1
             }
           ]
         },
@@ -7063,20 +6256,7 @@ module.exports = [
               "color": "#dc2626",
               "rotation": 0,
               "fill": "solid",
-              "count": 2
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "triangle",
-              "size": 80,
-              "color": "#d97706",
-              "rotation": 0,
-              "fill": "solid",
-              "count": 2
+              "count": 1
             }
           ]
         }
@@ -7086,12 +6266,12 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "triangle",
+              "type": "circle",
               "size": 80,
-              "color": "#2563eb",
+              "color": "#d97706",
               "rotation": 0,
               "fill": "solid",
-              "count": 3
+              "count": 1
             }
           ]
         },
@@ -7099,12 +6279,12 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "triangle",
+              "type": "diamond",
               "size": 80,
-              "color": "#dc2626",
+              "color": "#2563eb",
               "rotation": 0,
               "fill": "solid",
-              "count": 3
+              "count": 1
             }
           ]
         },
@@ -7121,23 +6301,10 @@ module.exports = [
           {
             "type": "triangle",
             "size": 80,
-            "color": "#16a34a",
+            "color": "#dc2626",
             "rotation": 0,
             "fill": "solid",
-            "count": 3
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "triangle",
-            "size": 80,
-            "color": "#d97706",
-            "rotation": 0,
-            "fill": "solid",
-            "count": 2
+            "count": 1
           }
         ]
       },
@@ -7158,51 +6325,64 @@ module.exports = [
         "bg": null,
         "shapes": [
           {
+            "type": "hexagon",
+            "size": 80,
+            "color": "#dc2626",
+            "rotation": 0,
+            "fill": "solid",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "circle",
+            "size": 80,
+            "color": "#dc2626",
+            "rotation": 0,
+            "fill": "solid",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "diamond",
+            "size": 80,
+            "color": "#dc2626",
+            "rotation": 0,
+            "fill": "solid",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
             "type": "triangle",
             "size": 80,
             "color": "#2563eb",
             "rotation": 0,
             "fill": "solid",
-            "count": 3
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "triangle",
-            "size": 80,
-            "color": "#1f2937",
-            "rotation": 0,
-            "fill": "solid",
-            "count": 3
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "triangle",
-            "size": 80,
-            "color": "#d97706",
-            "rotation": 0,
-            "fill": "solid",
-            "count": 3
+            "count": 1
           }
         ]
       }
     ],
-    "answer": 5,
+    "answer": 0,
     "timeLimit": 40
   },
   {
-    "id": "SPM-040",
-    "set": "D",
-    "indexInSet": 4,
-    "globalIndex": 40,
-    "rule": "count(行)+shape(列)",
+    "id": "SPM-036",
+    "set": "C",
+    "indexInSet": 12,
+    "globalIndex": 36,
+    "rule": "shape(行)+count(列)",
     "matrix": [
       [
         {
@@ -7222,34 +6402,6 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "diamond",
-              "size": 80,
-              "color": "#2563eb",
-              "rotation": 180,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "triangle",
-              "size": 80,
-              "color": "#2563eb",
-              "rotation": 180,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        }
-      ],
-      [
-        {
-          "bg": null,
-          "shapes": [
-            {
               "type": "square",
               "size": 80,
               "color": "#2563eb",
@@ -7263,25 +6415,12 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "diamond",
+              "type": "square",
               "size": 80,
               "color": "#2563eb",
               "rotation": 180,
               "fill": "solid",
-              "count": 2
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "triangle",
-              "size": 80,
-              "color": "#2563eb",
-              "rotation": 180,
-              "fill": "solid",
-              "count": 2
+              "count": 3
             }
           ]
         }
@@ -7291,12 +6430,12 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "square",
+              "type": "hexagon",
               "size": 80,
               "color": "#2563eb",
               "rotation": 180,
               "fill": "solid",
-              "count": 3
+              "count": 1
             }
           ]
         },
@@ -7304,12 +6443,53 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "diamond",
+              "type": "hexagon",
+              "size": 80,
+              "color": "#2563eb",
+              "rotation": 180,
+              "fill": "solid",
+              "count": 2
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "hexagon",
               "size": 80,
               "color": "#2563eb",
               "rotation": 180,
               "fill": "solid",
               "count": 3
+            }
+          ]
+        }
+      ],
+      [
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "star",
+              "size": 80,
+              "color": "#2563eb",
+              "rotation": 180,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "star",
+              "size": 80,
+              "color": "#2563eb",
+              "rotation": 180,
+              "fill": "solid",
+              "count": 2
             }
           ]
         },
@@ -7320,6 +6500,442 @@ module.exports = [
       ]
     ],
     "options": [
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "circle",
+            "size": 80,
+            "color": "#2563eb",
+            "rotation": 180,
+            "fill": "solid",
+            "count": 3
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "star",
+            "size": 80,
+            "color": "#2563eb",
+            "rotation": 180,
+            "fill": "solid",
+            "count": 3
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "diamond",
+            "size": 80,
+            "color": "#2563eb",
+            "rotation": 180,
+            "fill": "solid",
+            "count": 3
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "square",
+            "size": 80,
+            "color": "#2563eb",
+            "rotation": 180,
+            "fill": "solid",
+            "count": 3
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "star",
+            "size": 80,
+            "color": "#2563eb",
+            "rotation": 180,
+            "fill": "solid",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "star",
+            "size": 80,
+            "color": "#2563eb",
+            "rotation": 180,
+            "fill": "solid",
+            "count": 2
+          }
+        ]
+      }
+    ],
+    "answer": 1,
+    "timeLimit": 40
+  },
+  {
+    "id": "SPM-037",
+    "set": "D",
+    "indexInSet": 1,
+    "globalIndex": 37,
+    "rule": "color(行)+count(列)",
+    "matrix": [
+      [
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "hexagon",
+              "size": 80,
+              "color": "#16a34a",
+              "rotation": 180,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "hexagon",
+              "size": 80,
+              "color": "#16a34a",
+              "rotation": 180,
+              "fill": "solid",
+              "count": 2
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "hexagon",
+              "size": 80,
+              "color": "#16a34a",
+              "rotation": 180,
+              "fill": "solid",
+              "count": 3
+            }
+          ]
+        }
+      ],
+      [
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "hexagon",
+              "size": 80,
+              "color": "#dc2626",
+              "rotation": 180,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "hexagon",
+              "size": 80,
+              "color": "#dc2626",
+              "rotation": 180,
+              "fill": "solid",
+              "count": 2
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "hexagon",
+              "size": 80,
+              "color": "#dc2626",
+              "rotation": 180,
+              "fill": "solid",
+              "count": 3
+            }
+          ]
+        }
+      ],
+      [
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "hexagon",
+              "size": 80,
+              "color": "#d97706",
+              "rotation": 180,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "hexagon",
+              "size": 80,
+              "color": "#d97706",
+              "rotation": 180,
+              "fill": "solid",
+              "count": 2
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": []
+        }
+      ]
+    ],
+    "options": [
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "hexagon",
+            "size": 80,
+            "color": "#2563eb",
+            "rotation": 180,
+            "fill": "solid",
+            "count": 3
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "hexagon",
+            "size": 80,
+            "color": "#d97706",
+            "rotation": 180,
+            "fill": "solid",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "hexagon",
+            "size": 80,
+            "color": "#d97706",
+            "rotation": 180,
+            "fill": "solid",
+            "count": 3
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "hexagon",
+            "size": 80,
+            "color": "#1f2937",
+            "rotation": 180,
+            "fill": "solid",
+            "count": 3
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "hexagon",
+            "size": 80,
+            "color": "#d97706",
+            "rotation": 180,
+            "fill": "solid",
+            "count": 2
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "hexagon",
+            "size": 80,
+            "color": "#dc2626",
+            "rotation": 180,
+            "fill": "solid",
+            "count": 3
+          }
+        ]
+      }
+    ],
+    "answer": 2,
+    "timeLimit": 40
+  },
+  {
+    "id": "SPM-038",
+    "set": "D",
+    "indexInSet": 2,
+    "globalIndex": 38,
+    "rule": "count(列)+shape(行)",
+    "matrix": [
+      [
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "square",
+              "size": 80,
+              "color": "#2563eb",
+              "rotation": 180,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "square",
+              "size": 80,
+              "color": "#2563eb",
+              "rotation": 180,
+              "fill": "solid",
+              "count": 2
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "square",
+              "size": 80,
+              "color": "#2563eb",
+              "rotation": 180,
+              "fill": "solid",
+              "count": 3
+            }
+          ]
+        }
+      ],
+      [
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "star",
+              "size": 80,
+              "color": "#2563eb",
+              "rotation": 180,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "star",
+              "size": 80,
+              "color": "#2563eb",
+              "rotation": 180,
+              "fill": "solid",
+              "count": 2
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "star",
+              "size": 80,
+              "color": "#2563eb",
+              "rotation": 180,
+              "fill": "solid",
+              "count": 3
+            }
+          ]
+        }
+      ],
+      [
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "triangle",
+              "size": 80,
+              "color": "#2563eb",
+              "rotation": 180,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "triangle",
+              "size": 80,
+              "color": "#2563eb",
+              "rotation": 180,
+              "fill": "solid",
+              "count": 2
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": []
+        }
+      ]
+    ],
+    "options": [
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "triangle",
+            "size": 80,
+            "color": "#2563eb",
+            "rotation": 180,
+            "fill": "solid",
+            "count": 3
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "triangle",
+            "size": 80,
+            "color": "#2563eb",
+            "rotation": 180,
+            "fill": "solid",
+            "count": 1
+          }
+        ]
+      },
       {
         "bg": null,
         "shapes": [
@@ -7350,7 +6966,7 @@ module.exports = [
         "bg": null,
         "shapes": [
           {
-            "type": "circle",
+            "type": "star",
             "size": 80,
             "color": "#2563eb",
             "rotation": 180,
@@ -7371,15 +6987,386 @@ module.exports = [
             "count": 3
           }
         ]
+      }
+    ],
+    "answer": 0,
+    "timeLimit": 40
+  },
+  {
+    "id": "SPM-039",
+    "set": "D",
+    "indexInSet": 3,
+    "globalIndex": 39,
+    "rule": "color(行)+count(行)",
+    "matrix": [
+      [
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "star",
+              "size": 80,
+              "color": "#d97706",
+              "rotation": 180,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "star",
+              "size": 80,
+              "color": "#d97706",
+              "rotation": 180,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "star",
+              "size": 80,
+              "color": "#d97706",
+              "rotation": 180,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        }
+      ],
+      [
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "star",
+              "size": 80,
+              "color": "#16a34a",
+              "rotation": 180,
+              "fill": "solid",
+              "count": 2
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "star",
+              "size": 80,
+              "color": "#16a34a",
+              "rotation": 180,
+              "fill": "solid",
+              "count": 2
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "star",
+              "size": 80,
+              "color": "#16a34a",
+              "rotation": 180,
+              "fill": "solid",
+              "count": 2
+            }
+          ]
+        }
+      ],
+      [
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "star",
+              "size": 80,
+              "color": "#2563eb",
+              "rotation": 180,
+              "fill": "solid",
+              "count": 3
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "star",
+              "size": 80,
+              "color": "#2563eb",
+              "rotation": 180,
+              "fill": "solid",
+              "count": 3
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": []
+        }
+      ]
+    ],
+    "options": [
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "star",
+            "size": 80,
+            "color": "#16a34a",
+            "rotation": 180,
+            "fill": "solid",
+            "count": 3
+          }
+        ]
       },
       {
         "bg": null,
         "shapes": [
           {
-            "type": "triangle",
+            "type": "star",
             "size": 80,
             "color": "#2563eb",
             "rotation": 180,
+            "fill": "solid",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "star",
+            "size": 80,
+            "color": "#d97706",
+            "rotation": 180,
+            "fill": "solid",
+            "count": 3
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "star",
+            "size": 80,
+            "color": "#1f2937",
+            "rotation": 180,
+            "fill": "solid",
+            "count": 3
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "star",
+            "size": 80,
+            "color": "#2563eb",
+            "rotation": 180,
+            "fill": "solid",
+            "count": 3
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "star",
+            "size": 80,
+            "color": "#2563eb",
+            "rotation": 180,
+            "fill": "solid",
+            "count": 2
+          }
+        ]
+      }
+    ],
+    "answer": 4,
+    "timeLimit": 40
+  },
+  {
+    "id": "SPM-040",
+    "set": "D",
+    "indexInSet": 4,
+    "globalIndex": 40,
+    "rule": "color(列)+count(行)",
+    "matrix": [
+      [
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "square",
+              "size": 80,
+              "color": "#2563eb",
+              "rotation": 90,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "square",
+              "size": 80,
+              "color": "#16a34a",
+              "rotation": 90,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "square",
+              "size": 80,
+              "color": "#d97706",
+              "rotation": 90,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        }
+      ],
+      [
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "square",
+              "size": 80,
+              "color": "#2563eb",
+              "rotation": 90,
+              "fill": "solid",
+              "count": 2
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "square",
+              "size": 80,
+              "color": "#16a34a",
+              "rotation": 90,
+              "fill": "solid",
+              "count": 2
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "square",
+              "size": 80,
+              "color": "#d97706",
+              "rotation": 90,
+              "fill": "solid",
+              "count": 2
+            }
+          ]
+        }
+      ],
+      [
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "square",
+              "size": 80,
+              "color": "#2563eb",
+              "rotation": 90,
+              "fill": "solid",
+              "count": 3
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "square",
+              "size": 80,
+              "color": "#16a34a",
+              "rotation": 90,
+              "fill": "solid",
+              "count": 3
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": []
+        }
+      ]
+    ],
+    "options": [
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "square",
+            "size": 80,
+            "color": "#d97706",
+            "rotation": 90,
+            "fill": "solid",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "square",
+            "size": 80,
+            "color": "#16a34a",
+            "rotation": 90,
+            "fill": "solid",
+            "count": 3
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "square",
+            "size": 80,
+            "color": "#dc2626",
+            "rotation": 90,
+            "fill": "solid",
+            "count": 3
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "square",
+            "size": 80,
+            "color": "#d97706",
+            "rotation": 90,
             "fill": "solid",
             "count": 2
           }
@@ -7389,10 +7376,23 @@ module.exports = [
         "bg": null,
         "shapes": [
           {
-            "type": "triangle",
+            "type": "square",
             "size": 80,
             "color": "#2563eb",
-            "rotation": 180,
+            "rotation": 90,
+            "fill": "solid",
+            "count": 3
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "square",
+            "size": 80,
+            "color": "#d97706",
+            "rotation": 90,
             "fill": "solid",
             "count": 3
           }
@@ -7407,7 +7407,7 @@ module.exports = [
     "set": "D",
     "indexInSet": 5,
     "globalIndex": 41,
-    "rule": "color(行)+count(行)",
+    "rule": "count(行)+shape(列)",
     "matrix": [
       [
         {
@@ -7416,7 +7416,7 @@ module.exports = [
             {
               "type": "diamond",
               "size": 80,
-              "color": "#d97706",
+              "color": "#16a34a",
               "rotation": 0,
               "fill": "solid",
               "count": 1
@@ -7427,9 +7427,9 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "diamond",
+              "type": "circle",
               "size": 80,
-              "color": "#d97706",
+              "color": "#16a34a",
               "rotation": 0,
               "fill": "solid",
               "count": 1
@@ -7440,9 +7440,9 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "diamond",
+              "type": "star",
               "size": 80,
-              "color": "#d97706",
+              "color": "#16a34a",
               "rotation": 0,
               "fill": "solid",
               "count": 1
@@ -7468,7 +7468,7 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "diamond",
+              "type": "circle",
               "size": 80,
               "color": "#16a34a",
               "rotation": 0,
@@ -7481,7 +7481,7 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "diamond",
+              "type": "star",
               "size": 80,
               "color": "#16a34a",
               "rotation": 0,
@@ -7498,7 +7498,7 @@ module.exports = [
             {
               "type": "diamond",
               "size": 80,
-              "color": "#dc2626",
+              "color": "#16a34a",
               "rotation": 0,
               "fill": "solid",
               "count": 3
@@ -7509,9 +7509,9 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "diamond",
+              "type": "circle",
               "size": 80,
-              "color": "#dc2626",
+              "color": "#16a34a",
               "rotation": 0,
               "fill": "solid",
               "count": 3
@@ -7529,12 +7529,12 @@ module.exports = [
         "bg": null,
         "shapes": [
           {
-            "type": "diamond",
+            "type": "star",
             "size": 80,
-            "color": "#2563eb",
+            "color": "#16a34a",
             "rotation": 0,
             "fill": "solid",
-            "count": 3
+            "count": 2
           }
         ]
       },
@@ -7542,35 +7542,9 @@ module.exports = [
         "bg": null,
         "shapes": [
           {
-            "type": "diamond",
+            "type": "triangle",
             "size": 80,
-            "color": "#dc2626",
-            "rotation": 0,
-            "fill": "solid",
-            "count": 3
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "diamond",
-            "size": 80,
-            "color": "#dc2626",
-            "rotation": 0,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "diamond",
-            "size": 80,
-            "color": "#d97706",
+            "color": "#16a34a",
             "rotation": 0,
             "fill": "solid",
             "count": 3
@@ -7594,9 +7568,35 @@ module.exports = [
         "bg": null,
         "shapes": [
           {
-            "type": "diamond",
+            "type": "circle",
             "size": 80,
-            "color": "#1f2937",
+            "color": "#16a34a",
+            "rotation": 0,
+            "fill": "solid",
+            "count": 3
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "star",
+            "size": 80,
+            "color": "#16a34a",
+            "rotation": 0,
+            "fill": "solid",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "star",
+            "size": 80,
+            "color": "#16a34a",
             "rotation": 0,
             "fill": "solid",
             "count": 3
@@ -7604,7 +7604,7 @@ module.exports = [
         ]
       }
     ],
-    "answer": 1,
+    "answer": 5,
     "timeLimit": 40
   },
   {
@@ -7612,7 +7612,7 @@ module.exports = [
     "set": "D",
     "indexInSet": 6,
     "globalIndex": 42,
-    "rule": "color(列)+rotation(行)",
+    "rule": "color(列)+shape(行)",
     "matrix": [
       [
         {
@@ -7621,89 +7621,7 @@ module.exports = [
             {
               "type": "star",
               "size": 80,
-              "color": "#16a34a",
-              "rotation": 0,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "star",
-              "size": 80,
-              "color": "#dc2626",
-              "rotation": 0,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "star",
-              "size": 80,
-              "color": "#2563eb",
-              "rotation": 0,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        }
-      ],
-      [
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "star",
-              "size": 80,
-              "color": "#16a34a",
-              "rotation": 90,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "star",
-              "size": 80,
-              "color": "#dc2626",
-              "rotation": 90,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "star",
-              "size": 80,
-              "color": "#2563eb",
-              "rotation": 90,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        }
-      ],
-      [
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "star",
-              "size": 80,
-              "color": "#16a34a",
+              "color": "#d97706",
               "rotation": 180,
               "fill": "solid",
               "count": 1
@@ -7716,7 +7634,89 @@ module.exports = [
             {
               "type": "star",
               "size": 80,
-              "color": "#dc2626",
+              "color": "#2563eb",
+              "rotation": 180,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "star",
+              "size": 80,
+              "color": "#16a34a",
+              "rotation": 180,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        }
+      ],
+      [
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "triangle",
+              "size": 80,
+              "color": "#d97706",
+              "rotation": 180,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "triangle",
+              "size": 80,
+              "color": "#2563eb",
+              "rotation": 180,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "triangle",
+              "size": 80,
+              "color": "#16a34a",
+              "rotation": 180,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        }
+      ],
+      [
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "circle",
+              "size": 80,
+              "color": "#d97706",
+              "rotation": 180,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "circle",
+              "size": 80,
+              "color": "#2563eb",
               "rotation": 180,
               "fill": "solid",
               "count": 1
@@ -7734,215 +7734,10 @@ module.exports = [
         "bg": null,
         "shapes": [
           {
-            "type": "star",
-            "size": 80,
-            "color": "#2563eb",
-            "rotation": 180,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "star",
-            "size": 80,
-            "color": "#2563eb",
-            "rotation": 0,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "star",
-            "size": 80,
-            "color": "#2563eb",
-            "rotation": 90,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "star",
-            "size": 80,
-            "color": "#1f2937",
-            "rotation": 180,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "star",
+            "type": "square",
             "size": 80,
             "color": "#16a34a",
             "rotation": 180,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "star",
-            "size": 80,
-            "color": "#2563eb",
-            "rotation": 270,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      }
-    ],
-    "answer": 0,
-    "timeLimit": 40
-  },
-  {
-    "id": "SPM-043",
-    "set": "D",
-    "indexInSet": 7,
-    "globalIndex": 43,
-    "rule": "shape(列)+color(行)",
-    "matrix": [
-      [
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "hexagon",
-              "size": 80,
-              "color": "#2563eb",
-              "rotation": 270,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "triangle",
-              "size": 80,
-              "color": "#2563eb",
-              "rotation": 270,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "circle",
-              "size": 80,
-              "color": "#2563eb",
-              "rotation": 270,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        }
-      ],
-      [
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "hexagon",
-              "size": 80,
-              "color": "#d97706",
-              "rotation": 270,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "triangle",
-              "size": 80,
-              "color": "#d97706",
-              "rotation": 270,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "circle",
-              "size": 80,
-              "color": "#d97706",
-              "rotation": 270,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        }
-      ],
-      [
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "hexagon",
-              "size": 80,
-              "color": "#1f2937",
-              "rotation": 270,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "triangle",
-              "size": 80,
-              "color": "#1f2937",
-              "rotation": 270,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": []
-        }
-      ]
-    ],
-    "options": [
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "circle",
-            "size": 80,
-            "color": "#d97706",
-            "rotation": 270,
             "fill": "solid",
             "count": 1
           }
@@ -7954,8 +7749,8 @@ module.exports = [
           {
             "type": "hexagon",
             "size": 80,
-            "color": "#1f2937",
-            "rotation": 270,
+            "color": "#16a34a",
+            "rotation": 180,
             "fill": "solid",
             "count": 1
           }
@@ -7965,10 +7760,36 @@ module.exports = [
         "bg": null,
         "shapes": [
           {
-            "type": "diamond",
+            "type": "circle",
+            "size": 80,
+            "color": "#dc2626",
+            "rotation": 180,
+            "fill": "solid",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "circle",
+            "size": 80,
+            "color": "#16a34a",
+            "rotation": 180,
+            "fill": "solid",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "circle",
             "size": 80,
             "color": "#1f2937",
-            "rotation": 270,
+            "rotation": 180,
             "fill": "solid",
             "count": 1
           }
@@ -7981,7 +7802,173 @@ module.exports = [
             "type": "circle",
             "size": 80,
             "color": "#2563eb",
-            "rotation": 270,
+            "rotation": 180,
+            "fill": "solid",
+            "count": 1
+          }
+        ]
+      }
+    ],
+    "answer": 3,
+    "timeLimit": 40
+  },
+  {
+    "id": "SPM-043",
+    "set": "D",
+    "indexInSet": 7,
+    "globalIndex": 43,
+    "rule": "count(行)+shape(列)",
+    "matrix": [
+      [
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "star",
+              "size": 80,
+              "color": "#dc2626",
+              "rotation": 90,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "hexagon",
+              "size": 80,
+              "color": "#dc2626",
+              "rotation": 90,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "circle",
+              "size": 80,
+              "color": "#dc2626",
+              "rotation": 90,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        }
+      ],
+      [
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "star",
+              "size": 80,
+              "color": "#dc2626",
+              "rotation": 90,
+              "fill": "solid",
+              "count": 2
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "hexagon",
+              "size": 80,
+              "color": "#dc2626",
+              "rotation": 90,
+              "fill": "solid",
+              "count": 2
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "circle",
+              "size": 80,
+              "color": "#dc2626",
+              "rotation": 90,
+              "fill": "solid",
+              "count": 2
+            }
+          ]
+        }
+      ],
+      [
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "star",
+              "size": 80,
+              "color": "#dc2626",
+              "rotation": 90,
+              "fill": "solid",
+              "count": 3
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "hexagon",
+              "size": 80,
+              "color": "#dc2626",
+              "rotation": 90,
+              "fill": "solid",
+              "count": 3
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": []
+        }
+      ]
+    ],
+    "options": [
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "circle",
+            "size": 80,
+            "color": "#dc2626",
+            "rotation": 90,
+            "fill": "solid",
+            "count": 2
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "hexagon",
+            "size": 80,
+            "color": "#dc2626",
+            "rotation": 90,
+            "fill": "solid",
+            "count": 3
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "circle",
+            "size": 80,
+            "color": "#dc2626",
+            "rotation": 90,
             "fill": "solid",
             "count": 1
           }
@@ -7993,10 +7980,23 @@ module.exports = [
           {
             "type": "triangle",
             "size": 80,
-            "color": "#1f2937",
-            "rotation": 270,
+            "color": "#dc2626",
+            "rotation": 90,
             "fill": "solid",
-            "count": 1
+            "count": 3
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "star",
+            "size": 80,
+            "color": "#dc2626",
+            "rotation": 90,
+            "fill": "solid",
+            "count": 3
           }
         ]
       },
@@ -8006,10 +8006,10 @@ module.exports = [
           {
             "type": "circle",
             "size": 80,
-            "color": "#1f2937",
-            "rotation": 270,
+            "color": "#dc2626",
+            "rotation": 90,
             "fill": "solid",
-            "count": 1
+            "count": 3
           }
         ]
       }
@@ -8022,43 +8022,43 @@ module.exports = [
     "set": "D",
     "indexInSet": 8,
     "globalIndex": 44,
-    "rule": "rotation(行)+color(列)",
+    "rule": "color(行)+shape(行)",
     "matrix": [
       [
         {
           "bg": null,
           "shapes": [
             {
-              "type": "circle",
-              "size": 80,
-              "color": "#1f2937",
-              "rotation": 0,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "circle",
-              "size": 80,
-              "color": "#16a34a",
-              "rotation": 0,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "circle",
+              "type": "diamond",
               "size": 80,
               "color": "#dc2626",
-              "rotation": 0,
+              "rotation": 270,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "diamond",
+              "size": 80,
+              "color": "#dc2626",
+              "rotation": 270,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "diamond",
+              "size": 80,
+              "color": "#dc2626",
+              "rotation": 270,
               "fill": "solid",
               "count": 1
             }
@@ -8070,10 +8070,10 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "circle",
+              "type": "triangle",
               "size": 80,
-              "color": "#1f2937",
-              "rotation": 90,
+              "color": "#d97706",
+              "rotation": 270,
               "fill": "solid",
               "count": 1
             }
@@ -8083,10 +8083,10 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "circle",
+              "type": "triangle",
               "size": 80,
-              "color": "#16a34a",
-              "rotation": 90,
+              "color": "#d97706",
+              "rotation": 270,
               "fill": "solid",
               "count": 1
             }
@@ -8096,10 +8096,10 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "circle",
+              "type": "triangle",
               "size": 80,
-              "color": "#dc2626",
-              "rotation": 90,
+              "color": "#d97706",
+              "rotation": 270,
               "fill": "solid",
               "count": 1
             }
@@ -8111,10 +8111,10 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "circle",
+              "type": "star",
               "size": 80,
-              "color": "#1f2937",
-              "rotation": 180,
+              "color": "#16a34a",
+              "rotation": 270,
               "fill": "solid",
               "count": 1
             }
@@ -8124,10 +8124,10 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "circle",
+              "type": "star",
               "size": 80,
               "color": "#16a34a",
-              "rotation": 180,
+              "rotation": 270,
               "fill": "solid",
               "count": 1
             }
@@ -8144,10 +8144,10 @@ module.exports = [
         "bg": null,
         "shapes": [
           {
-            "type": "circle",
+            "type": "triangle",
             "size": 80,
-            "color": "#dc2626",
-            "rotation": 180,
+            "color": "#16a34a",
+            "rotation": 270,
             "fill": "solid",
             "count": 1
           }
@@ -8157,10 +8157,10 @@ module.exports = [
         "bg": null,
         "shapes": [
           {
-            "type": "circle",
+            "type": "star",
             "size": 80,
-            "color": "#dc2626",
-            "rotation": 0,
+            "color": "#d97706",
+            "rotation": 270,
             "fill": "solid",
             "count": 1
           }
@@ -8170,7 +8170,7 @@ module.exports = [
         "bg": null,
         "shapes": [
           {
-            "type": "circle",
+            "type": "star",
             "size": 80,
             "color": "#dc2626",
             "rotation": 270,
@@ -8183,36 +8183,241 @@ module.exports = [
         "bg": null,
         "shapes": [
           {
-            "type": "circle",
-            "size": 80,
-            "color": "#16a34a",
-            "rotation": 180,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "circle",
-            "size": 80,
-            "color": "#1f2937",
-            "rotation": 180,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "circle",
+            "type": "star",
             "size": 80,
             "color": "#2563eb",
-            "rotation": 180,
+            "rotation": 270,
+            "fill": "solid",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "star",
+            "size": 80,
+            "color": "#16a34a",
+            "rotation": 270,
+            "fill": "solid",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "square",
+            "size": 80,
+            "color": "#16a34a",
+            "rotation": 270,
+            "fill": "solid",
+            "count": 1
+          }
+        ]
+      }
+    ],
+    "answer": 4,
+    "timeLimit": 40
+  },
+  {
+    "id": "SPM-045",
+    "set": "D",
+    "indexInSet": 9,
+    "globalIndex": 45,
+    "rule": "shape(行)+color(行)",
+    "matrix": [
+      [
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "square",
+              "size": 80,
+              "color": "#16a34a",
+              "rotation": 0,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "square",
+              "size": 80,
+              "color": "#16a34a",
+              "rotation": 0,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "square",
+              "size": 80,
+              "color": "#16a34a",
+              "rotation": 0,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        }
+      ],
+      [
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "triangle",
+              "size": 80,
+              "color": "#2563eb",
+              "rotation": 0,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "triangle",
+              "size": 80,
+              "color": "#2563eb",
+              "rotation": 0,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "triangle",
+              "size": 80,
+              "color": "#2563eb",
+              "rotation": 0,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        }
+      ],
+      [
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "diamond",
+              "size": 80,
+              "color": "#dc2626",
+              "rotation": 0,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "diamond",
+              "size": 80,
+              "color": "#dc2626",
+              "rotation": 0,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": []
+        }
+      ]
+    ],
+    "options": [
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "diamond",
+            "size": 80,
+            "color": "#dc2626",
+            "rotation": 0,
+            "fill": "solid",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "triangle",
+            "size": 80,
+            "color": "#dc2626",
+            "rotation": 0,
+            "fill": "solid",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "square",
+            "size": 80,
+            "color": "#dc2626",
+            "rotation": 0,
+            "fill": "solid",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "diamond",
+            "size": 80,
+            "color": "#d97706",
+            "rotation": 0,
+            "fill": "solid",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "hexagon",
+            "size": 80,
+            "color": "#dc2626",
+            "rotation": 0,
+            "fill": "solid",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "diamond",
+            "size": 80,
+            "color": "#1f2937",
+            "rotation": 0,
             "fill": "solid",
             "count": 1
           }
@@ -8223,11 +8428,11 @@ module.exports = [
     "timeLimit": 40
   },
   {
-    "id": "SPM-045",
+    "id": "SPM-046",
     "set": "D",
-    "indexInSet": 9,
-    "globalIndex": 45,
-    "rule": "rotation(行)+shape(列)",
+    "indexInSet": 10,
+    "globalIndex": 46,
+    "rule": "count(列)+color(行)",
     "matrix": [
       [
         {
@@ -8236,8 +8441,8 @@ module.exports = [
             {
               "type": "square",
               "size": 80,
-              "color": "#dc2626",
-              "rotation": 0,
+              "color": "#1f2937",
+              "rotation": 270,
               "fill": "solid",
               "count": 1
             }
@@ -8247,12 +8452,12 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "circle",
+              "type": "square",
               "size": 80,
-              "color": "#dc2626",
-              "rotation": 0,
+              "color": "#1f2937",
+              "rotation": 270,
               "fill": "solid",
-              "count": 1
+              "count": 2
             }
           ]
         },
@@ -8260,12 +8465,12 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "triangle",
+              "type": "square",
               "size": 80,
-              "color": "#dc2626",
-              "rotation": 0,
+              "color": "#1f2937",
+              "rotation": 270,
               "fill": "solid",
-              "count": 1
+              "count": 3
             }
           ]
         }
@@ -8278,7 +8483,7 @@ module.exports = [
               "type": "square",
               "size": 80,
               "color": "#dc2626",
-              "rotation": 90,
+              "rotation": 270,
               "fill": "solid",
               "count": 1
             }
@@ -8288,12 +8493,12 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "circle",
+              "type": "square",
               "size": 80,
               "color": "#dc2626",
-              "rotation": 90,
+              "rotation": 270,
               "fill": "solid",
-              "count": 1
+              "count": 2
             }
           ]
         },
@@ -8301,12 +8506,12 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "triangle",
+              "type": "square",
               "size": 80,
               "color": "#dc2626",
-              "rotation": 90,
+              "rotation": 270,
               "fill": "solid",
-              "count": 1
+              "count": 3
             }
           ]
         }
@@ -8318,8 +8523,8 @@ module.exports = [
             {
               "type": "square",
               "size": 80,
-              "color": "#dc2626",
-              "rotation": 180,
+              "color": "#d97706",
+              "rotation": 270,
               "fill": "solid",
               "count": 1
             }
@@ -8329,12 +8534,12 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "circle",
+              "type": "square",
               "size": 80,
-              "color": "#dc2626",
-              "rotation": 180,
+              "color": "#d97706",
+              "rotation": 270,
               "fill": "solid",
-              "count": 1
+              "count": 2
             }
           ]
         },
@@ -8349,9 +8554,35 @@ module.exports = [
         "bg": null,
         "shapes": [
           {
-            "type": "triangle",
+            "type": "square",
             "size": 80,
             "color": "#dc2626",
+            "rotation": 270,
+            "fill": "solid",
+            "count": 3
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "square",
+            "size": 80,
+            "color": "#16a34a",
+            "rotation": 270,
+            "fill": "solid",
+            "count": 3
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "square",
+            "size": 80,
+            "color": "#d97706",
             "rotation": 270,
             "fill": "solid",
             "count": 1
@@ -8362,25 +8593,12 @@ module.exports = [
         "bg": null,
         "shapes": [
           {
-            "type": "triangle",
+            "type": "square",
             "size": 80,
-            "color": "#dc2626",
-            "rotation": 90,
+            "color": "#1f2937",
+            "rotation": 270,
             "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "star",
-            "size": 80,
-            "color": "#dc2626",
-            "rotation": 180,
-            "fill": "solid",
-            "count": 1
+            "count": 3
           }
         ]
       },
@@ -8390,246 +8608,28 @@ module.exports = [
           {
             "type": "square",
             "size": 80,
-            "color": "#dc2626",
-            "rotation": 180,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "triangle",
-            "size": 80,
-            "color": "#dc2626",
-            "rotation": 180,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "diamond",
-            "size": 80,
-            "color": "#dc2626",
-            "rotation": 180,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      }
-    ],
-    "answer": 4,
-    "timeLimit": 40
-  },
-  {
-    "id": "SPM-046",
-    "set": "D",
-    "indexInSet": 10,
-    "globalIndex": 46,
-    "rule": "color(行)+count(列)",
-    "matrix": [
-      [
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "hexagon",
-              "size": 80,
-              "color": "#16a34a",
-              "rotation": 0,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "hexagon",
-              "size": 80,
-              "color": "#16a34a",
-              "rotation": 0,
-              "fill": "solid",
-              "count": 2
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "hexagon",
-              "size": 80,
-              "color": "#16a34a",
-              "rotation": 0,
-              "fill": "solid",
-              "count": 3
-            }
-          ]
-        }
-      ],
-      [
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "hexagon",
-              "size": 80,
-              "color": "#d97706",
-              "rotation": 0,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "hexagon",
-              "size": 80,
-              "color": "#d97706",
-              "rotation": 0,
-              "fill": "solid",
-              "count": 2
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "hexagon",
-              "size": 80,
-              "color": "#d97706",
-              "rotation": 0,
-              "fill": "solid",
-              "count": 3
-            }
-          ]
-        }
-      ],
-      [
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "hexagon",
-              "size": 80,
-              "color": "#1f2937",
-              "rotation": 0,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "hexagon",
-              "size": 80,
-              "color": "#1f2937",
-              "rotation": 0,
-              "fill": "solid",
-              "count": 2
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": []
-        }
-      ]
-    ],
-    "options": [
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "hexagon",
-            "size": 80,
-            "color": "#1f2937",
-            "rotation": 0,
-            "fill": "solid",
-            "count": 2
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "hexagon",
-            "size": 80,
-            "color": "#1f2937",
-            "rotation": 0,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "hexagon",
-            "size": 80,
-            "color": "#dc2626",
-            "rotation": 0,
-            "fill": "solid",
-            "count": 3
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "hexagon",
-            "size": 80,
-            "color": "#16a34a",
-            "rotation": 0,
-            "fill": "solid",
-            "count": 3
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "hexagon",
-            "size": 80,
-            "color": "#1f2937",
-            "rotation": 0,
-            "fill": "solid",
-            "count": 3
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "hexagon",
-            "size": 80,
             "color": "#2563eb",
-            "rotation": 0,
+            "rotation": 270,
+            "fill": "solid",
+            "count": 3
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "square",
+            "size": 80,
+            "color": "#d97706",
+            "rotation": 270,
             "fill": "solid",
             "count": 3
           }
         ]
       }
     ],
-    "answer": 4,
+    "answer": 5,
     "timeLimit": 40
   },
   {
@@ -8637,17 +8637,17 @@ module.exports = [
     "set": "D",
     "indexInSet": 11,
     "globalIndex": 47,
-    "rule": "shape(行)+color(行)",
+    "rule": "color(行)+shape(行)",
     "matrix": [
       [
         {
           "bg": null,
           "shapes": [
             {
-              "type": "diamond",
+              "type": "hexagon",
               "size": 80,
-              "color": "#1f2937",
-              "rotation": 0,
+              "color": "#16a34a",
+              "rotation": 180,
               "fill": "solid",
               "count": 1
             }
@@ -8657,10 +8657,10 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "diamond",
+              "type": "hexagon",
               "size": 80,
-              "color": "#1f2937",
-              "rotation": 0,
+              "color": "#16a34a",
+              "rotation": 180,
               "fill": "solid",
               "count": 1
             }
@@ -8670,10 +8670,10 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "diamond",
+              "type": "hexagon",
               "size": 80,
-              "color": "#1f2937",
-              "rotation": 0,
+              "color": "#16a34a",
+              "rotation": 180,
               "fill": "solid",
               "count": 1
             }
@@ -8685,10 +8685,10 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "hexagon",
+              "type": "diamond",
               "size": 80,
-              "color": "#16a34a",
-              "rotation": 0,
+              "color": "#dc2626",
+              "rotation": 180,
               "fill": "solid",
               "count": 1
             }
@@ -8698,10 +8698,10 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "hexagon",
+              "type": "diamond",
               "size": 80,
-              "color": "#16a34a",
-              "rotation": 0,
+              "color": "#dc2626",
+              "rotation": 180,
               "fill": "solid",
               "count": 1
             }
@@ -8711,10 +8711,10 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "hexagon",
+              "type": "diamond",
               "size": 80,
-              "color": "#16a34a",
-              "rotation": 0,
+              "color": "#dc2626",
+              "rotation": 180,
               "fill": "solid",
               "count": 1
             }
@@ -8728,8 +8728,8 @@ module.exports = [
             {
               "type": "square",
               "size": 80,
-              "color": "#dc2626",
-              "rotation": 0,
+              "color": "#2563eb",
+              "rotation": 180,
               "fill": "solid",
               "count": 1
             }
@@ -8741,8 +8741,8 @@ module.exports = [
             {
               "type": "square",
               "size": 80,
-              "color": "#dc2626",
-              "rotation": 0,
+              "color": "#2563eb",
+              "rotation": 180,
               "fill": "solid",
               "count": 1
             }
@@ -8759,10 +8759,10 @@ module.exports = [
         "bg": null,
         "shapes": [
           {
-            "type": "square",
+            "type": "star",
             "size": 80,
-            "color": "#dc2626",
-            "rotation": 0,
+            "color": "#2563eb",
+            "rotation": 180,
             "fill": "solid",
             "count": 1
           }
@@ -8774,21 +8774,8 @@ module.exports = [
           {
             "type": "circle",
             "size": 80,
-            "color": "#dc2626",
-            "rotation": 0,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "star",
-            "size": 80,
-            "color": "#dc2626",
-            "rotation": 0,
+            "color": "#2563eb",
+            "rotation": 180,
             "fill": "solid",
             "count": 1
           }
@@ -8800,8 +8787,8 @@ module.exports = [
           {
             "type": "square",
             "size": 80,
-            "color": "#16a34a",
-            "rotation": 0,
+            "color": "#2563eb",
+            "rotation": 180,
             "fill": "solid",
             "count": 1
           }
@@ -8811,10 +8798,10 @@ module.exports = [
         "bg": null,
         "shapes": [
           {
-            "type": "diamond",
+            "type": "square",
             "size": 80,
-            "color": "#dc2626",
-            "rotation": 0,
+            "color": "#1f2937",
+            "rotation": 180,
             "fill": "solid",
             "count": 1
           }
@@ -8827,14 +8814,27 @@ module.exports = [
             "type": "square",
             "size": 80,
             "color": "#d97706",
-            "rotation": 0,
+            "rotation": 180,
+            "fill": "solid",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "triangle",
+            "size": 80,
+            "color": "#2563eb",
+            "rotation": 180,
             "fill": "solid",
             "count": 1
           }
         ]
       }
     ],
-    "answer": 0,
+    "answer": 2,
     "timeLimit": 40
   },
   {
@@ -8842,7 +8842,7 @@ module.exports = [
     "set": "D",
     "indexInSet": 12,
     "globalIndex": 48,
-    "rule": "count(列)+shape(行)",
+    "rule": "color(列)+count(列)",
     "matrix": [
       [
         {
@@ -8851,8 +8851,8 @@ module.exports = [
             {
               "type": "square",
               "size": 80,
-              "color": "#16a34a",
-              "rotation": 270,
+              "color": "#1f2937",
+              "rotation": 180,
               "fill": "solid",
               "count": 1
             }
@@ -8864,8 +8864,8 @@ module.exports = [
             {
               "type": "square",
               "size": 80,
-              "color": "#16a34a",
-              "rotation": 270,
+              "color": "#2563eb",
+              "rotation": 180,
               "fill": "solid",
               "count": 2
             }
@@ -8877,8 +8877,8 @@ module.exports = [
             {
               "type": "square",
               "size": 80,
-              "color": "#16a34a",
-              "rotation": 270,
+              "color": "#d97706",
+              "rotation": 180,
               "fill": "solid",
               "count": 3
             }
@@ -8890,10 +8890,10 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "hexagon",
+              "type": "square",
               "size": 80,
-              "color": "#16a34a",
-              "rotation": 270,
+              "color": "#1f2937",
+              "rotation": 180,
               "fill": "solid",
               "count": 1
             }
@@ -8903,10 +8903,10 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "hexagon",
+              "type": "square",
               "size": 80,
-              "color": "#16a34a",
-              "rotation": 270,
+              "color": "#2563eb",
+              "rotation": 180,
               "fill": "solid",
               "count": 2
             }
@@ -8916,10 +8916,10 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "hexagon",
+              "type": "square",
               "size": 80,
-              "color": "#16a34a",
-              "rotation": 270,
+              "color": "#d97706",
+              "rotation": 180,
               "fill": "solid",
               "count": 3
             }
@@ -8931,10 +8931,10 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "diamond",
+              "type": "square",
               "size": 80,
-              "color": "#16a34a",
-              "rotation": 270,
+              "color": "#1f2937",
+              "rotation": 180,
               "fill": "solid",
               "count": 1
             }
@@ -8944,10 +8944,10 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "diamond",
+              "type": "square",
               "size": 80,
-              "color": "#16a34a",
-              "rotation": 270,
+              "color": "#2563eb",
+              "rotation": 180,
               "fill": "solid",
               "count": 2
             }
@@ -8964,10 +8964,10 @@ module.exports = [
         "bg": null,
         "shapes": [
           {
-            "type": "diamond",
+            "type": "square",
             "size": 80,
-            "color": "#16a34a",
-            "rotation": 270,
+            "color": "#dc2626",
+            "rotation": 180,
             "fill": "solid",
             "count": 3
           }
@@ -8977,36 +8977,10 @@ module.exports = [
         "bg": null,
         "shapes": [
           {
-            "type": "diamond",
+            "type": "square",
             "size": 80,
-            "color": "#16a34a",
-            "rotation": 270,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "hexagon",
-            "size": 80,
-            "color": "#16a34a",
-            "rotation": 270,
-            "fill": "solid",
-            "count": 3
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "diamond",
-            "size": 80,
-            "color": "#16a34a",
-            "rotation": 270,
+            "color": "#d97706",
+            "rotation": 180,
             "fill": "solid",
             "count": 2
           }
@@ -9018,8 +8992,8 @@ module.exports = [
           {
             "type": "square",
             "size": 80,
-            "color": "#16a34a",
-            "rotation": 270,
+            "color": "#d97706",
+            "rotation": 180,
             "fill": "solid",
             "count": 3
           }
@@ -9029,17 +9003,43 @@ module.exports = [
         "bg": null,
         "shapes": [
           {
-            "type": "star",
+            "type": "square",
             "size": 80,
             "color": "#16a34a",
-            "rotation": 270,
+            "rotation": 180,
+            "fill": "solid",
+            "count": 3
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "square",
+            "size": 80,
+            "color": "#d97706",
+            "rotation": 180,
+            "fill": "solid",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "square",
+            "size": 80,
+            "color": "#2563eb",
+            "rotation": 180,
             "fill": "solid",
             "count": 3
           }
         ]
       }
     ],
-    "answer": 0,
+    "answer": 2,
     "timeLimit": 40
   },
   {
@@ -9047,17 +9047,17 @@ module.exports = [
     "set": "E",
     "indexInSet": 1,
     "globalIndex": 49,
-    "rule": "count(行)+color(列)",
+    "rule": "shape(行)+color(列)",
     "matrix": [
       [
         {
           "bg": null,
           "shapes": [
             {
-              "type": "hexagon",
+              "type": "diamond",
               "size": 80,
-              "color": "#1f2937",
-              "rotation": 0,
+              "color": "#dc2626",
+              "rotation": 270,
               "fill": "solid",
               "count": 1
             }
@@ -9067,23 +9067,23 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "hexagon",
-              "size": 80,
-              "color": "#2563eb",
-              "rotation": 0,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "hexagon",
+              "type": "diamond",
               "size": 80,
               "color": "#16a34a",
-              "rotation": 0,
+              "rotation": 270,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "diamond",
+              "size": 80,
+              "color": "#1f2937",
+              "rotation": 270,
               "fill": "solid",
               "count": 1
             }
@@ -9095,12 +9095,12 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "hexagon",
+              "type": "square",
               "size": 80,
-              "color": "#1f2937",
-              "rotation": 0,
+              "color": "#dc2626",
+              "rotation": 270,
               "fill": "solid",
-              "count": 2
+              "count": 1
             }
           ]
         },
@@ -9108,25 +9108,25 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "hexagon",
-              "size": 80,
-              "color": "#2563eb",
-              "rotation": 0,
-              "fill": "solid",
-              "count": 2
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "hexagon",
+              "type": "square",
               "size": 80,
               "color": "#16a34a",
-              "rotation": 0,
+              "rotation": 270,
               "fill": "solid",
-              "count": 2
+              "count": 1
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "square",
+              "size": 80,
+              "color": "#1f2937",
+              "rotation": 270,
+              "fill": "solid",
+              "count": 1
             }
           ]
         }
@@ -9136,12 +9136,12 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "hexagon",
+              "type": "triangle",
               "size": 80,
-              "color": "#1f2937",
-              "rotation": 0,
+              "color": "#dc2626",
+              "rotation": 270,
               "fill": "solid",
-              "count": 3
+              "count": 1
             }
           ]
         },
@@ -9149,12 +9149,12 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "hexagon",
+              "type": "triangle",
               "size": 80,
-              "color": "#2563eb",
-              "rotation": 0,
+              "color": "#16a34a",
+              "rotation": 270,
               "fill": "solid",
-              "count": 3
+              "count": 1
             }
           ]
         },
@@ -9169,23 +9169,10 @@ module.exports = [
         "bg": null,
         "shapes": [
           {
-            "type": "hexagon",
+            "type": "square",
             "size": 80,
-            "color": "#16a34a",
-            "rotation": 0,
-            "fill": "solid",
-            "count": 2
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "hexagon",
-            "size": 80,
-            "color": "#16a34a",
-            "rotation": 0,
+            "color": "#1f2937",
+            "rotation": 270,
             "fill": "solid",
             "count": 1
           }
@@ -9198,9 +9185,9 @@ module.exports = [
             "type": "hexagon",
             "size": 80,
             "color": "#1f2937",
-            "rotation": 0,
+            "rotation": 270,
             "fill": "solid",
-            "count": 3
+            "count": 1
           }
         ]
       },
@@ -9208,12 +9195,12 @@ module.exports = [
         "bg": null,
         "shapes": [
           {
-            "type": "hexagon",
+            "type": "triangle",
             "size": 80,
             "color": "#2563eb",
-            "rotation": 0,
+            "rotation": 270,
             "fill": "solid",
-            "count": 3
+            "count": 1
           }
         ]
       },
@@ -9221,12 +9208,12 @@ module.exports = [
         "bg": null,
         "shapes": [
           {
-            "type": "hexagon",
+            "type": "triangle",
             "size": 80,
             "color": "#dc2626",
-            "rotation": 0,
+            "rotation": 270,
             "fill": "solid",
-            "count": 3
+            "count": 1
           }
         ]
       },
@@ -9234,12 +9221,25 @@ module.exports = [
         "bg": null,
         "shapes": [
           {
-            "type": "hexagon",
+            "type": "circle",
             "size": 80,
-            "color": "#16a34a",
-            "rotation": 0,
+            "color": "#1f2937",
+            "rotation": 270,
             "fill": "solid",
-            "count": 3
+            "count": 1
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "triangle",
+            "size": 80,
+            "color": "#1f2937",
+            "rotation": 270,
+            "fill": "solid",
+            "count": 1
           }
         ]
       }
@@ -9252,211 +9252,6 @@ module.exports = [
     "set": "E",
     "indexInSet": 2,
     "globalIndex": 50,
-    "rule": "rotation(行)+count(列)",
-    "matrix": [
-      [
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "star",
-              "size": 80,
-              "color": "#16a34a",
-              "rotation": 0,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "star",
-              "size": 80,
-              "color": "#16a34a",
-              "rotation": 0,
-              "fill": "solid",
-              "count": 2
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "star",
-              "size": 80,
-              "color": "#16a34a",
-              "rotation": 0,
-              "fill": "solid",
-              "count": 3
-            }
-          ]
-        }
-      ],
-      [
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "star",
-              "size": 80,
-              "color": "#16a34a",
-              "rotation": 90,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "star",
-              "size": 80,
-              "color": "#16a34a",
-              "rotation": 90,
-              "fill": "solid",
-              "count": 2
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "star",
-              "size": 80,
-              "color": "#16a34a",
-              "rotation": 90,
-              "fill": "solid",
-              "count": 3
-            }
-          ]
-        }
-      ],
-      [
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "star",
-              "size": 80,
-              "color": "#16a34a",
-              "rotation": 180,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "star",
-              "size": 80,
-              "color": "#16a34a",
-              "rotation": 180,
-              "fill": "solid",
-              "count": 2
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": []
-        }
-      ]
-    ],
-    "options": [
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "star",
-            "size": 80,
-            "color": "#16a34a",
-            "rotation": 180,
-            "fill": "solid",
-            "count": 2
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "star",
-            "size": 80,
-            "color": "#16a34a",
-            "rotation": 180,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "star",
-            "size": 80,
-            "color": "#16a34a",
-            "rotation": 180,
-            "fill": "solid",
-            "count": 3
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "star",
-            "size": 80,
-            "color": "#16a34a",
-            "rotation": 0,
-            "fill": "solid",
-            "count": 3
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "star",
-            "size": 80,
-            "color": "#16a34a",
-            "rotation": 90,
-            "fill": "solid",
-            "count": 3
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "star",
-            "size": 80,
-            "color": "#16a34a",
-            "rotation": 270,
-            "fill": "solid",
-            "count": 3
-          }
-        ]
-      }
-    ],
-    "answer": 2,
-    "timeLimit": 40
-  },
-  {
-    "id": "SPM-051",
-    "set": "E",
-    "indexInSet": 3,
-    "globalIndex": 51,
     "rule": "color(行)+count(列)",
     "matrix": [
       [
@@ -9464,7 +9259,7 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "square",
+              "type": "triangle",
               "size": 80,
               "color": "#16a34a",
               "rotation": 0,
@@ -9477,7 +9272,7 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "square",
+              "type": "triangle",
               "size": 80,
               "color": "#16a34a",
               "rotation": 0,
@@ -9490,7 +9285,7 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "square",
+              "type": "triangle",
               "size": 80,
               "color": "#16a34a",
               "rotation": 0,
@@ -9505,9 +9300,9 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "square",
+              "type": "triangle",
               "size": 80,
-              "color": "#2563eb",
+              "color": "#1f2937",
               "rotation": 0,
               "fill": "solid",
               "count": 1
@@ -9518,9 +9313,9 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "square",
+              "type": "triangle",
               "size": 80,
-              "color": "#2563eb",
+              "color": "#1f2937",
               "rotation": 0,
               "fill": "solid",
               "count": 2
@@ -9531,9 +9326,9 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "square",
+              "type": "triangle",
               "size": 80,
-              "color": "#2563eb",
+              "color": "#1f2937",
               "rotation": 0,
               "fill": "solid",
               "count": 3
@@ -9546,9 +9341,9 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "square",
+              "type": "triangle",
               "size": 80,
-              "color": "#d97706",
+              "color": "#2563eb",
               "rotation": 0,
               "fill": "solid",
               "count": 1
@@ -9559,9 +9354,9 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "square",
+              "type": "triangle",
               "size": 80,
-              "color": "#d97706",
+              "color": "#2563eb",
               "rotation": 0,
               "fill": "solid",
               "count": 2
@@ -9579,20 +9374,7 @@ module.exports = [
         "bg": null,
         "shapes": [
           {
-            "type": "square",
-            "size": 80,
-            "color": "#d97706",
-            "rotation": 0,
-            "fill": "solid",
-            "count": 2
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "square",
+            "type": "triangle",
             "size": 80,
             "color": "#1f2937",
             "rotation": 0,
@@ -9605,7 +9387,33 @@ module.exports = [
         "bg": null,
         "shapes": [
           {
-            "type": "square",
+            "type": "triangle",
+            "size": 80,
+            "color": "#2563eb",
+            "rotation": 0,
+            "fill": "solid",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "triangle",
+            "size": 80,
+            "color": "#2563eb",
+            "rotation": 0,
+            "fill": "solid",
+            "count": 2
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "triangle",
             "size": 80,
             "color": "#dc2626",
             "rotation": 0,
@@ -9618,7 +9426,160 @@ module.exports = [
         "bg": null,
         "shapes": [
           {
-            "type": "square",
+            "type": "triangle",
+            "size": 80,
+            "color": "#2563eb",
+            "rotation": 0,
+            "fill": "solid",
+            "count": 3
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "triangle",
+            "size": 80,
+            "color": "#16a34a",
+            "rotation": 0,
+            "fill": "solid",
+            "count": 3
+          }
+        ]
+      }
+    ],
+    "answer": 4,
+    "timeLimit": 40
+  },
+  {
+    "id": "SPM-051",
+    "set": "E",
+    "indexInSet": 3,
+    "globalIndex": 51,
+    "rule": "shape(行)+color(列)",
+    "matrix": [
+      [
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "star",
+              "size": 80,
+              "color": "#1f2937",
+              "rotation": 0,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "star",
+              "size": 80,
+              "color": "#16a34a",
+              "rotation": 0,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "star",
+              "size": 80,
+              "color": "#2563eb",
+              "rotation": 0,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        }
+      ],
+      [
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "circle",
+              "size": 80,
+              "color": "#1f2937",
+              "rotation": 0,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "circle",
+              "size": 80,
+              "color": "#16a34a",
+              "rotation": 0,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "circle",
+              "size": 80,
+              "color": "#2563eb",
+              "rotation": 0,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        }
+      ],
+      [
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "triangle",
+              "size": 80,
+              "color": "#1f2937",
+              "rotation": 0,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "triangle",
+              "size": 80,
+              "color": "#16a34a",
+              "rotation": 0,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": []
+        }
+      ]
+    ],
+    "options": [
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "triangle",
             "size": 80,
             "color": "#d97706",
             "rotation": 0,
@@ -9631,12 +9592,12 @@ module.exports = [
         "bg": null,
         "shapes": [
           {
-            "type": "square",
+            "type": "triangle",
             "size": 80,
-            "color": "#d97706",
+            "color": "#1f2937",
             "rotation": 0,
             "fill": "solid",
-            "count": 3
+            "count": 1
           }
         ]
       },
@@ -9644,12 +9605,51 @@ module.exports = [
         "bg": null,
         "shapes": [
           {
-            "type": "square",
+            "type": "circle",
+            "size": 80,
+            "color": "#2563eb",
+            "rotation": 0,
+            "fill": "solid",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "triangle",
             "size": 80,
             "color": "#16a34a",
             "rotation": 0,
             "fill": "solid",
-            "count": 3
+            "count": 1
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "triangle",
+            "size": 80,
+            "color": "#2563eb",
+            "rotation": 0,
+            "fill": "solid",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "triangle",
+            "size": 80,
+            "color": "#dc2626",
+            "rotation": 0,
+            "fill": "solid",
+            "count": 1
           }
         ]
       }
@@ -9662,14 +9662,14 @@ module.exports = [
     "set": "E",
     "indexInSet": 4,
     "globalIndex": 52,
-    "rule": "count(行)+rotation(列)",
+    "rule": "count(行)+shape(列)",
     "matrix": [
       [
         {
           "bg": null,
           "shapes": [
             {
-              "type": "triangle",
+              "type": "hexagon",
               "size": 80,
               "color": "#16a34a",
               "rotation": 0,
@@ -9682,10 +9682,10 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "triangle",
+              "type": "circle",
               "size": 80,
               "color": "#16a34a",
-              "rotation": 90,
+              "rotation": 0,
               "fill": "solid",
               "count": 1
             }
@@ -9695,10 +9695,10 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "triangle",
+              "type": "diamond",
               "size": 80,
               "color": "#16a34a",
-              "rotation": 180,
+              "rotation": 0,
               "fill": "solid",
               "count": 1
             }
@@ -9710,7 +9710,7 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "triangle",
+              "type": "hexagon",
               "size": 80,
               "color": "#16a34a",
               "rotation": 0,
@@ -9723,10 +9723,10 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "triangle",
+              "type": "circle",
               "size": 80,
               "color": "#16a34a",
-              "rotation": 90,
+              "rotation": 0,
               "fill": "solid",
               "count": 2
             }
@@ -9736,10 +9736,10 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "triangle",
+              "type": "diamond",
               "size": 80,
               "color": "#16a34a",
-              "rotation": 180,
+              "rotation": 0,
               "fill": "solid",
               "count": 2
             }
@@ -9751,7 +9751,7 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "triangle",
+              "type": "hexagon",
               "size": 80,
               "color": "#16a34a",
               "rotation": 0,
@@ -9764,10 +9764,10 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "triangle",
+              "type": "circle",
               "size": 80,
               "color": "#16a34a",
-              "rotation": 90,
+              "rotation": 0,
               "fill": "solid",
               "count": 3
             }
@@ -9784,12 +9784,12 @@ module.exports = [
         "bg": null,
         "shapes": [
           {
-            "type": "triangle",
+            "type": "diamond",
             "size": 80,
             "color": "#16a34a",
-            "rotation": 180,
+            "rotation": 0,
             "fill": "solid",
-            "count": 2
+            "count": 1
           }
         ]
       },
@@ -9797,46 +9797,7 @@ module.exports = [
         "bg": null,
         "shapes": [
           {
-            "type": "triangle",
-            "size": 80,
-            "color": "#16a34a",
-            "rotation": 90,
-            "fill": "solid",
-            "count": 3
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "triangle",
-            "size": 80,
-            "color": "#16a34a",
-            "rotation": 180,
-            "fill": "solid",
-            "count": 3
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "triangle",
-            "size": 80,
-            "color": "#16a34a",
-            "rotation": 270,
-            "fill": "solid",
-            "count": 3
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "triangle",
+            "type": "circle",
             "size": 80,
             "color": "#16a34a",
             "rotation": 0,
@@ -9849,9 +9810,253 @@ module.exports = [
         "bg": null,
         "shapes": [
           {
-            "type": "triangle",
+            "type": "hexagon",
             "size": 80,
             "color": "#16a34a",
+            "rotation": 0,
+            "fill": "solid",
+            "count": 3
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "star",
+            "size": 80,
+            "color": "#16a34a",
+            "rotation": 0,
+            "fill": "solid",
+            "count": 3
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "diamond",
+            "size": 80,
+            "color": "#16a34a",
+            "rotation": 0,
+            "fill": "solid",
+            "count": 3
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "diamond",
+            "size": 80,
+            "color": "#16a34a",
+            "rotation": 0,
+            "fill": "solid",
+            "count": 2
+          }
+        ]
+      }
+    ],
+    "answer": 4,
+    "timeLimit": 40
+  },
+  {
+    "id": "SPM-053",
+    "set": "E",
+    "indexInSet": 5,
+    "globalIndex": 53,
+    "rule": "count(行)+color(列)",
+    "matrix": [
+      [
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "circle",
+              "size": 80,
+              "color": "#dc2626",
+              "rotation": 180,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "circle",
+              "size": 80,
+              "color": "#16a34a",
+              "rotation": 180,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "circle",
+              "size": 80,
+              "color": "#2563eb",
+              "rotation": 180,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        }
+      ],
+      [
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "circle",
+              "size": 80,
+              "color": "#dc2626",
+              "rotation": 180,
+              "fill": "solid",
+              "count": 2
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "circle",
+              "size": 80,
+              "color": "#16a34a",
+              "rotation": 180,
+              "fill": "solid",
+              "count": 2
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "circle",
+              "size": 80,
+              "color": "#2563eb",
+              "rotation": 180,
+              "fill": "solid",
+              "count": 2
+            }
+          ]
+        }
+      ],
+      [
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "circle",
+              "size": 80,
+              "color": "#dc2626",
+              "rotation": 180,
+              "fill": "solid",
+              "count": 3
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "circle",
+              "size": 80,
+              "color": "#16a34a",
+              "rotation": 180,
+              "fill": "solid",
+              "count": 3
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": []
+        }
+      ]
+    ],
+    "options": [
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "circle",
+            "size": 80,
+            "color": "#1f2937",
+            "rotation": 180,
+            "fill": "solid",
+            "count": 3
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "circle",
+            "size": 80,
+            "color": "#d97706",
+            "rotation": 180,
+            "fill": "solid",
+            "count": 3
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "circle",
+            "size": 80,
+            "color": "#2563eb",
+            "rotation": 180,
+            "fill": "solid",
+            "count": 3
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "circle",
+            "size": 80,
+            "color": "#2563eb",
+            "rotation": 180,
+            "fill": "solid",
+            "count": 2
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "circle",
+            "size": 80,
+            "color": "#16a34a",
+            "rotation": 180,
+            "fill": "solid",
+            "count": 3
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "circle",
+            "size": 80,
+            "color": "#2563eb",
             "rotation": 180,
             "fill": "solid",
             "count": 1
@@ -9863,226 +10068,21 @@ module.exports = [
     "timeLimit": 40
   },
   {
-    "id": "SPM-053",
-    "set": "E",
-    "indexInSet": 5,
-    "globalIndex": 53,
-    "rule": "rotation(行)+shape(列)",
-    "matrix": [
-      [
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "triangle",
-              "size": 80,
-              "color": "#16a34a",
-              "rotation": 0,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "star",
-              "size": 80,
-              "color": "#16a34a",
-              "rotation": 0,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "diamond",
-              "size": 80,
-              "color": "#16a34a",
-              "rotation": 0,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        }
-      ],
-      [
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "triangle",
-              "size": 80,
-              "color": "#16a34a",
-              "rotation": 90,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "star",
-              "size": 80,
-              "color": "#16a34a",
-              "rotation": 90,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "diamond",
-              "size": 80,
-              "color": "#16a34a",
-              "rotation": 90,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        }
-      ],
-      [
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "triangle",
-              "size": 80,
-              "color": "#16a34a",
-              "rotation": 180,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "star",
-              "size": 80,
-              "color": "#16a34a",
-              "rotation": 180,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": []
-        }
-      ]
-    ],
-    "options": [
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "triangle",
-            "size": 80,
-            "color": "#16a34a",
-            "rotation": 180,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "square",
-            "size": 80,
-            "color": "#16a34a",
-            "rotation": 180,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "diamond",
-            "size": 80,
-            "color": "#16a34a",
-            "rotation": 90,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "diamond",
-            "size": 80,
-            "color": "#16a34a",
-            "rotation": 0,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "diamond",
-            "size": 80,
-            "color": "#16a34a",
-            "rotation": 180,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "diamond",
-            "size": 80,
-            "color": "#16a34a",
-            "rotation": 270,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      }
-    ],
-    "answer": 4,
-    "timeLimit": 40
-  },
-  {
     "id": "SPM-054",
     "set": "E",
     "indexInSet": 6,
     "globalIndex": 54,
-    "rule": "rotation(行)+shape(列)",
+    "rule": "color(行)+count(列)",
     "matrix": [
       [
         {
           "bg": null,
           "shapes": [
             {
-              "type": "square",
+              "type": "star",
               "size": 80,
-              "color": "#1f2937",
-              "rotation": 0,
+              "color": "#d97706",
+              "rotation": 270,
               "fill": "solid",
               "count": 1
             }
@@ -10094,10 +10094,10 @@ module.exports = [
             {
               "type": "star",
               "size": 80,
-              "color": "#1f2937",
-              "rotation": 0,
+              "color": "#d97706",
+              "rotation": 270,
               "fill": "solid",
-              "count": 1
+              "count": 2
             }
           ]
         },
@@ -10105,12 +10105,12 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "hexagon",
+              "type": "star",
               "size": 80,
-              "color": "#1f2937",
-              "rotation": 0,
+              "color": "#d97706",
+              "rotation": 270,
               "fill": "solid",
-              "count": 1
+              "count": 3
             }
           ]
         }
@@ -10120,10 +10120,10 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "square",
+              "type": "star",
               "size": 80,
-              "color": "#1f2937",
-              "rotation": 90,
+              "color": "#16a34a",
+              "rotation": 270,
               "fill": "solid",
               "count": 1
             }
@@ -10135,10 +10135,10 @@ module.exports = [
             {
               "type": "star",
               "size": 80,
-              "color": "#1f2937",
-              "rotation": 90,
+              "color": "#16a34a",
+              "rotation": 270,
               "fill": "solid",
-              "count": 1
+              "count": 2
             }
           ]
         },
@@ -10146,12 +10146,12 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "hexagon",
+              "type": "star",
               "size": 80,
-              "color": "#1f2937",
-              "rotation": 90,
+              "color": "#16a34a",
+              "rotation": 270,
               "fill": "solid",
-              "count": 1
+              "count": 3
             }
           ]
         }
@@ -10161,10 +10161,10 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "square",
+              "type": "star",
               "size": 80,
               "color": "#1f2937",
-              "rotation": 180,
+              "rotation": 270,
               "fill": "solid",
               "count": 1
             }
@@ -10177,9 +10177,9 @@ module.exports = [
               "type": "star",
               "size": 80,
               "color": "#1f2937",
-              "rotation": 180,
+              "rotation": 270,
               "fill": "solid",
-              "count": 1
+              "count": 2
             }
           ]
         },
@@ -10196,8 +10196,21 @@ module.exports = [
           {
             "type": "star",
             "size": 80,
+            "color": "#2563eb",
+            "rotation": 270,
+            "fill": "solid",
+            "count": 3
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "star",
+            "size": 80,
             "color": "#1f2937",
-            "rotation": 180,
+            "rotation": 270,
             "fill": "solid",
             "count": 1
           }
@@ -10207,12 +10220,12 @@ module.exports = [
         "bg": null,
         "shapes": [
           {
-            "type": "hexagon",
+            "type": "star",
             "size": 80,
-            "color": "#1f2937",
-            "rotation": 180,
+            "color": "#16a34a",
+            "rotation": 270,
             "fill": "solid",
-            "count": 1
+            "count": 3
           }
         ]
       },
@@ -10220,12 +10233,12 @@ module.exports = [
         "bg": null,
         "shapes": [
           {
-            "type": "diamond",
+            "type": "star",
             "size": 80,
             "color": "#1f2937",
-            "rotation": 180,
+            "rotation": 270,
             "fill": "solid",
-            "count": 1
+            "count": 3
           }
         ]
       },
@@ -10233,12 +10246,12 @@ module.exports = [
         "bg": null,
         "shapes": [
           {
-            "type": "square",
+            "type": "star",
             "size": 80,
-            "color": "#1f2937",
-            "rotation": 180,
+            "color": "#dc2626",
+            "rotation": 270,
             "fill": "solid",
-            "count": 1
+            "count": 3
           }
         ]
       },
@@ -10246,30 +10259,17 @@ module.exports = [
         "bg": null,
         "shapes": [
           {
-            "type": "circle",
+            "type": "star",
             "size": 80,
-            "color": "#1f2937",
-            "rotation": 180,
+            "color": "#d97706",
+            "rotation": 270,
             "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "hexagon",
-            "size": 80,
-            "color": "#1f2937",
-            "rotation": 90,
-            "fill": "solid",
-            "count": 1
+            "count": 3
           }
         ]
       }
     ],
-    "answer": 1,
+    "answer": 3,
     "timeLimit": 40
   },
   {
@@ -10284,10 +10284,10 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "square",
+              "type": "hexagon",
               "size": 80,
-              "color": "#dc2626",
-              "rotation": 270,
+              "color": "#d97706",
+              "rotation": 0,
               "fill": "solid",
               "count": 1
             }
@@ -10297,10 +10297,10 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "square",
+              "type": "hexagon",
               "size": 80,
-              "color": "#2563eb",
-              "rotation": 270,
+              "color": "#1f2937",
+              "rotation": 0,
               "fill": "solid",
               "count": 1
             }
@@ -10310,10 +10310,10 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "square",
+              "type": "hexagon",
               "size": 80,
               "color": "#16a34a",
-              "rotation": 270,
+              "rotation": 0,
               "fill": "solid",
               "count": 1
             }
@@ -10325,10 +10325,10 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "square",
+              "type": "hexagon",
               "size": 80,
-              "color": "#dc2626",
-              "rotation": 270,
+              "color": "#d97706",
+              "rotation": 0,
               "fill": "solid",
               "count": 2
             }
@@ -10338,10 +10338,10 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "square",
+              "type": "hexagon",
               "size": 80,
-              "color": "#2563eb",
-              "rotation": 270,
+              "color": "#1f2937",
+              "rotation": 0,
               "fill": "solid",
               "count": 2
             }
@@ -10351,10 +10351,10 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "square",
+              "type": "hexagon",
               "size": 80,
               "color": "#16a34a",
-              "rotation": 270,
+              "rotation": 0,
               "fill": "solid",
               "count": 2
             }
@@ -10366,10 +10366,10 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "square",
+              "type": "hexagon",
               "size": 80,
-              "color": "#dc2626",
-              "rotation": 270,
+              "color": "#d97706",
+              "rotation": 0,
               "fill": "solid",
               "count": 3
             }
@@ -10379,10 +10379,10 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "square",
+              "type": "hexagon",
               "size": 80,
-              "color": "#2563eb",
-              "rotation": 270,
+              "color": "#1f2937",
+              "rotation": 0,
               "fill": "solid",
               "count": 3
             }
@@ -10399,10 +10399,23 @@ module.exports = [
         "bg": null,
         "shapes": [
           {
-            "type": "square",
+            "type": "hexagon",
+            "size": 80,
+            "color": "#16a34a",
+            "rotation": 0,
+            "fill": "solid",
+            "count": 3
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "hexagon",
             "size": 80,
             "color": "#1f2937",
-            "rotation": 270,
+            "rotation": 0,
             "fill": "solid",
             "count": 3
           }
@@ -10412,36 +10425,10 @@ module.exports = [
         "bg": null,
         "shapes": [
           {
-            "type": "square",
+            "type": "hexagon",
             "size": 80,
             "color": "#16a34a",
-            "rotation": 270,
-            "fill": "solid",
-            "count": 3
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "square",
-            "size": 80,
-            "color": "#2563eb",
-            "rotation": 270,
-            "fill": "solid",
-            "count": 3
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "square",
-            "size": 80,
-            "color": "#16a34a",
-            "rotation": 270,
+            "rotation": 0,
             "fill": "solid",
             "count": 2
           }
@@ -10451,173 +10438,7 @@ module.exports = [
         "bg": null,
         "shapes": [
           {
-            "type": "square",
-            "size": 80,
-            "color": "#d97706",
-            "rotation": 270,
-            "fill": "solid",
-            "count": 3
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "square",
-            "size": 80,
-            "color": "#16a34a",
-            "rotation": 270,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      }
-    ],
-    "answer": 1,
-    "timeLimit": 40
-  },
-  {
-    "id": "SPM-056",
-    "set": "E",
-    "indexInSet": 8,
-    "globalIndex": 56,
-    "rule": "count(行)+rotation(列)",
-    "matrix": [
-      [
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "triangle",
-              "size": 80,
-              "color": "#2563eb",
-              "rotation": 0,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "triangle",
-              "size": 80,
-              "color": "#2563eb",
-              "rotation": 90,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "triangle",
-              "size": 80,
-              "color": "#2563eb",
-              "rotation": 180,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        }
-      ],
-      [
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "triangle",
-              "size": 80,
-              "color": "#2563eb",
-              "rotation": 0,
-              "fill": "solid",
-              "count": 2
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "triangle",
-              "size": 80,
-              "color": "#2563eb",
-              "rotation": 90,
-              "fill": "solid",
-              "count": 2
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "triangle",
-              "size": 80,
-              "color": "#2563eb",
-              "rotation": 180,
-              "fill": "solid",
-              "count": 2
-            }
-          ]
-        }
-      ],
-      [
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "triangle",
-              "size": 80,
-              "color": "#2563eb",
-              "rotation": 0,
-              "fill": "solid",
-              "count": 3
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "triangle",
-              "size": 80,
-              "color": "#2563eb",
-              "rotation": 90,
-              "fill": "solid",
-              "count": 3
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": []
-        }
-      ]
-    ],
-    "options": [
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "triangle",
-            "size": 80,
-            "color": "#2563eb",
-            "rotation": 180,
-            "fill": "solid",
-            "count": 3
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "triangle",
+            "type": "hexagon",
             "size": 80,
             "color": "#2563eb",
             "rotation": 0,
@@ -10630,10 +10451,10 @@ module.exports = [
         "bg": null,
         "shapes": [
           {
-            "type": "triangle",
+            "type": "hexagon",
             "size": 80,
-            "color": "#2563eb",
-            "rotation": 180,
+            "color": "#16a34a",
+            "rotation": 0,
             "fill": "solid",
             "count": 1
           }
@@ -10643,7 +10464,199 @@ module.exports = [
         "bg": null,
         "shapes": [
           {
-            "type": "triangle",
+            "type": "hexagon",
+            "size": 80,
+            "color": "#dc2626",
+            "rotation": 0,
+            "fill": "solid",
+            "count": 3
+          }
+        ]
+      }
+    ],
+    "answer": 0,
+    "timeLimit": 40
+  },
+  {
+    "id": "SPM-056",
+    "set": "E",
+    "indexInSet": 8,
+    "globalIndex": 56,
+    "rule": "count(行)+color(列)",
+    "matrix": [
+      [
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "diamond",
+              "size": 80,
+              "color": "#dc2626",
+              "rotation": 90,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "diamond",
+              "size": 80,
+              "color": "#2563eb",
+              "rotation": 90,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "diamond",
+              "size": 80,
+              "color": "#1f2937",
+              "rotation": 90,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        }
+      ],
+      [
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "diamond",
+              "size": 80,
+              "color": "#dc2626",
+              "rotation": 90,
+              "fill": "solid",
+              "count": 2
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "diamond",
+              "size": 80,
+              "color": "#2563eb",
+              "rotation": 90,
+              "fill": "solid",
+              "count": 2
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "diamond",
+              "size": 80,
+              "color": "#1f2937",
+              "rotation": 90,
+              "fill": "solid",
+              "count": 2
+            }
+          ]
+        }
+      ],
+      [
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "diamond",
+              "size": 80,
+              "color": "#dc2626",
+              "rotation": 90,
+              "fill": "solid",
+              "count": 3
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "diamond",
+              "size": 80,
+              "color": "#2563eb",
+              "rotation": 90,
+              "fill": "solid",
+              "count": 3
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": []
+        }
+      ]
+    ],
+    "options": [
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "diamond",
+            "size": 80,
+            "color": "#dc2626",
+            "rotation": 90,
+            "fill": "solid",
+            "count": 3
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "diamond",
+            "size": 80,
+            "color": "#1f2937",
+            "rotation": 90,
+            "fill": "solid",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "diamond",
+            "size": 80,
+            "color": "#d97706",
+            "rotation": 90,
+            "fill": "solid",
+            "count": 3
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "diamond",
+            "size": 80,
+            "color": "#1f2937",
+            "rotation": 90,
+            "fill": "solid",
+            "count": 2
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "diamond",
             "size": 80,
             "color": "#2563eb",
             "rotation": 90,
@@ -10656,9 +10669,149 @@ module.exports = [
         "bg": null,
         "shapes": [
           {
-            "type": "triangle",
+            "type": "diamond",
             "size": 80,
-            "color": "#2563eb",
+            "color": "#1f2937",
+            "rotation": 90,
+            "fill": "solid",
+            "count": 3
+          }
+        ]
+      }
+    ],
+    "answer": 5,
+    "timeLimit": 40
+  },
+  {
+    "id": "SPM-057",
+    "set": "E",
+    "indexInSet": 9,
+    "globalIndex": 57,
+    "rule": "count(行)+shape(列)",
+    "matrix": [
+      [
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "square",
+              "size": 80,
+              "color": "#1f2937",
+              "rotation": 270,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "circle",
+              "size": 80,
+              "color": "#1f2937",
+              "rotation": 270,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "star",
+              "size": 80,
+              "color": "#1f2937",
+              "rotation": 270,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        }
+      ],
+      [
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "square",
+              "size": 80,
+              "color": "#1f2937",
+              "rotation": 270,
+              "fill": "solid",
+              "count": 2
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "circle",
+              "size": 80,
+              "color": "#1f2937",
+              "rotation": 270,
+              "fill": "solid",
+              "count": 2
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "star",
+              "size": 80,
+              "color": "#1f2937",
+              "rotation": 270,
+              "fill": "solid",
+              "count": 2
+            }
+          ]
+        }
+      ],
+      [
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "square",
+              "size": 80,
+              "color": "#1f2937",
+              "rotation": 270,
+              "fill": "solid",
+              "count": 3
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "circle",
+              "size": 80,
+              "color": "#1f2937",
+              "rotation": 270,
+              "fill": "solid",
+              "count": 3
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": []
+        }
+      ]
+    ],
+    "options": [
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "square",
+            "size": 80,
+            "color": "#1f2937",
             "rotation": 270,
             "fill": "solid",
             "count": 3
@@ -10669,178 +10822,12 @@ module.exports = [
         "bg": null,
         "shapes": [
           {
-            "type": "triangle",
-            "size": 80,
-            "color": "#2563eb",
-            "rotation": 180,
-            "fill": "solid",
-            "count": 2
-          }
-        ]
-      }
-    ],
-    "answer": 0,
-    "timeLimit": 40
-  },
-  {
-    "id": "SPM-057",
-    "set": "E",
-    "indexInSet": 9,
-    "globalIndex": 57,
-    "rule": "shape(行)+color(列)",
-    "matrix": [
-      [
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "diamond",
-              "size": 80,
-              "color": "#dc2626",
-              "rotation": 90,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "diamond",
-              "size": 80,
-              "color": "#d97706",
-              "rotation": 90,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "diamond",
-              "size": 80,
-              "color": "#1f2937",
-              "rotation": 90,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        }
-      ],
-      [
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "hexagon",
-              "size": 80,
-              "color": "#dc2626",
-              "rotation": 90,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "hexagon",
-              "size": 80,
-              "color": "#d97706",
-              "rotation": 90,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "hexagon",
-              "size": 80,
-              "color": "#1f2937",
-              "rotation": 90,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        }
-      ],
-      [
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "star",
-              "size": 80,
-              "color": "#dc2626",
-              "rotation": 90,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "star",
-              "size": 80,
-              "color": "#d97706",
-              "rotation": 90,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": []
-        }
-      ]
-    ],
-    "options": [
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "star",
-            "size": 80,
-            "color": "#2563eb",
-            "rotation": 90,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "star",
+            "type": "circle",
             "size": 80,
             "color": "#1f2937",
-            "rotation": 90,
+            "rotation": 270,
             "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "diamond",
-            "size": 80,
-            "color": "#1f2937",
-            "rotation": 90,
-            "fill": "solid",
-            "count": 1
+            "count": 3
           }
         ]
       },
@@ -10851,7 +10838,20 @@ module.exports = [
             "type": "hexagon",
             "size": 80,
             "color": "#1f2937",
-            "rotation": 90,
+            "rotation": 270,
+            "fill": "solid",
+            "count": 3
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "star",
+            "size": 80,
+            "color": "#1f2937",
+            "rotation": 270,
             "fill": "solid",
             "count": 1
           }
@@ -10863,10 +10863,10 @@ module.exports = [
           {
             "type": "star",
             "size": 80,
-            "color": "#16a34a",
-            "rotation": 90,
+            "color": "#1f2937",
+            "rotation": 270,
             "fill": "solid",
-            "count": 1
+            "count": 3
           }
         ]
       },
@@ -10876,15 +10876,15 @@ module.exports = [
           {
             "type": "star",
             "size": 80,
-            "color": "#dc2626",
-            "rotation": 90,
+            "color": "#1f2937",
+            "rotation": 270,
             "fill": "solid",
-            "count": 1
+            "count": 2
           }
         ]
       }
     ],
-    "answer": 1,
+    "answer": 4,
     "timeLimit": 40
   },
   {
@@ -10892,57 +10892,16 @@ module.exports = [
     "set": "E",
     "indexInSet": 10,
     "globalIndex": 58,
-    "rule": "rotation(行)+shape(列)",
+    "rule": "shape(行)+color(列)",
     "matrix": [
       [
         {
           "bg": null,
           "shapes": [
             {
-              "type": "circle",
+              "type": "square",
               "size": 80,
-              "color": "#1f2937",
-              "rotation": 0,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "diamond",
-              "size": 80,
-              "color": "#1f2937",
-              "rotation": 0,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "star",
-              "size": 80,
-              "color": "#1f2937",
-              "rotation": 0,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        }
-      ],
-      [
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "circle",
-              "size": 80,
-              "color": "#1f2937",
+              "color": "#dc2626",
               "rotation": 90,
               "fill": "solid",
               "count": 1
@@ -10953,9 +10912,9 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "diamond",
+              "type": "square",
               "size": 80,
-              "color": "#1f2937",
+              "color": "#16a34a",
               "rotation": 90,
               "fill": "solid",
               "count": 1
@@ -10966,9 +10925,9 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "star",
+              "type": "square",
               "size": 80,
-              "color": "#1f2937",
+              "color": "#2563eb",
               "rotation": 90,
               "fill": "solid",
               "count": 1
@@ -10983,8 +10942,49 @@ module.exports = [
             {
               "type": "circle",
               "size": 80,
-              "color": "#1f2937",
-              "rotation": 180,
+              "color": "#dc2626",
+              "rotation": 90,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "circle",
+              "size": 80,
+              "color": "#16a34a",
+              "rotation": 90,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "circle",
+              "size": 80,
+              "color": "#2563eb",
+              "rotation": 90,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        }
+      ],
+      [
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "diamond",
+              "size": 80,
+              "color": "#dc2626",
+              "rotation": 90,
               "fill": "solid",
               "count": 1
             }
@@ -10996,8 +10996,8 @@ module.exports = [
             {
               "type": "diamond",
               "size": 80,
-              "color": "#1f2937",
-              "rotation": 180,
+              "color": "#16a34a",
+              "rotation": 90,
               "fill": "solid",
               "count": 1
             }
@@ -11014,23 +11014,10 @@ module.exports = [
         "bg": null,
         "shapes": [
           {
-            "type": "diamond",
-            "size": 80,
-            "color": "#1f2937",
-            "rotation": 180,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
             "type": "star",
             "size": 80,
-            "color": "#1f2937",
-            "rotation": 180,
+            "color": "#2563eb",
+            "rotation": 90,
             "fill": "solid",
             "count": 1
           }
@@ -11040,10 +11027,10 @@ module.exports = [
         "bg": null,
         "shapes": [
           {
-            "type": "hexagon",
+            "type": "diamond",
             "size": 80,
-            "color": "#1f2937",
-            "rotation": 180,
+            "color": "#d97706",
+            "rotation": 90,
             "fill": "solid",
             "count": 1
           }
@@ -11053,10 +11040,36 @@ module.exports = [
         "bg": null,
         "shapes": [
           {
-            "type": "triangle",
+            "type": "diamond",
             "size": 80,
-            "color": "#1f2937",
-            "rotation": 180,
+            "color": "#2563eb",
+            "rotation": 90,
+            "fill": "solid",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "square",
+            "size": 80,
+            "color": "#2563eb",
+            "rotation": 90,
+            "fill": "solid",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "diamond",
+            "size": 80,
+            "color": "#16a34a",
+            "rotation": 90,
             "fill": "solid",
             "count": 1
           }
@@ -11068,8 +11081,200 @@ module.exports = [
           {
             "type": "circle",
             "size": 80,
+            "color": "#2563eb",
+            "rotation": 90,
+            "fill": "solid",
+            "count": 1
+          }
+        ]
+      }
+    ],
+    "answer": 2,
+    "timeLimit": 40
+  },
+  {
+    "id": "SPM-059",
+    "set": "E",
+    "indexInSet": 11,
+    "globalIndex": 59,
+    "rule": "color(行)+shape(列)",
+    "matrix": [
+      [
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "hexagon",
+              "size": 80,
+              "color": "#16a34a",
+              "rotation": 0,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "circle",
+              "size": 80,
+              "color": "#16a34a",
+              "rotation": 0,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "square",
+              "size": 80,
+              "color": "#16a34a",
+              "rotation": 0,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        }
+      ],
+      [
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "hexagon",
+              "size": 80,
+              "color": "#2563eb",
+              "rotation": 0,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "circle",
+              "size": 80,
+              "color": "#2563eb",
+              "rotation": 0,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "square",
+              "size": 80,
+              "color": "#2563eb",
+              "rotation": 0,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        }
+      ],
+      [
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "hexagon",
+              "size": 80,
+              "color": "#d97706",
+              "rotation": 0,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": [
+            {
+              "type": "circle",
+              "size": 80,
+              "color": "#d97706",
+              "rotation": 0,
+              "fill": "solid",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "bg": null,
+          "shapes": []
+        }
+      ]
+    ],
+    "options": [
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "square",
+            "size": 80,
+            "color": "#16a34a",
+            "rotation": 0,
+            "fill": "solid",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "square",
+            "size": 80,
+            "color": "#2563eb",
+            "rotation": 0,
+            "fill": "solid",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "hexagon",
+            "size": 80,
+            "color": "#d97706",
+            "rotation": 0,
+            "fill": "solid",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "square",
+            "size": 80,
             "color": "#1f2937",
-            "rotation": 180,
+            "rotation": 0,
+            "fill": "solid",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "square",
+            "size": 80,
+            "color": "#d97706",
+            "rotation": 0,
             "fill": "solid",
             "count": 1
           }
@@ -11081,7 +11286,7 @@ module.exports = [
           {
             "type": "star",
             "size": 80,
-            "color": "#1f2937",
+            "color": "#d97706",
             "rotation": 0,
             "fill": "solid",
             "count": 1
@@ -11089,25 +11294,25 @@ module.exports = [
         ]
       }
     ],
-    "answer": 1,
+    "answer": 4,
     "timeLimit": 40
   },
   {
-    "id": "SPM-059",
+    "id": "SPM-060",
     "set": "E",
-    "indexInSet": 11,
-    "globalIndex": 59,
-    "rule": "count(行)+color(列)",
+    "indexInSet": 12,
+    "globalIndex": 60,
+    "rule": "count(行)+shape(列)",
     "matrix": [
       [
         {
           "bg": null,
           "shapes": [
             {
-              "type": "hexagon",
+              "type": "triangle",
               "size": 80,
-              "color": "#dc2626",
-              "rotation": 180,
+              "color": "#d97706",
+              "rotation": 0,
               "fill": "solid",
               "count": 1
             }
@@ -11117,10 +11322,10 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "hexagon",
+              "type": "star",
               "size": 80,
-              "color": "#2563eb",
-              "rotation": 180,
+              "color": "#d97706",
+              "rotation": 0,
               "fill": "solid",
               "count": 1
             }
@@ -11130,10 +11335,10 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "hexagon",
+              "type": "square",
               "size": 80,
-              "color": "#16a34a",
-              "rotation": 180,
+              "color": "#d97706",
+              "rotation": 0,
               "fill": "solid",
               "count": 1
             }
@@ -11145,10 +11350,10 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "hexagon",
+              "type": "triangle",
               "size": 80,
-              "color": "#dc2626",
-              "rotation": 180,
+              "color": "#d97706",
+              "rotation": 0,
               "fill": "solid",
               "count": 2
             }
@@ -11158,10 +11363,10 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "hexagon",
+              "type": "star",
               "size": 80,
-              "color": "#2563eb",
-              "rotation": 180,
+              "color": "#d97706",
+              "rotation": 0,
               "fill": "solid",
               "count": 2
             }
@@ -11171,10 +11376,10 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "hexagon",
+              "type": "square",
               "size": 80,
-              "color": "#16a34a",
-              "rotation": 180,
+              "color": "#d97706",
+              "rotation": 0,
               "fill": "solid",
               "count": 2
             }
@@ -11186,10 +11391,10 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "hexagon",
+              "type": "triangle",
               "size": 80,
-              "color": "#dc2626",
-              "rotation": 180,
+              "color": "#d97706",
+              "rotation": 0,
               "fill": "solid",
               "count": 3
             }
@@ -11199,10 +11404,10 @@ module.exports = [
           "bg": null,
           "shapes": [
             {
-              "type": "hexagon",
+              "type": "star",
               "size": 80,
-              "color": "#2563eb",
-              "rotation": 180,
+              "color": "#d97706",
+              "rotation": 0,
               "fill": "solid",
               "count": 3
             }
@@ -11222,7 +11427,7 @@ module.exports = [
             "type": "hexagon",
             "size": 80,
             "color": "#d97706",
-            "rotation": 180,
+            "rotation": 0,
             "fill": "solid",
             "count": 3
           }
@@ -11232,10 +11437,10 @@ module.exports = [
         "bg": null,
         "shapes": [
           {
-            "type": "hexagon",
+            "type": "square",
             "size": 80,
-            "color": "#16a34a",
-            "rotation": 180,
+            "color": "#d97706",
+            "rotation": 0,
             "fill": "solid",
             "count": 2
           }
@@ -11245,191 +11450,12 @@ module.exports = [
         "bg": null,
         "shapes": [
           {
-            "type": "hexagon",
-            "size": 80,
-            "color": "#16a34a",
-            "rotation": 180,
-            "fill": "solid",
-            "count": 3
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "hexagon",
-            "size": 80,
-            "color": "#16a34a",
-            "rotation": 180,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "hexagon",
-            "size": 80,
-            "color": "#2563eb",
-            "rotation": 180,
-            "fill": "solid",
-            "count": 3
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "hexagon",
-            "size": 80,
-            "color": "#1f2937",
-            "rotation": 180,
-            "fill": "solid",
-            "count": 3
-          }
-        ]
-      }
-    ],
-    "answer": 2,
-    "timeLimit": 40
-  },
-  {
-    "id": "SPM-060",
-    "set": "E",
-    "indexInSet": 12,
-    "globalIndex": 60,
-    "rule": "color(行)+rotation(列)",
-    "matrix": [
-      [
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "square",
-              "size": 80,
-              "color": "#16a34a",
-              "rotation": 0,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "square",
-              "size": 80,
-              "color": "#16a34a",
-              "rotation": 90,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "square",
-              "size": 80,
-              "color": "#16a34a",
-              "rotation": 180,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        }
-      ],
-      [
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "square",
-              "size": 80,
-              "color": "#1f2937",
-              "rotation": 0,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "square",
-              "size": 80,
-              "color": "#1f2937",
-              "rotation": 90,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "square",
-              "size": 80,
-              "color": "#1f2937",
-              "rotation": 180,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        }
-      ],
-      [
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "square",
-              "size": 80,
-              "color": "#d97706",
-              "rotation": 0,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": [
-            {
-              "type": "square",
-              "size": 80,
-              "color": "#d97706",
-              "rotation": 90,
-              "fill": "solid",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "bg": null,
-          "shapes": []
-        }
-      ]
-    ],
-    "options": [
-      {
-        "bg": null,
-        "shapes": [
-          {
             "type": "square",
             "size": 80,
             "color": "#d97706",
-            "rotation": 270,
+            "rotation": 0,
             "fill": "solid",
-            "count": 1
+            "count": 3
           }
         ]
       },
@@ -11437,25 +11463,25 @@ module.exports = [
         "bg": null,
         "shapes": [
           {
-            "type": "square",
-            "size": 80,
-            "color": "#2563eb",
-            "rotation": 180,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "square",
+            "type": "star",
             "size": 80,
             "color": "#d97706",
-            "rotation": 180,
+            "rotation": 0,
             "fill": "solid",
-            "count": 1
+            "count": 3
+          }
+        ]
+      },
+      {
+        "bg": null,
+        "shapes": [
+          {
+            "type": "diamond",
+            "size": 80,
+            "color": "#d97706",
+            "rotation": 0,
+            "fill": "solid",
+            "count": 3
           }
         ]
       },
@@ -11467,32 +11493,6 @@ module.exports = [
             "size": 80,
             "color": "#d97706",
             "rotation": 0,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "square",
-            "size": 80,
-            "color": "#1f2937",
-            "rotation": 180,
-            "fill": "solid",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "bg": null,
-        "shapes": [
-          {
-            "type": "square",
-            "size": 80,
-            "color": "#16a34a",
-            "rotation": 180,
             "fill": "solid",
             "count": 1
           }
