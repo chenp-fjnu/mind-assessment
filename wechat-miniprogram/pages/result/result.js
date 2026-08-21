@@ -2,6 +2,7 @@ const { getModule } = require('../../utils/registry')
 const { computeTrend } = require('../../utils/trend')
 const { readableTextColor } = require('../../utils/color')
 const { isDark } = require('../../utils/theme')
+const { withPrivacy } = require('../../utils/privacy')
 
 Page({
   data: {
@@ -345,30 +346,32 @@ Page({
   },
 
   saveCard() {
-    wx.showLoading({ title: '生成中' })
-    this.drawCardToTemp((path) => {
-      wx.hideLoading()
-      if (!path) {
-        wx.showToast({ title: '生成失败', icon: 'none' })
-        return
-      }
-      wx.saveImageToPhotosAlbum({
-        filePath: path,
-        success: () => wx.showToast({ title: '已保存到相册' }),
-        fail: (err) => {
-          if (err && /auth|deny/i.test(err.errMsg || '')) {
-            wx.showModal({
-              title: '需要相册权限',
-              content: '请在设置中允许保存到相册',
-              confirmText: '去设置',
-              success: (r) => {
-                if (r.confirm) wx.openSetting()
-              },
-            })
-          } else {
-            wx.showToast({ title: '保存失败', icon: 'none' })
-          }
-        },
+    withPrivacy(() => {
+      wx.showLoading({ title: '生成中' })
+      this.drawCardToTemp((path) => {
+        wx.hideLoading()
+        if (!path) {
+          wx.showToast({ title: '生成失败', icon: 'none' })
+          return
+        }
+        wx.saveImageToPhotosAlbum({
+          filePath: path,
+          success: () => wx.showToast({ title: '已保存到相册' }),
+          fail: (err) => {
+            if (err && /auth|deny/i.test(err.errMsg || '')) {
+              wx.showModal({
+                title: '需要相册权限',
+                content: '请在设置中允许保存到相册',
+                confirmText: '去设置',
+                success: (r) => {
+                  if (r.confirm) wx.openSetting()
+                },
+              })
+            } else {
+              wx.showToast({ title: '保存失败', icon: 'none' })
+            }
+          },
+        })
       })
     })
   },

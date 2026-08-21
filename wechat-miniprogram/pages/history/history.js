@@ -1,4 +1,5 @@
 const { getModule } = require('../../utils/registry')
+const { withPrivacy } = require('../../utils/privacy')
 
 function fmt(ts) {
   const d = new Date(ts)
@@ -95,9 +96,11 @@ Page({
       wx.showToast({ title: '暂无记录', icon: 'none' })
       return
     }
-    wx.setClipboardData({
-      data: JSON.stringify(all, null, 2),
-      success: () => wx.showToast({ title: '已复制到剪贴板', icon: 'none' }),
+    withPrivacy(() => {
+      wx.setClipboardData({
+        data: JSON.stringify(all, null, 2),
+        success: () => wx.showToast({ title: '已复制到剪贴板', icon: 'none' }),
+      })
     })
   },
 })
