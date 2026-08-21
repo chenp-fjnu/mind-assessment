@@ -100,7 +100,7 @@ Page({
     else if (n === 6) cols = 3
     else if (n === 8) cols = 4
     const optStyle = 'width:' + (96 / cols).toFixed(2) + '%;'
-    const needCanvas = q.type === 'matrix' || !!q.matrix
+    const needCanvas = q.type === 'matrix' || !!q.matrix || !!(q.candidates && q.candidates.length)
     let groupLabel = ''
     const gs = q.set
     if (gs && this._setMeta[gs]) {

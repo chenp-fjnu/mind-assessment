@@ -127,14 +127,18 @@ function drawCell(ctx, cell, x, y, size) {
     ctx.fillRect(0, 0, size, size)
   }
   const shapes = cell.shapes || []
-  if (shapes.length === 1) {
+  if (shapes.length === 0) return
+  // count>1 时，按数量绘制多个相同图形（矩阵题中 count 是变化的属性，必须渲染出来）
+  if (shapes.length === 1 && !(shapes[0].count > 1)) {
     drawShape(ctx, shapes[0], size / 2, size / 2, size)
-  } else if (shapes.length > 1) {
-    const cols = Math.ceil(Math.sqrt(shapes.length))
-    const rows = Math.ceil(shapes.length / cols)
+  } else {
+    const list = shapes.length === 1 ? Array(Math.max(1, shapes[0].count | 0)).fill(shapes[0]) : shapes
+    const n = list.length
+    const cols = Math.ceil(Math.sqrt(n))
+    const rows = Math.ceil(n / cols)
     const cw = size / cols
     const ch = size / rows
-    shapes.forEach((s, i) => {
+    list.forEach((s, i) => {
       const cxi = (i % cols) * cw + cw / 2
       const cyi = Math.floor(i / cols) * ch + ch / 2
       const small = { ...s, size: s.size * 0.6 }
