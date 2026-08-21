@@ -17,6 +17,14 @@ const LOADERS = {
   holland: () => require('../modules/holland/index'),
   spm: () => require('../modules/spm/index'),
   wechsler: () => require('../modules/wechsler/index'),
+  phq9: () => require('../modules/phq9/index'),
+  pss: () => require('../modules/pss/index'),
+  psqi: () => require('../modules/psqi/index'),
+  gses: () => require('../modules/gses/index'),
+  ucla: () => require('../modules/ucla/index'),
+  cdrise: () => require('../modules/cdrise/index'),
+  enneagram: () => require('../modules/enneagram/index'),
+  temperament: () => require('../modules/temperament/index'),
 }
 
 const MODULES_META = require('./modules-meta')
@@ -27,6 +35,10 @@ const TYPE_LABELS = {
   intelligence: '智力推理',
   career: '职业兴趣',
   self: '自我认知',
+  stress: '压力应对',
+  sleep: '睡眠健康',
+  social: '社交关系',
+  wellbeing: '积极心理',
 }
 
 const _cache = {}

@@ -48,13 +48,15 @@ Page({
     allModules: [],
     keyword: '',
     activeType: '',
+    moduleCount: 0,
+    typeCount: 0,
   },
   onLoad() {
     const allModules = buildModuleList()
     const types = Object.keys(TYPE_LABELS)
       .filter((t) => allModules.some((m) => m.type === t))
       .map((t) => ({ type: t, label: TYPE_LABELS[t] }))
-    this.setData({ allModules, types, groups: buildGroups(allModules) })
+    this.setData({ allModules, types, groups: buildGroups(allModules), moduleCount: allModules.length, typeCount: types.length })
   },
   applyFilter() {
     const { allModules, keyword, activeType } = this.data

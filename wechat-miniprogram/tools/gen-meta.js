@@ -3,7 +3,10 @@
 const path = require('path')
 const fs = require('fs')
 const base = process.cwd()
-const ids = ['mbti','big5','epq','disc','pf16','sds','sas','gad7','dass21','ses','las','holland','spm','wechsler']
+// 单一数据源：直接复用 registry 的 LOADERS，新增模块只需在 registry.js 登记一次，
+// 无需再维护这里重复的 id 列表（避免两处不一致）。
+const { LOADERS } = require(path.join(base, 'utils', 'registry'))
+const ids = Object.keys(LOADERS)
 const out = []
 for (const id of ids) {
   const m = require(path.join(base, 'modules', id, 'index'))

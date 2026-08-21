@@ -1,5 +1,5 @@
 /**
- * 全量审计：对所有 14 个测评模块检查题目与答案的完整性/一致性。
+ * 全量审计：对所有测评模块（由 utils/registry 的 LOADERS 动态枚举）检查题目与答案的完整性/一致性。
  * 运行：node tools/audit-all.js
  */
 const { getMetaList, getModule } = require('../utils/registry')

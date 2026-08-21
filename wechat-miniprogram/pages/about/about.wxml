@@ -6,7 +6,7 @@
 
   <view class="card section">
     <text class="sec-title">我们做什么</text>
-    <text class="sec-text">心智探索局是一款纯本地、离线的心理测评小程序，覆盖人格、情绪、智力、职业兴趣与自我认知五大类共 14 套量表。所有题目、计分与结果均在你的设备本地完成，无需联网、不上传任何数据。</text>
+    <text class="sec-text">心智探索局是一款纯本地、离线的心理测评小程序，覆盖人格、情绪、智力、职业兴趣、自我认知等 {{typeCount}} 大类共 {{moduleCount}} 套量表。所有题目、计分与结果均在你的设备本地完成，无需联网、不上传任何数据。</text>
   </view>
 
   <view class="card section">

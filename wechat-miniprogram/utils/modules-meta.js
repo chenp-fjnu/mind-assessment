@@ -259,5 +259,157 @@ module.exports = [
       "操作",
       "综合"
     ]
+  },
+  {
+    "id": "phq9",
+    "type": "mood",
+    "name": "PHQ-9 抑郁筛查",
+    "shortName": "PHQ-9",
+    "icon": "🌧️",
+    "color": "#0891b2",
+    "desc": "基于 DSM-IV 抑郁诊断标准的 9 题抑郁筛查，评估近两周抑郁症状严重程度。",
+    "questionCount": 9,
+    "duration": 5,
+    "paid": false,
+    "price": 0,
+    "tag": [
+      "情绪",
+      "抑郁",
+      "筛查",
+      "DSM-IV"
+    ]
+  },
+  {
+    "id": "pss",
+    "type": "stress",
+    "name": "压力知觉量表",
+    "shortName": "PSS-10",
+    "icon": "🌪️",
+    "color": "#dc2626",
+    "desc": "基于 PSS-10 的压力知觉测评，评估近一个月你感知到的压力程度与应对感受。",
+    "questionCount": 10,
+    "duration": 5,
+    "paid": false,
+    "price": 0,
+    "tag": [
+      "压力",
+      "应激",
+      "心理健康",
+      "筛查"
+    ]
+  },
+  {
+    "id": "psqi",
+    "type": "sleep",
+    "name": "匹兹堡睡眠质量指数",
+    "shortName": "PSQI",
+    "icon": "🌙",
+    "color": "#4f46e5",
+    "desc": "基于 PSQI 的睡眠质量测评，从 7 个维度评估你近一个月的睡眠质量。",
+    "questionCount": 16,
+    "duration": 8,
+    "paid": false,
+    "price": 0,
+    "tag": [
+      "睡眠",
+      "健康",
+      "生活质量",
+      "筛查"
+    ]
+  },
+  {
+    "id": "gses",
+    "type": "self",
+    "name": "一般自我效能感量表",
+    "shortName": "GSES",
+    "icon": "🔥",
+    "color": "#0891b2",
+    "desc": "基于 GSES 的自我效能测评，评估你面对挑战时相信自己能应付的总体信心。",
+    "questionCount": 10,
+    "duration": 5,
+    "paid": false,
+    "price": 0,
+    "tag": [
+      "自我",
+      "自信",
+      "自我效能",
+      "积极心理"
+    ]
+  },
+  {
+    "id": "ucla",
+    "type": "social",
+    "name": "UCLA 孤独量表",
+    "shortName": "UCLA",
+    "icon": "🌫️",
+    "color": "#7c3aed",
+    "desc": "基于 UCLA 第三版的孤独感测评，评估你近期的社会联结与孤独体验。",
+    "questionCount": 20,
+    "duration": 6,
+    "paid": false,
+    "price": 0,
+    "tag": [
+      "社交",
+      "孤独",
+      "关系",
+      "心理健康"
+    ]
+  },
+  {
+    "id": "cdrise",
+    "type": "wellbeing",
+    "name": "心理韧性量表",
+    "shortName": "CD-RISC-10",
+    "icon": "🌱",
+    "color": "#059669",
+    "desc": "基于 CD-RISC 简版的心理韧性测评，评估你面对压力与逆境时的复原能力。",
+    "questionCount": 10,
+    "duration": 5,
+    "paid": false,
+    "price": 0,
+    "tag": [
+      "积极心理",
+      "韧性",
+      "抗压",
+      "自我成长"
+    ]
+  },
+  {
+    "id": "enneagram",
+    "type": "personality",
+    "name": "九型人格测试",
+    "shortName": "Enneagram",
+    "icon": "🌀",
+    "color": "#be185d",
+    "desc": "基于九型人格理论的简化测评，探索你的主导人格类型与特质倾向。",
+    "questionCount": 36,
+    "duration": 10,
+    "paid": false,
+    "price": 0,
+    "tag": [
+      "人格",
+      "性格",
+      "九型",
+      "自我探索"
+    ]
+  },
+  {
+    "id": "temperament",
+    "type": "personality",
+    "name": "气质类型问卷",
+    "shortName": "气质类型",
+    "icon": "🎭",
+    "color": "#0d9488",
+    "desc": "基于气质四维度的简化测评，探索你的先天行为风格与情绪反应倾向。",
+    "questionCount": 60,
+    "duration": 12,
+    "paid": false,
+    "price": 0,
+    "tag": [
+      "人格",
+      "气质",
+      "性格",
+      "自我探索"
+    ]
   }
 ]

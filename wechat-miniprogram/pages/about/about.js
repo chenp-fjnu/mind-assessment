@@ -1,3 +1,5 @@
+const { getMetaList, TYPE_LABELS } = require('../../utils/registry')
+
 Page({
   data: {
     sources: [
@@ -11,6 +13,13 @@ Page({
       { name: 'Rosenberg 自尊量表', desc: 'SES，10 题自尊测量' },
       { name: '瑞文 / 韦氏（图形题）', desc: 'SPM 矩阵推理、WAIS 分测验图形题为原创生成，仅作能力练习，非标准化常模' },
     ],
+    moduleCount: 0,
+    typeCount: 0,
+  },
+  onLoad() {
+    const allModules = getMetaList()
+    const typeCount = Object.keys(TYPE_LABELS).filter((t) => allModules.some((m) => m.type === t)).length
+    this.setData({ moduleCount: allModules.length, typeCount })
   },
   goHome() {
     wx.reLaunch({ url: '/pages/index/index' })

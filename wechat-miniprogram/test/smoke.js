@@ -1,5 +1,5 @@
 /**
- * 纯 Node 冒烟测试：校验 14 个量表模块的评分链路不报错。
+ * 纯 Node 冒烟测试：校验全部量表模块（由 utils/registry 动态枚举）的评分链路不报错。
  * 运行：node test/smoke.js   （无需安装任何依赖）
  */
 const { getMetaList, getModule } = require('../utils/registry')
