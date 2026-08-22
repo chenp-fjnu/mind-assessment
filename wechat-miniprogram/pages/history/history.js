@@ -1,4 +1,5 @@
 const { getModule } = require('../../utils/registry')
+const methodsData = require('../../utils/methods-data')
 const { withPrivacy } = require('../../utils/privacy')
 
 function fmt(ts) {
@@ -17,10 +18,36 @@ function fmt(ts) {
   )
 }
 
+function buildMethodRecords() {
+  const stored = wx.getStorageSync('ma_practices') || {}
+  const out = []
+  Object.keys(stored).forEach((mid) => {
+    const m = methodsData.getMethod(mid)
+    if (!m) return
+    ;(stored[mid] || []).forEach((entry) => {
+      const schema = m.schema || []
+      const fields = schema.map((f) => ({ label: f.label, value: (entry.data || {})[f.key] || '' }))
+      out.push({
+        mid,
+        rid: entry.id,
+        name: m.name,
+        icon: m.icon,
+        time: entry.time,
+        timeText: fmt(entry.time),
+        fields,
+      })
+    })
+  })
+  out.sort((a, b) => b.time - a.time)
+  return out
+}
+
 Page({
   data: {
+    tab: 'assess',
     all: [],
     list: [],
+    mList: [],
     filters: [],
     active: '',
   },
@@ -47,7 +74,11 @@ Page({
     const filters = [{ id: '', name: '全部', icon: '🗂' }].concat(Object.keys(map).map((k) => map[k]))
     const active = this.data.active
     const list = active ? all.filter((h) => h.id === active) : all
-    this.setData({ all, filters, list })
+    const mList = buildMethodRecords()
+    this.setData({ all, filters, list, mList })
+  },
+  onTab(e) {
+    this.setData({ tab: e.currentTarget.dataset.tab })
   },
   onFilter(e) {
     const id = e.currentTarget.dataset.id
@@ -60,6 +91,12 @@ Page({
     if (!item) return
     getApp().globalData.lastResult = { id: item.id, answers: item.answers }
     wx.navigateTo({ url: '/pages/result/result?id=' + item.id })
+  },
+  openMethod(e) {
+    const idx = e.currentTarget.dataset.idx
+    const item = this.data.mList[idx]
+    if (!item) return
+    wx.navigateTo({ url: '/pages/methods/detail?id=' + item.mid })
   },
   deleteOne(e) {
     const idx = e.currentTarget.dataset.idx
@@ -81,28 +118,55 @@ Page({
       },
     })
   },
+  deleteMethodOne(e) {
+    const idx = e.currentTarget.dataset.idx
+    const item = this.data.mList[idx]
+    if (!item) return
+    wx.showModal({
+      title: '删除记录',
+      content: '确定删除「' + item.name + '」的这条练习吗？',
+      success: (r) => {
+        if (!r.confirm) return
+        const stored = wx.getStorageSync('ma_practices') || {}
+        const list = (stored[item.mid] || []).filter((x) => x.id !== item.rid)
+        if (list.length) stored[item.mid] = list
+        else delete stored[item.mid]
+        wx.setStorageSync('ma_practices', stored)
+        this.load()
+      },
+    })
+  },
   clearAll() {
-    if (!this.data.list.length) return
+    const isMethod = this.data.tab === 'method'
+    const list = isMethod ? this.data.mList : this.data.list
+    if (!list.length) return
     wx.showModal({
       title: '清空全部记录',
-      content: '确定清空所有测评记录吗？此操作不可恢复。',
+      content: isMethod
+        ? '确定清空所有方法练习记录吗？此操作不可恢复。'
+        : '确定清空所有测评记录吗？此操作不可恢复。',
       success: (r) => {
         if (r.confirm) {
-          wx.removeStorageSync('ma_history')
-          this.setData({ all: [], list: [], filters: [], active: '' })
+          if (isMethod) wx.removeStorageSync('ma_practices')
+          else wx.removeStorageSync('ma_history')
+          this.load()
         }
       },
     })
   },
   exportAll() {
-    const all = wx.getStorageSync('ma_history') || []
-    if (!all.length) {
+    const isMethod = this.data.tab === 'method'
+    const data = isMethod
+      ? wx.getStorageSync('ma_practices') || {}
+      : wx.getStorageSync('ma_history') || []
+    const empty = isMethod ? !Object.keys(data).length : !data.length
+    if (empty) {
       wx.showToast({ title: '暂无记录', icon: 'none' })
       return
     }
     withPrivacy(() => {
       wx.setClipboardData({
-        data: JSON.stringify(all, null, 2),
+        data: JSON.stringify(data, null, 2),
         success: () => wx.showToast({ title: '已复制到剪贴板', icon: 'none' }),
       })
     })

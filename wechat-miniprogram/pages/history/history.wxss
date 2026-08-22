@@ -4,6 +4,35 @@
   align-items: center;
   padding: 32rpx 40rpx 8rpx;
 }
+.tabs {
+  display: flex;
+  margin: 16rpx 32rpx 0;
+  padding: 6rpx;
+  background: var(--chip);
+  border-radius: 999rpx;
+}
+.tab {
+  flex: 1;
+  text-align: center;
+  font-size: 27rpx;
+  color: var(--text2);
+  padding: 14rpx 0;
+  border-radius: 999rpx;
+}
+.tab.on {
+  background: var(--card);
+  color: var(--text);
+  font-weight: 600;
+  box-shadow: 0 2rpx 10rpx rgba(15, 23, 42, 0.08);
+}
+.m-tag {
+  font-size: 22rpx;
+  color: #0d9488;
+  background: #ccfbf1;
+  padding: 2rpx 14rpx;
+  border-radius: 999rpx;
+  margin-left: 14rpx;
+}
 .title {
   font-size: 36rpx;
   font-weight: 700;
@@ -73,6 +102,13 @@
   }
   .export {
     color: #60a5fa;
+  }
+  .tab.on {
+    background: #334155;
+  }
+  .m-tag {
+    color: #5eead4;
+    background: #0f3b34;
   }
 }
 .hist-card {

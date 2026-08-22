@@ -1,58 +1,98 @@
 <view class="scroll-page">
   <view class="bar">
-    <text class="title">测评记录</text>
+    <text class="title">我的记录</text>
     <view class="bar-actions">
-      <text wx:if="{{list.length}}" class="export" bindtap="exportAll" aria-label="导出全部记录">导出</text>
-      <text wx:if="{{list.length}}" class="clear" bindtap="clearAll" aria-label="清空全部记录">清空</text>
+      <text wx:if="{{tab === 'assess' ? list.length : mList.length}}" class="export" bindtap="exportAll" aria-label="导出记录">导出</text>
+      <text wx:if="{{tab === 'assess' ? list.length : mList.length}}" class="clear" bindtap="clearAll" aria-label="清空记录">清空</text>
     </view>
   </view>
 
-  <scroll-view wx:if="{{filters.length > 1}}" class="filter-bar" scroll-x="true">
-    <view
-      class="chip {{active === f.id ? 'on' : ''}}"
-      wx:for="{{filters}}"
-      wx:key="id"
-      wx:for-item="f"
-      bindtap="onFilter"
-      data-id="{{f.id}}"
-      role="button"
-      aria-label="筛选 {{f.name}} 量表记录"
-    >
-      <text class="chip-icon">{{f.icon}}</text>
-      <text>{{f.name}}</text>
-    </view>
-  </scroll-view>
-
-  <view wx:if="{{!list.length}}" class="empty">
-    <text class="empty-icon">📭</text>
-    <text class="empty-text">还没有测评记录</text>
-    <text class="empty-sub">去首页选择一个量表开始吧</text>
+  <view class="tabs">
+    <view class="tab {{tab === 'assess' ? 'on' : ''}}" bindtap="onTab" data-tab="assess" role="button" aria-label="测评记录">测评</view>
+    <view class="tab {{tab === 'method' ? 'on' : ''}}" bindtap="onTab" data-tab="method" role="button" aria-label="方法练习记录">方法</view>
   </view>
 
-  <view wx:else class="list">
-    <view
-      class="hist-card card"
-      wx:for="{{list}}"
-      wx:key="time"
-      wx:for-item="h"
-      wx:for-index="idx"
-      bindtap="open"
-      data-idx="{{idx}}"
-      role="button"
-      aria-label="查看 {{h.name}} 测评结果，{{h.summary}}{{h.level ? '，' + h.level : ''}}，{{h.timeText}}"
-    >
-      <text class="h-icon">{{h.icon}}</text>
-      <view class="h-body">
-        <view class="h-head">
-          <text class="h-name">{{h.name}}</text>
-          <text wx:if="{{h.level}}" class="h-level">{{h.level}}</text>
-        </view>
-        <text class="h-sum">结果：{{h.summary}}</text>
-        <text class="h-time">{{h.timeText}}</text>
+  <block wx:if="{{tab === 'assess'}}">
+    <scroll-view wx:if="{{filters.length > 1}}" class="filter-bar" scroll-x="true">
+      <view
+        class="chip {{active === f.id ? 'on' : ''}}"
+        wx:for="{{filters}}"
+        wx:key="id"
+        wx:for-item="f"
+        bindtap="onFilter"
+        data-id="{{f.id}}"
+        role="button"
+        aria-label="筛选 {{f.name}} 量表记录"
+      >
+        <text class="chip-icon">{{f.icon}}</text>
+        <text>{{f.name}}</text>
       </view>
-      <text class="h-del" catchtap="deleteOne" data-idx="{{idx}}" role="button" aria-label="删除该记录">删除</text>
+    </scroll-view>
+
+    <view wx:if="{{!list.length}}" class="empty">
+      <text class="empty-icon">📭</text>
+      <text class="empty-text">还没有测评记录</text>
+      <text class="empty-sub">去首页选择一个量表开始吧</text>
     </view>
-  </view>
+
+    <view wx:else class="list">
+      <view
+        class="hist-card card"
+        wx:for="{{list}}"
+        wx:key="time"
+        wx:for-item="h"
+        wx:for-index="idx"
+        bindtap="open"
+        data-idx="{{idx}}"
+        role="button"
+        aria-label="查看 {{h.name}} 测评结果，{{h.summary}}{{h.level ? '，' + h.level : ''}}，{{h.timeText}}"
+      >
+        <text class="h-icon">{{h.icon}}</text>
+        <view class="h-body">
+          <view class="h-head">
+            <text class="h-name">{{h.name}}</text>
+            <text wx:if="{{h.level}}" class="h-level">{{h.level}}</text>
+          </view>
+          <text class="h-sum">结果：{{h.summary}}</text>
+          <text class="h-time">{{h.timeText}}</text>
+        </view>
+        <text class="h-del" catchtap="deleteOne" data-idx="{{idx}}" role="button" aria-label="删除该记录">删除</text>
+      </view>
+    </view>
+  </block>
+
+  <block wx:else>
+    <view wx:if="{{!mList.length}}" class="empty">
+      <text class="empty-icon">🧩</text>
+      <text class="empty-text">还没有方法练习记录</text>
+      <text class="empty-sub">去方法论工具箱选个方法练练吧</text>
+    </view>
+
+    <view wx:else class="list">
+      <view
+        class="hist-card card"
+        wx:for="{{mList}}"
+        wx:key="rid"
+        wx:for-item="p"
+        wx:for-index="idx"
+        bindtap="openMethod"
+        data-idx="{{idx}}"
+        role="button"
+        aria-label="查看 {{p.name}} 练习，{{p.timeText}}"
+      >
+        <text class="h-icon">{{p.icon}}</text>
+        <view class="h-body">
+          <view class="h-head">
+            <text class="h-name">{{p.name}}</text>
+            <text class="m-tag">练习</text>
+          </view>
+          <text class="h-sum">{{p.fields[0].label}}：{{p.fields[0].value}}</text>
+          <text class="h-time">{{p.timeText}}</text>
+        </view>
+        <text class="h-del" catchtap="deleteMethodOne" data-idx="{{idx}}" role="button" aria-label="删除该记录">删除</text>
+      </view>
+    </view>
+  </block>
 
   <view class="brand-foot">心智探索局 · 认识自己，从测评与方法开始</view>
 </view>
