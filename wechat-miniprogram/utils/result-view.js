@@ -1,10 +1,11 @@
 /**
  * 模块结果视图构造（与页面解耦，便于复用与单测）
  *
- * 把 result.js / smoke.js 中重复出现的「鸭子类型」分支（buildGroupList /
- * buildScaleDimensionList / buildDimensionList / buildSubtestList /
- * buildInterpretations）收敛到这里，统一返回标准化视图模型。
- * 任一 build* 抛错都会被 safeCall 吞掉并返回兜底空数组，避免整页崩溃。
+ * 统一契约（路线图第 1 项）：
+ *   模块可整体实现 `getResultView(r, layout)` 直接返回标准化视图模型，
+ *   实现零样板；未实现时回退到「鸭子类型」分支（buildGroupList /
+ *   buildScaleDimensionList / buildDimensionList / buildSubtestList /
+ *   buildInterpretations）。任一 build* 抛错都会被 safeCall 吞掉并返回兜底空数组。
  *
  * @param {Object} mod 量表模块
  * @param {Object} r computeResult 的返回值
@@ -20,7 +21,8 @@ function safeCall(fn) {
   }
 }
 
-function buildModuleView(mod, r, layout) {
+// 回退实现：兼容现有模块的 build* 鸭子类型分支
+function fallbackBuild(mod, r, layout) {
   const groups =
     typeof mod.buildGroupList === 'function' ? safeCall(() => mod.buildGroupList(r, layout)) || [] : []
   const subtests =
@@ -55,4 +57,17 @@ function buildModuleView(mod, r, layout) {
   }
 }
 
-module.exports = { buildModuleView, safeCall }
+// 统一入口：优先使用模块自实现的 getResultView，否则回退
+function getResultView(mod, r, layout) {
+  if (typeof mod.getResultView === 'function') {
+    try {
+      const v = mod.getResultView(r, layout)
+      if (v && typeof v === 'object') return v
+    } catch (e) {
+      console.warn('[result-view] getResultView failed, fallback:', e)
+    }
+  }
+  return fallbackBuild(mod, r, layout)
+}
+
+module.exports = { getResultView, buildModuleView: getResultView, safeCall }

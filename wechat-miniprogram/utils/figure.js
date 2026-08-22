@@ -114,6 +114,19 @@ function drawShape(ctx, shape, cx, cy, cellSize) {
       ctx.restore()
     }
   }
+  // 色盲无障碍：在图形中央叠加字母标签（白字 + 深色描边，任意底色均可读）
+  if (shape.label) {
+    ctx.save()
+    ctx.font = 'bold ' + Math.round(r * 0.95) + 'px sans-serif'
+    ctx.textAlign = 'center'
+    ctx.textBaseline = 'middle'
+    ctx.lineWidth = Math.max(1.5, r * 0.14)
+    ctx.strokeStyle = 'rgba(15,23,42,0.85)'
+    ctx.strokeText(shape.label, 0, 0)
+    ctx.fillStyle = '#ffffff'
+    ctx.fillText(shape.label, 0, 0)
+    ctx.restore()
+  }
   ctx.restore()
 }
 
@@ -144,6 +157,14 @@ function drawCell(ctx, cell, x, y, size) {
       const small = { ...s, size: s.size * 0.6 }
       drawShape(ctx, small, cxi, cyi, Math.min(cw, ch))
     })
+  }
+  // 纯色底无图形时的标签（色盲无障碍）
+  if (cell.label && shapes.length === 0) {
+    ctx.fillStyle = '#0f172a'
+    ctx.font = 'bold ' + Math.round(size * 0.4) + 'px sans-serif'
+    ctx.textAlign = 'center'
+    ctx.textBaseline = 'middle'
+    ctx.fillText(cell.label, size / 2, size / 2)
   }
   ctx.restore()
 }

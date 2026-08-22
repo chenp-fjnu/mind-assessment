@@ -3,7 +3,7 @@
  * 运行：node test/smoke.js   （无需安装任何依赖）
  */
 const { getMetaList, getModule } = require('../utils/registry')
-const { buildModuleView } = require('../utils/result-view')
+const { getResultView } = require('../utils/result-view')
 
 let pass = 0
 let fail = 0
@@ -39,7 +39,7 @@ getMetaList().forEach((meta) => {
     )
     // 复刻 result.js 的渲染流程：统一走 utils/result-view 的构造逻辑
     const layout = mod.resultLayout || {}
-    const view = buildModuleView(mod, r, layout)
+    const view = getResultView(mod, r, layout)
     check(meta.id + ' 视图 groups 为数组', Array.isArray(view.groups))
     check(meta.id + ' 视图 dims 为数组', Array.isArray(view.dims))
     check(meta.id + ' 视图 interpretations 为数组', Array.isArray(view.interpretations))

@@ -1,6 +1,6 @@
 const { getModule } = require('../../utils/registry')
 const { computeTrend } = require('../../utils/trend')
-const { buildModuleView } = require('../../utils/result-view')
+const { getResultView } = require('../../utils/result-view')
 const { readableTextColor } = require('../../utils/color')
 const { renderTrend, renderCard } = require('../../utils/canvas')
 const { withPrivacy } = require('../../utils/privacy')
@@ -111,7 +111,7 @@ Page({
     const descText = r.description || (r.trait && String(r.trait) !== String(primaryValue) ? r.trait : '')
     const levelText = r.level && String(r.level) !== String(primaryValue) ? r.level : '已完成'
 
-    const view = buildModuleView(mod, r, layout)
+    const view = getResultView(mod, r, layout)
     const groups = view.groups
     const subtests = view.subtests
     const dims = view.dims

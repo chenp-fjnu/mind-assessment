@@ -22,11 +22,19 @@ const W = '#ffffff'
 const B = '#2563eb'
 const G = '#16a34a'
 const Y = '#d97706'
+// 颜色→字母映射，用于色盲用户通过字母（而非仅颜色）区分积木
+const COLOR_LABEL = { '#dc2626': 'R', '#ffffff': 'W', '#2563eb': 'B', '#16a34a': 'G', '#d97706': 'Y' }
 function sq(color) {
-  return { bg: null, shapes: [{ type: 'square', size: 80, color: color, fill: 'solid', rotation: 0, count: 1 }] }
+  return {
+    bg: null,
+    shapes: [{ type: 'square', size: 80, color: color, fill: 'solid', rotation: 0, count: 1, label: COLOR_LABEL[color] || '' }],
+  }
 }
 function tri(color) {
-  return { bg: null, shapes: [{ type: 'triangle', size: 80, color: color, fill: 'solid', rotation: 0, count: 1 }] }
+  return {
+    bg: null,
+    shapes: [{ type: 'triangle', size: 80, color: color, fill: 'solid', rotation: 0, count: 1, label: COLOR_LABEL[color] || '' }],
+  }
 }
 function g2(a, b, c, d) {
   return [[a, b], [c, d]]
