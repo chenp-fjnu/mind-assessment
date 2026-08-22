@@ -1,69 +1,5 @@
-.hero {
-  padding: 56rpx 40rpx 40rpx;
-  background: linear-gradient(135deg, #1e293b, #0d9488);
-}
-.hero-title {
-  display: block;
-  color: #fff;
-  font-size: 52rpx;
-  font-weight: 800;
-  letter-spacing: 4rpx;
-}
-.hero-sub {
-  display: block;
-  color: rgba(255, 255, 255, 0.92);
-  font-size: 27rpx;
-  margin-top: 16rpx;
-  font-weight: 500;
-}
-.hero-tag {
-  display: inline-block;
-  margin-top: 22rpx;
-  padding: 8rpx 22rpx;
-  font-size: 22rpx;
-  color: rgba(255, 255, 255, 0.9);
-  background: rgba(255, 255, 255, 0.14);
-  border-radius: 999rpx;
-}
-.group {
-  margin: 24rpx 32rpx 0;
-}
-.group-title {
-  font-size: 28rpx;
-  font-weight: 600;
-  color: #475569;
-  margin: 16rpx 4rpx;
-}
-.item {
-  display: flex;
-  align-items: center;
-  padding: 28rpx;
-  margin-bottom: 20rpx;
-}
-.item-icon {
-  width: 88rpx;
-  height: 88rpx;
-  border-radius: 22rpx;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 44rpx;
-  flex-shrink: 0;
-}
-.item-body {
-  flex: 1;
-  margin-left: 24rpx;
-  overflow: hidden;
-}
-.item-head {
-  display: flex;
-  align-items: center;
-}
-.item-name {
-  font-size: 31rpx;
-  font-weight: 600;
-  color: #1e293b;
-}
+@import "../../pages/index/index.wxss";
+
 .badge-practice {
   margin-left: 12rpx;
   font-size: 22rpx;
@@ -72,43 +8,10 @@
   padding: 2rpx 12rpx;
   border-radius: 999rpx;
 }
-.item-desc {
-  display: block;
-  font-size: 25rpx;
-  color: #64748b;
-  margin-top: 8rpx;
-  line-height: 1.5;
-}
-.arrow {
-  color: #cbd5e1;
-  font-size: 44rpx;
-  margin-left: 8rpx;
-}
-.footer {
-  text-align: center;
-  color: #64748b;
-  font-size: 22rpx;
-  padding: 40rpx 40rpx 40rpx;
-}
 
 @media (prefers-color-scheme: dark) {
-  .group-title {
-    color: var(--text2);
-  }
-  .item-name {
-    color: var(--text);
-  }
   .badge-practice {
     color: #5eead4;
     background: #0f3b34;
-  }
-  .item-desc {
-    color: var(--sub);
-  }
-  .arrow {
-    color: #475569;
-  }
-  .footer {
-    color: var(--muted);
   }
 }
