@@ -186,6 +186,7 @@ CI（`.github/workflows/ci.yml`）：push/PR 触及 `wechat-miniprogram/**` 时�
 - **架构统一**：新增 `utils/result-view.js` 集中收敛结果视图的「鸭子类型」构造（`buildGroupList`/`buildDimensionList`/`buildScaleDimensionList`/`buildSubtestList`/`buildInterpretations`），`result.js` 与 `test/smoke.js` 共用，消除重复逻辑（路线图第 1 项，向后兼容、未改动 22 个模块）。
 - **来源标注**：`utils/modules-meta.js` 为每个量表补充 `reference`（标准化版本/常用文献），详情页新增「参考来源与版本」区块（路线图第 14 项）。
 - **色盲无障碍**：图形/矩阵题选项 canvas 叠加**序号徽标**，除颜色外以编号区分选项，兼顾色盲用户与快速定位。
+- **趋势对比增强**：`utils/trend.js` 数值趋势补充「首次/最近」值与区间差；类型趋势新增「首次 → 最近」对比（路线图第 3 项）。
 
 > 仍未做（高成本/高风险，建议后续单独评估）：统一结果视图契约 `getResultView`（涉及 22 模块 + result 页重构）、图形题色盲无障碍（需引入形状/纹理区分）、常模文献逐条标注。
 

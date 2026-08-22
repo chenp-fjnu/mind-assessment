@@ -95,9 +95,13 @@
     <text class="trend-delta {{trendDelta>0?'up':(trendDelta<0?'down':'flat')}}">
       较上次 {{trendDelta>0?'↑':(trendDelta<0?'↓':'→')}} {{trendDelta>0?'+':''}}{{trendDelta}}
     </text>
+    <text class="trend-range">首次 {{firstValue}} → 最近 {{lastValue}}（{{rangeDelta>0?'+':''}}{{rangeDelta}}）</text>
   </view>
   <view wx:elif="{{catList.length}}" class="card sec">
     <text class="sec-title">历史记录（共 {{catList.length}} 次）</text>
+    <view wx:if="{{firstSummary && lastSummary && firstSummary !== lastSummary}}" class="trend-range">
+      首次 {{firstSummary}} → 最近 {{lastSummary}}
+    </view>
     <view class="cat-list">
       <view class="cat-item" wx:for="{{catList}}" wx:key="timeText" wx:for-item="c">
         <text class="cat-sum">{{c.summary}}</text>

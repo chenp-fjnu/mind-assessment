@@ -24,6 +24,10 @@ function computeTrend(history, id) {
   let trendDelta = 0
   let trendDates = []
   let catList = []
+  let firstValue = null
+  let lastValue = null
+  let firstSummary = ''
+  let lastSummary = ''
 
   const numericItems = sameId
     .map((h) => ({ raw: String(h.summary || ''), num: parseFloat(h.summary) }))
@@ -34,11 +38,25 @@ function computeTrend(history, id) {
     trendValues = numericItems.map((x) => x.num)
     trendDelta = trendValues[trendValues.length - 1] - trendValues[trendValues.length - 2]
     trendDates = sameId.map((h) => fmtMD(h.time))
+    firstValue = trendValues[0]
+    lastValue = trendValues[trendValues.length - 1]
   } else if (sameId.length >= 2) {
     catList = sameId.map((h) => ({ summary: String(h.summary || ''), timeText: fmtMD(h.time) }))
+    firstSummary = catList[0].summary
+    lastSummary = catList[catList.length - 1].summary
   }
 
-  return { showTrend, trendValues, trendDelta, trendDates, catList }
+  return {
+    showTrend,
+    trendValues,
+    trendDelta,
+    trendDates,
+    catList,
+    firstValue,
+    lastValue,
+    firstSummary,
+    lastSummary,
+  }
 }
 
 module.exports = { computeTrend, fmtMD, isNumeric }

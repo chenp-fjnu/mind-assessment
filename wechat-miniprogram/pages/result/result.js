@@ -125,6 +125,11 @@ Page({
     const trendDelta = t.trendDelta
     const catList = t.catList
     const trendDates = t.trendDates
+    const firstValue = t.firstValue
+    const lastValue = t.lastValue
+    const firstSummary = t.firstSummary
+    const lastSummary = t.lastSummary
+    const rangeDelta = firstValue != null && lastValue != null ? lastValue - firstValue : 0
 
     const pv = primaryValue == null ? '' : String(primaryValue)
     const primarySize = pv.length <= 4 ? 'big' : pv.length <= 10 ? 'mid' : 'small'
@@ -156,7 +161,12 @@ Page({
       showTrend,
       trendValues,
       trendDelta,
+      rangeDelta,
+      firstValue,
+      lastValue,
       catList,
+      firstSummary,
+      lastSummary,
       trendDates,
       testedTime,
       retestGap,
