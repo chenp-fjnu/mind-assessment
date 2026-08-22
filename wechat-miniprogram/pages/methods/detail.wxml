@@ -1,0 +1,70 @@
+<view wx:if="{{method}}" class="scroll-page">
+  <view class="head" style="background:{{method.color}};">
+    <text class="head-icon">{{method.icon}}</text>
+    <text class="head-name">{{method.name}}</text>
+    <text class="head-cat">{{method.category}}</text>
+    <text class="head-sum">{{method.summary}}</text>
+  </view>
+
+  <view wx:if="{{isInteractive}}" class="card sec">
+    <text class="sec-title">互动练习</text>
+    <view class="field" wx:for="{{formFields}}" wx:key="key" wx:for-item="f" wx:for-index="idx">
+      <text class="field-label">{{f.label}}</text>
+      <textarea
+        wx:if="{{f.type === 'textarea'}}"
+        class="field-input"
+        placeholder="{{f.placeholder}}"
+        placeholder-class="ph"
+        value="{{f.value}}"
+        bindinput="onInput"
+        data-key="{{f.key}}"
+        data-idx="{{idx}}"
+        auto-height
+        maxlength="-1"
+      />
+      <view wx:elif="{{f.type === 'scale'}}" class="scale-row">
+        <slider
+          class="scale"
+          min="{{f.min}}"
+          max="{{f.max}}"
+          value="{{f.value}}"
+          bindchange="onScale"
+          data-key="{{f.key}}"
+          data-idx="{{idx}}"
+          activeColor="{{method.color}}"
+          block-size="20"
+          show-value
+        />
+      </view>
+    </view>
+    <button class="btn save" style="background:{{method.color}};" bindtap="savePractice" aria-label="保存这次练习">保存这次练习</button>
+    <text class="save-tip">练习仅保存在本机，仅你可见</text>
+  </view>
+
+  <view class="card sec" wx:if="{{content.length}}">
+    <text class="sec-title">关于这个方法</text>
+    <view class="content-block" wx:for="{{content}}" wx:key="title" wx:for-item="c">
+      <text class="content-title">{{c.title}}</text>
+      <text class="content-text">{{c.text}}</text>
+    </view>
+  </view>
+
+  <view class="card sec" wx:if="{{practices.length}}">
+    <text class="sec-title">我的练习记录（{{practices.length}}）</text>
+    <view class="practice" wx:for="{{practices}}" wx:key="time" wx:for-item="p">
+      <text class="practice-time">{{p.timeText}}</text>
+      <view class="practice-body" wx:for="{{p.fields}}" wx:key="key" wx:for-item="pf">
+        <text class="practice-label">{{pf.label}}</text>
+        <text class="practice-value">{{pf.value}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="footer">方法用于自我探索与练习，不能替代专业帮助</view>
+</view>
+
+<view wx:else class="invalid">
+  <text class="invalid-icon">🧩</text>
+  <text class="invalid-title">未找到该方法</text>
+  <button class="btn home" bindtap="goBack">返回</button>
+</view>

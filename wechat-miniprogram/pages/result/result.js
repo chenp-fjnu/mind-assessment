@@ -3,6 +3,7 @@ const { computeTrend } = require('../../utils/trend')
 const { readableTextColor } = require('../../utils/color')
 const { isDark } = require('../../utils/theme')
 const { withPrivacy } = require('../../utils/privacy')
+const methodsData = require('../../utils/methods-data')
 
 Page({
   data: {
@@ -174,6 +175,7 @@ Page({
       retestGap,
       timeText,
       noteText,
+      recommend: methodsData.recommendFor(mod.type),
     }, () => {
       if (this.data.showTrend) this.drawTrend()
       this.drawCardToTemp((path) => {
@@ -378,6 +380,10 @@ Page({
 
   goHome() {
     wx.reLaunch({ url: '/pages/index/index' })
+  },
+  goMethod(e) {
+    const id = e.currentTarget.dataset.id
+    wx.navigateTo({ url: `/pages/methods/detail?id=${id}` })
   },
   retest() {
     wx.redirectTo({ url: `/pages/test/test?id=${this.data.meta.id}` })

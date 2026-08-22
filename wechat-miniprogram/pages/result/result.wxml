@@ -106,11 +106,33 @@
     </view>
   </view>
 
+  <view wx:if="{{recommend.length}}" class="card sec">
+    <text class="sec-title">🧰 相关方法论</text>
+    <view
+      class="rec"
+      wx:for="{{recommend}}"
+      wx:key="id"
+      wx:for-item="m"
+      bindtap="goMethod"
+      data-id="{{m.id}}"
+      role="button"
+      aria-label="{{m.name}}，{{m.summary}}"
+    >
+      <text class="rec-icon">{{m.icon}}</text>
+      <view class="rec-body">
+        <text class="rec-name">{{m.name}}</text>
+        <text class="rec-sum">{{m.summary}}</text>
+      </view>
+      <text wx:if="{{m.interactive}}" class="rec-badge">可练</text>
+      <text class="arrow">›</text>
+    </view>
+  </view>
+
   <view class="disclaimer">本结果基于自陈量表，题目部分参考公开心理量表题库整理，仅供自我探索与学习参考，非标准化临床诊断工具，不构成医学或专业建议。</view>
 
   <view wx:if="{{noteText}}" class="note-box">{{noteText}}</view>
 
-  <view class="brand-foot">心智探索局 · 认识自己，从一次测评开始</view>
+  <view class="brand-foot">心智探索局 · 认识自己，从测评与方法开始</view>
 
   <view class="bottom-bar">
     <button class="btn save" bindtap="saveCard" aria-label="保存结果卡片到相册">保存结果卡片</button>

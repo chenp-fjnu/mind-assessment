@@ -134,6 +134,16 @@ function drawAbout(c) {
   fillRect(px, 37, 33, 43, 54, c)
   return px
 }
+function drawToolbox(c) {
+  const px = newPx()
+  // 箱体
+  fillRect(px, 14, 30, 66, 66, c)
+  // 顶部提手
+  fillRect(px, 32, 18, 48, 28, c)
+  // 正面锁扣
+  fillRect(px, 37, 42, 43, 52, c)
+  return px
+}
 
 const outDir = path.join(process.cwd(), 'assets', 'tabicons')
 fs.mkdirSync(outDir, { recursive: true })
@@ -144,6 +154,8 @@ const files = {
   'record_on.png': drawRecord(ACTIVE),
   'about.png': drawAbout(NORMAL),
   'about_on.png': drawAbout(ACTIVE),
+  'toolbox.png': drawToolbox(NORMAL),
+  'toolbox_on.png': drawToolbox(ACTIVE),
 }
 for (const [name, px] of Object.entries(files)) {
   fs.writeFileSync(path.join(outDir, name), makePNG(px))

@@ -72,5 +72,5 @@
     <button class="btn start-btn" style="background:{{meta.color}};color:{{meta.colorText}};" bindtap="start" aria-label="开始测评：{{meta.name}}">开始测评</button>
   </view>
 
-  <view class="brand-foot">心智探索局 · 认识自己，从一次测评开始</view>
+  <view class="brand-foot">心智探索局 · 认识自己，从测评与方法开始</view>
 </view>

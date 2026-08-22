@@ -79,6 +79,47 @@
   display: block;
   margin-bottom: 20rpx;
 }
+.rec {
+  display: flex;
+  align-items: center;
+  padding: 20rpx 0;
+  border-top: 2rpx solid #f1f5f9;
+}
+.rec:first-of-type {
+  border-top: none;
+  padding-top: 0;
+}
+.rec-icon {
+  font-size: 42rpx;
+  margin-right: 18rpx;
+  flex-shrink: 0;
+}
+.rec-body {
+  flex: 1;
+  overflow: hidden;
+}
+.rec-name {
+  display: block;
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #1e293b;
+}
+.rec-sum {
+  display: block;
+  font-size: 23rpx;
+  color: #64748b;
+  margin-top: 6rpx;
+  line-height: 1.5;
+}
+.rec-badge {
+  margin-left: 12rpx;
+  font-size: 22rpx;
+  color: #0d9488;
+  background: #ccfbf1;
+  padding: 2rpx 12rpx;
+  border-radius: 999rpx;
+  flex-shrink: 0;
+}
 .group,
 .dim,
 .sub {

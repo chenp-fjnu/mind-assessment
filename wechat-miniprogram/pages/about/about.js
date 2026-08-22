@@ -1,4 +1,5 @@
 const { getMetaList, TYPE_LABELS } = require('../../utils/registry')
+const methodsData = require('../../utils/methods-data')
 
 Page({
   data: {
@@ -15,11 +16,18 @@ Page({
     ],
     moduleCount: 0,
     typeCount: 0,
+    methodCount: 0,
+    practiceCount: 0,
   },
   onLoad() {
     const allModules = getMetaList()
     const typeCount = Object.keys(TYPE_LABELS).filter((t) => allModules.some((m) => m.type === t)).length
-    this.setData({ moduleCount: allModules.length, typeCount })
+    this.setData({
+      moduleCount: allModules.length,
+      typeCount,
+      methodCount: methodsData.METHODS.length,
+      practiceCount: methodsData.METHODS.filter((m) => m.interactive).length,
+    })
   },
   goHome() {
     wx.reLaunch({ url: '/pages/index/index' })

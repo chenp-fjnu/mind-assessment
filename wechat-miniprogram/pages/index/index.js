@@ -1,4 +1,5 @@
 const { getMetaList, TYPE_LABELS, modulesByType } = require('../../utils/registry')
+const methodsData = require('../../utils/methods-data')
 
 // 将 #RRGGBB 转为带透明度的 rgba，兼容所有基础库（避免 8 位 hex 兼容性问题）
 function hexToRgba(hex, alpha) {
@@ -50,13 +51,23 @@ Page({
     activeType: '',
     moduleCount: 0,
     typeCount: 0,
+    methodCount: 0,
+    practiceCount: 0,
   },
   onLoad() {
     const allModules = buildModuleList()
     const types = Object.keys(TYPE_LABELS)
       .filter((t) => allModules.some((m) => m.type === t))
       .map((t) => ({ type: t, label: TYPE_LABELS[t] }))
-    this.setData({ allModules, types, groups: buildGroups(allModules), moduleCount: allModules.length, typeCount: types.length })
+    this.setData({
+      allModules,
+      types,
+      groups: buildGroups(allModules),
+      moduleCount: allModules.length,
+      typeCount: types.length,
+      methodCount: methodsData.METHODS.length,
+      practiceCount: methodsData.METHODS.filter((m) => m.interactive).length,
+    })
   },
   applyFilter() {
     const { allModules, keyword, activeType } = this.data
@@ -86,5 +97,8 @@ Page({
   },
   goAbout() {
     wx.switchTab({ url: '/pages/about/about' })
+  },
+  goMethods() {
+    wx.switchTab({ url: '/pages/methods/methods' })
   },
 })
