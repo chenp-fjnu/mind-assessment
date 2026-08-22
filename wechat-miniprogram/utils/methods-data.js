@@ -32,6 +32,13 @@ const METHODS = [
       { key: 'relevant', label: 'R 相关', type: 'textarea', placeholder: '为什么这件事对你重要？', rows: 2 },
       { key: 'timebound', label: 'T 有时限', type: 'textarea', placeholder: '何时完成？有哪些关键节点？', rows: 2 },
     ],
+    acronym: [
+      { letter: 'S', en: 'Specific', zh: '具体的' },
+      { letter: 'M', en: 'Measurable', zh: '可衡量的' },
+      { letter: 'A', en: 'Achievable', zh: '可达成的' },
+      { letter: 'R', en: 'Relevant', zh: '相关的' },
+      { letter: 'T', en: 'Time-bound', zh: '有时限的' },
+    ],
   },
   {
     id: 'grow',
@@ -64,6 +71,12 @@ const METHODS = [
       { key: 'reality', label: 'R 现状', type: 'textarea', placeholder: '现在的情况是怎样的？有哪些已具备的条件？', rows: 3 },
       { key: 'options', label: 'O 方案', type: 'textarea', placeholder: '有哪些可能的做法？先发散，不急着评判。', rows: 3 },
       { key: 'will', label: 'W 行动', type: 'textarea', placeholder: '你具体要做什么？何时开始？如何让自己负责？', rows: 3 },
+    ],
+    acronym: [
+      { letter: 'G', en: 'Goal', zh: '目标' },
+      { letter: 'R', en: 'Reality', zh: '现状' },
+      { letter: 'O', en: 'Options', zh: '方案' },
+      { letter: 'W', en: 'Will', zh: '行动意愿' },
     ],
   },
   {
@@ -98,6 +111,12 @@ const METHODS = [
       { key: 'obstacle', label: 'O 障碍', type: 'textarea', placeholder: '最可能出现的内部阻碍是什么？（如拖延、怕失败）', rows: 2 },
       { key: 'plan', label: 'P 计划', type: 'textarea', placeholder: '如果[障碍]出现，那么我就[具体应对]？', rows: 2 },
     ],
+    acronym: [
+      { letter: 'W', en: 'Wish', zh: '愿望' },
+      { letter: 'O', en: 'Outcome', zh: '结果' },
+      { letter: 'O', en: 'Obstacle', zh: '障碍' },
+      { letter: 'P', en: 'Plan', zh: '计划' },
+    ],
   },
   {
     id: 'pomodoro',
@@ -124,7 +143,12 @@ const METHODS = [
     ],
     example: '写报告拖延？设番茄钟 25 分钟只写大纲，休息 5 分钟，再一个番茄写正文——三四个番茄就能出初稿。',
     relatedTypes: ['self', 'career'],
-    interactive: false,
+    interactive: true,
+    schema: [
+      { key: 'task', label: '今日任务', type: 'textarea', placeholder: '选 1-3 件今天要专注完成的事', rows: 2 },
+      { key: 'count', label: '番茄目标', type: 'textarea', placeholder: '打算完成几个番茄钟？（每个 25 分钟）', rows: 2 },
+      { key: 'reflect', label: '一轮复盘', type: 'textarea', placeholder: '结束后写：哪个番茄最顺、哪个被中断了', rows: 2 },
+    ],
   },
   {
     id: 'pdca',
@@ -151,7 +175,19 @@ const METHODS = [
     ],
     example: '想早睡：P=23 点前放下手机；D=试一周；C=发现刷视频到 1 点；A=把手机放客厅充电，下周再测。',
     relatedTypes: ['career', 'self'],
-    interactive: false,
+    interactive: true,
+    schema: [
+      { key: 'plan', label: 'P 计划', type: 'textarea', placeholder: '定一个小目标与具体做法', rows: 2 },
+      { key: 'do', label: 'D 执行', type: 'textarea', placeholder: '小范围试做（先试一周）', rows: 2 },
+      { key: 'check', label: 'C 检查', type: 'textarea', placeholder: '对照目标，哪里偏了？', rows: 2 },
+      { key: 'act', label: 'A 处理', type: 'textarea', placeholder: '有效的变习惯，无效的怎么改？', rows: 2 },
+    ],
+    acronym: [
+      { letter: 'P', en: 'Plan', zh: '计划' },
+      { letter: 'D', en: 'Do', zh: '执行' },
+      { letter: 'C', en: 'Check', zh: '检查' },
+      { letter: 'A', en: 'Act', zh: '处理' },
+    ],
   },
   {
     id: 'abc',
@@ -185,6 +221,13 @@ const METHODS = [
       { key: 'consequence', label: 'C 后果', type: 'textarea', placeholder: '你的情绪与行为反应是什么？', rows: 2 },
       { key: 'dispute', label: 'D 辩驳', type: 'textarea', placeholder: '这个想法证据充分吗？有没有更合理的解释？', rows: 2 },
       { key: 'newresult', label: 'E 新结果', type: 'textarea', placeholder: '辩驳后，你的情绪/行为有什么变化？', rows: 2 },
+    ],
+    acronym: [
+      { letter: 'A', en: 'Activating event', zh: '诱发事件' },
+      { letter: 'B', en: 'Belief', zh: '信念' },
+      { letter: 'C', en: 'Consequence', zh: '情绪后果' },
+      { letter: 'D', en: 'Disputation', zh: '辩驳' },
+      { letter: 'E', en: 'Effect', zh: '新效果' },
     ],
   },
   {
@@ -245,7 +288,12 @@ const METHODS = [
     ],
     example: '睡前念头翻涌睡不着？不做“快睡”的努力，只数呼吸，通常几分钟后身体先松下来。',
     relatedTypes: ['mood', 'stress', 'sleep'],
-    interactive: false,
+    interactive: true,
+    schema: [
+      { key: 'duration', label: '练习时长', type: 'textarea', placeholder: '今天正念呼吸做了几分钟？', rows: 2 },
+      { key: 'anchor', label: '注意力锚点', type: 'textarea', placeholder: '你用什么把注意力拉回当下？（呼吸 / 身体感受）', rows: 2 },
+      { key: 'note', label: '当下感受', type: 'textarea', placeholder: '练习后身体 / 情绪有什么变化？', rows: 2 },
+    ],
   },
   {
     id: 'nvc',
@@ -272,7 +320,19 @@ const METHODS = [
     ],
     example: '伴侣沉迷游戏：观察“你今晚玩了 3 小时”；感受“我有点孤单”；需要“陪伴”；请求“明晚我们聊半小时天好吗？”',
     relatedTypes: ['social', 'self', 'mood'],
-    interactive: false,
+    interactive: true,
+    schema: [
+      { key: 'observe', label: 'O 观察', type: 'textarea', placeholder: '客观发生了什么？（不加评判）', rows: 2 },
+      { key: 'feel', label: 'F 感受', type: 'textarea', placeholder: '你当下的情绪是什么？', rows: 2 },
+      { key: 'need', label: 'N 需要', type: 'textarea', placeholder: '你未被满足的需要是什么？', rows: 2 },
+      { key: 'request', label: 'R 请求', type: 'textarea', placeholder: '你希望对方具体做什么？', rows: 2 },
+    ],
+    acronym: [
+      { letter: 'O', en: 'Observation', zh: '观察（事实）' },
+      { letter: 'F', en: 'Feeling', zh: '感受（情绪）' },
+      { letter: 'N', en: 'Need', zh: '需要' },
+      { letter: 'R', en: 'Request', zh: '请求' },
+    ],
   },
   {
     id: 'festinger',
@@ -299,7 +359,12 @@ const METHODS = [
     ],
     example: '重要会议前咖啡洒了：不可控的是已洒；可控的是“换件衣、准时到场、专注议题”，而不是反复懊恼。',
     relatedTypes: ['mood', 'stress', 'self'],
-    interactive: false,
+    interactive: true,
+    schema: [
+      { key: 'event', label: '事件', type: 'textarea', placeholder: '发生了什么？（那 10% 的事）', rows: 2 },
+      { key: 'reaction', label: '我的反应', type: 'textarea', placeholder: '你当时是怎么反应的？（那 90% 的反应）', rows: 2 },
+      { key: 'next', label: '建设性下一步', type: 'textarea', placeholder: '可控的部分，你能做的最小行动是什么？', rows: 2 },
+    ],
   },
   {
     id: 'fogg',
@@ -334,6 +399,12 @@ const METHODS = [
       { key: 'prompt', label: '提示设计', type: 'textarea', placeholder: '用什么触发来提醒自己执行？（如固定时间/地点/既有动作）', rows: 2 },
       { key: 'design', label: '行动方案', type: 'textarea', placeholder: '如何让行为更容易发生？先从小到不可能失败的一步开始。', rows: 2 },
     ],
+    acronym: [
+      { letter: 'B', en: 'Behavior', zh: '行为' },
+      { letter: 'M', en: 'Motivation', zh: '动机' },
+      { letter: 'A', en: 'Ability', zh: '能力' },
+      { letter: 'P', en: 'Prompt', zh: '提示' },
+    ],
   },
   {
     id: 'tinyhabits',
@@ -360,7 +431,12 @@ const METHODS = [
     ],
     example: '想运动：锚点“刷完牙后，我做 2 个深蹲”，做完比个耶。几周后可能变成 10 个。',
     relatedTypes: ['self', 'wellbeing'],
-    interactive: false,
+    interactive: true,
+    schema: [
+      { key: 'behavior', label: '微行为', type: 'textarea', placeholder: '想培养的方向，缩成 30 秒内、零门槛的动作', rows: 2 },
+      { key: 'anchor', label: '锚点习惯', type: 'textarea', placeholder: '在哪个已有习惯之后做它？（如刷完牙后）', rows: 2 },
+      { key: 'celebrate', label: '庆祝动作', type: 'textarea', placeholder: '完成后怎么给自己一个肯定？（如比个耶）', rows: 2 },
+    ],
   },
   {
     id: 'eisenhower',
@@ -387,7 +463,14 @@ const METHODS = [
     ],
     example: '①项目明天的截止（做）；②健身/学外语（排每周固定时段）；③临时杂事（集中处理）；④无谓刷手机（削减）。',
     relatedTypes: ['self', 'career'],
-    interactive: false,
+    interactive: true,
+    schema: [
+      { key: 'task', label: '待办清单', type: 'textarea', placeholder: '列出近期所有任务', rows: 3 },
+      { key: 'q1', label: '重要且紧急', type: 'textarea', placeholder: '第一象限：立刻做', rows: 2 },
+      { key: 'q2', label: '重要不紧急', type: 'textarea', placeholder: '第二象限：排进日程重点做', rows: 2 },
+      { key: 'q3', label: '紧急不重要', type: 'textarea', placeholder: '第三象限：委托 / 批量', rows: 2 },
+      { key: 'q4', label: '不重要不紧急', type: 'textarea', placeholder: '第四象限：减少 / 不做', rows: 2 },
+    ],
   },
   {
     id: 'pareto',
@@ -414,7 +497,12 @@ const METHODS = [
     ],
     example: '销售发现 20% 客户贡献 80% 业绩→把跟进重点放在这批客户，其余用模板化跟进。',
     relatedTypes: ['career', 'self'],
-    interactive: false,
+    interactive: true,
+    schema: [
+      { key: 'list', label: '投入盘点', type: 'textarea', placeholder: '列出你的任务 / 客户 / 时间渠道', rows: 3 },
+      { key: 'top', label: '关键 20%', type: 'textarea', placeholder: '哪些产出了大部分价值？', rows: 2 },
+      { key: 'cut', label: '可减法项', type: 'textarea', placeholder: '低效的多数，如何做减法 / 自动化？', rows: 2 },
+    ],
   },
   {
     id: 'johari',
@@ -447,6 +535,12 @@ const METHODS = [
       { key: 'blind', label: '盲点区', type: 'textarea', placeholder: '你不太察觉、但别人可能注意到的？', rows: 2 },
       { key: 'hidden', label: '隐藏区', type: 'textarea', placeholder: '你隐瞒、尚未对他人说的？（选填）', rows: 2 },
       { key: 'unknown', label: '未知区', type: 'textarea', placeholder: '你想探索的潜能或盲区？', rows: 2 },
+    ],
+    acronym: [
+      { letter: 'Open', en: 'Open Area', zh: '公开区（人知我知）' },
+      { letter: 'Blind', en: 'Blind Spot', zh: '盲点区（人知我不知）' },
+      { letter: 'Hidden', en: 'Hidden Area', zh: '隐藏区（我知人不知）' },
+      { letter: 'Unknown', en: 'Unknown Area', zh: '未知区（人我都不知）' },
     ],
   },
   {
@@ -483,6 +577,13 @@ const METHODS = [
       { key: 'accomplishment', label: 'A 成就', type: 'scale', min: 1, max: 10, placeholder: '达成目标/有成就感程度（1-10）' },
       { key: 'note', label: '薄弱项计划', type: 'textarea', placeholder: '最弱的一项打算如何加强？（选填）', rows: 2 },
     ],
+    acronym: [
+      { letter: 'P', en: 'Positive emotion', zh: '积极情绪' },
+      { letter: 'E', en: 'Engagement', zh: '投入' },
+      { letter: 'R', en: 'Relationships', zh: '关系' },
+      { letter: 'M', en: 'Meaning', zh: '意义' },
+      { letter: 'A', en: 'Accomplishment', zh: '成就' },
+    ],
   },
   {
     id: 'growth',
@@ -509,7 +610,12 @@ const METHODS = [
     ],
     example: '学新软件总出错：固定思维「我没那天赋」；成长思维「我还不会，先跟教程做 3 遍，再总结步骤」。',
     relatedTypes: ['self', 'wellbeing', 'career'],
-    interactive: false,
+    interactive: true,
+    schema: [
+      { key: 'fixed', label: '固定型内心台词', type: 'textarea', placeholder: '最近一次说「我不行 / 我笨」是在什么事上？', rows: 2 },
+      { key: 'reframe', label: '成长型改写', type: 'textarea', placeholder: '把它改成「我还不会，需要___」', rows: 2 },
+      { key: 'learn', label: '这次学到', type: 'textarea', placeholder: '如果失败了，你能提炼出什么信息？', rows: 2 },
+    ],
   },
   {
     id: 'flow',
@@ -536,7 +642,12 @@ const METHODS = [
     ],
     example: '写代码卡壳（太难）→ 先拆成「先跑通最小例子」（匹配），进入忘了吃饭的状态。',
     relatedTypes: ['wellbeing', 'self'],
-    interactive: false,
+    interactive: true,
+    schema: [
+      { key: 'task', label: '选定任务', type: 'textarea', placeholder: '选一件你有点基础、又不太轻松的事', rows: 2 },
+      { key: 'goal', label: '清晰小目标', type: 'textarea', placeholder: '把它拆成有明确终点的小目标', rows: 2 },
+      { key: 'note', label: '心流条件', type: 'textarea', placeholder: '这次为什么顺 / 不顺？怎样更容易进入状态？', rows: 2 },
+    ],
   },
   {
     id: 'wheel',
@@ -563,7 +674,12 @@ const METHODS = [
     ],
     example: '轮子显示「健康 3、关系 4」偏低：本周定「隔天散步 20 分」「约朋友喝一次茶」。',
     relatedTypes: ['self', 'wellbeing'],
-    interactive: false,
+    interactive: true,
+    schema: [
+      { key: 'dims', label: '生活维度', type: 'textarea', placeholder: '列出 6-8 个你在意的生活维度', rows: 3 },
+      { key: 'scores', label: '逐项打分', type: 'textarea', placeholder: '每个维度 1-10 打分', rows: 3 },
+      { key: 'plan', label: '补强行动', type: 'textarea', placeholder: '最低 1-2 项各定一个本周动作', rows: 2 },
+    ],
   },
   {
     id: 'kpt',
@@ -590,7 +706,17 @@ const METHODS = [
     ],
     example: '项目延期：K=每日站会同步；P=需求中途又加；T=下次先把变更拆小、单独排期。',
     relatedTypes: ['self', 'career'],
-    interactive: false,
+    interactive: true,
+    schema: [
+      { key: 'keep', label: 'K 保持', type: 'textarea', placeholder: '这次什么做得好，值得保留？', rows: 2 },
+      { key: 'problem', label: 'P 问题', type: 'textarea', placeholder: '具体遇到了什么阻碍或失误？', rows: 2 },
+      { key: 'try', label: 'T 尝试', type: 'textarea', placeholder: '针对问题，下次要试的一个具体动作？', rows: 2 },
+    ],
+    acronym: [
+      { letter: 'K', en: 'Keep', zh: '保持（继续做）' },
+      { letter: 'P', en: 'Problem', zh: '问题（遇到了）' },
+      { letter: 'T', en: 'Try', zh: '尝试（下次试）' },
+    ],
   },
   {
     id: 'swot',
@@ -617,7 +743,20 @@ const METHODS = [
     ],
     example: '想转行：S=沟通强；W=缺证书；O=行业缺人；T=竞争大。行动：先考一个证 + 投缺口岗位。',
     relatedTypes: ['career', 'self', 'personality'],
-    interactive: false,
+    interactive: true,
+    schema: [
+      { key: 's', label: 'S 优势', type: 'textarea', placeholder: '你内部的优势有哪些？', rows: 2 },
+      { key: 'w', label: 'W 劣势', type: 'textarea', placeholder: '你内部的劣势有哪些？', rows: 2 },
+      { key: 'o', label: 'O 机会', type: 'textarea', placeholder: '外部环境的机会有哪些？', rows: 2 },
+      { key: 't', label: 'T 威胁', type: 'textarea', placeholder: '外部环境的威胁有哪些？', rows: 2 },
+      { key: 'action', label: '行动计划', type: 'textarea', placeholder: '写出一个「下周就做」的具体动作', rows: 2 },
+    ],
+    acronym: [
+      { letter: 'S', en: 'Strengths', zh: '优势（内部）' },
+      { letter: 'W', en: 'Weaknesses', zh: '劣势（内部）' },
+      { letter: 'O', en: 'Opportunities', zh: '机会（外部）' },
+      { letter: 'T', en: 'Threats', zh: '威胁（外部）' },
+    ],
   },
   {
     id: 'sixhats',
@@ -644,7 +783,23 @@ const METHODS = [
     ],
     example: '是否辞职创业：白=存款够半年；红=兴奋又怕；黑=没客户风险；黄=自由；绿=先副业试水；蓝=定 3 个月试点。',
     relatedTypes: ['career', 'self'],
-    interactive: false,
+    interactive: true,
+    schema: [
+      { key: 'white', label: '白帽·事实', type: 'textarea', placeholder: '只列事实与数据', rows: 2 },
+      { key: 'red', label: '红帽·感受', type: 'textarea', placeholder: '说直觉与感受，不需理由', rows: 2 },
+      { key: 'black', label: '黑帽·风险', type: 'textarea', placeholder: '找风险与漏洞（谨慎）', rows: 2 },
+      { key: 'yellow', label: '黄帽·价值', type: 'textarea', placeholder: '说价值与乐观面', rows: 2 },
+      { key: 'green', label: '绿帽·创意', type: 'textarea', placeholder: '发散新点子', rows: 2 },
+      { key: 'blue', label: '蓝帽·收束', type: 'textarea', placeholder: '综合成结论 / 下一步', rows: 2 },
+    ],
+    acronym: [
+      { letter: 'White', en: 'White Hat · Facts', zh: '白帽：事实与数据' },
+      { letter: 'Red', en: 'Red Hat · Feelings', zh: '红帽：直觉与感受' },
+      { letter: 'Black', en: 'Black Hat · Caution', zh: '黑帽：风险与谨慎' },
+      { letter: 'Yellow', en: 'Yellow Hat · Value', zh: '黄帽：价值与乐观' },
+      { letter: 'Green', en: 'Green Hat · Creativity', zh: '绿帽：创意与发散' },
+      { letter: 'Blue', en: 'Blue Hat · Control', zh: '蓝帽：控场与总结' },
+    ],
   },
 ]
 

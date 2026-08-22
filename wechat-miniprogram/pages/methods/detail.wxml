@@ -6,6 +6,50 @@
     <text class="head-sum">{{method.summary}}</text>
   </view>
 
+  <view wx:if="{{method.acronym && method.acronym.length}}" class="card sec">
+    <text class="sec-title">名称拆解</text>
+    <view class="acro">
+      <view class="acro-item" wx:for="{{method.acronym}}" wx:key="letter" wx:for-item="a">
+        <text class="acro-letter">{{a.letter}}</text>
+        <view class="acro-body">
+          <text class="acro-en">{{a.en}}</text>
+          <text class="acro-zh">{{a.zh}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="card sec" wx:if="{{content.length}}">
+    <text class="sec-title">关于这个方法</text>
+    <view class="content-block" wx:for="{{content}}" wx:key="title" wx:for-item="c">
+      <text class="content-title">{{c.title}}</text>
+      <text class="content-text">{{c.text}}</text>
+    </view>
+  </view>
+
+  <view class="card sec" wx:if="{{method.steps && method.steps.length}}">
+    <text class="sec-title">上手步骤</text>
+    <view class="step-list">
+      <view class="step-item" wx:for="{{method.steps}}" wx:key="*this" wx:for-item="s" wx:for-index="si">
+        <text class="step-no">{{si + 1}}</text>
+        <text class="step-text">{{s}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="card sec" wx:if="{{method.example}}">
+    <text class="sec-title">举个栗子</text>
+    <view class="example"><text class="example-text">{{method.example}}</text></view>
+  </view>
+
+  <view class="card sec" wx:if="{{method.tips && method.tips.length}}">
+    <text class="sec-title">小贴士</text>
+    <view class="tip-item" wx:for="{{method.tips}}" wx:key="*this" wx:for-item="t">
+      <text class="tip-dot">·</text>
+      <text class="tip-text">{{t}}</text>
+    </view>
+  </view>
+
   <view wx:if="{{isInteractive}}" class="card sec">
     <text class="sec-title">互动练习</text>
     <view class="field" wx:for="{{formFields}}" wx:key="key" wx:for-item="f" wx:for-index="idx">
@@ -39,37 +83,6 @@
     </view>
     <button class="btn save" style="background:{{method.color}};" bindtap="savePractice" aria-label="保存这次练习">保存这次练习</button>
     <text class="save-tip">练习仅保存在本机，仅你可见</text>
-  </view>
-
-  <view class="card sec" wx:if="{{content.length}}">
-    <text class="sec-title">关于这个方法</text>
-    <view class="content-block" wx:for="{{content}}" wx:key="title" wx:for-item="c">
-      <text class="content-title">{{c.title}}</text>
-      <text class="content-text">{{c.text}}</text>
-    </view>
-  </view>
-
-  <view class="card sec" wx:if="{{method.steps && method.steps.length}}">
-    <text class="sec-title">上手步骤</text>
-    <view class="step-list">
-      <view class="step-item" wx:for="{{method.steps}}" wx:key="*this" wx:for-item="s" wx:for-index="si">
-        <text class="step-no">{{si + 1}}</text>
-        <text class="step-text">{{s}}</text>
-      </view>
-    </view>
-  </view>
-
-  <view class="card sec" wx:if="{{method.example}}">
-    <text class="sec-title">举个栗子</text>
-    <view class="example"><text class="example-text">{{method.example}}</text></view>
-  </view>
-
-  <view class="card sec" wx:if="{{method.tips && method.tips.length}}">
-    <text class="sec-title">小贴士</text>
-    <view class="tip-item" wx:for="{{method.tips}}" wx:key="*this" wx:for-item="t">
-      <text class="tip-dot">·</text>
-      <text class="tip-text">{{t}}</text>
-    </view>
   </view>
 
   <view class="card sec" wx:if="{{practices.length}}">
