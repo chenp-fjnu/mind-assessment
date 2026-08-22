@@ -20,6 +20,9 @@ function run() {
       continue
     }
   const n = qs.length
+  if (meta.questionCount !== n) {
+    issues.push(`meta.questionCount(${meta.questionCount}) 与真实题量(${n}) 不符`)
+  }
   const ids = new Set()
   const prompts = new Set()
   const dimCount = {}
@@ -77,7 +80,14 @@ function run() {
     try {
       const answers = qs.map(() => 0)
       const r = m.computeResult(answers, qs)
-      if (r == null) issues.push('computeResult 返回空')
+      if (r == null) {
+        issues.push('computeResult 返回空')
+      } else {
+        const layout = m.resultLayout || {}
+        const pf = layout.primaryField || 'score'
+        if (r[pf] === undefined) issues.push('resultLayout.primaryField(' + pf + ') 在结果中缺失')
+        if (!r.totalStat || typeof r.totalStat.skipped !== 'number') issues.push('结果缺少 totalStat')
+      }
     } catch (e) {
       issues.push('computeResult 抛错: ' + e.message)
     }

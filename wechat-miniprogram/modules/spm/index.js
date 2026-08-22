@@ -39,9 +39,9 @@ const moduleDef = {
     }));
   },
 
-  computeResult(answers, qs, timings = []) {
-    const result = scoring.computeResult(answers, qs, timings);
-    return result;
+  computeResult(answers, qs, options = {}) {
+    const timings = (options && options.timings) || [];
+    return scoring.computeResult(answers, qs, timings);
   },
 
   // 构建分组列表（下沉到模块，消除 report.js 硬编码）
@@ -75,11 +75,9 @@ const moduleDef = {
     primaryField: 'iq',
     primaryLabel: '智商估算 IQ',
     primarySuffix: '',
-    showGroups: true,
     groupLabels: {
       A: '完成型', B: '递进型', C: '组合型', D: '变换型', E: '分布型',
     },
-    showDetail: true,
     detailType: 'grid',
     interpretation: true,
     renderMode: 'intelligence',

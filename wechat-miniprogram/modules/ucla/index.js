@@ -16,6 +16,8 @@
  * 重要提示：本量表为自评筛查工具，不构成临床诊断。
  */
 
+const { scoreItem } = require('../../utils/scoring')
+
 const QUESTIONS = [
   { id: 'UCLA-01', reverse: true,  text: '你常感到和周围的人没有共同话题。' },
   { id: 'UCLA-02', reverse: false, text: '你常感到缺少可以信赖的朋友。' },
@@ -60,9 +62,9 @@ function computeResult(answers, qs) {
     }
     answered++;
     const val = raw + 1; // 1-4
-    const s = q.reverse ? (5 - val) : val;
-    score += s;
-    items.push({ id: q.id, answered: true, value: val, score: s });
+    const sc = scoreItem(val, q); // 反向由 scoreItem 统一处理
+    score += sc;
+    items.push({ id: q.id, answered: true, value: val, score: sc });
   });
 
   const lvl = describeLevel(score);
@@ -130,9 +132,7 @@ module.exports = {
     primaryField: 'totalScore',
     primaryLabel: '孤独评分',
     primarySuffix: '/80',
-    showGroups: false,
     groupLabels: {},
-    showDetail: false,
     interpretation: true,
   },
 };

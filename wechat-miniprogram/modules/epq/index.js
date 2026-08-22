@@ -15,6 +15,8 @@
  * 人格类型由 E、N 两维度的 high/low 组合得出，如"外向稳定型"。
  */
 
+const { scoreItem } = require('../../utils/scoring')
+
 // 维度说明
 const DIM_INFO = {
   E: { name: '外向性', en: 'Extraversion', desc: '社交活力与外向程度', high: '外向热情，喜欢社交与活动，精力充沛。', low: '内向安静，偏好独处与深思，沉稳内敛。' },
@@ -103,8 +105,8 @@ function computeResult(answers, qs) {
     dims[d].count++;
     const a = answers[i];
     if (a == null) return;
-    // a: 0(否) / 1(是)；reverse 题答"否"计 1 分
-    const score = q.reverse ? (1 - a) : a;
+    // a: 0(否) / 1(是)；reverse 题答"否"计 1 分（由 scoreItem 统一处理）
+    const score = scoreItem(a, q);
     dims[d].score += score;
   });
 
@@ -181,6 +183,7 @@ module.exports = {
       reverse: q.reverse,
       prompt: q.text,
       options: YES_NO_OPTIONS, // 0=否，1=是
+      scale: { min: 0, max: 1, labels: YES_NO_OPTIONS }, // 供 scoreItem 统一反向计分
       answer: null, // EPQ 无对错
     }));
   },
@@ -217,9 +220,7 @@ module.exports = {
     primaryField: 'type',
     primaryLabel: '人格类型',
     primarySuffix: '',
-    showGroups: true,
     groupLabels: { E: '外向性', N: '神经质', P: '精神质', L: '掩饰性' },
-    showDetail: false,
     interpretation: true,
   },
 };

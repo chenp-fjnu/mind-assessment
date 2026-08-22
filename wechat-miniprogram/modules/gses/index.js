@@ -117,9 +117,7 @@ module.exports = {
     primaryField: 'totalScore',
     primaryLabel: '自我效能',
     primarySuffix: '/40',
-    showGroups: false,
     groupLabels: {},
-    showDetail: false,
     interpretation: true,
   },
 };

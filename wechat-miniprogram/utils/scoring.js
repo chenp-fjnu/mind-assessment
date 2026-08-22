@@ -116,10 +116,49 @@ function describeLevel(iq) {
   return { label: '较低', desc: '建议在专业心理评估人员指导下进一步评估。' };
 }
 
+/**
+ * 单题计分（自动处理反向）。raw 为 null/undefined 时视作 0（未答按默认分）。
+ * Likert 反向计分标准公式：reverse 后分值 = (scaleMin + scaleMax) - raw
+ */
+function scoreItem(raw, q) {
+  if (raw == null) return 0
+  if (!q || !q.reverse) return raw
+  const sc = q.scale || {}
+  const min = sc.min != null ? sc.min : 0
+  const max = sc.max != null ? sc.max : sc.labels ? sc.labels.length - 1 : 0
+  return min + max - raw
+}
+
+// 按维度汇总（可选 dim 过滤），自动处理反向计分
+function sumByDimension(answers, qs, dim) {
+  let s = 0
+  qs.forEach((q, i) => {
+    if (dim != null && q.dimension !== dim) return
+    s += scoreItem(answers[i], q)
+  })
+  return s
+}
+
+// 拆分统计某维度下正向/反向题（反向题已换算）各自求和
+function splitSum(answers, qs, predicate) {
+  let pos = 0
+  let rev = 0
+  qs.forEach((q, i) => {
+    if (predicate && !predicate(q)) return
+    const v = scoreItem(answers[i], q)
+    if (q.reverse) rev += v
+    else pos += v
+  })
+  return { pos, rev }
+}
+
 module.exports = {
   RAW_TO_PERCENTILE,
   percentileToIQ,
   groupScores,
   computeResult,
   describeLevel,
+  scoreItem,
+  sumByDimension,
+  splitSum,
 };

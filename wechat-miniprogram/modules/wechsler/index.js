@@ -166,7 +166,8 @@ const QUESTIONS = [
 
 const SUBTESTS = ['词汇', '相似性', '算术', '积木', '矩阵推理', '数字广度'];
 
-function computeResult(answers, qs, timings = []) {
+function computeResult(answers, qs, options = {}) {
+  const timings = (options && options.timings) || [];
   // 按子测验统计
   const subScores = {};
   SUBTESTS.forEach((s) => (subScores[s] = { correct: 0, total: 0, domain: '' }));
@@ -302,9 +303,7 @@ module.exports = {
     primaryField: 'fsiq',
     primaryLabel: '总智商 FSIQ',
     primarySuffix: '',
-    showGroups: true,
     groupLabels: { 言语: '言语理解', 操作: '操作推理' },
-    showDetail: true,
     detailType: 'subtest',
     interpretation: true,
     renderMode: 'subtest',

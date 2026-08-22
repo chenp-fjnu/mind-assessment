@@ -10,6 +10,8 @@ const ids = Object.keys(LOADERS)
 const out = []
 for (const id of ids) {
   const m = require(path.join(base, 'modules', id, 'index'))
+  // 题量以 getQuestions() 为准，避免手工维护的 questionCount 与真实题量漂移
+  const questionCount = (m.getQuestions ? m.getQuestions() : []).length
   out.push({
     id: m.id,
     type: m.type,
@@ -18,7 +20,7 @@ for (const id of ids) {
     icon: m.icon,
     color: m.color,
     desc: m.desc,
-    questionCount: m.questionCount,
+    questionCount,
     duration: m.duration,
     paid: m.paid,
     price: m.price,

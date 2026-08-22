@@ -117,9 +117,7 @@ module.exports = {
     primaryField: 'totalScore',
     primaryLabel: '韧性评分',
     primarySuffix: '/40',
-    showGroups: false,
     groupLabels: {},
-    showDetail: false,
     interpretation: true,
   },
 };

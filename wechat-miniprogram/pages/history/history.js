@@ -31,6 +31,7 @@ Page({
     const hist = wx.getStorageSync('ma_history') || []
     const all = hist.map((h) => ({
       id: h.id,
+      rid: h.rid,
       name: h.name,
       icon: h.icon,
       summary: h.summary || '',
@@ -70,7 +71,10 @@ Page({
       success: (r) => {
         if (!r.confirm) return
         const hist = wx.getStorageSync('ma_history') || []
-        const next = hist.filter((h) => h.time !== item.time)
+        const next = hist.filter((h) => {
+          if (item.rid) return h.rid !== item.rid
+          return h.time !== item.time // 兼容无 rid 的旧数据
+        })
         wx.setStorageSync('ma_history', next)
         this.setData({ active: '' })
         this.load()

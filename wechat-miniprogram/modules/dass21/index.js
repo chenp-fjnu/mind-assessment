@@ -219,9 +219,7 @@ module.exports = {
     primaryField: 'trait',
     primaryLabel: '情绪综合评估',
     primarySuffix: '',
-    showGroups: true,
     groupLabels: { depression: '抑郁', anxiety: '焦虑', stress: '压力' },
-    showDetail: false,
     interpretation: true,
   },
 };

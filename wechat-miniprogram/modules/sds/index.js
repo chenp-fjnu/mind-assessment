@@ -21,6 +21,8 @@
  * 重要提示：本量表为自评筛查工具，不构成临床诊断。
  */
 
+const { scoreItem } = require('../../utils/scoring')
+
 const QUESTIONS = [
   { id: 'SDS-01', reverse: false, text: '我感到情绪沮丧、郁闷。' },
   { id: 'SDS-02', reverse: true,  text: '我感到早晨心情最好。' },
@@ -67,7 +69,7 @@ function computeResult(answers, qs) {
     answered++;
     // 4 级评分存储为 0/1/2/3（与选项索引一致），转为 1/2/3/4
     const val = raw + 1;
-    const score = q.reverse ? (5 - val) : val;
+    const score = scoreItem(val, q); // 反向由 scoreItem 统一处理
     rawScore += score;
     items.push({ id: q.id, answered: true, value: val, score });
   });
@@ -91,7 +93,7 @@ function computeResult(answers, qs) {
       if (items[idx] && items[idx].answered) {
         const q = qs[idx];
         const v = items[idx].value;
-        s += q.reverse ? (5 - v) : v;
+        s += scoreItem(v, q);
         n++;
       }
     });
@@ -187,9 +189,7 @@ module.exports = {
     primaryField: 'index',
     primaryLabel: '抑郁指数',
     primarySuffix: '',
-    showGroups: true,
     groupLabels: { somatic: '躯体症状', psychological: '心理症状', positive: '正向感受' },
-    showDetail: false,
     interpretation: true,
   },
 };

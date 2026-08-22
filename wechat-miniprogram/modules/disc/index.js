@@ -181,9 +181,7 @@ module.exports = {
     primaryField: 'style',
     primaryLabel: '行为风格',
     primarySuffix: '',
-    showGroups: true,
     groupLabels: { D: '支配型', I: '影响型', S: '稳健型', C: '谨慎型' },
-    showDetail: false,
     interpretation: true,
   },
 };

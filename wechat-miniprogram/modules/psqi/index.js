@@ -152,9 +152,7 @@ module.exports = {
     primaryField: 'totalScore',
     primaryLabel: '睡眠指数',
     primarySuffix: '/21',
-    showGroups: true,
     groupLabels: { c1: '主观质量', c2: '入睡时间', c3: '睡眠时间', c4: '睡眠效率', c5: '睡眠障碍', c6: '催眠药物', c7: '日间功能' },
-    showDetail: false,
     interpretation: true,
   },
 };

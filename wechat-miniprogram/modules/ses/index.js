@@ -19,6 +19,8 @@
  *        ≥ 35   自尊很高
  */
 
+const { scoreItem } = require('../../utils/scoring')
+
 const QUESTIONS = [
   { id: 'SES-01', reverse: false, text: '我感到自己是一个有价值的人，至少与其他人在同一水平上。' },
   { id: 'SES-02', reverse: false, text: '我感到我有许多好的品质。' },
@@ -55,7 +57,7 @@ function computeResult(answers, qs) {
     }
     answered++;
     const val = raw + 1; // 0/1/2/3 → 1/2/3/4
-    const score = q.reverse ? (5 - val) : val;
+    const score = scoreItem(val, q); // 反向由 scoreItem 统一处理
     totalScore += score;
     items.push({ id: q.id, answered: true, value: val, score });
   });
@@ -71,7 +73,7 @@ function computeResult(answers, qs) {
     list.forEach(({ q, i }) => {
       if (items[i] && items[i].answered) {
         const v = items[i].value;
-        s += q.reverse ? (5 - v) : v;
+        s += scoreItem(v, q);
         n++;
       }
     });
@@ -159,9 +161,7 @@ module.exports = {
     primaryField: 'score',
     primaryLabel: '自尊得分',
     primarySuffix: '',
-    showGroups: true,
     groupLabels: { positive: '正向自我评价', reverse: '负向自我评价' },
-    showDetail: false,
     interpretation: true,
   },
 };

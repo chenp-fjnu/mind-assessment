@@ -16,6 +16,8 @@
  * 重要提示：本量表为自评筛查工具，不构成临床诊断。
  */
 
+const { scoreItem } = require('../../utils/scoring')
+
 const QUESTIONS = [
   { id: 'PSS-01', reverse: false, text: '因为一些意料之外的事情而感到心烦意乱。' },
   { id: 'PSS-02', reverse: false, text: '感到无法掌控生活中的重要事情。' },
@@ -50,7 +52,7 @@ function computeResult(answers, qs) {
     }
     answered++;
     const val = raw; // 0-4 直接使用
-    const score = q.reverse ? (4 - val) : val;
+    const score = scoreItem(val, q); // 反向由 scoreItem 统一处理
     rawScore += score;
     items.push({ id: q.id, answered: true, value: val, score });
   });
@@ -121,9 +123,7 @@ module.exports = {
     primaryField: 'totalScore',
     primaryLabel: '压力评分',
     primarySuffix: '/40',
-    showGroups: false,
     groupLabels: {},
-    showDetail: false,
     interpretation: true,
   },
 };

@@ -170,9 +170,7 @@ module.exports = {
     primaryField: 'type',
     primaryLabel: '主导类型',
     primarySuffix: '号',
-    showGroups: true,
     groupLabels: { '1': '1 改革者', '2': '2 助人者', '3': '3 成就者', '4': '4 浪漫者', '5': '5 观察家', '6': '6 忠诚者', '7': '7 活跃者', '8': '8 挑战者', '9': '9 和平者' },
-    showDetail: false,
     interpretation: true,
   },
 };

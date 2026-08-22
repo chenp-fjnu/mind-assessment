@@ -387,8 +387,12 @@ const METHODS = [
 function getMethod(id) {
   return METHODS.find((m) => m.id === id) || null
 }
-function recommendFor(type) {
-  return METHODS.filter((m) => (m.relatedTypes || []).includes(type))
+function recommendFor(type, n) {
+  const matched = METHODS.filter((m) => (m.relatedTypes || []).includes(type))
+  if (matched.length) return n ? matched.slice(0, n) : matched
+  // 兜底：无匹配类型（如 intelligence）时，推荐通用自我/幸福感方法
+  const fallback = METHODS.filter((m) => (m.relatedTypes || []).some((t) => t === 'self' || t === 'wellbeing'))
+  return n ? fallback.slice(0, n) : fallback
 }
 function groupByCategory() {
   const map = {}

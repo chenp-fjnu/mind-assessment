@@ -199,9 +199,7 @@ module.exports = {
     primaryField: 'code',
     primaryLabel: '职业代码',
     primarySuffix: '',
-    showGroups: true,
     groupLabels: { R: '现实型', I: '研究型', A: '艺术型', S: '社会型', E: '企业型', C: '常规型' },
-    showDetail: false,
     interpretation: true,
   },
 };

@@ -134,13 +134,15 @@ Page({
     )
   },
 
-  ensureCanvas(id, cb) {
+  ensureCanvas(id, cb, tries = 0) {
+    const MAX_TRIES = 30
     wx.createSelectorQuery()
       .select('#' + id)
       .fields({ node: true, size: true })
       .exec((res) => {
         if (!res[0]) {
-          setTimeout(() => this.ensureCanvas(id, cb), 60)
+          if (tries >= MAX_TRIES) return
+          setTimeout(() => this.ensureCanvas(id, cb, tries + 1), 60)
           return
         }
         const canvas = res[0].node
@@ -148,7 +150,8 @@ Page({
         const W = res[0].width
         const H = res[0].height
         if (!W || !H) {
-          setTimeout(() => this.ensureCanvas(id, cb), 60)
+          if (tries >= MAX_TRIES) return
+          setTimeout(() => this.ensureCanvas(id, cb, tries + 1), 60)
           return
         }
         canvas.width = W * this.dpr
@@ -377,10 +380,11 @@ Page({
     this.markTime()
     wx.removeStorageSync('ma_progress_' + this.data.meta.id)
     const layout = this.mod.resultLayout || {}
-    const r = this.mod.computeResult(this.data.answers, this.data.questions, this._timings)
+    const r = this.mod.computeResult(this.data.answers, this.data.questions, { timings: this._timings })
     const pv = r[layout.primaryField || 'score']
     const hist = wx.getStorageSync('ma_history') || []
     hist.unshift({
+      rid: Date.now() + '_' + Math.random().toString(36).slice(2, 8),
       id: this.data.meta.id,
       name: this.data.meta.name,
       icon: this.data.meta.icon,

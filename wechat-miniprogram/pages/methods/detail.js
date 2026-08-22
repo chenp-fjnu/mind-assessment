@@ -74,7 +74,8 @@ Page({
     const form = this._form
     const stored = wx.getStorageSync(STORE_KEY) || {}
     const list = stored[id] || []
-    list.unshift({ time: Date.now(), data: Object.assign({}, form) })
+    list.unshift({ id: Date.now() + '_' + Math.random().toString(36).slice(2, 8), time: Date.now(), data: Object.assign({}, form) })
+    if (list.length > 50) list.length = 50 // 单方法最多保留 50 条
     stored[id] = list
     wx.setStorageSync(STORE_KEY, stored)
     this.setData({ practices: list.map((entry) => this.decorate(entry, schema)) })

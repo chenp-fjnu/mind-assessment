@@ -26,6 +26,8 @@
  * 重要提示：本量表为自评筛查工具，不构成临床诊断。
  */
 
+const { scoreItem } = require('../../utils/scoring')
+
 const QUESTIONS = [
   { id: 'SAS-01', reverse: false, text: '我感到比平常更紧张或着急。' },
   { id: 'SAS-02', reverse: false, text: '我无缘无故地感到害怕。' },
@@ -72,7 +74,7 @@ function computeResult(answers, qs) {
     answered++;
     // 4 级评分存储为 0/1/2/3（与选项索引一致），转为 1/2/3/4
     const val = raw + 1;
-    const score = q.reverse ? (5 - val) : val;
+    const score = scoreItem(val, q); // 反向由 scoreItem 统一处理
     rawScore += score;
     items.push({ id: q.id, answered: true, value: val, score });
   });
@@ -95,7 +97,7 @@ function computeResult(answers, qs) {
       if (items[idx] && items[idx].answered) {
         const q = qs[idx];
         const v = items[idx].value;
-        s += q.reverse ? (5 - v) : v;
+        s += scoreItem(v, q);
         n++;
       }
     });
@@ -191,9 +193,7 @@ module.exports = {
     primaryField: 'index',
     primaryLabel: '焦虑指数',
     primarySuffix: '',
-    showGroups: true,
     groupLabels: { somatic: '躯体症状', anxiety: '焦虑心境', other: '其他症状' },
-    showDetail: false,
     interpretation: true,
   },
 };

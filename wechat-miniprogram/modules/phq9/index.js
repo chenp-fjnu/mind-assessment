@@ -133,9 +133,7 @@ module.exports = {
     primaryField: 'score',
     primaryLabel: '抑郁评分',
     primarySuffix: '/27',
-    showGroups: false,
     groupLabels: {},
-    showDetail: false,
     interpretation: true,
   },
 };

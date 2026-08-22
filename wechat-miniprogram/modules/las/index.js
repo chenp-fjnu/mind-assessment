@@ -219,9 +219,7 @@ module.exports = {
     primaryField: 'dominantName',
     primaryLabel: '主导风格',
     primarySuffix: '型',
-    showGroups: true,
     groupLabels: { eros: '激情型', ludus: '游戏型', storge: '友谊型', pragma: '实用型', mania: '狂热型', agape: '奉献型' },
-    showDetail: false,
     interpretation: true,
   },
 };

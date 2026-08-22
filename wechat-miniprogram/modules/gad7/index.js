@@ -126,9 +126,7 @@ module.exports = {
     primaryField: 'score',
     primaryLabel: '焦虑评分',
     primarySuffix: '',
-    showGroups: false,
     groupLabels: {},
-    showDetail: false,
     interpretation: true,
   },
 };

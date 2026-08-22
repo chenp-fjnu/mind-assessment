@@ -177,9 +177,7 @@ module.exports = {
     primaryField: 'type',
     primaryLabel: '气质类型',
     primarySuffix: '',
-    showGroups: true,
     groupLabels: { choleric: '胆汁质', sanguine: '多血质', phlegmatic: '粘液质', melancholic: '抑郁质' },
-    showDetail: false,
     interpretation: true,
   },
 };

@@ -1,7 +1,7 @@
 const { getModule } = require('../../utils/registry')
 const { computeTrend } = require('../../utils/trend')
 const { readableTextColor } = require('../../utils/color')
-const { isDark } = require('../../utils/theme')
+const { renderTrend, renderCard } = require('../../utils/canvas')
 const { withPrivacy } = require('../../utils/privacy')
 const methodsData = require('../../utils/methods-data')
 
@@ -188,10 +188,6 @@ Page({
   drawTrend() {
     if (!this.data.showTrend) return
     const dpr = this.dpr || 2
-    const dark = isDark()
-    const gridColor = dark ? '#334155' : '#e2e8f0'
-    const labelColor = dark ? '#cbd5e1' : '#475569'
-    const dateColor = dark ? '#94a3b8' : '#64748b'
     wx.createSelectorQuery()
       .in(this)
       .select('#trendCanvas')
@@ -205,58 +201,11 @@ Page({
         canvas.width = W * dpr
         canvas.height = H * dpr
         ctx.scale(dpr, dpr)
-        ctx.clearRect(0, 0, W, H)
-        const vals = this.data.trendValues
-        const color = this.data.meta.color
-        const pad = 26
-        const cw = W - pad * 2
-        const ch = H - pad * 2
-        let min = Math.min.apply(null, vals)
-        let max = Math.max.apply(null, vals)
-        if (min === max) {
-          min -= 1
-          max += 1
-        }
-        const range = max - min
-        const n = vals.length
-        const xAt = (i) => pad + (n === 1 ? cw / 2 : (cw * i) / (n - 1))
-        const yAt = (v) => pad + ch - ((v - min) / range) * ch
-        ctx.strokeStyle = gridColor
-        ctx.lineWidth = 1
-        ctx.beginPath()
-        ctx.moveTo(pad, pad + ch)
-        ctx.lineTo(pad + cw, pad + ch)
-        ctx.stroke()
-        ctx.strokeStyle = color
-        ctx.lineWidth = 3
-        ctx.beginPath()
-        vals.forEach((v, i) => {
-          const x = xAt(i)
-          const y = yAt(v)
-          if (i === 0) ctx.moveTo(x, y)
-          else ctx.lineTo(x, y)
+        renderTrend(ctx, W, H, {
+          values: this.data.trendValues,
+          color: this.data.meta.color,
+          dates: this.data.trendDates,
         })
-        ctx.stroke()
-        ctx.textAlign = 'center'
-        ctx.font = '20px sans-serif'
-        vals.forEach((v, i) => {
-          const x = xAt(i)
-          const y = yAt(v)
-          ctx.fillStyle = color
-          ctx.beginPath()
-          ctx.arc(x, y, 5, 0, Math.PI * 2)
-          ctx.fill()
-          ctx.fillStyle = labelColor
-          ctx.fillText(String(v), x, y - 12)
-        })
-        // x 轴日期标签（点数较少时绘制，避免拥挤）
-        if (trendDates && trendDates.length === vals.length && vals.length <= 8) {
-          ctx.fillStyle = dateColor
-          ctx.font = '15px sans-serif'
-          vals.forEach((v, i) => {
-            ctx.fillText(trendDates[i], xAt(i), H - 6)
-          })
-        }
       })
   },
 
@@ -270,7 +219,6 @@ Page({
   },
 
   drawCardToTemp(done) {
-    const dpr = this.dpr || 2
     wx.createSelectorQuery()
       .in(this)
       .select('#cardCanvas')
@@ -284,66 +232,15 @@ Page({
         const ctx = canvas.getContext('2d')
         const W = res[0].width
         const H = res[0].height
-        canvas.width = W * dpr
-        canvas.height = H * dpr
-        ctx.scale(dpr, dpr)
-        ctx.fillStyle = '#1e293b'
-        ctx.fillRect(0, 0, W, H)
-        ctx.textAlign = 'center'
-        ctx.fillStyle = '#fff'
-        ctx.font = '28px sans-serif'
-        ctx.fillText('心智探索局', W / 2, 70)
-        ctx.fillStyle = this.data.meta.color
-        ctx.font = '34px sans-serif'
-        ctx.fillText(this.data.meta.name, W / 2, 130)
-        ctx.fillStyle = '#fff'
-        ctx.font = '72px sans-serif'
-        ctx.fillText(this.data.primaryValue, W / 2, 250)
-        ctx.fillStyle = 'rgba(255,255,255,0.8)'
-        ctx.font = '26px sans-serif'
-        ctx.fillText(this.data.primaryLabel, W / 2, 300)
-        ctx.fillStyle = this.data.levelColor
-        ctx.fillRect(W / 2 - 90, 330, 180, 46)
-        ctx.fillStyle = this.data.levelColorText
-        ctx.font = '26px sans-serif'
-        ctx.fillText(this.data.levelText, W / 2, 362)
-        // 维度条形（最多 8 个，仅含 percent 的维度）
-        const dims = this.data.dims || []
-        if (dims.length) {
-          const startY = 430
-          const rowH = 40
-          const maxRows = Math.min(dims.length, 8)
-          ctx.textAlign = 'left'
-          for (let i = 0; i < maxRows; i++) {
-            const d0 = dims[i]
-            if (d0.percent == null) continue
-            const y = startY + i * rowH
-            ctx.fillStyle = 'rgba(255,255,255,0.85)'
-            ctx.font = '20px sans-serif'
-            ctx.fillText((d0.name || '').slice(0, 6), 40, y)
-            const barX = 170
-            const barW = 300
-            ctx.fillStyle = 'rgba(255,255,255,0.18)'
-            ctx.fillRect(barX, y - 14, barW, 14)
-            ctx.fillStyle = this.data.meta.color
-            ctx.fillRect(barX, y - 14, (barW * Math.min(100, d0.percent || 0)) / 100, 14)
-            ctx.fillStyle = 'rgba(255,255,255,0.7)'
-            ctx.textAlign = 'right'
-            ctx.fillText((d0.percent || 0) + '%', barX + barW + 40, y)
-            ctx.textAlign = 'left'
-          }
-          ctx.textAlign = 'center'
-        }
-        const d = new Date()
-        const date = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate()
-        ctx.fillStyle = 'rgba(255,255,255,0.5)'
-        ctx.font = '22px sans-serif'
-        ctx.fillText(date, W / 2, H - 40)
-        wx.canvasToTempFilePath({
-          canvas,
-          success: (r) => done(r.tempFilePath),
-          fail: () => done(null),
-        })
+        renderCard(canvas, ctx, W, H, {
+          meta: this.data.meta,
+          primaryValue: this.data.primaryValue,
+          primaryLabel: this.data.primaryLabel,
+          levelText: this.data.levelText,
+          levelColor: this.data.levelColor,
+          levelColorText: this.data.levelColorText,
+          dims: this.data.dims,
+        }, done)
       })
   },
 
