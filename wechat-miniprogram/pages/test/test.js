@@ -166,6 +166,24 @@ Page({
     const sel = this.data.answers[this.data.current]
     const self = this
 
+    // 选项序号徽标：除颜色外用编号区分选项，兼顾色盲用户与快速定位
+    const drawBadge = (ctx, W, H, idx) => {
+      const r = 11
+      const cx = r + 4
+      const cy = r + 4
+      ctx.fillStyle = 'rgba(15,23,42,0.85)'
+      ctx.beginPath()
+      ctx.arc(cx, cy, r, 0, Math.PI * 2)
+      ctx.fill()
+      ctx.fillStyle = '#ffffff'
+      ctx.font = 'bold 13px sans-serif'
+      ctx.textAlign = 'center'
+      ctx.textBaseline = 'middle'
+      ctx.fillText(String(idx + 1), cx, cy)
+      ctx.textAlign = 'left'
+      ctx.textBaseline = 'alphabetic'
+    }
+
     if (q.type === 'matrix') {
       this.ensureCanvas('matrixCanvas', (ctx, W, H) => {
         ctx.clearRect(0, 0, W, H)
@@ -195,6 +213,7 @@ Page({
           ctx.clearRect(0, 0, W, H)
           const s = Math.min(W, H)
           drawCell(ctx, opt, (W - s) / 2, (H - s) / 2, s)
+          drawBadge(ctx, W, H, idx)
           if (sel === idx) {
             ctx.strokeStyle = '#2563eb'
             ctx.lineWidth = 4
@@ -229,6 +248,7 @@ Page({
           m.forEach((row, r) => {
             row.forEach((c, col) => drawCell(ctx, c, col * cw, r * ch, Math.min(cw, ch)))
           })
+          drawBadge(ctx, W, H, idx)
           if (sel === idx) {
             ctx.strokeStyle = '#2563eb'
             ctx.lineWidth = 4

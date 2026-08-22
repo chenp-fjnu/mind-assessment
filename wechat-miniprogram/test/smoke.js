@@ -3,6 +3,7 @@
  * 运行：node test/smoke.js   （无需安装任何依赖）
  */
 const { getMetaList, getModule } = require('../utils/registry')
+const { buildModuleView } = require('../utils/result-view')
 
 let pass = 0
 let fail = 0
@@ -36,26 +37,12 @@ getMetaList().forEach((meta) => {
       meta.id + ' 含结果字段',
       ['iq', 'score', 'index', 'trait', 'type', 'level', 'percent', 'summary'].some((k) => r[k] !== undefined)
     )
-    if (typeof mod.buildGroupList === 'function') mod.buildGroupList(r, mod.resultLayout || {})
-    if (typeof mod.buildSubtestList === 'function') mod.buildSubtestList(r)
-    // 复刻 result.js 的渲染流程：groups/dims 的构造方式需与页面一致
+    // 复刻 result.js 的渲染流程：统一走 utils/result-view 的构造逻辑
     const layout = mod.resultLayout || {}
-    const hasBuildGroupList = typeof mod.buildGroupList === 'function'
-    const groups = hasBuildGroupList ? mod.buildGroupList(r, layout) : []
-    let dims = []
-    if (typeof mod.buildScaleDimensionList === 'function') {
-      dims = mod.buildScaleDimensionList(r) || []
-    } else if (typeof mod.buildDimensionList === 'function') {
-      dims = mod.buildDimensionList(r) || []
-    } else if (r.dimensions) {
-      dims = Object.keys(r.dimensions).map((k) => {
-        const d = r.dimensions[k]
-        return { key: k, name: d.name || k, percent: d.percent, text: d.text, level: d.level }
-      })
-    }
-    if (typeof mod.buildInterpretations === 'function') {
-      mod.buildInterpretations(r, groups, dims)
-    }
+    const view = buildModuleView(mod, r, layout)
+    check(meta.id + ' 视图 groups 为数组', Array.isArray(view.groups))
+    check(meta.id + ' 视图 dims 为数组', Array.isArray(view.dims))
+    check(meta.id + ' 视图 interpretations 为数组', Array.isArray(view.interpretations))
   } catch (e) {
     fail++
     console.error('  ✗ THROW ' + meta.id + ': ' + e.message)

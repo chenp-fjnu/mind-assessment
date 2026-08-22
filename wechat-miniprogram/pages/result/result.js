@@ -1,5 +1,6 @@
 const { getModule } = require('../../utils/registry')
 const { computeTrend } = require('../../utils/trend')
+const { buildModuleView } = require('../../utils/result-view')
 const { readableTextColor } = require('../../utils/color')
 const { renderTrend, renderCard } = require('../../utils/canvas')
 const { withPrivacy } = require('../../utils/privacy')
@@ -110,29 +111,12 @@ Page({
     const descText = r.description || (r.trait && String(r.trait) !== String(primaryValue) ? r.trait : '')
     const levelText = r.level && String(r.level) !== String(primaryValue) ? r.level : '已完成'
 
-    const hasBuildGroupList = typeof mod.buildGroupList === 'function'
-    const groups = hasBuildGroupList ? safeCall(() => mod.buildGroupList(r, layout)) : []
-    const subtests = typeof mod.buildSubtestList === 'function' ? safeCall(() => mod.buildSubtestList(r)) : []
-
-    let dims = []
-    let showBipolar = false
-    if (typeof mod.buildScaleDimensionList === 'function') {
-      dims = safeCall(() => mod.buildScaleDimensionList(r)) || []
-      showBipolar = !!(dims && dims[0] && dims[0].leftPercent !== undefined)
-    } else if (typeof mod.buildDimensionList === 'function') {
-      dims = safeCall(() => mod.buildDimensionList(r)) || []
-      showBipolar = !!(dims && dims[0] && dims[0].leftPercent !== undefined)
-    } else if (r.dimensions) {
-      dims = Object.keys(r.dimensions).map((k) => {
-        const d = r.dimensions[k]
-        return { key: k, name: d.name || k, percent: d.percent, text: d.text, level: d.level }
-      })
-    }
-
-    const interpretations =
-      typeof mod.buildInterpretations === 'function'
-        ? safeCall(() => mod.buildInterpretations(r, groups, dims)) || []
-        : []
+    const view = buildModuleView(mod, r, layout)
+    const groups = view.groups
+    const subtests = view.subtests
+    const dims = view.dims
+    const showBipolar = view.showBipolar
+    const interpretations = view.interpretations
 
     // 同一量表的历史趋势（计算逻辑抽离至 utils/trend.js，便于单测）
     const t = computeTrend(wx.getStorageSync('ma_history'), id)
@@ -167,7 +151,7 @@ Page({
       interpretations: interpretations || [],
       showGroups: !!(groups && groups.length),
       showBipolar,
-      showDims: !!(dims && dims.length) && !showBipolar && !hasBuildGroupList,
+      showDims: !!(dims && dims.length) && !showBipolar && !(groups && groups.length),
       showSubtests: !!(subtests && subtests.length),
       showTrend,
       trendValues,
@@ -297,12 +281,3 @@ Page({
     }
   },
 })
-
-function safeCall(fn) {
-  try {
-    return fn()
-  } catch (e) {
-    console.warn('[result] build failed:', e)
-    return []
-  }
-}

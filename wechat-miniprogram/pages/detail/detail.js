@@ -1,4 +1,4 @@
-const { getModule, TYPE_LABELS } = require('../../utils/registry')
+const { getModule, TYPE_LABELS, getMetaList } = require('../../utils/registry')
 const { readableTextColor } = require('../../utils/color')
 const { genCard, saveToAlbum } = require('../../utils/share')
 
@@ -16,6 +16,7 @@ Page({
       this.setData({ invalid: true })
       return
     }
+    const metaRef = getMetaList().find((m) => m.id === mod.id)
     this.setData({
       id: mod.id,
       meta: {
@@ -31,6 +32,7 @@ Page({
         price: mod.price,
         tags: mod.tag || [],
         type: mod.type,
+        reference: (metaRef && metaRef.reference) || '',
       },
     })
     wx.setNavigationBarTitle({ title: mod.name })

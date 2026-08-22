@@ -22,6 +22,11 @@
     </view>
   </view>
 
+  <view wx:if="{{meta.reference}}" class="card section">
+    <text class="sec-title">参考来源与版本</text>
+    <text class="sec-text">{{meta.reference}}</text>
+  </view>
+
   <view wx:if="{{history.count}}" class="card section">
     <text class="sec-title">历史成绩</text>
     <view class="hist-row">

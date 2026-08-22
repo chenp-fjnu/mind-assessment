@@ -17,7 +17,8 @@ module.exports = [
       "人格",
       "性格",
       "自我认知"
-    ]
+    ],
+    "reference": "Myers, I.B. & Briggs, K.C. — MBTI® 类型指标；本题源为公开领域 70 题标准化版整理（简体中文译）"
   },
   {
     "id": "big5",
@@ -35,7 +36,8 @@ module.exports = [
       "人格",
       "性格",
       "OCEAN"
-    ]
+    ],
+    "reference": "Goldberg, L.R. — IPIP-50 大五人格量表（OCEAN 五因素模型）"
   },
   {
     "id": "epq",
@@ -53,7 +55,8 @@ module.exports = [
       "人格",
       "性格",
       "EPQ"
-    ]
+    ],
+    "reference": "Eysenck, H.J. & Eysenck, S.B.G. — EPQ-RSC 艾森克人格问卷（简式中文版，E/N/P/L 四量表）"
   },
   {
     "id": "disc",
@@ -71,7 +74,8 @@ module.exports = [
       "行为风格",
       "职场",
       "沟通"
-    ]
+    ],
+    "reference": "Marston, W.M. — DISC 行为风格模型（Dominance/Influence/Steadiness/Conscientiousness）"
   },
   {
     "id": "pf16",
@@ -89,7 +93,8 @@ module.exports = [
       "人格",
       "性格",
       "16因素"
-    ]
+    ],
+    "reference": "Cattell, R.B. — 16PF 卡特尔十六种人格因素问卷（IPIP 版因子题）"
   },
   {
     "id": "sds",
@@ -108,7 +113,8 @@ module.exports = [
       "抑郁",
       "心理健康",
       "筛查"
-    ]
+    ],
+    "reference": "Zung, W.W.K. (1965) — 抑郁自评量表（SDS）"
   },
   {
     "id": "sas",
@@ -127,7 +133,8 @@ module.exports = [
       "焦虑",
       "心理健康",
       "筛查"
-    ]
+    ],
+    "reference": "Zung, W.W.K. (1971) — 焦虑自评量表（SAS）"
   },
   {
     "id": "gad7",
@@ -146,7 +153,8 @@ module.exports = [
       "焦虑",
       "心理健康",
       "筛查"
-    ]
+    ],
+    "reference": "Spitzer, R.L. et al. (2006) — 广泛性焦虑量表（GAD-7）"
   },
   {
     "id": "dass21",
@@ -167,7 +175,8 @@ module.exports = [
       "压力",
       "心理健康",
       "筛查"
-    ]
+    ],
+    "reference": "Lovibond, S.H. & Lovibond, P.F. (1995) — 抑郁-焦虑-压力量表（DASS-21）"
   },
   {
     "id": "ses",
@@ -185,7 +194,8 @@ module.exports = [
       "自我",
       "自尊",
       "自我价值"
-    ]
+    ],
+    "reference": "Rosenberg, M. (1965) — 自尊量表（SES）"
   },
   {
     "id": "las",
@@ -203,7 +213,8 @@ module.exports = [
       "自我",
       "爱情",
       "亲密关系"
-    ]
+    ],
+    "reference": "Hendrick, C. & Hendrick, S. (1986) — 爱情态度量表（LAS，六型浪漫风格）"
   },
   {
     "id": "holland",
@@ -221,7 +232,8 @@ module.exports = [
       "职业",
       "兴趣",
       "RIASEC"
-    ]
+    ],
+    "reference": "Holland, J.L. — RIASEC 霍兰德职业兴趣理论（现实/研究/艺术/社会/企业/常规）"
   },
   {
     "id": "spm",
@@ -239,7 +251,8 @@ module.exports = [
       "智力",
       "图形",
       "非言语"
-    ]
+    ],
+    "reference": "Raven, J.C. — 瑞文标准推理测验（SPM）；本题为原创图形推理练习，按正确率换算近似推理水平，非标准化常模"
   },
   {
     "id": "wechsler",
@@ -258,7 +271,8 @@ module.exports = [
       "言语",
       "操作",
       "综合"
-    ]
+    ],
+    "reference": "Wechsler, D. — 韦氏成人智力量表（WAIS）；本题为原创分测验图形练习，按正确率换算近似量表分，非标准化常模"
   },
   {
     "id": "phq9",
@@ -277,7 +291,8 @@ module.exports = [
       "抑郁",
       "筛查",
       "DSM-IV"
-    ]
+    ],
+    "reference": "Kroenke, K. et al. (2001) — 患者健康问卷抑郁模块（PHQ-9）"
   },
   {
     "id": "pss",
@@ -296,7 +311,8 @@ module.exports = [
       "应激",
       "心理健康",
       "筛查"
-    ]
+    ],
+    "reference": "Cohen, S., Kamarck, T. & Mermelstein, R. (1983) — 知觉压力量表（PSS-10）"
   },
   {
     "id": "psqi",
@@ -315,7 +331,8 @@ module.exports = [
       "健康",
       "生活质量",
       "筛查"
-    ]
+    ],
+    "reference": "Buysse, D.J. et al. (1989) — 匹兹堡睡眠质量指数（PSQI，7 个成分）"
   },
   {
     "id": "gses",
@@ -334,7 +351,8 @@ module.exports = [
       "自信",
       "自我效能",
       "积极心理"
-    ]
+    ],
+    "reference": "Schwarzer, R. & Jerusalem, M. (1995) — 一般自我效能感量表（GSES）"
   },
   {
     "id": "ucla",
@@ -353,7 +371,8 @@ module.exports = [
       "孤独",
       "关系",
       "心理健康"
-    ]
+    ],
+    "reference": "Russell, D. et al. (1978/1980 第三版) — UCLA 孤独量表"
   },
   {
     "id": "cdrise",
@@ -372,7 +391,8 @@ module.exports = [
       "韧性",
       "抗压",
       "自我成长"
-    ]
+    ],
+    "reference": "Connor, K.M. & Davidson, J.R.T. (2003) — 心理韧性量表（CD-RISC-10）"
   },
   {
     "id": "enneagram",
@@ -391,7 +411,8 @@ module.exports = [
       "性格",
       "九型",
       "自我探索"
-    ]
+    ],
+    "reference": "Riso, D.R. & Hudson, R. — 九型人格理论（Enneagram，简化测评版）"
   },
   {
     "id": "temperament",
@@ -410,6 +431,7 @@ module.exports = [
       "气质",
       "性格",
       "自我探索"
-    ]
+    ],
+    "reference": "气质四维度问卷（简化版；基于希波克拉底-盖伦气质学说与现代四维模型）"
   }
 ]
