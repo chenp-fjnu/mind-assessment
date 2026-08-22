@@ -146,8 +146,6 @@ module.exports = {
     ];
   },
 
-  getDimensionLabel(dim) { return COMPONENT_INFO[dim] ? COMPONENT_INFO[dim].name : dim; },
-
   resultLayout: {
     primaryField: 'totalScore',
     primaryLabel: '睡眠指数',

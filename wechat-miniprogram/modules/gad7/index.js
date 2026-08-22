@@ -120,8 +120,6 @@ module.exports = {
   },
 
   // 维度标签：GAD-7 情绪状态维度
-  getDimensionLabel(dim) { return dim === 'mood' ? '情绪状态' : dim; },
-
   resultLayout: {
     primaryField: 'score',
     primaryLabel: '焦虑评分',

@@ -46,5 +46,6 @@
   </view>
 
   <button class="btn home" bindtap="goHome" aria-label="返回首页">返回首页</button>
+  <button class="btn link" bindtap="openPrivacy" aria-label="查看隐私保护指引">查看隐私保护指引</button>
   <view class="brand-foot">心智探索局 · 认识自己，从测评与方法开始</view>
 </view>

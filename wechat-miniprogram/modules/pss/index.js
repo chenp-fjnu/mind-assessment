@@ -117,8 +117,6 @@ module.exports = {
     ];
   },
 
-  getDimensionLabel(dim) { return dim === 'stress' ? '压力感知' : dim; },
-
   resultLayout: {
     primaryField: 'totalScore',
     primaryLabel: '压力评分',

@@ -213,8 +213,6 @@ module.exports = {
   },
 
   // 维度标签：DASS-21 三个情绪维度
-    getDimensionLabel: makeLabeler(DIM_LABELS),
-
   resultLayout: {
     primaryField: 'trait',
     primaryLabel: '情绪综合评估',

@@ -175,8 +175,6 @@ module.exports = {
   },
 
   // 维度标签：DISC 四种行为风格
-    getDimensionLabel: makeLabeler(DIM_LABELS),
-
   resultLayout: {
     primaryField: 'style',
     primaryLabel: '行为风格',

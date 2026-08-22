@@ -213,8 +213,6 @@ module.exports = {
     ];
   },
 
-    getDimensionLabel: makeLabeler(DIM_LABELS),
-
   resultLayout: {
     primaryField: 'dominantName',
     primaryLabel: '主导风格',

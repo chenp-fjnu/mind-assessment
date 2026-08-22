@@ -70,8 +70,6 @@ const moduleDef = {
   },
 
   // 维度标签：SPM 使用集合字母 A-E 作为标签
-    getDimensionLabel: makeLabeler({}),
-
   resultLayout: {
     primaryField: 'iq',
     primaryLabel: '智商估算 IQ',

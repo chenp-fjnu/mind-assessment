@@ -187,8 +187,6 @@ module.exports = {
   },
 
   // 维度标签：SAS 情绪状态维度
-  getDimensionLabel(dim) { return dim === 'mood' ? '情绪状态' : dim; },
-
   resultLayout: {
     primaryField: 'index',
     primaryLabel: '焦虑指数',

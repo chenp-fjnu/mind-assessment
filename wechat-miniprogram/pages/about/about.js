@@ -1,5 +1,6 @@
 const { getMetaList, TYPE_LABELS } = require('../../utils/registry')
 const methodsData = require('../../utils/methods-data')
+const { openPrivacyContract } = require('../../utils/privacy')
 
 Page({
   data: {
@@ -31,5 +32,8 @@ Page({
   },
   goHome() {
     wx.reLaunch({ url: '/pages/index/index' })
+  },
+  openPrivacy() {
+    openPrivacyContract()
   },
 })

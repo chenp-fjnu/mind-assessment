@@ -155,8 +155,6 @@ module.exports = {
     ];
   },
 
-  getDimensionLabel(dim) { return dim === 'self-esteem' ? '自我评价' : dim; },
-
   resultLayout: {
     primaryField: 'score',
     primaryLabel: '自尊得分',

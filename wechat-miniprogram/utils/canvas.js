@@ -109,16 +109,34 @@ function renderCard(canvas, ctx, W, H, opts, done) {
     const startY = 430
     const rowH = 40
     const maxRows = Math.min(d.length, 8)
+    const barX = 170
+    const barW = 300
     ctx.textAlign = 'left'
     for (let i = 0; i < maxRows; i++) {
       const d0 = d[i]
-      if (d0.percent == null) continue
       const y = startY + i * rowH
+      const label = (d0.name || d0.key || '').slice(0, 6)
+      // 双极维度（MBTI 等）：左/右百分比分裂条
+      if (d0.leftPercent != null && d0.rightPercent != null) {
+        ctx.fillStyle = 'rgba(255,255,255,0.85)'
+        ctx.font = '20px sans-serif'
+        ctx.fillText(label, 40, y)
+        ctx.fillStyle = 'rgba(255,255,255,0.18)'
+        ctx.fillRect(barX, y - 14, barW, 14)
+        ctx.fillStyle = meta.color
+        ctx.fillRect(barX, y - 14, (barW * Math.min(100, d0.leftPercent)) / 100, 14)
+        ctx.fillStyle = 'rgba(255,255,255,0.45)'
+        ctx.fillRect(barX + (barW * Math.min(100, d0.leftPercent)) / 100, y - 14, (barW * Math.min(100, d0.rightPercent)) / 100, 14)
+        ctx.fillStyle = 'rgba(255,255,255,0.85)'
+        ctx.textAlign = 'right'
+        ctx.fillText((d0.dominant || '') + ' ' + d0.leftPercent + '/' + d0.rightPercent, barX + barW + 10, y)
+        ctx.textAlign = 'left'
+        continue
+      }
+      if (d0.percent == null) continue
       ctx.fillStyle = 'rgba(255,255,255,0.85)'
       ctx.font = '20px sans-serif'
-      ctx.fillText((d0.name || '').slice(0, 6), 40, y)
-      const barX = 170
-      const barW = 300
+      ctx.fillText(label, 40, y)
       ctx.fillStyle = 'rgba(255,255,255,0.18)'
       ctx.fillRect(barX, y - 14, barW, 14)
       ctx.fillStyle = meta.color

@@ -162,10 +162,6 @@ module.exports = {
     ];
   },
 
-  getDimensionLabel(dim) {
-    return DIMENSIONS[dim] ? `${dim} 号 ${DIMENSIONS[dim].name}` : dim;
-  },
-
   resultLayout: {
     primaryField: 'type',
     primaryLabel: '主导类型',

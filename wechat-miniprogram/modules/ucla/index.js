@@ -126,8 +126,6 @@ module.exports = {
     ];
   },
 
-  getDimensionLabel(dim) { return dim === 'social' ? '孤独感' : dim; },
-
   resultLayout: {
     primaryField: 'totalScore',
     primaryLabel: '孤独评分',

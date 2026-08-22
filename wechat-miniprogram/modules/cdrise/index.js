@@ -111,8 +111,6 @@ module.exports = {
     ];
   },
 
-  getDimensionLabel(dim) { return dim === 'wellbeing' ? '心理韧性' : dim; },
-
   resultLayout: {
     primaryField: 'totalScore',
     primaryLabel: '韧性评分',

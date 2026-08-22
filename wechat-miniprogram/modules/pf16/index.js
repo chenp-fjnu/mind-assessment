@@ -324,8 +324,6 @@ module.exports = {
   },
 
   // 维度标签：16PF 十六种人格因素
-    getDimensionLabel: makeLabeler(DIM_LABELS),
-
   resultLayout: {
     primaryField: 'trait',
     primaryLabel: '人格画像',

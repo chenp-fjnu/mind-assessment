@@ -127,8 +127,6 @@ module.exports = {
     return lines;
   },
 
-  getDimensionLabel(dim) { return dim === 'mood' ? '情绪状态' : dim; },
-
   resultLayout: {
     primaryField: 'score',
     primaryLabel: '抑郁评分',

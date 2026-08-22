@@ -47,7 +47,7 @@ Page({
         .sort((a, b) => b.time - a.time)
       const qn = mod.getQuestions().length
       if (hist.length && hist[0].answers && hist[0].answers.length === qn) {
-        saved = { id, answers: hist[0].answers }
+        saved = { id, answers: hist[0].answers, totalTime: hist[0].totalTime || 0 }
       }
     }
     if (!saved || !saved.answers) {
@@ -92,8 +92,11 @@ Page({
     }
 
     let timeText = ''
-    if (r.totalTime != null && !isNaN(r.totalTime)) {
-      const sec = Math.round(r.totalTime / 1000)
+    const usedTime = (saved && typeof saved.totalTime === 'number' && saved.totalTime > 0)
+      ? saved.totalTime
+      : (r.totalTime || 0)
+    if (usedTime > 0) {
+      const sec = Math.round(usedTime / 1000)
       timeText = sec >= 60 ? Math.floor(sec / 60) + ' 分 ' + (sec % 60) + ' 秒' : sec + ' 秒'
     }
     const NOTE_MAP = {

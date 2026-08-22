@@ -24,4 +24,19 @@ function readableTextColor(hex) {
   return lum > 0.6 ? '#1e293b' : '#ffffff'
 }
 
-module.exports = { readableTextColor, hexToRgb }
+/**
+ * 将 #RRGGBB 转换为带透明度的 rgba 字符串
+ * @param {string} hex 颜色 #RRGGBB
+ * @param {number} alpha 透明度 0~1
+ * @returns {string} rgba(...)
+ */
+function hexToRgba(hex, alpha = 1) {
+  const m = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex || '')
+  if (!m) return `rgba(100,116,139,${alpha})`
+  const r = parseInt(m[1], 16)
+  const g = parseInt(m[2], 16)
+  const b = parseInt(m[3], 16)
+  return `rgba(${r},${g},${b},${alpha})`
+}
+
+module.exports = { readableTextColor, hexToRgb, hexToRgba }

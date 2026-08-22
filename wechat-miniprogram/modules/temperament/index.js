@@ -169,10 +169,6 @@ module.exports = {
     ];
   },
 
-  getDimensionLabel(dim) {
-    return TEMPER[dim] ? TEMPER[dim].name : dim;
-  },
-
   resultLayout: {
     primaryField: 'type',
     primaryLabel: '气质类型',

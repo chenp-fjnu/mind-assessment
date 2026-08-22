@@ -49,4 +49,15 @@ function withPrivacy(action, onRefuse) {
   })
 }
 
-module.exports = { registerPrivacyModal, withPrivacy }
+// 打开微信官方《隐私保护指引》页面（需在小程序后台配置隐私协议）
+function openPrivacyContract() {
+  if (typeof wx.openPrivacyContract === 'function') {
+    wx.openPrivacyContract({
+      fail: () => wx.showToast({ title: '暂未配置隐私协议', icon: 'none' }),
+    })
+  } else {
+    wx.showToast({ title: '当前基础库不支持', icon: 'none' })
+  }
+}
+
+module.exports = { registerPrivacyModal, withPrivacy, openPrivacyContract }

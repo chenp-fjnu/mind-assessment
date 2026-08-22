@@ -214,8 +214,6 @@ module.exports = {
   },
 
   // 维度标签：EPQ 四个维度
-    getDimensionLabel: makeLabeler(DIM_LABELS),
-
   resultLayout: {
     primaryField: 'type',
     primaryLabel: '人格类型',

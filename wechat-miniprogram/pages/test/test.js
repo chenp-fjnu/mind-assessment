@@ -248,7 +248,9 @@ Page({
       if (this.data.qType === 'matrix') this.drawFigures()
       this.stopCountdown()
       this.saveProgress()
-      this.scheduleNext(this.data.qType === 'matrix' ? 700 : 350)
+      // 图形/矩阵题给用户更长时间观察，普通量表题快速跳入下一题
+      const delay = this.data.showFigureOptions || this.data.qType === 'matrix' ? 900 : 350
+      this.scheduleNext(delay)
     })
   },
 
@@ -383,7 +385,7 @@ Page({
     const r = this.mod.computeResult(this.data.answers, this.data.questions, { timings: this._timings })
     const pv = r[layout.primaryField || 'score']
     const hist = wx.getStorageSync('ma_history') || []
-    hist.unshift({
+    const record = {
       rid: Date.now() + '_' + Math.random().toString(36).slice(2, 8),
       id: this.data.meta.id,
       name: this.data.meta.name,
@@ -393,11 +395,23 @@ Page({
       qcount: this.data.total,
       summary: pv == null ? '' : String(pv),
       level: r.level || '',
-    })
-    wx.setStorageSync('ma_history', hist.slice(0, 30))
+      totalTime: typeof r.totalTime === 'number' ? r.totalTime : 0,
+      schemaVersion: 1,
+    }
+    hist.unshift(record)
+    // 配额兜底：写入失败时 progressively 丢弃最旧记录直至成功
+    let trimmed = hist.slice(0, 30)
+    for (let guard = 0; guard < trimmed.length; guard++) {
+      try {
+        wx.setStorageSync('ma_history', trimmed)
+        break
+      } catch (e) {
+        trimmed = trimmed.slice(0, trimmed.length - 1)
+      }
+    }
 
     const app = getApp()
-    app.globalData.lastResult = { id: this.data.meta.id, answers: this.data.answers }
+    app.globalData.lastResult = { id: this.data.meta.id, answers: this.data.answers, totalTime: record.totalTime }
     wx.reLaunch({ url: `/pages/result/result?id=${this.data.meta.id}` })
   },
 

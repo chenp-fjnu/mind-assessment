@@ -227,8 +227,6 @@ module.exports = {
   },
 
   // 维度标签：MBTI 四大维度
-    getDimensionLabel: makeLabeler(DIM_LABELS),
-
   resultLayout: {
     primaryField: 'type',
     primaryLabel: '人格类型',

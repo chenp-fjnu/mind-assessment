@@ -169,8 +169,6 @@ module.exports = {
   },
 
   // 维度标签：大五人格五大维度
-    getDimensionLabel: makeLabeler(DIM_LABELS),
-
   resultLayout: {
     primaryField: 'trait',
     primaryLabel: '人格画像',

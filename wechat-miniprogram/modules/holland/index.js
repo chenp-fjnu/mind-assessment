@@ -193,8 +193,6 @@ module.exports = {
   },
 
   // 维度标签：霍兰德六种职业兴趣类型
-    getDimensionLabel: makeLabeler(DIM_LABELS),
-
   resultLayout: {
     primaryField: 'code',
     primaryLabel: '职业代码',

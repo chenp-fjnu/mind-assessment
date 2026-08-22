@@ -1,10 +1,5 @@
 const { getMetaList, TYPE_LABELS } = require('../../utils/registry')
-
-function hexToRgba(hex, alpha) {
-  const m = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex || '')
-  if (!m) return 'rgba(100,116,139,0.12)'
-  return `rgba(${parseInt(m[1], 16)},${parseInt(m[2], 16)},${parseInt(m[3], 16)},${alpha})`
-}
+const { hexToRgba } = require('../../utils/color')
 
 function buildModuleList() {
   return getMetaList().map((m) => ({

@@ -1,11 +1,7 @@
 const { getMetaList, TYPE_LABELS } = require('../../utils/registry')
+const { hexToRgba } = require('../../utils/color')
 const methodsData = require('../../utils/methods-data')
 
-function hexToRgba(hex, alpha) {
-  const m = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex || '')
-  if (!m) return 'rgba(100,116,139,0.12)'
-  return `rgba(${parseInt(m[1], 16)},${parseInt(m[2], 16)},${parseInt(m[3], 16)},${alpha})`
-}
 function fmtTime(ts) {
   const d = new Date(ts)
   const p = (n) => (n < 10 ? '0' + n : '' + n)

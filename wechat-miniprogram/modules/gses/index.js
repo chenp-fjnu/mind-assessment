@@ -111,8 +111,6 @@ module.exports = {
     ];
   },
 
-  getDimensionLabel(dim) { return dim === 'self' ? '自我效能' : dim; },
-
   resultLayout: {
     primaryField: 'totalScore',
     primaryLabel: '自我效能',

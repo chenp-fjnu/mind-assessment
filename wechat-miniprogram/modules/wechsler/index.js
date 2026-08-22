@@ -298,8 +298,6 @@ module.exports = {
   },
 
   // 维度标签：韦氏使用子测验名作为标签
-    getDimensionLabel: makeLabeler({}),
-
   resultLayout: {
     primaryField: 'fsiq',
     primaryLabel: '总智商 FSIQ',
