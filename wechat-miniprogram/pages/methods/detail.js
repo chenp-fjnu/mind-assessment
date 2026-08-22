@@ -1,4 +1,5 @@
 const methodsData = require('../../utils/methods-data')
+const { genCard, saveToAlbum } = require('../../utils/share')
 
 const STORE_KEY = 'ma_practices'
 
@@ -83,5 +84,42 @@ Page({
   },
   goBack() {
     wx.navigateBack({ delta: 1 })
+  },
+  onReady() {
+    const m = this.data.method
+    if (!m) return
+    genCard(this, {
+      color: m.color,
+      icon: m.icon,
+      title: m.name,
+      subtitle: m.summary,
+      lines: (m.content || []).slice(0, 3).map((c, i) => ({ label: (i + 1) + '. ' + (c.text || '').slice(0, 14), value: '' })),
+      footer: '心智探索局 · 方法卡片',
+    }, (p) => { this._shareImage = p })
+  },
+  onShareAppMessage() {
+    const m = this.data.method
+    if (!m) return {}
+    return {
+      title: '推荐一个心理学方法：' + m.name,
+      path: '/pages/methods/detail?id=' + this._id,
+      imageUrl: this._shareImage || '',
+    }
+  },
+  saveCard() {
+    const m = this.data.method
+    if (!m) return
+    wx.showLoading({ title: '生成中' })
+    genCard(this, {
+      color: m.color,
+      icon: m.icon,
+      title: m.name,
+      subtitle: m.summary,
+      lines: (m.content || []).slice(0, 3).map((c, i) => ({ label: (i + 1) + '. ' + (c.text || '').slice(0, 14), value: '' })),
+      footer: '心智探索局 · 方法卡片',
+    }, (p) => {
+      wx.hideLoading()
+      saveToAlbum(p)
+    })
   },
 })

@@ -73,4 +73,11 @@
   </view>
 
   <view class="brand-foot">心智探索局 · 认识自己，从测评与方法开始</view>
+
+  <view class="share-bar">
+    <button class="btn ghost" bindtap="saveCard" aria-label="保存为图片">保存为图片</button>
+    <button class="btn ghost" open-type="share" aria-label="分享给好友">分享给好友</button>
+  </view>
+
+  <canvas type="2d" id="shareCanvas" class="share-canvas"></canvas>
 </view>

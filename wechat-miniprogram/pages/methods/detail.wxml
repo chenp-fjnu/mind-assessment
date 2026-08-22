@@ -61,6 +61,13 @@
   </view>
 
   <view class="footer">方法用于自我探索与练习，不能替代专业帮助</view>
+
+  <view class="share-bar">
+    <button class="btn ghost" bindtap="saveCard" aria-label="保存为图片">保存为图片</button>
+    <button class="btn ghost" open-type="share" aria-label="分享给好友">分享给好友</button>
+  </view>
+
+  <canvas type="2d" id="shareCanvas" class="share-canvas"></canvas>
 </view>
 
 <view wx:else class="invalid">

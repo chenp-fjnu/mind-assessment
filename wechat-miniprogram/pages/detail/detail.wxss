@@ -156,6 +156,28 @@
   font-size: 22rpx;
   padding: 32rpx;
 }
+.share-bar {
+  display: flex;
+  gap: 20rpx;
+  margin: 8rpx 32rpx 0;
+}
+.btn.ghost {
+  flex: 1;
+  height: 84rpx;
+  line-height: 84rpx;
+  background: var(--card);
+  color: #7c3aed;
+  border: 2rpx solid #7c3aed;
+  font-size: 28rpx;
+  border-radius: 16rpx;
+}
+.share-canvas {
+  position: fixed;
+  left: -9999rpx;
+  top: 0;
+  width: 300px;
+  height: 380px;
+}
 
 .invalid {
   min-height: 100vh;

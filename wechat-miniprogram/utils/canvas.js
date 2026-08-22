@@ -138,4 +138,58 @@ function renderCard(canvas, ctx, W, H, opts, done) {
   wx.canvasToTempFilePath({ canvas, success: (r) => done(r.tempFilePath), done: () => done(null) })
 }
 
-module.exports = { canvasPalette, renderTrend, renderCard }
+// 通用内容卡片（测评/方法/结果均可复用）：标题 + 副标题 + 多行 + 页脚
+function renderContentCard(canvas, ctx, W, H, opts, done) {
+  const { color, icon, title, subtitle, lines, footer } = opts
+  const pal = canvasPalette()
+  const dpr = (wx.getWindowInfo ? wx.getWindowInfo().pixelRatio : wx.getSystemInfoSync().pixelRatio) || 2
+  canvas.width = W * dpr
+  canvas.height = H * dpr
+  ctx.scale(dpr, dpr)
+  ctx.fillStyle = pal.bg
+  ctx.fillRect(0, 0, W, H)
+  // 顶部色条
+  ctx.fillStyle = color || '#7c3aed'
+  ctx.fillRect(0, 0, W, 12)
+  ctx.textAlign = 'center'
+  ctx.fillStyle = pal.text
+  ctx.font = '30px sans-serif'
+  ctx.fillText('心智探索局', W / 2, 70)
+  // 图标
+  if (icon) {
+    ctx.font = '64px sans-serif'
+    ctx.fillText(icon, W / 2, 160)
+  }
+  ctx.fillStyle = pal.text
+  ctx.font = '40px sans-serif'
+  ctx.fillText(title || '', W / 2, 230)
+  if (subtitle) {
+    ctx.fillStyle = pal.textSoft
+    ctx.font = '24px sans-serif'
+    ctx.fillText(subtitle, W / 2, 272)
+  }
+  // 多行
+  const ls = lines || []
+  let y = 330
+  ctx.textAlign = 'left'
+  ls.slice(0, 6).forEach((ln) => {
+    ctx.fillStyle = pal.textSoft
+    ctx.font = '22px sans-serif'
+    ctx.fillText(ln.label || '', 50, y)
+    ctx.fillStyle = pal.text
+    ctx.font = '24px sans-serif'
+    ctx.textAlign = 'right'
+    ctx.fillText(ln.value != null ? String(ln.value) : '', W - 50, y)
+    ctx.textAlign = 'left'
+    y += 44
+  })
+  if (footer) {
+    ctx.fillStyle = pal.textFaint
+    ctx.font = '20px sans-serif'
+    ctx.textAlign = 'center'
+    ctx.fillText(footer, W / 2, H - 36)
+  }
+  wx.canvasToTempFilePath({ canvas, success: (r) => done(r.tempFilePath), done: () => done(null) })
+}
+
+module.exports = { canvasPalette, renderTrend, renderCard, renderContentCard }

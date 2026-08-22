@@ -1,104 +1,90 @@
-const { getMetaList, TYPE_LABELS, modulesByType } = require('../../utils/registry')
+const { getMetaList, TYPE_LABELS } = require('../../utils/registry')
 const methodsData = require('../../utils/methods-data')
 
-// 将 #RRGGBB 转为带透明度的 rgba，兼容所有基础库（避免 8 位 hex 兼容性问题）
 function hexToRgba(hex, alpha) {
   const m = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex || '')
   if (!m) return 'rgba(100,116,139,0.12)'
-  const r = parseInt(m[1], 16)
-  const g = parseInt(m[2], 16)
-  const b = parseInt(m[3], 16)
-  return `rgba(${r},${g},${b},${alpha})`
+  return `rgba(${parseInt(m[1], 16)},${parseInt(m[2], 16)},${parseInt(m[3], 16)},${alpha})`
+}
+function fmtTime(ts) {
+  const d = new Date(ts)
+  const p = (n) => (n < 10 ? '0' + n : '' + n)
+  return d.getFullYear() + '-' + p(d.getMonth() + 1) + '-' + p(d.getDate()) + ' ' + p(d.getHours()) + ':' + p(d.getMinutes())
 }
 
-function buildModuleList() {
-  return getMetaList().map((m) => ({
-    id: m.id,
-    type: m.type,
-    icon: m.icon,
-    name: m.name,
-    shortName: m.shortName,
-    desc: m.desc,
-    duration: m.duration,
-    questionCount: m.questionCount,
-    paid: m.paid,
-    price: m.price,
-    color: m.color,
-    tint: hexToRgba(m.color, 0.12),
-    keywords: (m.name + ' ' + m.desc + ' ' + (m.tag || []).join(' ') + ' ' + (TYPE_LABELS[m.type] || '')).toLowerCase(),
-  }))
-}
+const FEATURED_ASSESS = ['big5', 'phq9', 'pss', 'mbti', 'sds', 'gad7']
+const FEATURED_METHODS = ['smart', 'grow', 'woop', 'abc', 'threegood', 'fogg']
 
-function buildGroups(list) {
-  const map = {}
-  list.forEach((m) => {
-    if (!map[m.type]) map[m.type] = []
-    map[m.type].push(m)
-  })
-  return Object.keys(map).map((type) => ({
-    type,
-    label: TYPE_LABELS[type] || type,
-    list: map[type],
+function buildModules() {
+  const all = getMetaList().map((m) => ({
+    id: m.id, type: m.type, icon: m.icon, name: m.name, shortName: m.shortName,
+    desc: m.desc, duration: m.duration, questionCount: m.questionCount,
+    paid: m.paid, price: m.price, color: m.color, tint: hexToRgba(m.color, 0.12),
   }))
+  const byId = {}
+  all.forEach((m) => (byId[m.id] = m))
+  const pick = (ids, pool, n) => ids.filter((id) => byId[id]).map((id) => byId[id]).concat(pool.filter((m) => ids.indexOf(m.id) < 0)).slice(0, n)
+  return { all, featuredAssess: pick(FEATURED_ASSESS, all, 4) }
+}
+function buildMethods() {
+  const all = methodsData.METHODS.map((m) => Object.assign({}, m, { tint: hexToRgba(m.color, 0.12) }))
+  const byId = {}
+  all.forEach((m) => (byId[m.id] = m))
+  const featured = FEATURED_METHODS.filter((id) => byId[id]).map((id) => byId[id]).concat(all.filter((m) => FEATURED_METHODS.indexOf(m.id) < 0)).slice(0, 4)
+  return { all, featuredMethods: featured }
 }
 
 Page({
   data: {
-    groups: [],
-    types: [],
-    allModules: [],
-    keyword: '',
-    activeType: '',
     moduleCount: 0,
-    typeCount: 0,
     methodCount: 0,
     practiceCount: 0,
+    featuredAssess: [],
+    featuredMethods: [],
+    resume: null,
+    keyword: '',
   },
   onLoad() {
-    const allModules = buildModuleList()
-    const types = Object.keys(TYPE_LABELS)
-      .filter((t) => allModules.some((m) => m.type === t))
-      .map((t) => ({ type: t, label: TYPE_LABELS[t] }))
+    const mod = buildModules()
+    const met = buildMethods()
     this.setData({
-      allModules,
-      types,
-      groups: buildGroups(allModules),
-      moduleCount: allModules.length,
-      typeCount: types.length,
-      methodCount: methodsData.METHODS.length,
-      practiceCount: methodsData.METHODS.filter((m) => m.interactive).length,
+      moduleCount: mod.all.length,
+      methodCount: met.all.length,
+      practiceCount: met.all.filter((m) => m.interactive).length,
+      featuredAssess: mod.featuredAssess,
+      featuredMethods: met.featuredMethods,
     })
   },
-  applyFilter() {
-    const { allModules, keyword, activeType } = this.data
-    const kw = (keyword || '').trim().toLowerCase()
-    const list = allModules.filter((m) => {
-      if (activeType && m.type !== activeType) return false
-      if (kw && m.keywords.indexOf(kw) === -1) return false
-      return true
+  onShow() {
+    this.refreshResume()
+  },
+  refreshResume() {
+    const hist = wx.getStorageSync('ma_history') || []
+    if (!hist.length) {
+      if (this.data.resume) this.setData({ resume: null })
+      return
+    }
+    const last = hist.slice().sort((a, b) => b.time - a.time)[0]
+    this.setData({
+      resume: { id: last.id, name: last.name, icon: last.icon, timeText: fmtTime(last.time) },
     })
-    this.setData({ groups: buildGroups(list) })
   },
   onSearch(e) {
-    this.setData({ keyword: e.detail.value }, () => this.applyFilter())
+    const kw = e.detail.value
+    this.setData({ keyword: kw })
+    if (kw) wx.navigateTo({ url: '/pages/assess/assess?keyword=' + encodeURIComponent(kw) })
   },
   clearSearch() {
-    this.setData({ keyword: '' }, () => this.applyFilter())
+    this.setData({ keyword: '' })
   },
-  onType(e) {
-    this.setData({ activeType: e.currentTarget.dataset.type }, () => this.applyFilter())
+  goAssess() { wx.switchTab({ url: '/pages/assess/assess' }) },
+  goMethods() { wx.switchTab({ url: '/pages/methods/methods' }) },
+  goDetail(e) { wx.navigateTo({ url: `/pages/detail/detail?id=${e.currentTarget.dataset.id}` }) },
+  goMethodDetail(e) { wx.navigateTo({ url: `/pages/methods/detail?id=${e.currentTarget.dataset.id}` }) },
+  goResume() {
+    if (!this.data.resume) return
+    wx.navigateTo({ url: `/pages/result/result?id=${this.data.resume.id}` })
   },
-  goDetail(e) {
-    const id = e.currentTarget.dataset.id
-    wx.navigateTo({ url: `/pages/detail/detail?id=${id}` })
-  },
-  goAllHistory() {
-    wx.switchTab({ url: '/pages/history/history' })
-  },
-  goAbout() {
-    wx.switchTab({ url: '/pages/about/about' })
-  },
-  goMethods() {
-    wx.switchTab({ url: '/pages/methods/methods' })
-  },
+  goHistory() { wx.navigateTo({ url: '/pages/history/history' }) },
+  goAbout() { wx.navigateTo({ url: '/pages/about/about' }) },
 })

@@ -334,3 +334,88 @@
     color: var(--muted);
   }
 }
+
+.pillars {
+  display: flex;
+  margin: 24rpx 32rpx 0;
+  gap: 20rpx;
+}
+.pillar {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  padding: 28rpx;
+  border-radius: 24rpx;
+  box-shadow: 0 8rpx 30rpx rgba(15, 23, 42, 0.08);
+}
+.pillar.assess { background: linear-gradient(135deg, #1e293b, #334155); }
+.pillar.method { background: linear-gradient(135deg, #0d9488, #7c3aed); }
+.pillar-icon {
+  width: 72rpx;
+  height: 72rpx;
+  border-radius: 20rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 38rpx;
+  background: rgba(255, 255, 255, 0.18);
+  flex-shrink: 0;
+}
+.pillar-text { flex: 1; margin-left: 18rpx; overflow: hidden; }
+.pillar-title { display: block; color: #fff; font-size: 30rpx; font-weight: 700; }
+.pillar-sub { display: block; color: rgba(255, 255, 255, 0.85); font-size: 22rpx; margin-top: 6rpx; }
+.pillar .arrow { color: rgba(255, 255, 255, 0.8); }
+
+.resume { display: flex; align-items: center; margin: 24rpx 32rpx 0; padding: 24rpx 28rpx; }
+
+.section { margin: 32rpx 32rpx 0; }
+.section-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 16rpx;
+}
+.section-title { font-size: 30rpx; font-weight: 700; color: #1e293b; }
+.section-more { font-size: 24rpx; color: #7c3aed; }
+.card-row { white-space: nowrap; }
+.mini-card {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  width: 200rpx;
+  padding: 28rpx 20rpx;
+  margin-right: 20rpx;
+  background: var(--card);
+  border: 3rpx solid transparent;
+  border-radius: 24rpx;
+  box-shadow: 0 6rpx 22rpx rgba(15, 23, 42, 0.06);
+  vertical-align: top;
+}
+.mini-icon {
+  width: 84rpx;
+  height: 84rpx;
+  border-radius: 22rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 44rpx;
+}
+.mini-name {
+  font-size: 27rpx;
+  font-weight: 600;
+  color: #1e293b;
+  margin-top: 16rpx;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 180rpx;
+}
+.mini-meta { font-size: 22rpx; color: #64748b; margin-top: 6rpx; }
+
+@media (prefers-color-scheme: dark) {
+  .section-title { color: var(--text); }
+  .mini-name { color: var(--text); }
+  .mini-meta { color: var(--muted); }
+  .pillar-title { color: #fff; }
+}

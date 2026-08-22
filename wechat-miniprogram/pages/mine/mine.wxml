@@ -1,0 +1,37 @@
+<view class="scroll-page">
+  <view class="mine-hero">
+    <view class="mine-avatar">🧠</view>
+    <text class="mine-name">我的心智档案</text>
+    <text class="mine-sub">记录、方法与关于，都在这里</text>
+  </view>
+
+  <view class="menu">
+    <view class="card menu-item" bindtap="goHistory" role="button" aria-label="我的记录">
+      <view class="menu-icon">📑</view>
+      <view class="menu-body">
+        <text class="menu-name">我的记录</text>
+        <text class="menu-sub">已保存 {{recordCount}} 条测评结果</text>
+      </view>
+      <text class="arrow">›</text>
+    </view>
+
+    <view class="card menu-item" bindtap="goAbout" role="button" aria-label="关于心智探索局">
+      <view class="menu-icon">ℹ️</view>
+      <view class="menu-body">
+        <text class="menu-name">关于心智探索局</text>
+        <text class="menu-sub">方法论、隐私与免责说明</text>
+      </view>
+      <text class="arrow">›</text>
+    </view>
+
+    <view class="card menu-item">
+      <view class="menu-icon">🖼️</view>
+      <view class="menu-body">
+        <text class="menu-name">保存的图片</text>
+        <text class="menu-sub">结果/方法卡片已存入手机相册</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="footer">结果与练习仅供自我探索，不构成专业建议</view>
+</view>

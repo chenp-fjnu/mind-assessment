@@ -7,7 +7,9 @@
     "pages/history/history",
     "pages/about/about",
     "pages/methods/methods",
-    "pages/methods/detail"
+    "pages/methods/detail",
+    "pages/assess/assess",
+    "pages/mine/mine"
   ],
   "window": {
     "navigationBarTextStyle": "white",
@@ -23,9 +25,9 @@
     "borderStyle": "black",
     "list": [
       { "pagePath": "pages/index/index", "text": "首页", "iconPath": "assets/tabicons/home.png", "selectedIconPath": "assets/tabicons/home_on.png" },
-      { "pagePath": "pages/history/history", "text": "记录", "iconPath": "assets/tabicons/record.png", "selectedIconPath": "assets/tabicons/record_on.png" },
-      { "pagePath": "pages/about/about", "text": "关于", "iconPath": "assets/tabicons/about.png", "selectedIconPath": "assets/tabicons/about_on.png" },
-      { "pagePath": "pages/methods/methods", "text": "工具箱", "iconPath": "assets/tabicons/toolbox.png", "selectedIconPath": "assets/tabicons/toolbox_on.png" }
+      { "pagePath": "pages/assess/assess", "text": "测评", "iconPath": "assets/tabicons/assess.png", "selectedIconPath": "assets/tabicons/assess_on.png" },
+      { "pagePath": "pages/methods/methods", "text": "方法", "iconPath": "assets/tabicons/method.png", "selectedIconPath": "assets/tabicons/method_on.png" },
+      { "pagePath": "pages/mine/mine", "text": "我的", "iconPath": "assets/tabicons/mine.png", "selectedIconPath": "assets/tabicons/mine_on.png" }
     ]
   },
   "style": "v2",

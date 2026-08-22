@@ -144,6 +144,32 @@ function drawToolbox(c) {
   fillRect(px, 37, 42, 43, 52, c)
   return px
 }
+// 测评：剪贴板 + 对勾
+function drawAssess(c) {
+  const px = newPx()
+  fillRect(px, 16, 26, 64, 66, c)
+  fillRect(px, 28, 16, 52, 18, c)
+  line(px, 30, 54, 38, 62, c)
+  line(px, 38, 62, 56, 42, c)
+  return px
+}
+// 方法：灯泡
+function drawMethod(c) {
+  const px = newPx()
+  circleOutline(px, 40, 34, 18, c)
+  line(px, 40, 16, 40, 22, c)
+  line(px, 30, 18, 50, 18, c)
+  fillRect(px, 32, 52, 48, 58, c)
+  fillRect(px, 34, 58, 46, 65, c)
+  return px
+}
+// 我的：人形
+function drawMine(c) {
+  const px = newPx()
+  circleOutline(px, 40, 26, 13, c)
+  fillTriangle(px, [16, 70], [40, 44], [64, 70], c)
+  return px
+}
 
 const outDir = path.join(process.cwd(), 'assets', 'tabicons')
 fs.mkdirSync(outDir, { recursive: true })
@@ -156,6 +182,12 @@ const files = {
   'about_on.png': drawAbout(ACTIVE),
   'toolbox.png': drawToolbox(NORMAL),
   'toolbox_on.png': drawToolbox(ACTIVE),
+  'assess.png': drawAssess(NORMAL),
+  'assess_on.png': drawAssess(ACTIVE),
+  'method.png': drawMethod(NORMAL),
+  'method_on.png': drawMethod(ACTIVE),
+  'mine.png': drawMine(NORMAL),
+  'mine_on.png': drawMine(ACTIVE),
 }
 for (const [name, px] of Object.entries(files)) {
   fs.writeFileSync(path.join(outDir, name), makePNG(px))
