@@ -197,6 +197,19 @@
   .content-text {
     color: var(--sub);
   }
+  .step-text {
+    color: var(--sub);
+  }
+  .example {
+    background: #1e1b4b;
+    border-left-color: #7c3aed;
+  }
+  .example-text {
+    color: #c4b5fd;
+  }
+  .tip-text {
+    color: var(--sub);
+  }
   .practice {
     border-top-color: var(--border);
   }
@@ -209,7 +222,64 @@
   .practice-value {
     color: var(--sub);
   }
-  .footer {
+.step-list {
+  display: flex;
+  flex-direction: column;
+  gap: 18rpx;
+}
+.step-item {
+  display: flex;
+  align-items: flex-start;
+}
+.step-no {
+  flex: none;
+  width: 40rpx;
+  height: 40rpx;
+  margin-right: 16rpx;
+  text-align: center;
+  line-height: 40rpx;
+  font-size: 24rpx;
+  font-weight: 700;
+  color: #fff;
+  background: #7c3aed;
+  border-radius: 50%;
+}
+.step-text {
+  flex: 1;
+  font-size: 26rpx;
+  color: #475569;
+  line-height: 1.6;
+}
+.example {
+  padding: 20rpx 24rpx;
+  background: #f5f3ff;
+  border-left: 6rpx solid #7c3aed;
+  border-radius: 12rpx;
+}
+.example-text {
+  font-size: 26rpx;
+  color: #4c3aa3;
+  line-height: 1.7;
+}
+.tip-item {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 12rpx;
+}
+.tip-dot {
+  flex: none;
+  margin-right: 12rpx;
+  font-size: 30rpx;
+  color: #7c3aed;
+  line-height: 1.4;
+}
+.tip-text {
+  flex: 1;
+  font-size: 26rpx;
+  color: #475569;
+  line-height: 1.6;
+}
+.footer {
     color: var(--muted);
   }
   .invalid-title {

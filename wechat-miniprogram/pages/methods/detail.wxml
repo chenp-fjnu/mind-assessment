@@ -49,6 +49,29 @@
     </view>
   </view>
 
+  <view class="card sec" wx:if="{{method.steps && method.steps.length}}">
+    <text class="sec-title">上手步骤</text>
+    <view class="step-list">
+      <view class="step-item" wx:for="{{method.steps}}" wx:key="*this" wx:for-item="s" wx:for-index="si">
+        <text class="step-no">{{si + 1}}</text>
+        <text class="step-text">{{s}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="card sec" wx:if="{{method.example}}">
+    <text class="sec-title">举个栗子</text>
+    <view class="example"><text class="example-text">{{method.example}}</text></view>
+  </view>
+
+  <view class="card sec" wx:if="{{method.tips && method.tips.length}}">
+    <text class="sec-title">小贴士</text>
+    <view class="tip-item" wx:for="{{method.tips}}" wx:key="*this" wx:for-item="t">
+      <text class="tip-dot">·</text>
+      <text class="tip-text">{{t}}</text>
+    </view>
+  </view>
+
   <view class="card sec" wx:if="{{practices.length}}">
     <text class="sec-title">我的练习记录（{{practices.length}}）</text>
     <view class="practice" wx:for="{{practices}}" wx:key="time" wx:for-item="p">
