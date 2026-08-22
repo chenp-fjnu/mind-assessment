@@ -1,3 +1,4 @@
+const { makeLabeler } = require('../../utils/labels')
 /**
  * LAS 爱情态度量表（Love Attitudes Scale）
  *
@@ -155,6 +156,8 @@ function computeResult(answers, qs) {
   };
 }
 
+const DIM_LABELS = { eros: '激情', ludus: '游戏', storge: '友谊', pragma: '实用', mania: '狂热', agape: '奉献' };
+
 module.exports = {
   id: 'las',
   type: 'self',
@@ -210,10 +213,7 @@ module.exports = {
     ];
   },
 
-  getDimensionLabel(dim) {
-    const map = { eros: '激情', ludus: '游戏', storge: '友谊', pragma: '实用', mania: '狂热', agape: '奉献' };
-    return map[dim] || dim;
-  },
+    getDimensionLabel: makeLabeler(DIM_LABELS),
 
   resultLayout: {
     primaryField: 'dominantName',

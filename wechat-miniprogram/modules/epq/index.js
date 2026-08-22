@@ -1,3 +1,4 @@
+const { makeLabeler } = require('../../utils/labels')
 /**
  * EPQ 艾森克人格问卷（简化版 48 题）
  *
@@ -160,6 +161,8 @@ function computeResult(answers, qs) {
   };
 }
 
+const DIM_LABELS = { E: '外向性', N: '神经质', P: '精神质', L: '掩饰性' };
+
 module.exports = {
   id: 'epq',
   type: 'personality',
@@ -211,10 +214,7 @@ module.exports = {
   },
 
   // 维度标签：EPQ 四个维度
-  getDimensionLabel(dim) {
-    const labels = { E: '外向性', N: '神经质', P: '精神质', L: '掩饰性' };
-    return labels[dim] || dim;
-  },
+    getDimensionLabel: makeLabeler(DIM_LABELS),
 
   resultLayout: {
     primaryField: 'type',

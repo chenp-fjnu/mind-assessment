@@ -1,3 +1,4 @@
+const { makeLabeler } = require('../../utils/labels')
 /**
  * 16PF 卡特尔 16 种人格因素问卷（扩展版 160 题）
  *
@@ -261,6 +262,12 @@ function computeResult(answers, qs) {
   };
 }
 
+const DIM_LABELS = {
+      A: '乐群性', B: '聪慧性', C: '稳定性', E: '恃强性', F: '兴奋性',
+      G: '有恒性', H: '敢为性', I: '敏感性', L: '怀疑性', M: '幻想性',
+      N: '世故性', O: '忧虑性', Q1: '实验性', Q2: '独立性', Q3: '自律性', Q4: '紧张性',
+    };
+
 module.exports = {
   id: 'pf16',
   type: 'personality',
@@ -317,14 +324,7 @@ module.exports = {
   },
 
   // 维度标签：16PF 十六种人格因素
-  getDimensionLabel(dim) {
-    const labels = {
-      A: '乐群性', B: '聪慧性', C: '稳定性', E: '恃强性', F: '兴奋性',
-      G: '有恒性', H: '敢为性', I: '敏感性', L: '怀疑性', M: '幻想性',
-      N: '世故性', O: '忧虑性', Q1: '实验性', Q2: '独立性', Q3: '自律性', Q4: '紧张性',
-    };
-    return labels[dim] || dim;
-  },
+    getDimensionLabel: makeLabeler(DIM_LABELS),
 
   resultLayout: {
     primaryField: 'trait',

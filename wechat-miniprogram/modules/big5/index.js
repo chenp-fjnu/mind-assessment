@@ -1,3 +1,4 @@
+const { makeLabeler } = require('../../utils/labels')
 /**
  * Big Five 大五人格测试模块（IPIP-50 国际人格项目库 50 题）
  *
@@ -111,6 +112,8 @@ function computeResult(answers, qs) {
   };
 }
 
+const DIM_LABELS = { O: '开放性', C: '尽责性', E: '外向性', A: '宜人性', N: '神经质' };
+
 module.exports = {
   id: 'big5',
   type: 'personality',
@@ -166,10 +169,7 @@ module.exports = {
   },
 
   // 维度标签：大五人格五大维度
-  getDimensionLabel(dim) {
-    const labels = { O: '开放性', C: '尽责性', E: '外向性', A: '宜人性', N: '神经质' };
-    return labels[dim] || dim;
-  },
+    getDimensionLabel: makeLabeler(DIM_LABELS),
 
   resultLayout: {
     primaryField: 'trait',

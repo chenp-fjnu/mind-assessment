@@ -1,3 +1,4 @@
+const { makeLabeler } = require('../../utils/labels')
 /**
  * SPM 瑞文标准推理测验模块
  * 适配通用模块接口，内部复用现有 questions.js 与 scoring.js
@@ -69,7 +70,7 @@ const moduleDef = {
   },
 
   // 维度标签：SPM 使用集合字母 A-E 作为标签
-  getDimensionLabel(dim) { return dim; },
+    getDimensionLabel: makeLabeler({}),
 
   resultLayout: {
     primaryField: 'iq',

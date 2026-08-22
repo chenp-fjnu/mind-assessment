@@ -1,3 +1,4 @@
+const { makeLabeler } = require('../../utils/labels')
 /**
  * 韦氏成人智力测验模块（简化版 WAIS-Lite）
  *
@@ -297,7 +298,7 @@ module.exports = {
   },
 
   // 维度标签：韦氏使用子测验名作为标签
-  getDimensionLabel(dim) { return dim; },
+    getDimensionLabel: makeLabeler({}),
 
   resultLayout: {
     primaryField: 'fsiq',
