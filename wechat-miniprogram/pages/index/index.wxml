@@ -38,13 +38,12 @@
           role="button"
           aria-label="{{h.name}}，{{h.kindLabel}}"
         >
-          <view class="hot-card-bg" style="background:{{h.gradient}};"></view>
           <view class="hot-card-content">
             <view class="hot-icon-row">
-              <view class="hot-icon-wrap" style="background:{{h.tint}};">
+              <view class="hot-icon-wrap">
                 <text class="hot-icon">{{h.icon}}</text>
               </view>
-              <text class="hot-kind" style="background:{{h.tint}};color:{{h.color}};">{{h.kindLabel}}</text>
+              <text class="hot-kind">{{h.kindLabel}}</text>
             </view>
             <text class="hot-name">{{h.name}}</text>
           </view>
