@@ -13,9 +13,11 @@ function getDPR() {
       const winInfo = wx.getWindowInfo()
       if (winInfo.pixelRatio) return winInfo.pixelRatio
     }
-  } catch {}
-  try {
-    return wx.getSystemInfoSync().pixelRatio
+    // 基础库 2.30.0+ 使用 wx.getDeviceInfo
+    if (wx.getDeviceInfo) {
+      const deviceInfo = wx.getDeviceInfo()
+      if (deviceInfo.pixelRatio) return deviceInfo.pixelRatio
+    }
   } catch {}
   return 2
 }

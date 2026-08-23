@@ -101,7 +101,7 @@ Page({
       retakeHint = ''
     }
 
-    this.dpr = (() => { try { if (wx.getWindowInfo) { const w = wx.getWindowInfo(); if (w.pixelRatio) return w.pixelRatio } } catch {} try { return wx.getSystemInfoSync().pixelRatio } catch {} return 2 })()
+    this.dpr = (() => { try { if (wx.getWindowInfo) { const w = wx.getWindowInfo(); if (w.pixelRatio) return w.pixelRatio } } catch {} try { if (wx.getDeviceInfo) { const d = wx.getDeviceInfo(); if (d.pixelRatio) return d.pixelRatio } } catch {} return 2 })()
     const questions = mod.getQuestions()
     const layout = mod.resultLayout || {}
     const primaryField = layout.primaryField || 'score'
@@ -244,7 +244,7 @@ Page({
   },
 
   onReady() {
-    this.dpr = (() => { try { if (wx.getWindowInfo) { const w = wx.getWindowInfo(); if (w.pixelRatio) return w.pixelRatio } } catch {} try { return wx.getSystemInfoSync().pixelRatio } catch {} return 2 })()
+    this.dpr = (() => { try { if (wx.getWindowInfo) { const w = wx.getWindowInfo(); if (w.pixelRatio) return w.pixelRatio } } catch {} try { if (wx.getDeviceInfo) { const d = wx.getDeviceInfo(); if (d.pixelRatio) return d.pixelRatio } } catch {} return 2 })()
     if (this.data.meta && this.data.meta.name) {
       this.drawCardToTemp((path) => {
         if (path) this._shareImage = path

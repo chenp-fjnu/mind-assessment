@@ -18,9 +18,14 @@ function getSystemTheme() {
         return windowInfo.theme === 'dark' ? THEME_MODES.DARK : THEME_MODES.LIGHT
       }
     }
-    // 兼容旧版 API
-    const systemInfo = wx.getSystemInfoSync()
-    return systemInfo.theme === 'dark' ? THEME_MODES.DARK : THEME_MODES.LIGHT
+    // 基础库 2.30.0+ 使用 wx.getDeviceInfo
+    if (wx.getDeviceInfo) {
+      const deviceInfo = wx.getDeviceInfo()
+      if (deviceInfo.theme) {
+        return deviceInfo.theme === 'dark' ? THEME_MODES.DARK : THEME_MODES.LIGHT
+      }
+    }
+    return THEME_MODES.LIGHT
   } catch {
     return THEME_MODES.LIGHT
   }

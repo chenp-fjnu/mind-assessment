@@ -235,8 +235,14 @@ function isDark() {
         return windowInfo.theme === 'dark'
       }
     }
-    const systemInfo = wx.getSystemInfoSync()
-    return systemInfo.theme === 'dark'
+    // 基础库 2.30.0+ 使用 wx.getDeviceInfo
+    if (wx.getDeviceInfo) {
+      const deviceInfo = wx.getDeviceInfo()
+      if (deviceInfo.theme) {
+        return deviceInfo.theme === 'dark'
+      }
+    }
+    return false
   } catch {
     return false
   }
