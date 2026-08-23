@@ -1,4 +1,3 @@
-const { makeLabeler } = require('../../utils/labels')
 /**
  * EPQ 艾森克人格问卷（简化版 48 题）
  *
@@ -161,7 +160,6 @@ function computeResult(answers, qs) {
   };
 }
 
-const DIM_LABELS = { E: '外向性', N: '神经质', P: '精神质', L: '掩饰性' };
 
 module.exports = {
   id: 'epq',

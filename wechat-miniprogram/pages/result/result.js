@@ -32,7 +32,7 @@ Page({
   onLoad(query) {
     const app = getApp()
     let saved = app.globalData.lastResult
-    let id = query.id || (saved && saved.id)
+    const id = query.id || (saved && saved.id)
     if (!id) {
       this.setData({ invalid: true })
       return

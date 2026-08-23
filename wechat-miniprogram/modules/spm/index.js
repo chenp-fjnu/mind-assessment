@@ -1,4 +1,3 @@
-const { makeLabeler } = require('../../utils/labels')
 /**
  * SPM 瑞文标准推理测验模块
  * 适配通用模块接口，内部复用现有 questions.js 与 scoring.js

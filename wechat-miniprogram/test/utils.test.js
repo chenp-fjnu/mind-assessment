@@ -51,6 +51,14 @@ describe('scoring', () => {
     expect(pss.computeResult(new Array(10).fill(0), pss.getQuestions()).raw).toBe(16)
     expect(pss.computeResult(new Array(10).fill(4), pss.getQuestions()).raw).toBe(24)
   })
+  test('computeResult UCLA 全 1 => 44', () => {
+    const ucla = getModule('ucla')
+    expect(ucla.computeResult(new Array(20).fill(0), ucla.getQuestions()).raw).toBe(44)
+  })
+  test('computeResult SDS 全 1 => 50', () => {
+    const sds = getModule('sds')
+    expect(sds.computeResult(new Array(20).fill(0), sds.getQuestions()).raw).toBe(50)
+  })
 })
 
 describe('trend', () => {

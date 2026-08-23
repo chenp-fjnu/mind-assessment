@@ -74,7 +74,7 @@ function shapePath(ctx, type, r) {
       }
       ctx.closePath()
       break
-    case 'plus':
+    case 'plus': {
       const t = r * 0.38
       ctx.moveTo(-t, -r)
       ctx.lineTo(t, -r)
@@ -90,6 +90,7 @@ function shapePath(ctx, type, r) {
       ctx.lineTo(-t, -t)
       ctx.closePath()
       break
+    }
     default:
       ctx.arc(0, 0, r, 0, Math.PI * 2)
   }

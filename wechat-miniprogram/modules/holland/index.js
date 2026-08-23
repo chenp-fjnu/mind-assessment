@@ -1,4 +1,3 @@
-const { makeLabeler } = require('../../utils/labels')
 /**
  * 霍兰德职业兴趣测试（Holland / RIASEC，简化版 48 题）
  *
@@ -136,7 +135,6 @@ function computeResult(answers, qs) {
   };
 }
 
-const DIM_LABELS = { R: '现实型', I: '研究型', A: '艺术型', S: '社会型', E: '企业型', C: '常规型' };
 
 module.exports = {
   id: 'holland',

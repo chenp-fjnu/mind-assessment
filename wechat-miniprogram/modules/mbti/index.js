@@ -1,4 +1,3 @@
-const { makeLabeler } = require('../../utils/labels')
 /**
  * MBTI 人格测试模块（标准 70 题版）
  *
@@ -167,7 +166,6 @@ function opposite(pole) {
   return { E: 'I', I: 'E', S: 'N', N: 'S', T: 'F', F: 'T', J: 'P', P: 'J' }[pole];
 }
 
-const DIM_LABELS = { EI: '外向/内向', SN: '实感/直觉', TF: '思考/情感', JP: '判断/感知' };
 
 module.exports = {
   id: 'mbti',

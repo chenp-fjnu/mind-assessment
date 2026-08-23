@@ -1,4 +1,3 @@
-const { makeLabeler } = require('../../utils/labels')
 /**
  * DASS-21 抑郁焦虑压力复合量表（Depression Anxiety Stress Scales 21）
  *
@@ -145,7 +144,6 @@ function computeResult(answers, qs) {
   };
 }
 
-const DIM_LABELS = { depression: '抑郁', anxiety: '焦虑', stress: '压力' };
 
 module.exports = {
   id: 'dass21',

@@ -1,4 +1,3 @@
-const { getModule } = require('../../utils/registry')
 const methodsData = require('../../utils/methods-data')
 const { withPrivacy } = require('../../utils/privacy')
 

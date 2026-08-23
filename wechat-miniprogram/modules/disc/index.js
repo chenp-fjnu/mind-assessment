@@ -1,4 +1,3 @@
-const { makeLabeler } = require('../../utils/labels')
 /**
  * DISC 行为风格测评（36 题，含真实题库改编）
  *
@@ -120,7 +119,6 @@ function computeResult(answers, qs) {
   };
 }
 
-const DIM_LABELS = { D: '支配型', I: '影响型', S: '稳健型', C: '谨慎型' };
 
 module.exports = {
   id: 'disc',

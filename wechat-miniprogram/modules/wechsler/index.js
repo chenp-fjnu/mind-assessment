@@ -1,4 +1,3 @@
-const { makeLabeler } = require('../../utils/labels')
 /**
  * 韦氏成人智力测验模块（简化版 WAIS-Lite）
  *

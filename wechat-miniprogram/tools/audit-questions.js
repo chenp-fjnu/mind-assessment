@@ -16,7 +16,7 @@ function optSig(o) {
 console.log('total questions:', qs.length)
 const matSet = new Set()
 const optSet = new Set()
-let bad = []
+const bad = []
 qs.forEach((q, i) => {
   const ms = matrixSig(q.matrix)
   matSet.add(ms)
