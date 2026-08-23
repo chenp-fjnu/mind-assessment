@@ -123,10 +123,14 @@ function useTheme(pageInstance) {
 
   // 提供手动切换方法
   pageInstance.setThemeMode = (mode) => {
-    console.log('[theme-store] setThemeMode called:', mode)
+    console.log('[theme-store] === SET THEME MODE START ===', { mode, timestamp: Date.now() })
+    console.log('[theme-store] stored theme before:', getStoredTheme())
     setStoredTheme(mode);
+    console.log('[theme-store] stored theme after:', getStoredTheme())
+    console.log('[theme-store] effective theme:', getEffectiveTheme())
     updateTheme();
     console.log('[theme-store] after updateTheme, themeClass should be:', `theme-${getEffectiveTheme()}`)
+    console.log('[theme-store] === SET THEME MODE END ===')
   };
 
   // 强制刷新页面主题类的辅助函数
@@ -134,8 +138,10 @@ function useTheme(pageInstance) {
     console.log('[theme-store] forceThemeUpdate called')
     const effectiveTheme = getEffectiveTheme();
     const themeClass = `theme-${effectiveTheme}`;
+    console.log('[theme-store] forceThemeUpdate will set themeClass:', themeClass)
     pageInstance.setData({ themeClass }, () => {
       console.log('[theme-store] forceThemeUpdate setData callback fired, themeClass:', themeClass)
+      console.log('[theme-store] page data after callback:', { themeClass: pageInstance.data.themeClass, themeMode: pageInstance.data.themeMode })
     })
   };
 
