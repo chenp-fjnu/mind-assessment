@@ -91,20 +91,23 @@ module.exports = {
   resultLayout,                 // { primaryField, primaryLabel, groupLabels, ... }
   getQuestions(),               // 返回渲染所需的题目数组
   computeResult(answers, questions),  // 纯函数，返回评分结果对象
-  // 以下为可选的结果视图构造器（鸭子类型）：
-  buildGroupList?(r, layout),
-  buildDimensionList?(r),
-  buildSubtestList?(r),
-  buildInterpretations?(r, groups, dims),
+  // 结果视图构造器（统一契约，必实现）：
+  getResultView(r, layout),     // 返回标准化视图模型，页面只渲染
 }
 ```
 
-> 说明：部分模块的 `buildInterpretations` 第二/三参数命名不同（`groupList` / `scaleDimensionList`），但 `result.js` 统一以 `buildInterpretations(r, groups, dims)` 调用，多余参数被忽略，接口兼容。
+> 说明：`getResultView(r, layout)` 返回统一结构
+> `{ groups:[], dims:[], subtests:[], interpretations:[], showBipolar:boolean }`：
+> - `groups`：`{ key, label, percent, display?, isScale? }`
+> - `dims`：标量 `{ key, name, percent?, text? }` 或双极 `{ key, name, leftName, rightName, leftPercent, rightPercent, dominant, dominantDesc? }`（含 `leftPercent` 即双极，`showBipolar` 由首元素推断）
+> - `subtests`：`{ name, correct, total, scalePercent? }`
+> - `interpretations`：`{ title, text }`
+> 页面（`result.js`）与 `test/smoke.js` 统一调用，不再依赖多方法鸭子类型分支。
 
 ### 结果页渲染流程（`pages/result/result.js`）
 1. 从 `globalData.lastResult` 取 `{ id, answers }`（首页/详情/历史跳转前写入）。
 2. `getModule(id).computeResult(answers, questions)` 得到 `r`。
-3. 依 `resultLayout.primaryField` 取主结果；通过「函数是否存在」鸭子类型构造 `groups / dims / subtests / interpretations`。
+3. 依 `resultLayout.primaryField` 取主结果；调用模块 `getResultView(r, layout)` 统一构造 `groups / dims / subtests / interpretations`。
 4. 读取 `ma_history` 计算**同量表趋势**：数值型（`/^\d+(\.\d+)?$/`）画折线图，类型型显示历史 chips。
 5. 统一渲染维度条、双极维度（MBTI）、分测验（韦氏）、解读与趋势。
 
@@ -136,7 +139,7 @@ module.exports = {
 
 | 测试 | 命令 | 依赖 | 说明 |
 | --- | --- | --- | --- |
-| 冒烟（评分链路） | `node test/smoke.js` | 无 | 22 模块评分 + 韦氏候选完整性 + 复刻 result.js 构造流程，**81 项** |
+| 冒烟（评分链路） | `node test/smoke.js` | 无 | 22 模块评分 + 韦氏候选完整性 + `getResultView` 视图构造流程，**152 项** |
 | 模块单测 | `npm run test:simulate` → Jest `modules.test.js` | jest | 模块评分断言 |
 | UI 渲染 | `npm run test:simulate` → Jest `index.page.test.js` | @miniprogram/simulate | 页面结构与绑定断言 |
 
@@ -149,7 +152,7 @@ CI（`.github/workflows/ci.yml`）：push/PR 触及 `wechat-miniprogram/**` 时�
 按优先级排列，供后续迭代参考：
 
 ### 高优先 · 架构健壮性
-1. **统一结果视图契约**：把 `result.js` 的鸭子类型分支收敛为模块可选实现 `getResultView(r)` → 返回标准化视图模型 `{ primary, level, desc, sections:[...] }`，页面只渲染。新模块零样板、避免漏接 `build*` 导致白屏。
+1. **统一结果视图契约**：把 `result.js` 的鸭子类型分支收敛为模块统一实现 `getResultView(r, layout)` → 返回标准化视图模型 `{ groups, dims, subtests, interpretations, showBipolar }`，页面只渲染。新模块零样板、避免漏接 `build*` 导致白屏。**（已完成：22 个模块全部迁移，回退分支已移除）**
 2. **`computeResult` 容错**：`result.js` 用 try/catch 包裹评分，异常时显示兜底结果而非整页崩溃（尤其旧版 `answers` 格式变更时）。
 3. **趋势图增强**：数值趋势补 x 轴日期标签、>N 条时支持缩放；类型趋势展示「最近一次 vs 首次」变化。
 
@@ -183,14 +186,14 @@ CI（`.github/workflows/ci.yml`）：push/PR 触及 `wechat-miniprogram/**` 时�
 - **隐私合规增强**：`utils/privacy.js` 新增 `openPrivacyContract`，`about` 页提供「查看隐私保护指引」入口（需在小程序后台配置隐私协议）。
 - **死代码清理**：移除全部 22 个模块中从未被调用的 `getDimensionLabel` 定义。
 - **工程化**：新增 ESLint + Prettier 配置、`.editorconfig` 与 `npm run lint` / `npm run format`，统一行尾与格式。
-- **架构统一**：新增 `utils/result-view.js` 集中收敛结果视图的「鸭子类型」构造（`buildGroupList`/`buildDimensionList`/`buildScaleDimensionList`/`buildSubtestList`/`buildInterpretations`），`result.js` 与 `test/smoke.js` 共用，消除重复逻辑（路线图第 1 项，向后兼容、未改动 22 个模块）。
+- **架构统一（全量迁移）**：`utils/result-view.js` 收敛为 `getResultView(mod, r, layout)` 统一入口，所有 22 个模块的 `buildGroupList`/`buildDimensionList`/`buildScaleDimensionList`/`buildSubtestList`/`buildInterpretations` 已**合并删除**，改为各模块单一 `getResultView(r, layout)`；结果结构统一为 `{ groups, dims, subtests, interpretations, showBipolar }`，页面与 smoke 共用（路线图第 1 项，已消除所有鸭子类型分支）。
 - **来源标注**：`utils/modules-meta.js` 为每个量表补充 `reference`（标准化版本/常用文献），详情页新增「参考来源与版本」区块（路线图第 14 项）。
 - **色盲无障碍**：图形/矩阵题选项 canvas 叠加**序号徽标**，除颜色外以编号区分选项，兼顾色盲用户与快速定位。
 - **趋势对比增强**：`utils/trend.js` 数值趋势补充「首次/最近」值与区间差；类型趋势新增「首次 → 最近」对比（路线图第 3 项）。
-- **结果视图统一契约**：`utils/result-view.js` 升级为 `getResultView(mod, r, layout)` 统一入口——新模块可整体实现 `getResultView` 返回标准化视图模型（零样板），未实现时回退到现有 build* 分支（路线图第 1 项，向后兼容）。
+- **结果视图统一契约**：22 个模块全部实现单一 `getResultView(r, layout)`（零鸭子类型分支），`utils/result-view.js` 仅做标准化兜底；返回结构 `{ groups, dims, subtests, interpretations, showBipolar }`（路线图第 1 项，已完成）。
 - **色盲无障碍（图形）**：`utils/figure.js` 支持图形单元 `label` 叠加（白字+深色描边，任意底色可读）；韦氏积木 `sq`/`tri` 按颜色自动打标（R/W/B/G/Y），色盲用户可凭字母而非仅颜色区分积木。
 
-> 仍未做（高成本/高风险，建议后续单独评估）：统一结果视图契约 `getResultView`（涉及 22 模块 + result 页重构）、图形题色盲无障碍（需引入形状/纹理区分）、常模文献逐条标注。
+> 仍未做（高成本/高风险，建议后续单独评估）：图形题形状/纹理色盲区分（已通过序号/字母徽标缓解）、常模文献逐条标注。
 
 ## 许可
 

@@ -274,7 +274,9 @@ module.exports = {
 
   computeResult,
 
-  buildGroupList(r, layout) {
+    getResultView(r, layout) {
+    const _mkGroup = function (r, layout) {
+
     return Object.entries(r.groups).map(([k, v]) => ({
       key: k,
       label: layout.groupLabels[k] || k,
@@ -282,9 +284,10 @@ module.exports = {
       display: `${v}/24`,
       isScale: false,
     }));
-  },
+  
+    };
+    const _mkSub = function (r) {
 
-  buildSubtestList(r) {
     if (!r.subScores) return [];
     return Object.entries(r.subScores).map(([name, sub]) => ({
       name,
@@ -294,18 +297,25 @@ module.exports = {
       correct: sub.correct,
       total: sub.total,
     }));
-  },
+  
+    };
+    const _mkInterp = function (r, groupList, scaleDimensionList) {
 
-  buildInterpretations(r) {
     return [
       { title: '总体水平', text: `总智商 FSIQ=${r.fsiq}，${r.level}。言语智商 ${r.viq}，操作智商 ${r.piq}。` },
       { title: '优势领域', text: r.viq >= r.piq ? '言语理解能力优于操作推理，擅长语言类任务。' : '操作推理能力优于言语理解，擅长空间与图形任务。' },
       { title: '提升方向', text: r.viq >= r.piq ? '可加强图形推理与空间思维训练。' : '可加强词汇积累与言语推理训练。' },
       { title: '建议', text: r.fsiq >= 110 ? '综合智力优秀，可挑战更高难度任务。' : '建议系统训练薄弱分测验相关能力。' },
     ];
-  },
-
-  // 维度标签：韦氏使用子测验名作为标签
+  
+    };
+    const groups = _mkGroup(r, layout);
+    const dims = (r && r.dimensions) ? Object.keys(r.dimensions).map((k) => { const d = r.dimensions[k]; return { key: k, name: d.name || k, percent: d.percent, text: d.text, level: d.level }; }) : [];
+    const subtests = _mkSub(r);
+    const interpretations = _mkInterp(r, groups, dims);
+    const showBipolar = !!(dims[0] && dims[0].leftPercent !== undefined);
+    return { groups, dims, subtests, interpretations, showBipolar };
+  },// 维度标签：韦氏使用子测验名作为标签
   resultLayout: {
     primaryField: 'fsiq',
     primaryLabel: '总智商 FSIQ',

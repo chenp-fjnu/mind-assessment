@@ -105,19 +105,28 @@ module.exports = {
 
   computeResult,
 
-  buildGroupList() {
-    return [];
-  },
+    getResultView(r, layout) {
+    const _mkGroup = function (r, layout) {
 
-  buildInterpretations(r) {
+    return [];
+  
+    };
+    const _mkInterp = function (r, groupList, scaleDimensionList) {
+
     return [
       { title: '测评结果', text: `压力评分 ${r.totalScore}/40，${r.level}。${r.description}` },
       { title: '调节建议', text: r.totalScore < 14 ? '保持当前的生活节奏，规律运动与充足睡眠有助于维持低压力状态。' : r.totalScore < 27 ? '尝试梳理压力来源，通过时间管理、运动、倾诉等方式主动减压。' : '建议重新审视工作与生活的平衡，必要时寻求心理咨询或社会支持，避免长期高压透支身心。' },
       { title: '重要提示', text: '本量表为自评筛查工具，结果仅供参考，不构成医学诊断。' },
     ];
-  },
-
-  resultLayout: {
+  
+    };
+    const groups = _mkGroup(r, layout);
+    const dims = (r && r.dimensions) ? Object.keys(r.dimensions).map((k) => { const d = r.dimensions[k]; return { key: k, name: d.name || k, percent: d.percent, text: d.text, level: d.level }; }) : [];
+    const subtests = [];
+    const interpretations = _mkInterp(r, groups, dims);
+    const showBipolar = !!(dims[0] && dims[0].leftPercent !== undefined);
+    return { groups, dims, subtests, interpretations, showBipolar };
+  },resultLayout: {
     primaryField: 'totalScore',
     primaryLabel: '压力评分',
     primarySuffix: '/40',

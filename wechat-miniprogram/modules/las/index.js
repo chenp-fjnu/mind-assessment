@@ -186,7 +186,9 @@ module.exports = {
 
   computeResult,
 
-  buildGroupList(r, layout) {
+    getResultView(r, layout) {
+    const _mkGroup = function (r, layout) {
+
     return Object.entries(r.groups).map(([k, v]) => {
       const detail = r.groupDetails[k];
       return {
@@ -197,9 +199,10 @@ module.exports = {
         isScale: true,
       };
     });
-  },
+  
+    };
+    const _mkInterp = function (r, groupList, scaleDimensionList) {
 
-  buildInterpretations(r) {
     const top3 = Object.entries(r.groups)
       .sort((a, b) => b[1] - a[1])
       .slice(0, 3)
@@ -211,9 +214,15 @@ module.exports = {
       { title: '风格说明', text: '每个人通常以一两种风格为主导，并兼有其他风格的特征。风格无好坏之分，了解自己的倾向有助于更好地经营亲密关系。' },
       { title: '提醒', text: '本量表为自评工具，结果仅供参考。爱情是复杂的情感体验，量表仅反映你的倾向性。' },
     ];
-  },
-
-  resultLayout: {
+  
+    };
+    const groups = _mkGroup(r, layout);
+    const dims = (r && r.dimensions) ? Object.keys(r.dimensions).map((k) => { const d = r.dimensions[k]; return { key: k, name: d.name || k, percent: d.percent, text: d.text, level: d.level }; }) : [];
+    const subtests = [];
+    const interpretations = _mkInterp(r, groups, dims);
+    const showBipolar = !!(dims[0] && dims[0].leftPercent !== undefined);
+    return { groups, dims, subtests, interpretations, showBipolar };
+  },resultLayout: {
     primaryField: 'dominantName',
     primaryLabel: '主导风格',
     primarySuffix: '型',

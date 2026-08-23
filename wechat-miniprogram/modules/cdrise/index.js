@@ -99,19 +99,28 @@ module.exports = {
 
   computeResult,
 
-  buildGroupList() {
-    return [];
-  },
+    getResultView(r, layout) {
+    const _mkGroup = function (r, layout) {
 
-  buildInterpretations(r) {
+    return [];
+  
+    };
+    const _mkInterp = function (r, groupList, scaleDimensionList) {
+
     return [
       { title: '测评结果', text: `心理韧性评分 ${r.totalScore}/40，处于${r.level}水平。${r.description}` },
       { title: '提升建议', text: r.totalScore < 20 ? '从规律的睡眠、运动与冥想开始建立稳定的身心基础，遇到挫折时给自己恢复的时间。' : r.totalScore < 30 ? '在压力情境中练习「暂停—重新评估—行动」的应对节奏，并经营好支持性人际圈。' : '把你的韧性转化为支持他人的力量，同时留意长期高压下的耗竭，保持自我关怀。' },
       { title: '重要提示', text: '本量表为自评筛查工具，结果仅供参考，不构成医学诊断。' },
     ];
-  },
-
-  resultLayout: {
+  
+    };
+    const groups = _mkGroup(r, layout);
+    const dims = (r && r.dimensions) ? Object.keys(r.dimensions).map((k) => { const d = r.dimensions[k]; return { key: k, name: d.name || k, percent: d.percent, text: d.text, level: d.level }; }) : [];
+    const subtests = [];
+    const interpretations = _mkInterp(r, groups, dims);
+    const showBipolar = !!(dims[0] && dims[0].leftPercent !== undefined);
+    return { groups, dims, subtests, interpretations, showBipolar };
+  },resultLayout: {
     primaryField: 'totalScore',
     primaryLabel: '韧性评分',
     primarySuffix: '/40',

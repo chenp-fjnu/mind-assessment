@@ -107,19 +107,28 @@ module.exports = {
   computeResult,
 
   // GAD-7 无分组维度，返回空数组
-  buildGroupList() {
-    return [];
-  },
+    getResultView(r, layout) {
+    const _mkGroup = function (r, layout) {
 
-  buildInterpretations(r) {
+    return [];
+  
+    };
+    const _mkInterp = function (r, groupList, scaleDimensionList) {
+
     return [
       { title: '测评结果', text: `焦虑评分 ${r.score}/21，${r.level}。${r.description}` },
       { title: '严重度说明', text: r.score < 5 ? '当前焦虑水平较低，情绪状态良好。' : r.score < 10 ? '存在轻度焦虑，建议通过放松训练、规律运动、充足睡眠等方式自我调节。' : r.score < 15 ? '存在中度焦虑，建议进一步评估，必要时寻求心理咨询师帮助。' : '存在重度焦虑，强烈建议尽快前往精神科或心理科就诊评估。' },
       { title: '重要提示', text: '本量表为自评筛查工具，结果仅供参考，不构成医学诊断。如焦虑困扰持续或加重，请务必寻求专业帮助。' },
     ];
-  },
-
-  // 维度标签：GAD-7 情绪状态维度
+  
+    };
+    const groups = _mkGroup(r, layout);
+    const dims = (r && r.dimensions) ? Object.keys(r.dimensions).map((k) => { const d = r.dimensions[k]; return { key: k, name: d.name || k, percent: d.percent, text: d.text, level: d.level }; }) : [];
+    const subtests = [];
+    const interpretations = _mkInterp(r, groups, dims);
+    const showBipolar = !!(dims[0] && dims[0].leftPercent !== undefined);
+    return { groups, dims, subtests, interpretations, showBipolar };
+  },// 维度标签：GAD-7 情绪状态维度
   resultLayout: {
     primaryField: 'score',
     primaryLabel: '焦虑评分',

@@ -136,7 +136,9 @@ module.exports = {
 
   computeResult,
 
-  buildGroupList(r, layout) {
+    getResultView(r, layout) {
+    const _mkGroup = function (r, layout) {
+
     return Object.entries(r.groups).map(([k, v]) => ({
       key: k,
       label: layout.groupLabels[k] || k,
@@ -144,18 +146,25 @@ module.exports = {
       display: `${v}/${r.groupDetails[k]?.max || 20}`,
       isScale: true,
     }));
-  },
+  
+    };
+    const _mkInterp = function (r, groupList, scaleDimensionList) {
 
-  buildInterpretations(r) {
     return [
       { title: '测评结果', text: `自尊得分 ${r.score}，${r.level}。${r.description}` },
       { title: '维度分析', text: `正向自我评价得分 ${r.groups.positive}，负向自我评价（反向计分后）得分 ${r.groups.reverse}。` },
       { title: '改善建议', text: r.score < 20 ? '可通过记录自身优点、设定可达成的小目标、练习自我关怀等方式逐步提升自尊。' : r.score < 26 ? '保持积极的自我对话，继续发掘自身优势。' : '自尊状态良好，继续保持积极的自我认知。' },
       { title: '说明', text: '本量表为自评工具，结果仅供参考。如自我评价困扰持续存在，可寻求专业心理咨询。' },
     ];
-  },
-
-  resultLayout: {
+  
+    };
+    const groups = _mkGroup(r, layout);
+    const dims = (r && r.dimensions) ? Object.keys(r.dimensions).map((k) => { const d = r.dimensions[k]; return { key: k, name: d.name || k, percent: d.percent, text: d.text, level: d.level }; }) : [];
+    const subtests = [];
+    const interpretations = _mkInterp(r, groups, dims);
+    const showBipolar = !!(dims[0] && dims[0].leftPercent !== undefined);
+    return { groups, dims, subtests, interpretations, showBipolar };
+  },resultLayout: {
     primaryField: 'score',
     primaryLabel: '自尊得分',
     primarySuffix: '',

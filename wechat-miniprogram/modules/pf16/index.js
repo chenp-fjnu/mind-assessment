@@ -297,7 +297,9 @@ module.exports = {
 
   computeResult,
 
-  buildScaleDimensionList(r) {
+    getResultView(r, layout) {
+    const _mkScaleDim = function (r) {
+
     if (!r.dimensions) return [];
     return Object.entries(r.dimensions).map(([k, dim]) => ({
       key: k,
@@ -308,9 +310,10 @@ module.exports = {
       text: dim.text,
       sum: dim.sum,
     }));
-  },
+  
+    };
+    const _mkInterp = function (r, groupList, scaleDimensionList) {
 
-  buildInterpretations(r, groupList, scaleDimensionList) {
     const sorted = [...scaleDimensionList].sort((a, b) => b.percent - a.percent);
     const highs = sorted.filter((d) => d.level === 'high').slice(0, 3);
     const lows = sorted.filter((d) => d.level === 'low').slice(0, 3);
@@ -321,9 +324,15 @@ module.exports = {
       { title: '次元特征', text: `综合来看，你偏向${r.secondary.extroversion.label}、${r.secondary.anxiety.label}、${r.secondary.sensitivity.label}。` },
       { title: '发展建议', text: '16PF 反映人格的丰富细节，可结合职业发展与人际关系理解自身特点，在优势领域发挥特长。' },
     ];
-  },
-
-  // 维度标签：16PF 十六种人格因素
+  
+    };
+    const groups = [];
+    const dims = _mkScaleDim(r);
+    const subtests = [];
+    const interpretations = _mkInterp(r, groups, dims);
+    const showBipolar = !!(dims[0] && dims[0].leftPercent !== undefined);
+    return { groups, dims, subtests, interpretations, showBipolar };
+  },// 维度标签：16PF 十六种人格因素
   resultLayout: {
     primaryField: 'trait',
     primaryLabel: '人格画像',

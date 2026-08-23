@@ -110,11 +110,14 @@ module.exports = {
 
   computeResult,
 
-  buildGroupList() {
-    return [];
-  },
+    getResultView(r, layout) {
+    const _mkGroup = function (r, layout) {
 
-  buildInterpretations(r) {
+    return [];
+  
+    };
+    const _mkInterp = function (r, groupList, scaleDimensionList) {
+
     const lines = [
       { title: '测评结果', text: `抑郁评分 ${r.score}/27，${r.level}。${r.description}` },
       { title: '严重度说明', text: r.score < 5 ? '当前情绪状态良好，继续保持健康的生活方式。' : r.score < 10 ? '存在轻度抑郁倾向，建议通过运动、社交、规律作息等方式调节情绪。' : r.score < 15 ? '存在中度抑郁症状，建议寻求专业心理咨询师帮助。' : '存在中重度及以上抑郁症状，强烈建议尽快前往精神科或心理科就诊评估。' },
@@ -125,9 +128,15 @@ module.exports = {
       lines.push({ title: '重要提示', text: '本量表为自评筛查工具，结果仅供参考，不构成医学诊断。如情绪困扰持续或加重，请务必寻求专业帮助。' });
     }
     return lines;
-  },
-
-  resultLayout: {
+  
+    };
+    const groups = _mkGroup(r, layout);
+    const dims = (r && r.dimensions) ? Object.keys(r.dimensions).map((k) => { const d = r.dimensions[k]; return { key: k, name: d.name || k, percent: d.percent, text: d.text, level: d.level }; }) : [];
+    const subtests = [];
+    const interpretations = _mkInterp(r, groups, dims);
+    const showBipolar = !!(dims[0] && dims[0].leftPercent !== undefined);
+    return { groups, dims, subtests, interpretations, showBipolar };
+  },resultLayout: {
     primaryField: 'score',
     primaryLabel: '抑郁评分',
     primarySuffix: '/27',

@@ -149,7 +149,9 @@ module.exports = {
 
   computeResult,
 
-  buildGroupList(r, layout) {
+    getResultView(r, layout) {
+    const _mkGroup = function (r, layout) {
+
     const total = r.total || 24;
     return ['D', 'I', 'S', 'C'].map((k) => ({
       key: k,
@@ -158,9 +160,10 @@ module.exports = {
       display: `${r.groups[k]}/${total}`,
       isScale: false,
     }));
-  },
+  
+    };
+    const _mkInterp = function (r, groupList, scaleDimensionList) {
 
-  buildInterpretations(r) {
     const style = r.style;
     const letters = style.split('');
     const intros = letters.map((k) => `${STYLE_INFO[k].name}：${STYLE_INFO[k].trait}`);
@@ -172,9 +175,15 @@ module.exports = {
       { title: '发展建议', text: growths.join('；') + '。建议在发挥主导风格优势的同时，有意识地调整与互补。' },
       { title: '人际提示', text: '了解自身与他人的 DISC 风格差异，有助于因人而异地沟通协作，提升团队效能。' },
     ];
-  },
-
-  // 维度标签：DISC 四种行为风格
+  
+    };
+    const groups = _mkGroup(r, layout);
+    const dims = (r && r.dimensions) ? Object.keys(r.dimensions).map((k) => { const d = r.dimensions[k]; return { key: k, name: d.name || k, percent: d.percent, text: d.text, level: d.level }; }) : [];
+    const subtests = [];
+    const interpretations = _mkInterp(r, groups, dims);
+    const showBipolar = !!(dims[0] && dims[0].leftPercent !== undefined);
+    return { groups, dims, subtests, interpretations, showBipolar };
+  },// 维度标签：DISC 四种行为风格
   resultLayout: {
     primaryField: 'style',
     primaryLabel: '行为风格',

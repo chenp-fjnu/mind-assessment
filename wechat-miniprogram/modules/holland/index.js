@@ -166,7 +166,9 @@ module.exports = {
 
   computeResult,
 
-  buildGroupList(r, layout) {
+    getResultView(r, layout) {
+    const _mkGroup = function (r, layout) {
+
     // P0-4: 使用 computeScaleScores 返回的 percent，保持与评分逻辑一致
     return ['R', 'I', 'A', 'S', 'E', 'C'].map((k) => ({
       key: k,
@@ -175,9 +177,10 @@ module.exports = {
       display: `${r.groups[k]}/40`,
       isScale: true,
     }));
-  },
+  
+    };
+    const _mkInterp = function (r, groupList, scaleDimensionList) {
 
-  buildInterpretations(r) {
     const code = r.code;
     const d = r.dimensions;
     const sorted = [...Object.values(d)].sort((a, b) => b.percent - a.percent);
@@ -190,9 +193,15 @@ module.exports = {
       { title: '推荐职业', text: `结合你的代码 ${code}，适合的方向包括：${primary.careers}等。兼顾次要维度，也可考虑${secondary.careers}。` },
       { title: '发展建议', text: primary.advice + '职业兴趣并非一成不变，可在主导方向上深耕，同时适当拓展相邻类型的能力，以拓宽职业选择空间。' },
     ];
-  },
-
-  // 维度标签：霍兰德六种职业兴趣类型
+  
+    };
+    const groups = _mkGroup(r, layout);
+    const dims = (r && r.dimensions) ? Object.keys(r.dimensions).map((k) => { const d = r.dimensions[k]; return { key: k, name: d.name || k, percent: d.percent, text: d.text, level: d.level }; }) : [];
+    const subtests = [];
+    const interpretations = _mkInterp(r, groups, dims);
+    const showBipolar = !!(dims[0] && dims[0].leftPercent !== undefined);
+    return { groups, dims, subtests, interpretations, showBipolar };
+  },// 维度标签：霍兰德六种职业兴趣类型
   resultLayout: {
     primaryField: 'code',
     primaryLabel: '职业代码',

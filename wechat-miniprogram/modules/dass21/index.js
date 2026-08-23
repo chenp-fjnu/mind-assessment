@@ -176,7 +176,9 @@ module.exports = {
 
   computeResult,
 
-  buildGroupList(r, layout) {
+    getResultView(r, layout) {
+    const _mkGroup = function (r, layout) {
+
     return Object.entries(r.groups).map(([k, v]) => {
       const detail = r.groupDetails[k];
       return {
@@ -187,9 +189,10 @@ module.exports = {
         isScale: true,
       };
     });
-  },
+  
+    };
+    const _mkInterp = function (r, groupList, scaleDimensionList) {
 
-  buildInterpretations(r, groupList, scaleDimensionList) {
     const d = r.groupDetails.depression;
     const a = r.groupDetails.anxiety;
     const s = r.groupDetails.stress;
@@ -210,9 +213,15 @@ module.exports = {
       { title: '建议', text: worst.level === '正常' ? '当前情绪状态总体良好，继续保持健康的生活方式与压力管理。' : worst.level === '轻度' ? '存在轻度情绪困扰，建议通过运动、规律作息、社交支持等方式自我调节。' : worst.level === '中度' ? '存在中度情绪困扰，建议寻求专业心理咨询师的帮助。' : '存在重度及以上情绪困扰，强烈建议尽快前往精神科或心理科就诊评估。' },
       { title: '重要提示', text: '本量表为自评筛查工具，结果仅供参考，不构成医学诊断。如情绪困扰持续或加重，请务必寻求专业帮助。' },
     ];
-  },
-
-  // 维度标签：DASS-21 三个情绪维度
+  
+    };
+    const groups = _mkGroup(r, layout);
+    const dims = (r && r.dimensions) ? Object.keys(r.dimensions).map((k) => { const d = r.dimensions[k]; return { key: k, name: d.name || k, percent: d.percent, text: d.text, level: d.level }; }) : [];
+    const subtests = [];
+    const interpretations = _mkInterp(r, groups, dims);
+    const showBipolar = !!(dims[0] && dims[0].leftPercent !== undefined);
+    return { groups, dims, subtests, interpretations, showBipolar };
+  },// 维度标签：DASS-21 三个情绪维度
   resultLayout: {
     primaryField: 'trait',
     primaryLabel: '情绪综合评估',

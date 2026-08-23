@@ -193,7 +193,9 @@ module.exports = {
 
   computeResult,
 
-  buildGroupList(r, layout) {
+    getResultView(r, layout) {
+    const _mkGroup = function (r, layout) {
+
     return ['E', 'N', 'P', 'L'].map((k) => ({
       key: k,
       label: layout.groupLabels[k] || k,
@@ -201,9 +203,10 @@ module.exports = {
       display: `${r.groups[k]}/12`,
       isScale: true,
     }));
-  },
+  
+    };
+    const _mkInterp = function (r, groupList, scaleDimensionList) {
 
-  buildInterpretations(r) {
     const d = r.dimensions;
     return [
       { title: '人格类型', text: `${r.type}：${r.description}` },
@@ -211,9 +214,15 @@ module.exports = {
       { title: '行为倾向', text: r.trait + '。' + (d.E.level === 'high' ? '你善于在社交互动中获取能量。' : '你更擅长在独处思考中恢复能量。') + (d.N.level === 'high' ? '建议加强情绪管理与压力调节。' : '你的情绪基础良好，继续保持。') },
       { title: '发展建议', text: 'EPQ 各维度无优劣之分，了解自身倾向有助于职业选择与人际相处。若 L（掩饰性）偏高，提示作答时社会期望影响较大，建议更真实作答以获得准确结果。' },
     ];
-  },
-
-  // 维度标签：EPQ 四个维度
+  
+    };
+    const groups = _mkGroup(r, layout);
+    const dims = (r && r.dimensions) ? Object.keys(r.dimensions).map((k) => { const d = r.dimensions[k]; return { key: k, name: d.name || k, percent: d.percent, text: d.text, level: d.level }; }) : [];
+    const subtests = [];
+    const interpretations = _mkInterp(r, groups, dims);
+    const showBipolar = !!(dims[0] && dims[0].leftPercent !== undefined);
+    return { groups, dims, subtests, interpretations, showBipolar };
+  },// 维度标签：EPQ 四个维度
   resultLayout: {
     primaryField: 'type',
     primaryLabel: '人格类型',

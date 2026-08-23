@@ -143,7 +143,9 @@ module.exports = {
 
   computeResult,
 
-  buildScaleDimensionList(r) {
+    getResultView(r, layout) {
+    const _mkScaleDim = function (r) {
+
     if (!r.dimensions) return [];
     return Object.entries(r.dimensions).map(([k, dim]) => ({
       key: k,
@@ -154,9 +156,10 @@ module.exports = {
       text: dim.text,
       sum: dim.sum,
     }));
-  },
+  
+    };
+    const _mkInterp = function (r, groupList, scaleDimensionList) {
 
-  buildInterpretations(r, groupList, scaleDimensionList) {
     const sorted = [...scaleDimensionList].sort((a, b) => b.percent - a.percent);
     const top = sorted[0];
     const bottom = sorted[sorted.length - 1];
@@ -166,9 +169,15 @@ module.exports = {
       { title: '较低维度', text: `${bottom.name}得分较低（${bottom.percent}%），${bottom.text}` },
       { title: '发展建议', text: '大五人格各维度无好坏之分，了解自身特点有助于职业选择、人际沟通与自我成长。可在低分维度适当拓展。' },
     ];
-  },
-
-  // 维度标签：大五人格五大维度
+  
+    };
+    const groups = [];
+    const dims = _mkScaleDim(r);
+    const subtests = [];
+    const interpretations = _mkInterp(r, groups, dims);
+    const showBipolar = !!(dims[0] && dims[0].leftPercent !== undefined);
+    return { groups, dims, subtests, interpretations, showBipolar };
+  },// 维度标签：大五人格五大维度
   resultLayout: {
     primaryField: 'trait',
     primaryLabel: '人格画像',

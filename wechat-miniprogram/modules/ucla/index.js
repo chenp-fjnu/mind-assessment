@@ -114,19 +114,28 @@ module.exports = {
 
   computeResult,
 
-  buildGroupList() {
-    return [];
-  },
+    getResultView(r, layout) {
+    const _mkGroup = function (r, layout) {
 
-  buildInterpretations(r) {
+    return [];
+  
+    };
+    const _mkInterp = function (r, groupList, scaleDimensionList) {
+
     return [
       { title: '测评结果', text: `孤独评分 ${r.totalScore}/80，处于${r.level}水平。${r.description}` },
       { title: '联结建议', text: r.totalScore < 40 ? '保持并经营好现有关系，适度参与感兴趣的社群活动即可。' : r.totalScore < 60 ? '可以尝试主动联系旧友、加入共同兴趣的圈子，增加有质量的互动。' : '孤独感较高时，规律的人际接触很重要；若持续困扰，建议寻求心理咨询支持。' },
       { title: '重要提示', text: '本量表为自评筛查工具，结果仅供参考，不构成医学诊断。' },
     ];
-  },
-
-  resultLayout: {
+  
+    };
+    const groups = _mkGroup(r, layout);
+    const dims = (r && r.dimensions) ? Object.keys(r.dimensions).map((k) => { const d = r.dimensions[k]; return { key: k, name: d.name || k, percent: d.percent, text: d.text, level: d.level }; }) : [];
+    const subtests = [];
+    const interpretations = _mkInterp(r, groups, dims);
+    const showBipolar = !!(dims[0] && dims[0].leftPercent !== undefined);
+    return { groups, dims, subtests, interpretations, showBipolar };
+  },resultLayout: {
     primaryField: 'totalScore',
     primaryLabel: '孤独评分',
     primarySuffix: '/80',

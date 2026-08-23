@@ -99,19 +99,28 @@ module.exports = {
 
   computeResult,
 
-  buildGroupList() {
-    return [];
-  },
+    getResultView(r, layout) {
+    const _mkGroup = function (r, layout) {
 
-  buildInterpretations(r) {
+    return [];
+  
+    };
+    const _mkInterp = function (r, groupList, scaleDimensionList) {
+
     return [
       { title: '测评结果', text: `自我效能评分 ${r.totalScore}/40，处于${r.level}水平。${r.description}` },
       { title: '提升建议', text: r.totalScore < 20 ? '把大目标拆成可达成的小步骤，每完成一项就肯定自己，逐步积累「我能行」的经验。' : r.totalScore < 30 ? '在擅长的领域继续深耕，同时有意识地在薄弱环节练习「先行动、再调整」的应对方式。' : '善用你的信心去尝试更有挑战性的任务，并在团队中带动他人，将效能感转化为行动力。' },
       { title: '重要提示', text: '本量表为自评筛查工具，结果仅供参考，不构成医学诊断。' },
     ];
-  },
-
-  resultLayout: {
+  
+    };
+    const groups = _mkGroup(r, layout);
+    const dims = (r && r.dimensions) ? Object.keys(r.dimensions).map((k) => { const d = r.dimensions[k]; return { key: k, name: d.name || k, percent: d.percent, text: d.text, level: d.level }; }) : [];
+    const subtests = [];
+    const interpretations = _mkInterp(r, groups, dims);
+    const showBipolar = !!(dims[0] && dims[0].leftPercent !== undefined);
+    return { groups, dims, subtests, interpretations, showBipolar };
+  },resultLayout: {
     primaryField: 'totalScore',
     primaryLabel: '自我效能',
     primarySuffix: '/40',

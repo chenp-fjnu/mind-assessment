@@ -198,7 +198,9 @@ module.exports = {
 
   computeResult,
 
-  buildDimensionList(r) {
+    getResultView(r, layout) {
+    const _mkDim = function (r) {
+
     if (!r.dimensions) return [];
     return ['EI', 'SN', 'TF', 'JP'].map((d) => {
       const dim = r.dimensions[d];
@@ -215,18 +217,25 @@ module.exports = {
         dominantDesc: dim.dominant === info.left ? info.leftDesc : info.rightDesc,
       };
     });
-  },
+  
+    };
+    const _mkInterp = function (r, groupList, scaleDimensionList) {
 
-  buildInterpretations(r) {
     return [
       { title: '人格类型', text: `${r.type} · ${r.typeName}：${r.trait}` },
       { title: '类型解读', text: r.description },
       { title: '认知偏好', text: `你的能量来自${r.dimensions.EI.dominant === 'E' ? '外部互动' : '内心深思'}，关注${r.dimensions.SN.dominant === 'S' ? '具体事实' : '抽象可能'}，决策时偏重${r.dimensions.TF.dominant === 'T' ? '逻辑分析' : '人情感受'}，生活节奏${r.dimensions.JP.dominant === 'J' ? '喜欢计划' : '保持灵活'}。` },
       { title: '发展建议', text: '了解自己的偏好有助于选择适合的工作与生活方式，同时也可有意识发展非主导功能以获得更全面的视角。' },
     ];
-  },
-
-  // 维度标签：MBTI 四大维度
+  
+    };
+    const groups = [];
+    const dims = _mkDim(r);
+    const subtests = [];
+    const interpretations = _mkInterp(r, groups, dims);
+    const showBipolar = !!(dims[0] && dims[0].leftPercent !== undefined);
+    return { groups, dims, subtests, interpretations, showBipolar };
+  },// 维度标签：MBTI 四大维度
   resultLayout: {
     primaryField: 'type',
     primaryLabel: '人格类型',

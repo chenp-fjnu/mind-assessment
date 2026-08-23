@@ -151,7 +151,9 @@ module.exports = {
 
   computeResult,
 
-  buildGroupList(r, layout) {
+    getResultView(r, layout) {
+    const _mkGroup = function (r, layout) {
+
     return Object.keys(TEMPER).map((k) => ({
       key: k,
       label: layout.groupLabels[k] || k,
@@ -159,17 +161,24 @@ module.exports = {
       display: `${r.dimensions[k].sum}/15`,
       isScale: true,
     }));
-  },
+  
+    };
+    const _mkInterp = function (r, groupList, scaleDimensionList) {
 
-  buildInterpretations(r) {
     return [
       { title: '你的气质类型', text: `你是${r.typeName}。${r.description}` },
       { title: '特点解读', text: r.advice },
       { title: '重要提示', text: '气质由先天因素决定、相对稳定，无优劣之分；它描述的是你的行为能量与情绪风格，而非能力高低。了解气质有助于更好地发挥优势、与人相处。' },
     ];
-  },
-
-  resultLayout: {
+  
+    };
+    const groups = _mkGroup(r, layout);
+    const dims = (r && r.dimensions) ? Object.keys(r.dimensions).map((k) => { const d = r.dimensions[k]; return { key: k, name: d.name || k, percent: d.percent, text: d.text, level: d.level }; }) : [];
+    const subtests = [];
+    const interpretations = _mkInterp(r, groups, dims);
+    const showBipolar = !!(dims[0] && dims[0].leftPercent !== undefined);
+    return { groups, dims, subtests, interpretations, showBipolar };
+  },resultLayout: {
     primaryField: 'type',
     primaryLabel: '气质类型',
     primarySuffix: '',

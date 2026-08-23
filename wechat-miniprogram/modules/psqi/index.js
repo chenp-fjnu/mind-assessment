@@ -127,7 +127,9 @@ module.exports = {
 
   computeResult,
 
-  buildGroupList(r, layout) {
+    getResultView(r, layout) {
+    const _mkGroup = function (r, layout) {
+
     return Object.keys(COMPONENT_INFO).map((k) => ({
       key: k,
       label: layout.groupLabels[k] || k,
@@ -135,18 +137,25 @@ module.exports = {
       display: `${r.components[k]}/${COMPONENT_INFO[k].max}`,
       isScale: true,
     }));
-  },
+  
+    };
+    const _mkInterp = function (r, groupList, scaleDimensionList) {
 
-  buildInterpretations(r) {
     return [
       { title: '测评结果', text: `睡眠指数 ${r.totalScore}/21，${r.level}。${r.description}` },
       { title: '成分解读', text: `主观质量 ${r.components.c1}、入睡时间 ${r.components.c2}、睡眠时间 ${r.components.c3}、睡眠效率 ${r.components.c4}、睡眠障碍 ${r.components.c5}、催眠药物 ${r.components.c6}、日间功能 ${r.components.c7}（各 0-3 分）。` },
       { title: '改善建议', text: r.totalScore <= 7 ? '保持固定的作息与睡前放松习惯即可。' : '建议减少睡前屏幕时间、规律运动、避免咖啡因与酒精；若长期失眠或影响日间功能，请到睡眠门诊或精神心理科进一步评估。' },
       { title: '重要提示', text: '本量表为自评筛查工具，结果仅供参考，不构成医学诊断。' },
     ];
-  },
-
-  resultLayout: {
+  
+    };
+    const groups = _mkGroup(r, layout);
+    const dims = (r && r.dimensions) ? Object.keys(r.dimensions).map((k) => { const d = r.dimensions[k]; return { key: k, name: d.name || k, percent: d.percent, text: d.text, level: d.level }; }) : [];
+    const subtests = [];
+    const interpretations = _mkInterp(r, groups, dims);
+    const showBipolar = !!(dims[0] && dims[0].leftPercent !== undefined);
+    return { groups, dims, subtests, interpretations, showBipolar };
+  },resultLayout: {
     primaryField: 'totalScore',
     primaryLabel: '睡眠指数',
     primarySuffix: '/21',

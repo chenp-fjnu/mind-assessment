@@ -46,7 +46,9 @@ const moduleDef = {
   },
 
   // 构建分组列表（下沉到模块，消除 report.js 硬编码）
-  buildGroupList(r, layout) {
+    getResultView(r, layout) {
+    const _mkGroup = function (r, layout) {
+
     return ['A', 'B', 'C', 'D', 'E'].map((k) => ({
       key: k,
       label: k,
@@ -54,10 +56,10 @@ const moduleDef = {
       display: `${r.groups[k] || 0}/12`,
       isScale: false,
     }));
-  },
+  
+    };
+    const _mkInterp = function (r, groupList, scaleDimensionList) {
 
-  // 构建解读文本（下沉到模块，消除 report.js 硬编码）
-  buildInterpretations(r, groupList) {
     const sorted = [...groupList].sort((a, b) => b.percent - a.percent);
     const strength = sorted[0];
     const weakness = sorted[sorted.length - 1];
@@ -67,8 +69,15 @@ const moduleDef = {
       { title: '提升方向', text: `${weakness.label} 组得分较低（${weakness.display}），可针对性训练。` },
       { title: '建议', text: r.iq >= 110 ? '推理能力优秀，可尝试更高难度的逻辑训练。' : '保持日常思维训练，逐步提升弱项。' },
     ];
-  },
-
+  
+    };
+    const groups = _mkGroup(r, layout);
+    const dims = (r && r.dimensions) ? Object.keys(r.dimensions).map((k) => { const d = r.dimensions[k]; return { key: k, name: d.name || k, percent: d.percent, text: d.text, level: d.level }; }) : [];
+    const subtests = [];
+    const interpretations = _mkInterp(r, groups, dims);
+    const showBipolar = !!(dims[0] && dims[0].leftPercent !== undefined);
+    return { groups, dims, subtests, interpretations, showBipolar };
+  },// 构建解读文本（下沉到模块，消除 report.js 硬编码）
   // 维度标签：SPM 使用集合字母 A-E 作为标签
   resultLayout: {
     primaryField: 'iq',

@@ -163,7 +163,9 @@ module.exports = {
 
   computeResult,
 
-  buildGroupList(r, layout) {
+    getResultView(r, layout) {
+    const _mkGroup = function (r, layout) {
+
     return Object.entries(r.groups).map(([k, v]) => ({
       key: k,
       label: layout.groupLabels[k] || k,
@@ -171,18 +173,25 @@ module.exports = {
       display: `${v}/${r.groupDetails[k]?.max || 20}`,
       isScale: true,
     }));
-  },
+  
+    };
+    const _mkInterp = function (r, groupList, scaleDimensionList) {
 
-  buildInterpretations(r) {
     return [
       { title: '测评结果', text: `抑郁指数 ${r.index}，${r.level}。${r.description}` },
       { title: '症状分布', text: `躯体症状得分 ${r.groups.somatic}，心理症状得分 ${r.groups.psychological}，正向感受得分 ${r.groups.positive}。` },
       { title: '严重度说明', text: r.index < 50 ? '当前情绪状态良好，继续保持健康的生活方式。' : r.index < 60 ? '存在轻度抑郁倾向，建议通过运动、社交、规律作息等方式调节情绪。' : r.index < 70 ? '存在中度抑郁症状，建议寻求专业心理咨询师的帮助。' : '存在重度抑郁症状，强烈建议尽快前往精神科或心理科就诊评估。' },
       { title: '重要提示', text: '本量表为自评筛查工具，结果仅供参考，不构成医学诊断。如情绪困扰持续或加重，请务必寻求专业帮助。' },
     ];
-  },
-
-  // 维度标签：SDS 情绪状态维度
+  
+    };
+    const groups = _mkGroup(r, layout);
+    const dims = (r && r.dimensions) ? Object.keys(r.dimensions).map((k) => { const d = r.dimensions[k]; return { key: k, name: d.name || k, percent: d.percent, text: d.text, level: d.level }; }) : [];
+    const subtests = [];
+    const interpretations = _mkInterp(r, groups, dims);
+    const showBipolar = !!(dims[0] && dims[0].leftPercent !== undefined);
+    return { groups, dims, subtests, interpretations, showBipolar };
+  },// 维度标签：SDS 情绪状态维度
   resultLayout: {
     primaryField: 'index',
     primaryLabel: '抑郁指数',

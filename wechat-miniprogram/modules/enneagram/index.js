@@ -140,7 +140,9 @@ module.exports = {
 
   computeResult,
 
-  buildGroupList(r, layout) {
+    getResultView(r, layout) {
+    const _mkGroup = function (r, layout) {
+
     return Object.keys(DIMENSIONS).map((k) => ({
       key: k,
       label: layout.groupLabels[k] || k,
@@ -148,9 +150,10 @@ module.exports = {
       display: `${r.dimensions[k].sum}/20`,
       isScale: true,
     }));
-  },
+  
+    };
+    const _mkInterp = function (r, groupList, scaleDimensionList) {
 
-  buildInterpretations(r) {
     const d = r.dimensions;
     const top = r.type;
     const second = r.secondary;
@@ -160,9 +163,15 @@ module.exports = {
       { title: '次要倾向', text: `你的次高类型为 ${second} 号 · ${DIMENSIONS[second].name}，可与主导类型共同塑造你的性格轮廓（类似「翼型」的雏形）。` },
       { title: '成长方向', text: '九型人格强调动态成长：在压力与安全状态下，人的表现会向其他类型流动。了解类型是为了更有觉察地接纳与发展自己，而非自我设限。' },
     ];
-  },
-
-  resultLayout: {
+  
+    };
+    const groups = _mkGroup(r, layout);
+    const dims = (r && r.dimensions) ? Object.keys(r.dimensions).map((k) => { const d = r.dimensions[k]; return { key: k, name: d.name || k, percent: d.percent, text: d.text, level: d.level }; }) : [];
+    const subtests = [];
+    const interpretations = _mkInterp(r, groups, dims);
+    const showBipolar = !!(dims[0] && dims[0].leftPercent !== undefined);
+    return { groups, dims, subtests, interpretations, showBipolar };
+  },resultLayout: {
     primaryField: 'type',
     primaryLabel: '主导类型',
     primarySuffix: '号',
