@@ -6,7 +6,7 @@
 </view>
 
 <view class="scroll-page" wx:elif="{{meta.name}}">
-  <view class="banner" style="background:{{meta.color}};color:{{meta.colorText}};">
+  <view class="banner" style="background:{{meta.gradient}};color:#fff;">
     <text class="banner-icon">{{meta.icon}}</text>
     <text class="banner-name">{{meta.name}}</text>
     <text class="banner-short">{{meta.shortName}}</text>

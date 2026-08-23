@@ -1,37 +1,243 @@
-@import "../../pages/index/index.wxss";
+/* ============================================
+   方法页样式
+   ============================================ */
 
-.badge-practice {
-  margin-left: 12rpx;
-  font-size: 22rpx;
-  color: #0d9488;
-  background: #ccfbf1;
-  padding: 2rpx 12rpx;
-  border-radius: 999rpx;
+.scroll-page {
+  background: var(--bg, #f8fafc);
+  min-height: 100vh;
 }
 
+/* Hero */
+.hero {
+  padding: 48rpx 24rpx 40rpx;
+  background: linear-gradient(135deg, #0d9488 0%, #059669 100%);
+}
+.hero-title {
+  display: block;
+  color: #fff;
+  font-size: 44rpx;
+  font-weight: 800;
+  letter-spacing: 2rpx;
+}
+.hero-sub {
+  display: block;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 24rpx;
+  margin-top: 10rpx;
+}
+.hero-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12rpx;
+  margin-top: 20rpx;
+}
+.pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 8rpx 18rpx;
+  background: rgba(255, 255, 255, 0.18);
+  border-radius: 999rpx;
+  font-size: 22rpx;
+  color: #fff;
+}
+.pill .num {
+  font-weight: 700;
+  margin-right: 4rpx;
+}
+.pill.link {
+  background: rgba(255, 255, 255, 0.28);
+  color: #fff;
+  font-weight: 600;
+}
+
+/* 搜索栏 */
+.search-bar {
+  display: flex;
+  align-items: center;
+  margin: 20rpx 20rpx 0;
+  padding: 0 20rpx;
+  height: 68rpx;
+  background: var(--card, #fff);
+  border-radius: 999rpx;
+  box-shadow: 0 4rpx 16rpx rgba(15, 23, 42, 0.05);
+}
+.search-icon {
+  font-size: 26rpx;
+  margin-right: 10rpx;
+  opacity: 0.6;
+}
+.search-input {
+  flex: 1;
+  font-size: 26rpx;
+  color: var(--text, #1e293b);
+  height: 68rpx;
+}
+.search-ph {
+  color: var(--muted, #94a3b8);
+}
+.search-clear {
+  font-size: 26rpx;
+  color: var(--muted, #94a3b8);
+  padding: 0 6rpx;
+}
+
+/* 分类筛选 */
+.type-bar {
+  white-space: nowrap;
+  margin: 16rpx 20rpx 0;
+  padding-bottom: 4rpx;
+}
+.type-chip {
+  display: inline-block;
+  font-size: 24rpx;
+  color: #475569;
+  background: #eef2f7;
+  padding: 8rpx 24rpx;
+  border-radius: 999rpx;
+  margin-right: 12rpx;
+}
+.type-chip.on {
+  color: #fff;
+  background: #0d9488;
+}
+
+/* 空状态 */
+.empty-search {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 100rpx 20rpx;
+}
+.empty-search-icon {
+  font-size: 64rpx;
+  opacity: 0.5;
+}
+.empty-search-text {
+  margin-top: 16rpx;
+  font-size: 26rpx;
+  color: #64748b;
+}
+
+/* 分组列表 */
+.group {
+  margin: 24rpx 20rpx 0;
+}
+.group-title {
+  font-size: 26rpx;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 12rpx 4rpx 16rpx;
+}
+.card {
+  background: var(--card, #fff);
+  border-radius: 16rpx;
+  box-shadow: 0 4rpx 16rpx rgba(15, 23, 42, 0.06);
+  border: 1rpx solid var(--border, #e2e8f0);
+}
+.item {
+  display: flex;
+  align-items: center;
+  padding: 24rpx;
+  margin-bottom: 16rpx;
+}
+.item-icon {
+  width: 72rpx;
+  height: 72rpx;
+  border-radius: 16rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36rpx;
+  flex-shrink: 0;
+}
+.item-body {
+  flex: 1;
+  margin-left: 20rpx;
+  overflow: hidden;
+}
+.item-head {
+  display: flex;
+  align-items: center;
+  gap: 10rpx;
+  flex-wrap: wrap;
+}
+.item-name {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #1e293b;
+  max-width: 60%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.badge-practice {
+  margin-left: 12rpx;
+  font-size: 20rpx;
+  color: #0d9488;
+  background: #ccfbf1;
+  padding: 2rpx 10rpx;
+  border-radius: 999rpx;
+}
+.item-desc {
+  display: block;
+  font-size: 24rpx;
+  color: #64748b;
+  margin-top: 8rpx;
+  line-height: 1.5;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+.arrow {
+  color: #cbd5e1;
+  font-size: 40rpx;
+  margin-left: 8rpx;
+}
+
+.footer {
+  text-align: center;
+  color: #64748b;
+  font-size: 20rpx;
+  padding: 36rpx 20rpx 20rpx;
+}
+
+/* Dark Mode */
 @media (prefers-color-scheme: dark) {
+  .scroll-page {
+    background: var(--bg, #0f172a);
+  }
+  .search-bar {
+    background: var(--card, #1e293b);
+  }
+  .type-chip {
+    color: var(--text2, #94a3b8);
+    background: var(--chip, #1e293b);
+  }
+  .type-chip.on {
+    background: #0d9488;
+  }
+  .group-title {
+    color: var(--text, #f1f5f9);
+  }
+  .card {
+    background: var(--card, #1e293b);
+    border-color: var(--border, #334155);
+  }
+  .item-name {
+    color: var(--text, #f1f5f9);
+  }
   .badge-practice {
     color: #5eead4;
     background: #0f3b34;
   }
-}
-
-.topbar {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-}
-.topbar-title {
-  font-size: 44rpx;
-  font-weight: 800;
-  color: #fff;
-  letter-spacing: 2rpx;
-}
-.topbar-action {
-  padding: 10rpx 24rpx;
-  background: rgba(255, 255, 255, 0.22);
-  color: #fff;
-  font-size: 26rpx;
-  font-weight: 600;
-  border-radius: 999rpx;
+  .item-desc {
+    color: var(--sub, #94a3b8);
+  }
+  .arrow {
+    color: #475569;
+  }
+  .footer {
+    color: var(--muted, #94a3b8);
+  }
 }

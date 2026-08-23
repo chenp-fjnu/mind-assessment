@@ -2,6 +2,13 @@ const { getModule, TYPE_LABELS, getMetaList } = require('../../utils/registry')
 const { readableTextColor } = require('../../utils/color')
 const { genCard, saveToAlbum } = require('../../utils/share')
 
+// 渐变映射
+const GRADIENT_MAP = {
+  assess: 'linear-gradient(135deg, #9f67f7 0%, #b87aff 100%)',
+  method: 'linear-gradient(135deg, #7c7aff 0%, #a5b4fc 100%)',
+  train: 'linear-gradient(135deg, #2dd4bf 0%, #5eead4 100%)',
+}
+
 Page({
   data: {
     id: '',
@@ -16,6 +23,8 @@ Page({
       return
     }
     const metaRef = getMetaList().find((m) => m.id === mod.id)
+    const kind = mod.type
+    const gradient = GRADIENT_MAP[kind] || GRADIENT_MAP.assess
     this.setData({
       id: mod.id,
       meta: {
@@ -29,6 +38,8 @@ Page({
         colorText: readableTextColor(mod.color),
         tags: mod.tag || [],
         type: mod.type,
+        kind,
+        gradient,
         reference: (metaRef && metaRef.reference) || '',
         scoring: (metaRef && metaRef.scoring) || '',
       },
@@ -56,6 +67,7 @@ Page({
     if (!m || !m.name) return
     genCard(this, {
       color: m.color,
+      gradient: m.gradient,
       icon: m.icon,
       title: m.name,
       subtitle: m.desc,
@@ -80,6 +92,7 @@ Page({
     wx.showLoading({ title: '生成中' })
     genCard(this, {
       color: m.color,
+      gradient: m.gradient,
       icon: m.icon,
       title: m.name,
       subtitle: m.desc,

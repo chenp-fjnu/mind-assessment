@@ -18,6 +18,13 @@ const HOT_CONFIG = [
   { kind: 'train', id: 'n-back' },      // 唯一有RCT证据提升流体智力
 ]
 
+// 渐变映射：匹配各页面的 Hero 渐变
+const GRADIENT_MAP = {
+  assess: 'linear-gradient(135deg, #7c3aed 0%, #5b21b6 100%)',
+  method: 'linear-gradient(135deg, #0d9488 0%, #059669 100%)',
+  train: 'linear-gradient(135deg, #1e293b 0%, #f59e0b 100%)',
+}
+
 function buildHotPicks() {
   const modules = getMetaList()
   const methods = methodsData.METHODS
@@ -37,6 +44,7 @@ function buildHotPicks() {
       color: item.color,
       tint,
       desc: item.desc,
+      gradient: GRADIENT_MAP[cfg.kind],
     }
   }).filter(Boolean)
 }
@@ -111,6 +119,7 @@ Page({
     const met = buildMethods(lastMap)
     const gam = buildGames(lastMap)
     const hotPicks = buildHotPicks()
+    const hotAssessCount = hotPicks.filter((h) => h.kind === 'assess').length
     this.setData({
       moduleCount: mod.all.length,
       methodCount: met.all.length,
@@ -121,6 +130,7 @@ Page({
       featuredMethods: met.featuredMethods,
       featuredGames: gam.featuredGames,
       hotPicks,
+      hotAssessCount,
     })
   },
   goAssess() { wx.switchTab({ url: '/pages/assess/assess' }) },

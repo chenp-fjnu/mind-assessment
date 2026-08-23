@@ -1,103 +1,84 @@
 <view class="scroll-page">
+  <!-- Hero 区 -->
   <view class="hero">
     <text class="hero-title">心智探索局</text>
     <text class="hero-sub">测评 · 方法 · 训练，陪你认识并锻炼心智</text>
-    <text class="hero-tag">{{moduleCount}} 套测评表 · {{methodCount}} 个方法 · {{gameCount}} 个训练</text>
+    <view class="hero-stats">
+      <view class="stat-item">
+        <text class="stat-num">{{moduleCount}}</text>
+        <text class="stat-label">套测评</text>
+      </view>
+      <view class="stat-item">
+        <text class="stat-num">{{methodCount}}</text>
+        <text class="stat-label">个方法</text>
+      </view>
+      <view class="stat-item">
+        <text class="stat-num">{{gameCount}}</text>
+        <text class="stat-label">个训练</text>
+      </view>
+    </view>
   </view>
 
+  <!-- 热门推荐：网格布局 2列，精简卡片 -->
   <view wx:if="{{hotPicks.length}}" class="section hot-section">
     <view class="section-head">
       <text class="section-title">🔥 热门推荐</text>
+      <view class="section-desc">跨板块精选，一键直达</view>
     </view>
-    <scroll-view class="card-row" scroll-x="true">
+    <view class="hot-grid">
       <view
-        class="mini-card hot-card"
+        class="hot-card"
+        data-kind="{{h.kind}}"
         wx:for="{{hotPicks}}"
         wx:key="index"
         wx:for-item="h"
         bindtap="goHot"
         data-item="{{h}}"
-        style="border-color:{{h.tint}};"
         role="button"
-        aria-label="{{h.name}}"
+        aria-label="{{h.name}}，{{h.kindLabel}}"
       >
-        <view class="mini-icon hot-icon" style="background:{{h.tint}};">{{h.icon}}</view>
-        <text class="mini-name">{{h.name}}</text>
-        <text class="mini-meta hot-tag">{{h.kindLabel}}</text>
+        <view class="hot-card-bg" style="background:{{h.gradient}};"></view>
+        <view class="hot-card-content">
+          <view class="hot-icon-row">
+            <view class="hot-icon-wrap" style="background:{{h.tint}};">
+              <text class="hot-icon">{{h.icon}}</text>
+            </view>
+            <text class="hot-kind" style="background:{{h.tint}};color:{{h.color}};">{{h.kindLabel}}</text>
+          </view>
+          <text class="hot-name">{{h.name}}</text>
+        </view>
       </view>
-    </scroll-view>
+    </view>
   </view>
 
-  <view class="section">
-    <view class="section-head">
-      <text class="section-title">心理测评</text>
-      <text class="section-more" bindtap="goAssess" role="button">全部 ›</text>
-    </view>
-    <scroll-view class="card-row" scroll-x="true">
-      <view
-        class="mini-card"
-        wx:for="{{featuredAssess}}"
-        wx:key="id"
-        wx:for-item="m"
-        bindtap="goDetail"
-        data-id="{{m.id}}"
-        style="border-color:{{m.tint}};"
-        role="button"
-        aria-label="{{m.name}}"
-      >
-        <view class="mini-icon" style="background:{{m.tint}};">{{m.icon}}</view>
-        <text class="mini-name">{{m.name}}</text>
-        <text class="mini-meta">{{m.questionCount}} 题</text>
-      </view>
-    </scroll-view>
-  </view>
+  <!-- 分隔线 -->
+  <view class="divider"></view>
 
-  <view class="section">
-    <view class="section-head">
-      <text class="section-title">精选方法</text>
-      <text class="section-more" bindtap="goMethods" role="button">全部 ›</text>
-    </view>
-    <scroll-view class="card-row" scroll-x="true">
-      <view
-        class="mini-card"
-        wx:for="{{featuredMethods}}"
-        wx:key="id"
-        wx:for-item="m"
-        bindtap="goMethodDetail"
-        data-id="{{m.id}}"
-        style="border-color:{{m.tint}};"
-        role="button"
-        aria-label="{{m.name}}"
-      >
-        <view class="mini-icon" style="background:{{m.tint}};">{{m.icon}}</view>
-        <text class="mini-name">{{m.name}}</text>
-        <text class="mini-meta">{{m.interactive ? '可练习' : '方法'}}</text>
+  <!-- 三大板块入口 -->
+  <view class="sections">
+    <view class="section-block assess-block" bindtap="goAssess" role="button" aria-label="进入心理测评">
+      <view class="section-icon assess-icon">🧠</view>
+      <view class="section-info">
+        <text class="section-title">心理测评</text>
+        <text class="section-count">{{moduleCount}} 套量表</text>
       </view>
-    </scroll-view>
-  </view>
+    </view>
 
-  <view class="section">
-    <view class="section-head">
-      <text class="section-title">脑力训练</text>
-      <text class="section-more" bindtap="goTrain" role="button">全部 ›</text>
-    </view>
-    <scroll-view class="card-row" scroll-x="true">
-      <view
-        class="mini-card"
-        wx:for="{{featuredGames}}"
-        wx:key="id"
-        wx:for-item="g"
-        bindtap="goGame"
-        data-id="{{g.id}}"
-        style="border-color:{{g.tint}};"
-        role="button"
-        aria-label="{{g.name}}"
-      >
-        <view class="mini-icon" style="background:{{g.tint}};">{{g.icon}}</view>
-        <text class="mini-name">{{g.name}}</text>
-        <text class="mini-meta">{{g.dimLabel}}</text>
+    <view class="section-block method-block" bindtap="goMethods" role="button" aria-label="进入精选方法">
+      <view class="section-icon method-icon">🧰</view>
+      <view class="section-info">
+        <text class="section-title">精选方法</text>
+        <text class="section-count">{{methodCount}} 个方法</text>
       </view>
-    </scroll-view>
+    </view>
+
+    <view class="section-block train-block" bindtap="goTrain" role="button" aria-label="进入脑力训练">
+      <view class="section-icon train-icon">🎮</view>
+      <view class="section-info">
+        <text class="section-title">脑力训练</text>
+        <text class="section-count">{{gameCount}} 个游戏</text>
+      </view>
+    </view>
   </view>
 
   <view class="footer">结果仅供自我探索与娱乐，不构成医学诊断</view>

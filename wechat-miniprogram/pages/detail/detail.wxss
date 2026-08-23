@@ -149,6 +149,7 @@
   height: 92rpx;
   line-height: 92rpx;
   font-size: 32rpx;
+  background: var(--grad-assess-card);
 }
 .brand-foot {
   text-align: center;

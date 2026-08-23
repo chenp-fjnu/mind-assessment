@@ -1,51 +1,204 @@
+/* ============================================
+   全局设计系统 - 统一色彩、间距、阴影、圆角
+   所有页面必须通过 CSS 变量使用颜色，禁止硬编码
+   ============================================ */
+
 page {
   min-height: 100vh;
-  background: var(--bg);
-  color: var(--text);
+  background: var(--bg-primary);
+  color: var(--text-primary);
   font-family: -apple-system, "PingFang SC", "Helvetica Neue", sans-serif;
   overflow-x: hidden;
 }
 
 .scroll-page {
   min-height: 100vh;
-  background: var(--bg);
+  background: var(--bg-primary);
   font-family: -apple-system, "PingFang SC", "Helvetica Neue", sans-serif;
   overflow-x: hidden;
 }
 
+/* ============================================
+   CSS 变量定义 - 单一事实来源
+   所有页面必须通过这些变量使用颜色
+   ============================================ */
 page {
-  --bg: #f1f5f9;
-  --card: #fff;
-  --text: #1e293b;
-  --text2: #475569;
-  --sub: #64748b;
-  --muted: #64748b;
-  --border: #e2e8f0;
-  --chip: #f1f5f9;
-  --sel-bg: #eff6ff;
-  --sel-text: #1d4ed8;
-  --primary: #7c3aed;
+  /* ===== 背景层级 ===== */
+  --bg-primary: #ffffff;           /* 页面主背景 */
+  --bg-secondary: #fafafa;         /* 区块背景 */
+  --bg-tertiary: #f4f4f5;          /* 卡片悬浮/悬停 */
+  --bg-inverted: #18181b;          /* 深色背景 */
+  --bg-brand: #eef2ff;             /* 品牌浅色背景 */
+  --bg-brand-strong: #e0e7ff;      /* 品牌强背景 */
+
+  /* ===== 文字层级 ===== */
+  --text-primary: #18181b;         /* 主标题 */
+  --text-secondary: #52525b;       /* 副标题/正文 */
+  --text-tertiary: #71717a;        /* 辅助文字 */
+  --text-muted: #a1a1aa;           /* 占位/禁用 */
+  --text-inverse: #ffffff;         /* 深色背景上 */
+  --text-brand: #4f46e5;           /* 品牌色文字 */
+  --text-link: #6366f1;            /* 链接 */
+
+  /* ===== 边框/分割线 ===== */
+  --border-light: #e4e4e7;         /* 默认边框 */
+  --border-medium: #d4d4d8;        /* 强调边框 */
+  --border-dark: #a1a1aa;          /* 重边框 */
+  --border-focus: #818cf8;         /* 聚焦态 */
+
+  /* ===== 交互状态 ===== */
+  --interactive-hover: #fafafa;
+  --interactive-active: #f4f4f5;
+  --interactive-disabled: #e4e4e7;
+  --focus-ring: #a5b4fc;
+
+  /* ===== 阴影 ===== */
+  --shadow-sm: 0 2rpx 8rpx rgba(15, 23, 42, 0.05);
+  --shadow-md: 0 8rpx 24rpx rgba(15, 23, 42, 0.07);
+  --shadow-lg: 0 16rpx 40rpx rgba(15, 23, 42, 0.09);
+  --shadow-xl: 0 24rpx 56rpx rgba(15, 23, 42, 0.11);
+  --shadow-glow: 0 0 40rpx rgba(99, 102, 241, 0.12);
+  --shadow-glow-assess: 0 0 40rpx rgba(139, 92, 246, 0.15);
+  --shadow-glow-method: 0 0 40rpx rgba(6, 182, 212, 0.15);
+  --shadow-glow-train: 0 0 40rpx rgba(245, 158, 11, 0.15);
+
+  /* ===== 圆角 ===== */
+  --radius-sm: 8rpx;
+  --radius-md: 12rpx;
+  --radius-lg: 16rpx;
+  --radius-xl: 20rpx;
+  --radius-xxl: 24rpx;
+  --radius-full: 999rpx;
+
+  /* ===== 间距 ===== */
+  --spacing-xs: 8rpx;
+  --spacing-sm: 12rpx;
+  --spacing-md: 16rpx;
+  --spacing-lg: 20rpx;
+  --spacing-xl: 24rpx;
+  --spacing-xxl: 32rpx;
+  --spacing-xxxl: 40rpx;
+
+  /* ===== 功能色 - 浅色模式 ===== */
+  --color-assess-light: #f5f3ff;
+  --color-assess: #8b5cf6;
+  --color-assess-dark: #7c3aed;
+  --color-assess-darker: #6d28d9;
+
+  --color-method-light: #f0fdfa;
+  --color-method: #06b6d4;
+  --color-method-dark: #0891b2;
+  --color-method-darker: #0e7490;
+
+  --color-train-light: #fffbeb;
+  --color-train: #f59e0b;
+  --color-train-dark: #d97706;
+  --color-train-darker: #b45309;
+
+  /* ===== 渐变预设 ===== */
+  --grad-hero: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #06b6d4 100%);
+  --grad-assess-page: linear-gradient(135deg, #8b5cf6 0%, #a855f7 100%);
+  --grad-method-page: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);
+  --grad-train-page: linear-gradient(135deg, #f59e0b 0%, #f97316 100%);
+  --grad-assess-card: linear-gradient(135deg, rgba(139,92,246,0.9) 0%, rgba(168,85,247,0.9) 100%);
+  --grad-method-card: linear-gradient(135deg, rgba(6,182,212,0.9) 0%, rgba(8,145,178,0.9) 100%);
+  --grad-train-card: linear-gradient(135deg, rgba(245,158,11,0.9) 0%, rgba(249,115,22,0.9) 100%);
+  --grad-assess-entry: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+  --grad-method-entry: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);
+  --grad-train-entry: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  --grad-divider: linear-gradient(90deg, transparent, var(--border-light), transparent);
 }
 
+/* ============================================
+   深色模式变量覆盖
+   ============================================ */
 @media (prefers-color-scheme: dark) {
   page {
-    --bg: #0f172a;
-    --card: #1e293b;
-    --text: #e2e8f0;
-    --text2: #cbd5e1;
-    --sub: #94a3b8;
-    --muted: #64748b;
-    --border: #334155;
-    --chip: #334155;
-    --sel-bg: #1e3a5f;
-    --sel-text: #93c5fd;
+    /* 背景层级 */
+    --bg-primary: #09090b;
+    --bg-secondary: #18181b;
+    --bg-tertiary: #27272a;
+    --bg-inverted: #fafafa;
+    --bg-brand: rgba(99, 102, 241, 0.12);
+    --bg-brand-strong: rgba(99, 102, 241, 0.18);
+
+    /* 文字层级 */
+    --text-primary: #fafafa;
+    --text-secondary: #a1a1aa;
+    --text-tertiary: #71717a;
+    --text-muted: #71717a;
+    --text-inverse: #09090b;
+    --text-brand: #818cf8;
+    --text-link: #818cf8;
+
+    /* 边框/分割线 */
+    --border-light: #27272a;
+    --border-medium: #3f3f46;
+    --border-dark: #52525b;
+    --border-focus: #818cf8;
+
+    /* 交互状态 */
+    --interactive-hover: #18181b;
+    --interactive-active: #27272a;
+    --interactive-disabled: #27272a;
+    --focus-ring: #818cf8;
+
+    /* 阴影 */
+    --shadow-sm: 0 2rpx 8rpx rgba(0, 0, 0, 0.2);
+    --shadow-md: 0 8rpx 24rpx rgba(0, 0, 0, 0.25);
+    --shadow-lg: 0 16rpx 40rpx rgba(0, 0, 0, 0.3);
+    --shadow-xl: 0 24rpx 56rpx rgba(0, 0, 0, 0.35);
+    --shadow-glow: 0 0 40rpx rgba(99, 102, 241, 0.18);
+    --shadow-glow-assess: 0 0 40rpx rgba(139, 92, 246, 0.2);
+    --shadow-glow-method: 0 0 40rpx rgba(6, 182, 212, 0.2);
+    --shadow-glow-train: 0 0 40rpx rgba(245, 158, 11, 0.2);
+
+    /* 功能色 - 深色模式 */
+    --color-assess-light: rgba(139, 92, 246, 0.12);
+    --color-assess: #8b5cf6;
+    --color-assess-dark: #a855f7;
+    --color-assess-darker: #c084fc;
+
+    --color-method-light: rgba(6, 182, 212, 0.12);
+    --color-method: #06b6d4;
+    --color-method-dark: #22d3ee;
+    --color-method-darker: #67e8f9;
+
+    --color-train-light: rgba(245, 158, 11, 0.12);
+    --color-train: #f59e0b;
+    --color-train-dark: #fbbf24;
+    --color-train-darker: #fcd34d;
+
+    /* 渐变 */
+    --grad-hero: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #06b6d4 100%);
+    --grad-assess-page: linear-gradient(135deg, #8b5cf6 0%, #a855f7 100%);
+    --grad-method-page: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);
+    --grad-train-page: linear-gradient(135deg, #f59e0b 0%, #f97316 100%);
+    --grad-assess-card: linear-gradient(135deg, rgba(139,92,246,0.85) 0%, rgba(168,85,247,0.85) 100%);
+    --grad-method-card: linear-gradient(135deg, rgba(6,182,212,0.85) 0%, rgba(8,145,178,0.85) 100%);
+    --grad-train-card: linear-gradient(135deg, rgba(245,158,11,0.85) 0%, rgba(249,115,22,0.85) 100%);
+    --grad-assess-entry: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+    --grad-method-entry: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);
+    --grad-train-entry: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    --grad-divider: linear-gradient(90deg, transparent, var(--border-light), transparent);
   }
 }
 
+/* ============================================
+   通用基础组件
+   ============================================ */
+.scroll-page {
+  min-height: 100vh;
+  background: var(--bg-primary);
+  font-family: -apple-system, "PingFang SC", "Helvetica Neue", sans-serif;
+  overflow-x: hidden;
+}
+
 .card {
-  background: var(--card);
-  border-radius: 24rpx;
-  box-shadow: 0 8rpx 30rpx rgba(15, 23, 42, 0.06);
+  background: var(--bg-primary);
+  border: 1rpx solid var(--border-light);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-md);
 }
 
 .btn {
@@ -53,16 +206,73 @@ page {
   align-items: center;
   justify-content: center;
   padding: 0;
-  border-radius: 999rpx;
+  border-radius: var(--radius-full);
   color: #fff;
   text-align: center;
   font-weight: 600;
 }
 
 .muted {
-  color: var(--sub);
+  color: var(--text-muted);
 }
 
 button::after {
   border: none;
 }
+
+/* ============================================
+   通用工具类
+   ============================================ */
+.text-primary { color: var(--text-primary); }
+.text-secondary { color: var(--text-secondary); }
+.text-tertiary { color: var(--text-tertiary); }
+.text-muted { color: var(--text-muted); }
+.text-brand { color: var(--text-brand); }
+.text-link { color: var(--text-link); }
+.text-inverse { color: var(--text-inverse); }
+
+.bg-primary { background: var(--bg-primary); }
+.bg-secondary { background: var(--bg-secondary); }
+.bg-tertiary { background: var(--bg-tertiary); }
+.bg-brand { background: var(--bg-brand); }
+.bg-brand-strong { background: var(--bg-brand-strong); }
+
+.border-light { border-color: var(--border-light); }
+.border-medium { border-color: var(--border-medium); }
+.border-focus { border-color: var(--border-focus); }
+
+.shadow-sm { box-shadow: var(--shadow-sm); }
+.shadow-md { box-shadow: var(--shadow-md); }
+.shadow-lg { box-shadow: var(--shadow-lg); }
+.shadow-xl { box-shadow: var(--shadow-xl); }
+
+.rounded-sm { border-radius: var(--radius-sm); }
+.rounded-md { border-radius: var(--radius-md); }
+.rounded-lg { border-radius: var(--radius-lg); }
+.rounded-xl { border-radius: var(--radius-xl); }
+.rounded-xxl { border-radius: var(--radius-xxl); }
+.rounded-full { border-radius: var(--radius-full); }
+
+/* ============================================
+   功能色工具类
+   ============================================ */
+/* 测评 */
+.bg-assess-light { background: var(--color-assess-light); }
+.text-assess { color: var(--color-assess-darker); }
+.text-assess-dark { color: var(--color-assess-dark); }
+.border-assess { border-color: var(--color-assess); }
+.badge-assess { background: var(--color-assess-light); color: var(--color-assess-dark); }
+
+/* 方法 */
+.bg-method-light { background: var(--color-method-light); }
+.text-method { color: var(--color-method-darker); }
+.text-method-dark { color: var(--color-method-dark); }
+.border-method { border-color: var(--color-method); }
+.badge-method { background: var(--color-method-light); color: var(--color-method-dark); }
+
+/* 训练 */
+.bg-train-light { background: var(--color-train-light); }
+.text-train { color: var(--color-train-darker); }
+.text-train-dark { color: var(--color-train-dark); }
+.border-train { border-color: var(--color-train); }
+.badge-train { background: var(--color-train-light); color: var(--color-train-dark); }

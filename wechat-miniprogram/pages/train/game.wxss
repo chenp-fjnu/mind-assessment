@@ -1,8 +1,13 @@
+/* ============================================
+   训练游戏详情页 - 统一设计系统
+   ============================================ */
+
 .hero {
   padding: calc(96rpx + env(safe-area-inset-top)) 40rpx 40rpx;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  background: var(--grad-train-page);
 }
 .back {
   position: absolute;
@@ -23,6 +28,7 @@
   justify-content: center;
   font-size: 52rpx;
   margin-bottom: 20rpx;
+  background: rgba(255, 255, 255, 0.2);
 }
 .hero-title {
   display: block;
@@ -53,7 +59,7 @@
 .lv-title {
   font-size: 26rpx;
   font-weight: 600;
-  color: var(--text2);
+  color: var(--text-secondary);
 }
 .lv-bar {
   white-space: nowrap;
@@ -64,9 +70,9 @@
   flex-direction: column;
   align-items: center;
   font-size: 24rpx;
-  color: var(--text2);
-  background: var(--chip);
-  border: 2rpx solid var(--border);
+  color: var(--text-tertiary);
+  background: var(--bg-tertiary);
+  border: 2rpx solid var(--border-light);
   padding: 12rpx 26rpx;
   border-radius: 999rpx;
   margin-right: 16rpx;
@@ -78,6 +84,8 @@
 }
 .lv-chip.on {
   color: #fff;
+  background: var(--color-train);
+  border-color: var(--color-train);
 }
 .lv-chip.on .lv-best {
   opacity: 0.9;
@@ -98,7 +106,7 @@
 .res-title {
   font-size: 30rpx;
   font-weight: 700;
-  color: var(--text);
+  color: var(--text-primary);
 }
 .res-chips {
   display: flex;
@@ -109,7 +117,7 @@
 .res-chip {
   flex: 1 1 30%;
   min-width: 150rpx;
-  background: var(--chip);
+  background: var(--bg-tertiary);
   border-radius: 18rpx;
   padding: 20rpx;
   display: flex;
@@ -119,17 +127,17 @@
 .res-val {
   font-size: 38rpx;
   font-weight: 800;
-  color: var(--text);
+  color: var(--text-primary);
 }
 .res-lab {
   font-size: 22rpx;
-  color: var(--sub);
+  color: var(--text-tertiary);
   margin-top: 6rpx;
 }
 .trend {
   margin-top: 24rpx;
   font-size: 24rpx;
-  color: var(--sub);
+  color: var(--text-tertiary);
   text-align: center;
 }
 .res-actions {
@@ -148,23 +156,23 @@
   color: #fff;
 }
 .btn-ghost {
-  background: var(--chip);
-  color: var(--text2);
+  background: var(--bg-tertiary);
+  color: var(--text-secondary);
 }
 .footer {
   text-align: center;
-  color: var(--muted);
+  color: var(--text-muted);
   font-size: 22rpx;
   padding: 40rpx 40rpx 40rpx;
 }
 
 @media (prefers-color-scheme: dark) {
-  .lv-title { color: var(--text2); }
-  .lv-chip { color: var(--text2); }
-  .res-title { color: var(--text); }
-  .res-val { color: var(--text); }
-  .res-lab { color: var(--muted); }
-  .trend { color: var(--muted); }
-  .btn-ghost { color: var(--text2); }
-  .footer { color: var(--muted); }
+  .lv-title { color: var(--text-secondary); }
+  .lv-chip { color: var(--text-tertiary); }
+  .res-title { color: var(--text-primary); }
+  .res-val { color: var(--text-primary); }
+  .res-lab { color: var(--text-tertiary); }
+  .trend { color: var(--text-tertiary); }
+  .btn-ghost { color: var(--text-secondary); }
+  .footer { color: var(--text-muted); }
 }
