@@ -1,0 +1,28 @@
+name: CI
+
+on:
+  push:
+    paths:
+      - 'wechat-miniprogram/**'
+  pull_request:
+    paths:
+      - 'wechat-miniprogram/**'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: wechat-miniprogram
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: npm
+          cache-dependency-path: wechat-miniprogram/package-lock.json
+      - run: npm install
+      - name: 冒烟测试（无依赖）
+        run: npm test
+      - name: Jest 单元/页面测试 + 覆盖率
+        run: npm run test:coverage

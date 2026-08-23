@@ -139,11 +139,17 @@ module.exports = {
 
 | 测试 | 命令 | 依赖 | 说明 |
 | --- | --- | --- | --- |
-| 冒烟（评分链路） | `node test/smoke.js` | 无 | 22 模块评分 + 韦氏候选完整性 + `getResultView` 视图构造流程，**152 项** |
-| 模块单测 | `npm run test:simulate` → Jest `modules.test.js` | jest | 模块评分断言 |
-| UI 渲染 | `npm run test:simulate` → Jest `index.page.test.js` | @miniprogram/simulate | 页面结构与绑定断言 |
+| 冒烟（评分链路） | `npm test`（`node test/smoke.js`） | 无 | 22 模块评分 + 韦氏候选完整性 + `getResultView` 视图构造流程，**152 项** |
+| 模块单测 | `npm run test:simulate` → Jest `modules.test.js` | jest | 模块评分 / 候选 / 选项数断言 |
+| 工具单测 | `npm run test:simulate` → Jest `utils.test.js` | jest | `color`/`scoring`/`trend`/`result-view`/`registry`/`figure`/`methods-data` 纯函数、模块契约（`getResultView` 标准化结构、22 量表 `reference`/`scoring` 非空）、图形色盲纹理 |
+| 页面单测 | `npm run test:simulate` → Jest `index.page.test.js` | jest | `detail`/`result`/`index`/`test` 页面 `onLoad` 渲染数据（基于 mock 运行时 `wx`/`Page`，**无需** `@miniprogram/simulate`） |
+| 全量 | `npm run test:all` | jest | 先跑冒烟再跑 Jest；`npm run test:coverage` 附覆盖率报告 |
 
-CI（`.github/workflows/ci.yml`）：push/PR 触及 `wechat-miniprogram/**` 时于 Node 18 跑冒烟测试。
+覆盖率门槛（jest.config.js）：语句/行 35%、分支/函数 25%；当前全仓约 **59% 语句 / 61% 行**（工具与模块层多数 >80%，页面层随页面单测逐步提升）。
+
+CI（`.github/workflows/ci.yml`）：push/PR 触及 `wechat-miniprogram/**` 时于 Node 18 依次跑 `npm test`（冒烟）与 `npm run test:coverage`（Jest + 覆盖率）。
+
+> 说明：早期 `index.page.test.js` 依赖 `@miniprogram/simulate`（源中已不可用），现已改为基于 `test/setup.js` 的轻量 mock 运行时 + `test/page-helper.js` 加载页面并执行 `onLoad`，零额外重依赖、可在 Node 直接运行。
 
 ---
 
@@ -197,8 +203,9 @@ CI（`.github/workflows/ci.yml`）：push/PR 触及 `wechat-miniprogram/**` 时�
 - **结果页重测提示**：`pages/result/result.js` 展示「距上次测评 N 天 / 首次测评」，便于跟踪变化。
 - **详情页续答入口**：`pages/detail/detail.wxml` 在存在未完成进度时显示「继续未完成测评（已答 X/Y，Z%）」按钮，点击即恢复（路线图第 6 项）。
 - **首页搜索与分类筛选**：`pages/index` 新增搜索框（按名称/简称/简介/标签匹配）与按 `type` 的分类 chips，实时过滤「全部量表」列表，含空态提示（路线图第 7 项）。
+- **测试体系完善**：新增 `jest.config.js` + `test/setup.js`（mock 运行时 `wx`/`Page`/`Component`）+ `test/page-helper.js`（加载页面并执行 `onLoad`）；`utils.test.js` 补足工具层单测，`index.page.test.js` 改为零依赖页面单测；`npm run test:all` 串联冒烟与 Jest、`test:coverage` 附覆盖率；新增 `.github/workflows/ci.yml`（Node 18 跑冒烟 + Jest）。移除源中不可用的 `@miniprogram/simulate` 依赖。
 
-> 路线图全部高/中优先项均已完成；仅余低优先工程化项（CI 接入 Jest + `@miniprogram/simulate` 完整链路、`.gitattributes` 行尾统一）可按需推进。
+> 路线图全部高/中优先项均已完成；CI 已接入 Jest + 覆盖率。仅余极低优先工程化项（`.gitattributes` 行尾统一）可按需推进。
 
 ## 许可
 
