@@ -1,5 +1,6 @@
 const { getMetaList, TYPE_LABELS } = require('../../utils/registry')
 const { hexToRgba } = require('../../utils/color')
+const { useTheme } = require('../../utils/theme-store')
 
 function buildModuleList() {
   return getMetaList().map((m) => ({
@@ -42,6 +43,7 @@ Page({
     assessRecordCount: 0,
   },
   onLoad(query) {
+    useTheme(this)
     const allModules = buildModuleList()
     const types = Object.keys(TYPE_LABELS)
       .filter((t) => allModules.some((m) => m.type === t))

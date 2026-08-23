@@ -1,56 +1,58 @@
-<view class="scroll-page">
-  <view class="hero">
-    <text class="hero-title">关于心智探索局</text>
-    <text class="hero-sub">测评、方法、训练，三步陪你认识并锻炼心智</text>
-  </view>
+<view class="theme-wrapper {{themeClass}}">
+  <view class="scroll-page">
+    <view class="hero">
+      <text class="hero-title">关于心智探索局</text>
+      <text class="hero-sub">测评、方法、训练，三步陪你认识并锻炼心智</text>
+    </view>
 
-  <view class="card section">
-    <text class="sec-title">我们做什么</text>
-    <text class="sec-text">心智探索局是一款心理成长小程序。覆盖人格、情绪、智力、职业兴趣、自我认知等 {{typeCount}} 大类，共 {{moduleCount}} 套测评表；并提供「方法库」，收录 {{methodCount}} 个经典方法与理论，其中 {{practiceCount}} 个支持互动练习；还内置「脑力训练」板块，包含 {{gameCount}} 个改编自成熟认知心理学范式的游戏，按注意力、工作记忆、反应速度、放松正念、执行功能 {{dimCount}} 大维度组织，帮你把测评洞察转化为日常可练的心智训练。</text>
-  </view>
+    <view class="card section">
+      <text class="sec-title">我们做什么</text>
+      <text class="sec-text">心智探索局是一款心理成长小程序。覆盖人格、情绪、智力、职业兴趣、自我认知等 {{typeCount}} 大类，共 {{moduleCount}} 套测评表；并提供「方法库」，收录 {{methodCount}} 个经典方法与理论，其中 {{practiceCount}} 个支持互动练习；还内置「脑力训练」板块，包含 {{gameCount}} 个改编自成熟认知心理学范式的游戏，按注意力、工作记忆、反应速度、放松正念、执行功能 {{dimCount}} 大维度组织，帮你把测评洞察转化为日常可练的心智训练。</text>
+    </view>
 
-  <view class="card section">
-    <text class="sec-title">隐私与离线</text>
-    <text class="sec-text">你在本程序进行的所有测评与练习，题目、计分与结果都在你的设备本地完成，全程无需联网，我们也不会上传或收集任何个人数据。你可以放心地把它当作一个私人的自我探索笔记本，数据只在你主动清空时才会删除。</text>
-  </view>
+    <view class="card section">
+      <text class="sec-title">隐私与离线</text>
+      <text class="sec-text">你在本程序进行的所有测评与练习，题目、计分与结果都在你的设备本地完成，全程无需联网，我们也不会上传或收集任何个人数据。你可以放心地把它当作一个私人的自我探索笔记本，数据只在你主动清空时才会删除。</text>
+    </view>
 
-  <view class="card section">
-    <text class="sec-title">测评如何计分</text>
-    <text class="sec-text">· 自陈量表：采用标准化李克特式问卷收集你的主观作答，按各维度计分并给出剖面解读。
+    <view class="card section">
+      <text class="sec-title">测评如何计分</text>
+      <text class="sec-text">· 自陈量表：采用标准化李克特式问卷收集你的主观作答，按各维度计分并给出剖面解读。
 · 图形推理：基于矩阵推理与分测验模式，按正确率换算近似测评表分 / 智商区间。
 · 趋势追踪：同一测评表多次作答，可在结果页查看历史趋势对比。</text>
-    <text class="sec-note">本程序的计分方式参考公开心理测量学方法实现，但并非各测评表的官方标准化施测与常模，结果仅供自我探索与学习参考。</text>
-  </view>
+      <text class="sec-note">本程序的计分方式参考公开心理测量学方法实现，但并非各测评表的官方标准化施测与常模，结果仅供自我探索与学习参考。</text>
+    </view>
 
-  <view class="card section">
-    <text class="sec-title">方法库</text>
-    <text class="sec-text">我们把常用方法分为四大类，方便你按场景取用；并把 GROW、SMART、WOOP、ABC 认知重构等经典方法做成图文讲解与可填写的练习，帮你把测评洞察转化为日常行动：
+    <view class="card section">
+      <text class="sec-title">方法库</text>
+      <text class="sec-text">我们把常用方法分为四大类，方便你按场景取用；并把 GROW、SMART、WOOP、ABC 认知重构等经典方法做成图文讲解与可填写的练习，帮你把测评洞察转化为日常行动：
 · 目标与行动：SMART、GROW、WOOP、番茄工作法、PDCA
 · 情绪与认知：ABC 认知重构、三件好事、正念呼吸、非暴力沟通、费斯汀格法则
 · 习惯与行为：Fogg 行为模型、微习惯、四象限法则、二八定律
 · 自我与成长：乔哈里视窗、PERMA、成长型思维、心流、人生平衡轮、复盘 KPT、SWOT、六顶思考帽
 其中标注「可练习」的方法可在详情页填写并保存在本机，结果页也会根据你的测评类型推荐相关方法。</text>
-  </view>
-
-  <view class="card section">
-    <text class="sec-title">脑力训练</text>
-    <text class="sec-text">「训练」板块提供 {{gameCount}} 个游戏，覆盖注意力、工作记忆、反应速度、放松正念、执行功能 {{dimCount}} 大认知维度（如舒尔特方格、N-Back、斯特鲁普、打地鼠、汉诺塔、威斯康星等）。每个游戏支持多档难度，完成后成绩仅保存在本机，可在游戏页查看最佳成绩与近期趋势，方便你持续追踪、循序渐进。所有游戏均改编自公开认知范式，仅作娱乐与自我探索用途，不构成任何专业能力评估。</text>
-  </view>
-
-  <view class="card section">
-    <text class="sec-title">题库来源</text>
-    <view class="src" wx:for="{{sources}}" wx:key="name" wx:for-item="s">
-      <text class="src-name">{{s.name}}</text>
-      <text class="src-desc">{{s.desc}}</text>
     </view>
-  </view>
 
-  <view class="card section tip">
-    <text class="sec-title">免责声明</text>
-    <text class="sec-text">本小程序结果基于自陈量表与图形推理，题目部分参考公开心理测评表题库整理，仅供自我探索与娱乐参考，非标准化临床诊断工具，不构成任何医学、心理或专业建议。如有心理困扰，请寻求专业机构与持证人员帮助。</text>
-  </view>
+    <view class="card section">
+      <text class="sec-title">脑力训练</text>
+      <text class="sec-text">「训练」板块提供 {{gameCount}} 个游戏，覆盖注意力、工作记忆、反应速度、放松正念、执行功能 {{dimCount}} 大认知维度（如舒尔特方格、N-Back、斯特鲁普、打地鼠、汉诺塔、威斯康星等）。每个游戏支持多档难度，完成后成绩仅保存在本机，可在游戏页查看最佳成绩与近期趋势，方便你持续追踪、循序渐进。所有游戏均改编自公开认知范式，仅作娱乐与自我探索用途，不构成任何专业能力评估。</text>
+    </view>
 
-  <button class="btn home" bindtap="goHome" aria-label="返回首页">返回首页</button>
-  <text class="link" bindtap="openPrivacy" role="button" aria-label="查看隐私保护指引">查看隐私保护指引</text>
-  <view class="brand-foot">心智探索局 · 测评 · 方法 · 训练</view>
+    <view class="card section">
+      <text class="sec-title">题库来源</text>
+      <view class="src" wx:for="{{sources}}" wx:key="name" wx:for-item="s">
+        <text class="src-name">{{s.name}}</text>
+        <text class="src-desc">{{s.desc}}</text>
+      </view>
+    </view>
+
+    <view class="card section tip">
+      <text class="sec-title">免责声明</text>
+      <text class="sec-text">本小程序结果基于自陈量表与图形推理，题目部分参考公开心理测评表题库整理，仅供自我探索与娱乐参考，非标准化临床诊断工具，不构成任何医学、心理或专业建议。如有心理困扰，请寻求专业机构与持证人员帮助。</text>
+    </view>
+
+    <button class="btn home" bindtap="goHome" aria-label="返回首页">返回首页</button>
+    <text class="link" bindtap="openPrivacy" role="button" aria-label="查看隐私保护指引">查看隐私保护指引</text>
+    <view class="brand-foot">心智探索局 · 测评 · 方法 · 训练</view>
+  </view>
 </view>

@@ -1,6 +1,7 @@
 const { getGame } = require('../../utils/game-registry')
 const { hexToRgba } = require('../../utils/color')
 const trainStore = require('../../utils/train-store')
+const { useTheme } = require('../../utils/theme-store')
 
 function fmtBest(value, unit) {
   if (value == null) return '暂无记录'
@@ -23,6 +24,7 @@ Page({
     trendText: '',
   },
   onLoad(query) {
+    useTheme(this)
     const id = query.gameId
     const g = getGame(id)
     if (!g) {

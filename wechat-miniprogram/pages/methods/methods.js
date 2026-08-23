@@ -1,5 +1,6 @@
 const methodsData = require('../../utils/methods-data')
 const { hexToRgba } = require('../../utils/color')
+const { useTheme } = require('../../utils/theme-store')
 
 function buildList() {
   return methodsData.METHODS.map((m) => Object.assign({}, m, { tint: hexToRgba(m.color, 0.12) }))
@@ -27,6 +28,7 @@ Page({
     methodRecordCount: 0,
   },
   onLoad() {
+    useTheme(this)
     const allMethods = buildList()
     const seen = {}
     const categories = []

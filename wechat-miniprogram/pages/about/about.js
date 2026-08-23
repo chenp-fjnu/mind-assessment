@@ -2,6 +2,7 @@ const { getMetaList, TYPE_LABELS } = require('../../utils/registry')
 const methodsData = require('../../utils/methods-data')
 const gameReg = require('../../utils/game-registry')
 const { openPrivacyContract } = require('../../utils/privacy')
+const { useTheme } = require('../../utils/theme-store')
 
 Page({
   data: {
@@ -24,6 +25,7 @@ Page({
     dimCount: 0,
   },
   onLoad() {
+    useTheme(this)
     const allModules = getMetaList()
     const typeCount = Object.keys(TYPE_LABELS).filter((t) => allModules.some((m) => m.type === t)).length
     const games = gameReg.getMetaList()

@@ -5,6 +5,7 @@ const { readableTextColor } = require('../../utils/color')
 const { renderTrend, renderCard } = require('../../utils/canvas')
 const { withPrivacy } = require('../../utils/privacy')
 const methodsData = require('../../utils/methods-data')
+const { useTheme } = require('../../utils/theme-store')
 
 Page({
   data: {
@@ -30,6 +31,7 @@ Page({
   },
 
   onLoad(query) {
+    useTheme(this)
     const app = getApp()
     let saved = app.globalData.lastResult
     const id = query.id || (saved && saved.id)

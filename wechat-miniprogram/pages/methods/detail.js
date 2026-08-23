@@ -1,5 +1,6 @@
 const methodsData = require('../../utils/methods-data')
 const { genCard, saveToAlbum } = require('../../utils/share')
+const { useTheme } = require('../../utils/theme-store')
 
 Page({
   data: {
@@ -9,6 +10,7 @@ Page({
     steps: [],
   },
   onLoad(query) {
+    useTheme(this)
     const id = query.id
     const method = methodsData.getMethod(id)
     if (!method) {

@@ -1,177 +1,179 @@
-<view class="scroll-page">
-  <view class="bar">
-    <text class="title">我的记录</text>
-    <view class="bar-actions">
-      <text wx:if="{{tab === 'assess' ? list.length : (tab === 'method' ? mList.length : tList.length)}}" class="export" bindtap="exportAll" aria-label="导出记录">导出</text>
-      <text wx:if="{{tab === 'assess' ? list.length : (tab === 'method' ? mList.length : tList.length)}}" class="clear" bindtap="clearAll" aria-label="清空记录">清空</text>
-    </view>
-  </view>
-
-  <view class="search">
-    <input
-      class="search-input"
-      placeholder="搜索记录名称"
-      value="{{kw}}"
-      bindinput="onSearch"
-      confirm-type="search"
-      aria-label="搜索记录"
-    />
-    <text wx:if="{{kw}}" class="search-clear" bindtap="clearSearch" role="button" aria-label="清空搜索">✕</text>
-  </view>
-
-  <view class="tabs">
-    <view class="tab {{tab === 'assess' ? 'on' : ''}}" bindtap="onTab" data-tab="assess" role="button" aria-label="测评记录">测评</view>
-    <view class="tab {{tab === 'method' ? 'on' : ''}}" bindtap="onTab" data-tab="method" role="button" aria-label="方法练习记录">方法</view>
-    <view class="tab {{tab === 'train' ? 'on' : ''}}" bindtap="onTab" data-tab="train" role="button" aria-label="训练记录">训练</view>
-  </view>
-
-  <block wx:if="{{tab === 'assess'}}">
-    <!-- 进行中的测评 -->
-    <view wx:if="{{inProgressAssess.length}}" class="section in-progress-section">
-      <view class="section-head">
-        <text class="section-title">📝 进行中</text>
+<view class="theme-wrapper {{themeClass}}">
+  <view class="scroll-page">
+    <view class="bar">
+      <text class="title">我的记录</text>
+      <view class="bar-actions">
+        <text wx:if="{{tab === 'assess' ? list.length : (tab === 'method' ? mList.length : tList.length)}}" class="export" bindtap="exportAll" aria-label="导出记录">导出</text>
+        <text wx:if="{{tab === 'assess' ? list.length : (tab === 'method' ? mList.length : tList.length)}}" class="clear" bindtap="clearAll" aria-label="清空记录">清空</text>
       </view>
-      <view class="list">
+    </view>
+
+    <view class="search">
+      <input
+        class="search-input"
+        placeholder="搜索记录名称"
+        value="{{kw}}"
+        bindinput="onSearch"
+        confirm-type="search"
+        aria-label="搜索记录"
+      />
+      <text wx:if="{{kw}}" class="search-clear" bindtap="clearSearch" role="button" aria-label="清空搜索">✕</text>
+    </view>
+
+    <view class="tabs">
+      <view class="tab {{tab === 'assess' ? 'on' : ''}}" bindtap="onTab" data-tab="assess" role="button" aria-label="测评记录">测评</view>
+      <view class="tab {{tab === 'method' ? 'on' : ''}}" bindtap="onTab" data-tab="method" role="button" aria-label="方法练习记录">方法</view>
+      <view class="tab {{tab === 'train' ? 'on' : ''}}" bindtap="onTab" data-tab="train" role="button" aria-label="训练记录">训练</view>
+    </view>
+
+    <block wx:if="{{tab === 'assess'}}">
+      <!-- 进行中的测评 -->
+      <view wx:if="{{inProgressAssess.length}}" class="section in-progress-section">
+        <view class="section-head">
+          <text class="section-title">📝 进行中</text>
+        </view>
+        <view class="list">
+          <view
+            class="hist-card card in-progress"
+            wx:for="{{inProgressAssess}}"
+            wx:key="rid"
+            wx:for-item="p"
+            wx:for-index="idx"
+            bindtap="openInProgressAssess"
+            data-item="{{p}}"
+            role="button"
+            aria-label="继续 {{p.name}} 测评，已答 {{p.answered}}/{{p.total}}，{{p.percent}}%"
+          >
+            <text class="h-icon" style="background:{{p.color}}1f;">{{p.icon}}</text>
+            <view class="h-body">
+              <view class="h-head">
+                <text class="h-name">{{p.name}}</text>
+                <text class="h-level in-progress-tag">进行中</text>
+              </view>
+              <view class="progress-row">
+                <text class="progress-text">已答 {{p.answered}}/{{p.total}}（{{p.percent}}%）</text>
+                <progress class="progress-bar" percent="{{p.percent}}" stroke-width="6" activeColor="{{p.color}}" backgroundColor="#e2e8f0" />
+              </view>
+              <text class="h-time">上次编辑：{{p.updatedText}}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <scroll-view wx:if="{{filters.length > 1}}" class="filter-bar" scroll-x="true">
         <view
-          class="hist-card card in-progress"
-          wx:for="{{inProgressAssess}}"
+          class="chip {{active === f.id ? 'on' : ''}}"
+          wx:for="{{filters}}"
+          wx:key="id"
+          wx:for-item="f"
+          bindtap="onFilter"
+          data-id="{{f.id}}"
+          role="button"
+          aria-label="筛选 {{f.name}} 测评表记录"
+        >
+          <text class="chip-icon">{{f.icon}}</text>
+          <text>{{f.name}}</text>
+        </view>
+      </scroll-view>
+
+      <view wx:if="{{!list.length && !inProgressAssess.length}}" class="empty">
+        <text class="empty-icon">📭</text>
+        <text class="empty-text">还没有测评记录</text>
+        <text class="empty-sub">去首页选择一个测评表开始吧</text>
+      </view>
+
+      <view wx:else class="list">
+        <view
+          class="hist-card card"
+          wx:for="{{list}}"
+          wx:key="time"
+          wx:for-item="h"
+          wx:for-index="idx"
+          bindtap="open"
+          data-idx="{{idx}}"
+          role="button"
+          aria-label="查看 {{h.name}} 测评结果，{{h.summary}}{{h.level ? '，' + h.level : ''}}，{{h.timeText}}"
+        >
+          <text class="h-icon">{{h.icon}}</text>
+          <view class="h-body">
+            <view class="h-head">
+              <text class="h-name">{{h.name}}</text>
+              <text wx:if="{{h.level}}" class="h-level">{{h.level}}</text>
+            </view>
+            <text class="h-sum">结果：{{h.summary}}</text>
+            <text class="h-time">{{h.timeText}}</text>
+          </view>
+          <text class="h-del" catchtap="deleteOne" data-idx="{{idx}}" role="button" aria-label="删除该记录">删除</text>
+        </view>
+      </view>
+    </block>
+
+    <block wx:elif="{{tab === 'method'}}">
+      <view wx:if="{{!mList.length}}" class="empty">
+        <text class="empty-icon">🧩</text>
+        <text class="empty-text">还没有方法练习记录</text>
+        <text class="empty-sub">去方法库选个方法练练吧</text>
+      </view>
+
+      <view wx:else class="list">
+        <view
+          class="hist-card card"
+          wx:for="{{mList}}"
           wx:key="rid"
           wx:for-item="p"
           wx:for-index="idx"
-          bindtap="openInProgressAssess"
-          data-item="{{p}}"
+          bindtap="openMethod"
+          data-idx="{{idx}}"
           role="button"
-          aria-label="继续 {{p.name}} 测评，已答 {{p.answered}}/{{p.total}}，{{p.percent}}%"
+          aria-label="查看 {{p.name}} 练习，{{p.timeText}}"
         >
-          <text class="h-icon" style="background:{{p.color}}1f;">{{p.icon}}</text>
+          <text class="h-icon">{{p.icon}}</text>
           <view class="h-body">
             <view class="h-head">
               <text class="h-name">{{p.name}}</text>
-              <text class="h-level in-progress-tag">进行中</text>
+              <text class="m-tag">练习</text>
             </view>
-            <view class="progress-row">
-              <text class="progress-text">已答 {{p.answered}}/{{p.total}}（{{p.percent}}%）</text>
-              <progress class="progress-bar" percent="{{p.percent}}" stroke-width="6" activeColor="{{p.color}}" backgroundColor="#e2e8f0" />
+            <text class="h-sum">{{p.fields[0].label}}：{{p.fields[0].value}}</text>
+            <text class="h-time">{{p.timeText}}</text>
+          </view>
+          <text class="h-del" catchtap="deleteMethodOne" data-idx="{{idx}}" role="button" aria-label="删除该记录">删除</text>
+        </view>
+      </view>
+    </block>
+
+    <block wx:else>
+      <view wx:if="{{!tList.length}}" class="empty">
+        <text class="empty-icon">🎮</text>
+        <text class="empty-text">还没有训练记录</text>
+        <text class="empty-sub">去脑力训练选个游戏挑战吧</text>
+      </view>
+
+      <view wx:else class="list">
+        <view
+          class="hist-card card"
+          wx:for="{{tList}}"
+          wx:key="time"
+          wx:for-item="t"
+          wx:for-index="idx"
+          bindtap="openTrain"
+          data-idx="{{idx}}"
+          role="button"
+          aria-label="查看 {{t.name}} {{t.levelLabel}} 训练，{{t.metricLabel}} {{t.value}}，{{t.timeText}}"
+        >
+          <text class="h-icon" style="background:{{t.color}}1f;">{{t.icon}}</text>
+          <view class="h-body">
+            <view class="h-head">
+              <text class="h-name">{{t.name}}</text>
+              <text class="t-tag">{{t.levelLabel}}</text>
             </view>
-            <text class="h-time">上次编辑：{{p.updatedText}}</text>
+            <text class="h-sum">{{t.metricLabel}}：{{t.value}}</text>
+            <text class="h-time">{{t.dimLabel}} · {{t.timeText}}</text>
           </view>
+          <text class="h-del" catchtap="deleteTrainOne" data-idx="{{idx}}" role="button" aria-label="删除该记录">删除</text>
         </view>
       </view>
-    </view>
+    </block>
 
-    <scroll-view wx:if="{{filters.length > 1}}" class="filter-bar" scroll-x="true">
-      <view
-        class="chip {{active === f.id ? 'on' : ''}}"
-        wx:for="{{filters}}"
-        wx:key="id"
-        wx:for-item="f"
-        bindtap="onFilter"
-        data-id="{{f.id}}"
-        role="button"
-        aria-label="筛选 {{f.name}} 测评表记录"
-      >
-        <text class="chip-icon">{{f.icon}}</text>
-        <text>{{f.name}}</text>
-      </view>
-    </scroll-view>
-
-    <view wx:if="{{!list.length && !inProgressAssess.length}}" class="empty">
-      <text class="empty-icon">📭</text>
-      <text class="empty-text">还没有测评记录</text>
-      <text class="empty-sub">去首页选择一个测评表开始吧</text>
-    </view>
-
-    <view wx:else class="list">
-      <view
-        class="hist-card card"
-        wx:for="{{list}}"
-        wx:key="time"
-        wx:for-item="h"
-        wx:for-index="idx"
-        bindtap="open"
-        data-idx="{{idx}}"
-        role="button"
-        aria-label="查看 {{h.name}} 测评结果，{{h.summary}}{{h.level ? '，' + h.level : ''}}，{{h.timeText}}"
-      >
-        <text class="h-icon">{{h.icon}}</text>
-        <view class="h-body">
-          <view class="h-head">
-            <text class="h-name">{{h.name}}</text>
-            <text wx:if="{{h.level}}" class="h-level">{{h.level}}</text>
-          </view>
-          <text class="h-sum">结果：{{h.summary}}</text>
-          <text class="h-time">{{h.timeText}}</text>
-        </view>
-        <text class="h-del" catchtap="deleteOne" data-idx="{{idx}}" role="button" aria-label="删除该记录">删除</text>
-      </view>
-    </view>
-  </block>
-
-  <block wx:elif="{{tab === 'method'}}">
-    <view wx:if="{{!mList.length}}" class="empty">
-      <text class="empty-icon">🧩</text>
-      <text class="empty-text">还没有方法练习记录</text>
-      <text class="empty-sub">去方法库选个方法练练吧</text>
-    </view>
-
-    <view wx:else class="list">
-      <view
-        class="hist-card card"
-        wx:for="{{mList}}"
-        wx:key="rid"
-        wx:for-item="p"
-        wx:for-index="idx"
-        bindtap="openMethod"
-        data-idx="{{idx}}"
-        role="button"
-        aria-label="查看 {{p.name}} 练习，{{p.timeText}}"
-      >
-        <text class="h-icon">{{p.icon}}</text>
-        <view class="h-body">
-          <view class="h-head">
-            <text class="h-name">{{p.name}}</text>
-            <text class="m-tag">练习</text>
-          </view>
-          <text class="h-sum">{{p.fields[0].label}}：{{p.fields[0].value}}</text>
-          <text class="h-time">{{p.timeText}}</text>
-        </view>
-        <text class="h-del" catchtap="deleteMethodOne" data-idx="{{idx}}" role="button" aria-label="删除该记录">删除</text>
-      </view>
-    </view>
-  </block>
-
-  <block wx:else>
-    <view wx:if="{{!tList.length}}" class="empty">
-      <text class="empty-icon">🎮</text>
-      <text class="empty-text">还没有训练记录</text>
-      <text class="empty-sub">去脑力训练选个游戏挑战吧</text>
-    </view>
-
-    <view wx:else class="list">
-      <view
-        class="hist-card card"
-        wx:for="{{tList}}"
-        wx:key="time"
-        wx:for-item="t"
-        wx:for-index="idx"
-        bindtap="openTrain"
-        data-idx="{{idx}}"
-        role="button"
-        aria-label="查看 {{t.name}} {{t.levelLabel}} 训练，{{t.metricLabel}} {{t.value}}，{{t.timeText}}"
-      >
-        <text class="h-icon" style="background:{{t.color}}1f;">{{t.icon}}</text>
-        <view class="h-body">
-          <view class="h-head">
-            <text class="h-name">{{t.name}}</text>
-            <text class="t-tag">{{t.levelLabel}}</text>
-          </view>
-          <text class="h-sum">{{t.metricLabel}}：{{t.value}}</text>
-          <text class="h-time">{{t.dimLabel}} · {{t.timeText}}</text>
-        </view>
-        <text class="h-del" catchtap="deleteTrainOne" data-idx="{{idx}}" role="button" aria-label="删除该记录">删除</text>
-      </view>
-    </view>
-  </block>
-
-  <view class="brand-foot">心智探索局 · 测评 · 方法 · 训练</view>
+    <view class="brand-foot">心智探索局 · 测评 · 方法 · 训练</view>
+  </view>
 </view>

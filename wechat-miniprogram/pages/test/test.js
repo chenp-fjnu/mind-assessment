@@ -1,6 +1,7 @@
 const { getModule } = require('../../utils/registry')
 const { drawCell } = require('../../utils/figure')
 const { readableTextColor } = require('../../utils/color')
+const { useTheme } = require('../../utils/theme-store')
 
 Page({
   data: {
@@ -20,6 +21,7 @@ Page({
   },
 
   onLoad(query) {
+    useTheme(this)
     const mod = getModule(query.id)
     if (!mod) {
       wx.showToast({ title: '未找到测评', icon: 'none' })

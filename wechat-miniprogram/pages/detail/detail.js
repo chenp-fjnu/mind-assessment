@@ -1,6 +1,7 @@
 const { getModule, TYPE_LABELS, getMetaList } = require('../../utils/registry')
 const { readableTextColor } = require('../../utils/color')
 const { genCard, saveToAlbum } = require('../../utils/share')
+const { useTheme } = require('../../utils/theme-store')
 
 // 渐变映射
 const GRADIENT_MAP = {
@@ -17,6 +18,7 @@ Page({
     history: { count: 0 },
   },
   onLoad(query) {
+    useTheme(this)
     const mod = getModule(query.id)
     if (!mod) {
       this.setData({ invalid: true })

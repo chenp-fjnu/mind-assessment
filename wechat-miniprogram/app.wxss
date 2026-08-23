@@ -2,6 +2,7 @@
    全局设计系统 - 统一色彩、间距、阴影、圆角、字体
    所有页面必须通过 CSS 变量使用颜色，禁止硬编码
    单一事实来源：此文件定义所有语义化变量
+   支持 .theme-light / .theme-dark 类切换，配合 theme-store.js
    ============================================ */
 
 page {
@@ -20,9 +21,10 @@ page {
 }
 
 /* ============================================
-   CSS 变量定义 - 单一事实来源
-   所有页面必须通过这些变量使用颜色
+   CSS 变量定义 - 浅色模式 (默认)
    ============================================ */
+.theme-wrapper,
+.theme-wrapper.theme-light,
 page {
   /* ===== 背景层级 ===== */
   --bg-primary: #fefefe;           /* 页面主背景 - 更柔和的白 */
@@ -235,163 +237,161 @@ page {
 }
 
 /* ============================================
-   深色模式变量覆盖
+   深色模式变量覆盖 - 通过 .theme-wrapper.theme-dark 类激活
    ============================================ */
-@media (prefers-color-scheme: dark) {
-  page {
-    /* 背景层级 */
-    --bg-primary: #0a0a0c;
-    --bg-secondary: #141416;
-    --bg-tertiary: #1e1e20;
-    --bg-inverted: #fafafa;
-    --bg-brand: rgba(125, 131, 216, 0.1);
-    --bg-brand-strong: rgba(125, 131, 216, 0.15);
-    --bg-card: #141416;
+.theme-wrapper.theme-dark {
+  /* 背景层级 */
+  --bg-primary: #0a0a0c;
+  --bg-secondary: #141416;
+  --bg-tertiary: #1e1e20;
+  --bg-inverted: #fafafa;
+  --bg-brand: rgba(125, 131, 216, 0.1);
+  --bg-brand-strong: rgba(125, 131, 216, 0.15);
+  --bg-card: #141416;
 
-    /* 文字层级 */
-    --text-primary: #f0f0f0;
-    --text-secondary: #b8b8b8;
-    --text-tertiary: #888888;
-    --text-muted: #6a6a6a;
-    --text-inverse: #0a0a0c;
-    --text-brand: #a8acf0;
-    --text-link: #b0b4e8;
-    --text-success: #5ed98f;
-    --text-warning: #f0c858;
-    --text-error: #e88080;
+  /* 文字层级 */
+  --text-primary: #f0f0f0;
+  --text-secondary: #b8b8b8;
+  --text-tertiary: #888888;
+  --text-muted: #6a6a6a;
+  --text-inverse: #0a0a0c;
+  --text-brand: #a8acf0;
+  --text-link: #b0b4e8;
+  --text-success: #5ed98f;
+  --text-warning: #f0c858;
+  --text-error: #e88080;
 
-    /* 边框/分割线 */
-    --border-light: #2a2a2e;
-    --border-medium: #38383c;
-    --border-dark: #4a4a4e;
-    --border-focus: #9aa0e8;
-    --border-divider: #2a2a2e;
+  /* 边框/分割线 */
+  --border-light: #2a2a2e;
+  --border-medium: #38383c;
+  --border-dark: #4a4a4e;
+  --border-focus: #9aa0e8;
+  --border-divider: #2a2a2e;
 
-    /* 交互状态 */
-    --interactive-hover: #1a1a1c;
-    --interactive-active: #222224;
-    --interactive-disabled: #2a2a2e;
-    --focus-ring: #b8bbe8;
+  /* 交互状态 */
+  --interactive-hover: #1a1a1c;
+  --interactive-active: #222224;
+  --interactive-disabled: #2a2a2e;
+  --focus-ring: #b8bbe8;
 
-    /* 阴影 */
-    --shadow-sm: 0 2rpx 8rpx rgba(0, 0, 0, 0.2);
-    --shadow-md: 0 8rpx 24rpx rgba(0, 0, 0, 0.25);
-    --shadow-lg: 0 16rpx 40rpx rgba(0, 0, 0, 0.3);
-    --shadow-xl: 0 24rpx 56rpx rgba(0, 0, 0, 0.35);
-    --shadow-glow: 0 0 40rpx rgba(125, 131, 216, 0.15);
-    --shadow-glow-assess: 0 0 40rpx rgba(155, 125, 216, 0.18);
-    --shadow-glow-method: 0 0 40rpx rgba(76, 196, 176, 0.18);
-    --shadow-glow-train: 0 0 40rpx rgba(232, 180, 56, 0.18);
+  /* 阴影 */
+  --shadow-sm: 0 2rpx 8rpx rgba(0, 0, 0, 0.2);
+  --shadow-md: 0 8rpx 24rpx rgba(0, 0, 0, 0.25);
+  --shadow-lg: 0 16rpx 40rpx rgba(0, 0, 0, 0.3);
+  --shadow-xl: 0 24rpx 56rpx rgba(0, 0, 0, 0.35);
+  --shadow-glow: 0 0 40rpx rgba(125, 131, 216, 0.15);
+  --shadow-glow-assess: 0 0 40rpx rgba(155, 125, 216, 0.18);
+  --shadow-glow-method: 0 0 40rpx rgba(76, 196, 176, 0.18);
+  --shadow-glow-train: 0 0 40rpx rgba(232, 180, 56, 0.18);
 
-    /* 功能色 - 深色模式清淡版 */
-    --color-assess-50: rgba(155, 125, 216, 0.1);
-    --color-assess-100: rgba(155, 125, 216, 0.15);
-    --color-assess-400: #b897e8;
-    --color-assess: #9b7dd8;
-    --color-assess-600: #b897e8;
-    --color-assess-700: #c8afe8;
-    --color-assess-light: rgba(155, 125, 216, 0.1);
-    --color-assess-dark: #b897e8;
-    --color-assess-darker: #c8afe8;
+  /* 功能色 - 深色模式清淡版 */
+  --color-assess-50: rgba(155, 125, 216, 0.1);
+  --color-assess-100: rgba(155, 125, 216, 0.15);
+  --color-assess-400: #b897e8;
+  --color-assess: #9b7dd8;
+  --color-assess-600: #b897e8;
+  --color-assess-700: #c8afe8;
+  --color-assess-light: rgba(155, 125, 216, 0.1);
+  --color-assess-dark: #b897e8;
+  --color-assess-darker: #c8afe8;
 
-    --color-method-50: rgba(76, 196, 176, 0.1);
-    --color-method-100: rgba(76, 196, 176, 0.15);
-    --color-method-400: #5ed8c6;
-    --color-method: #4cc4b0;
-    --color-method-600: #5ed8c6;
-    --color-method-700: #7edec8;
-    --color-method-light: rgba(76, 196, 176, 0.1);
-    --color-method-dark: #5ed8c6;
-    --color-method-darker: #7edec8;
+  --color-method-50: rgba(76, 196, 176, 0.1);
+  --color-method-100: rgba(76, 196, 176, 0.15);
+  --color-method-400: #5ed8c6;
+  --color-method: #4cc4b0;
+  --color-method-600: #5ed8c6;
+  --color-method-700: #7edec8;
+  --color-method-light: rgba(76, 196, 176, 0.1);
+  --color-method-dark: #5ed8c6;
+  --color-method-darker: #7edec8;
 
-    --color-train-50: rgba(232, 180, 56, 0.1);
-    --color-train-100: rgba(232, 180, 56, 0.15);
-    --color-train-400: #f4c84d;
-    --color-train: #e8b438;
-    --color-train-600: #f4c84d;
-    --color-train-700: #f6d478;
-    --color-train-light: rgba(232, 180, 56, 0.1);
-    --color-train-dark: #f4c84d;
-    --color-train-darker: #f6d478;
+  --color-train-50: rgba(232, 180, 56, 0.1);
+  --color-train-100: rgba(232, 180, 56, 0.15);
+  --color-train-400: #f4c84d;
+  --color-train: #e8b438;
+  --color-train-600: #f4c84d;
+  --color-train-700: #f6d478;
+  --color-train-light: rgba(232, 180, 56, 0.1);
+  --color-train-dark: #f4c84d;
+  --color-train-darker: #f6d478;
 
-    --color-brand-50: rgba(125, 131, 216, 0.1);
-    --color-brand-100: rgba(125, 131, 216, 0.15);
-    --color-brand-400: #9aa0e8;
-    --color-brand: #7d83d8;
-    --color-brand-600: #9aa0e8;
-    --color-brand-700: #abaef0;
+  --color-brand-50: rgba(125, 131, 216, 0.1);
+  --color-brand-100: rgba(125, 131, 216, 0.15);
+  --color-brand-400: #9aa0e8;
+  --color-brand: #7d83d8;
+  --color-brand-600: #9aa0e8;
+  --color-brand-700: #abaef0;
 
-    /* 渐变 - 深色模式更柔和清淡 */
-    --grad-hero: linear-gradient(135deg, #7d83d8 0%, #9b7dd8 50%, #4cc4b0 100%);
-    --grad-assess-page: linear-gradient(135deg, #9b7dd8 0%, #b897e8 100%);
-    --grad-method-page: linear-gradient(135deg, #4cc4b0 0%, #42b5a2 100%);
-    --grad-train-page: linear-gradient(135deg, #e8b438 0%, #f4c84d 100%);
-    --grad-assess-card: linear-gradient(135deg, rgba(155,125,216,0.8) 0%, rgba(184,151,232,0.8) 100%);
-    --grad-method-card: linear-gradient(135deg, rgba(76,196,176,0.8) 0%, rgba(66,181,162,0.8) 100%);
-    --grad-train-card: linear-gradient(135deg, rgba(232,180,56,0.8) 0%, rgba(244,200,77,0.8) 100%);
-    --grad-assess-entry: linear-gradient(135deg, #9b7dd8 0%, #8a6bd0 100%);
-    --grad-method-entry: linear-gradient(135deg, #4cc4b0 0%, #42b5a2 100%);
-    --grad-train-entry: linear-gradient(135deg, #e8b438 0%, #d8a330 100%);
-    --grad-divider: linear-gradient(90deg, transparent, var(--border-light), transparent);
+  /* 渐变 - 深色模式更柔和清淡 */
+  --grad-hero: linear-gradient(135deg, #7d83d8 0%, #9b7dd8 50%, #4cc4b0 100%);
+  --grad-assess-page: linear-gradient(135deg, #9b7dd8 0%, #b897e8 100%);
+  --grad-method-page: linear-gradient(135deg, #4cc4b0 0%, #42b5a2 100%);
+  --grad-train-page: linear-gradient(135deg, #e8b438 0%, #f4c84d 100%);
+  --grad-assess-card: linear-gradient(135deg, rgba(155,125,216,0.8) 0%, rgba(184,151,232,0.8) 100%);
+  --grad-method-card: linear-gradient(135deg, rgba(76,196,176,0.8) 0%, rgba(66,181,162,0.8) 100%);
+  --grad-train-card: linear-gradient(135deg, rgba(232,180,56,0.8) 0%, rgba(244,200,77,0.8) 100%);
+  --grad-assess-entry: linear-gradient(135deg, #9b7dd8 0%, #8a6bd0 100%);
+  --grad-method-entry: linear-gradient(135deg, #4cc4b0 0%, #42b5a2 100%);
+  --grad-train-entry: linear-gradient(135deg, #e8b438 0%, #d8a330 100%);
+  --grad-divider: linear-gradient(90deg, transparent, var(--border-light), transparent);
 
-    /* 语义化组合色 - 深色模式 */
-    --card-bg: var(--bg-card);
-    --card-border: var(--border-light);
-    --card-shadow: var(--shadow-md);
+  /* 语义化组合色 - 深色模式 */
+  --card-bg: var(--bg-card);
+  --card-border: var(--border-light);
+  --card-shadow: var(--shadow-md);
 
-    --btn-primary-bg: var(--color-brand);
-    --btn-primary-text: var(--text-inverse);
-    --btn-secondary-bg: var(--bg-tertiary);
-    --btn-secondary-text: var(--text-secondary);
-    --btn-ghost-bg: transparent;
-    --btn-ghost-text: var(--text-brand);
-    --btn-ghost-border: var(--color-brand-400);
-    --btn-disabled-bg: var(--interactive-disabled);
-    --btn-disabled-text: var(--text-muted);
+  --btn-primary-bg: var(--color-brand);
+  --btn-primary-text: var(--text-inverse);
+  --btn-secondary-bg: var(--bg-tertiary);
+  --btn-secondary-text: var(--text-secondary);
+  --btn-ghost-bg: transparent;
+  --btn-ghost-text: var(--text-brand);
+  --btn-ghost-border: var(--color-brand-400);
+  --btn-disabled-bg: var(--interactive-disabled);
+  --btn-disabled-text: var(--text-muted);
 
-    --badge-assess-bg: var(--color-assess-light);
-    --badge-assess-text: var(--color-assess-dark);
-    --badge-method-bg: var(--color-method-light);
-    --badge-method-text: var(--color-method-dark);
-    --badge-train-bg: var(--color-train-light);
-    --badge-train-text: var(--color-train-dark);
-    --badge-success-bg: rgba(34, 168, 106, 0.15);
-    --badge-success-text: #5ed98f;
-    --badge-warning-bg: rgba(224, 144, 16, 0.15);
-    --badge-warning-text: #f0c858;
-    --badge-error-bg: rgba(217, 74, 74, 0.15);
-    --badge-error-text: #e88080;
+  --badge-assess-bg: var(--color-assess-light);
+  --badge-assess-text: var(--color-assess-dark);
+  --badge-method-bg: var(--color-method-light);
+  --badge-method-text: var(--color-method-dark);
+  --badge-train-bg: var(--color-train-light);
+  --badge-train-text: var(--color-train-dark);
+  --badge-success-bg: rgba(34, 168, 106, 0.15);
+  --badge-success-text: #5ed98f;
+  --badge-warning-bg: rgba(224, 144, 16, 0.15);
+  --badge-warning-text: #f0c858;
+  --badge-error-bg: rgba(217, 74, 74, 0.15);
+  --badge-error-text: #e88080;
 
-    --input-bg: var(--bg-tertiary);
-    --input-border: var(--border-light);
-    --input-border-focus: var(--border-focus);
-    --input-text: var(--text-primary);
-    --input-placeholder: var(--text-muted);
+  --input-bg: var(--bg-tertiary);
+  --input-border: var(--border-light);
+  --input-border-focus: var(--border-focus);
+  --input-text: var(--text-primary);
+  --input-placeholder: var(--text-muted);
 
-    --search-bg: var(--bg-card);
-    --search-shadow: var(--shadow-sm);
+  --search-bg: var(--bg-card);
+  --search-shadow: var(--shadow-sm);
 
-    --chip-bg: var(--bg-tertiary);
-    --chip-text: var(--text-tertiary);
-    --chip-active-bg: var(--color-brand);
-    --chip-active-text: var(--text-inverse);
+  --chip-bg: var(--bg-tertiary);
+  --chip-text: var(--text-tertiary);
+  --chip-active-bg: var(--color-brand);
+  --chip-active-text: var(--text-inverse);
 
-    --progress-bg: var(--bg-tertiary);
-    --progress-fill-assess: var(--color-assess);
-    --progress-fill-method: var(--color-method);
-    --progress-fill-train: var(--color-train);
+  --progress-bg: var(--bg-tertiary);
+  --progress-fill-assess: var(--color-assess);
+  --progress-fill-method: var(--color-method);
+  --progress-fill-train: var(--color-train);
 
-    --result-head-bg: var(--grad-hero);
-    --result-card-bg: var(--bg-card);
-    --result-bar-bg: var(--bg-tertiary);
-    --result-bipolar-left: var(--bg-tertiary);
-    --result-bipolar-right-assess: var(--color-assess);
-    --result-bipolar-right-method: var(--color-method);
-    --result-bipolar-right-train: var(--color-train);
-    --result-note-bg: rgba(232, 180, 56, 0.12);
-    --result-note-border: #f4c84d;
-    --result-note-text: #f0c858;
-  }
+  --result-head-bg: var(--grad-hero);
+  --result-card-bg: var(--bg-card);
+  --result-bar-bg: var(--bg-tertiary);
+  --result-bipolar-left: var(--bg-tertiary);
+  --result-bipolar-right-assess: var(--color-assess);
+  --result-bipolar-right-method: var(--color-method);
+  --result-bipolar-right-train: var(--color-train);
+  --result-note-bg: rgba(232, 180, 56, 0.12);
+  --result-note-border: #f4c84d;
+  --result-note-text: #f0c858;
 }
 
 /* ============================================

@@ -1,71 +1,73 @@
-<view wx:if="{{method}}" class="scroll-page">
-  <view class="head" style="background:{{method.color}};">
-    <text class="head-icon">{{method.icon}}</text>
-    <text class="head-name">{{method.name}}</text>
-    <text class="head-cat">{{method.category}}</text>
-    <text class="head-sum">{{method.summary}}</text>
-    <button wx:if="{{isInteractive}}" class="head-practice" style="background:rgba(255,255,255,0.2);color:{{method.colorText || '#fff'}};" bindtap="goPractice" aria-label="开始互动练习">互动练习</button>
-  </view>
+<view class="theme-wrapper {{themeClass}}">
+  <view wx:if="{{method}}" class="scroll-page">
+    <view class="head" style="background:{{method.color}};">
+      <text class="head-icon">{{method.icon}}</text>
+      <text class="head-name">{{method.name}}</text>
+      <text class="head-cat">{{method.category}}</text>
+      <text class="head-sum">{{method.summary}}</text>
+      <button wx:if="{{isInteractive}}" class="head-practice" style="background:rgba(255,255,255,0.2);color:{{method.colorText || '#fff'}};" bindtap="goPractice" aria-label="开始互动练习">互动练习</button>
+    </view>
 
-  <view wx:if="{{method.acronym && method.acronym.length}}" class="card sec">
-    <text class="sec-title">名称拆解</text>
-    <view class="acro">
-      <view class="acro-item" wx:for="{{method.acronym}}" wx:key="letter" wx:for-item="a">
-        <text class="acro-letter">{{a.letter}}</text>
-        <view class="acro-body">
-          <text class="acro-en">{{a.en}}</text>
-          <text class="acro-zh">{{a.zh}}</text>
+    <view wx:if="{{method.acronym && method.acronym.length}}" class="card sec">
+      <text class="sec-title">名称拆解</text>
+      <view class="acro">
+        <view class="acro-item" wx:for="{{method.acronym}}" wx:key="letter" wx:for-item="a">
+          <text class="acro-letter">{{a.letter}}</text>
+          <view class="acro-body">
+            <text class="acro-en">{{a.en}}</text>
+            <text class="acro-zh">{{a.zh}}</text>
+          </view>
         </view>
       </view>
     </view>
-  </view>
 
-  <view class="card sec" wx:if="{{content.length}}">
-    <text class="sec-title">关于这个方法</text>
-    <view class="content-block" wx:for="{{content}}" wx:key="title" wx:for-item="c">
-      <text class="content-title">{{c.title}}</text>
-      <text class="content-text">{{c.text}}</text>
-    </view>
-  </view>
-
-  <view class="card sec" wx:if="{{steps.length}}">
-    <text class="sec-title">上手步骤</text>
-    <view class="step-list">
-      <view class="step-item" wx:for="{{steps}}" wx:key="text" wx:for-item="st" wx:for-index="si">
-        <block wx:if="{{st.showNo}}">
-          <text class="step-no">{{si + 1}}</text>
-          <text class="step-sep">：</text>
-        </block>
-        <text class="step-text">{{st.text}}</text>
+    <view class="card sec" wx:if="{{content.length}}">
+      <text class="sec-title">关于这个方法</text>
+      <view class="content-block" wx:for="{{content}}" wx:key="title" wx:for-item="c">
+        <text class="content-title">{{c.title}}</text>
+        <text class="content-text">{{c.text}}</text>
       </view>
     </view>
-  </view>
 
-  <view class="card sec" wx:if="{{method.example}}">
-    <text class="sec-title">举个栗子</text>
-    <view class="example"><text class="example-text">{{method.example}}</text></view>
-  </view>
-
-  <view class="card sec" wx:if="{{method.tips && method.tips.length}}">
-    <text class="sec-title">小贴士</text>
-    <view class="tip-item" wx:for="{{method.tips}}" wx:key="*this" wx:for-item="t">
-      <text class="tip-dot">·</text>
-      <text class="tip-text">{{t}}</text>
+    <view class="card sec" wx:if="{{steps.length}}">
+      <text class="sec-title">上手步骤</text>
+      <view class="step-list">
+        <view class="step-item" wx:for="{{steps}}" wx:key="text" wx:for-item="st" wx:for-index="si">
+          <block wx:if="{{st.showNo}}">
+            <text class="step-no">{{si + 1}}</text>
+            <text class="step-sep">：</text>
+          </block>
+          <text class="step-text">{{st.text}}</text>
+        </view>
+      </view>
     </view>
+
+    <view class="card sec" wx:if="{{method.example}}">
+      <text class="sec-title">举个栗子</text>
+      <view class="example"><text class="example-text">{{method.example}}</text></view>
+    </view>
+
+    <view class="card sec" wx:if="{{method.tips && method.tips.length}}">
+      <text class="sec-title">小贴士</text>
+      <view class="tip-item" wx:for="{{method.tips}}" wx:key="*this" wx:for-item="t">
+        <text class="tip-dot">·</text>
+        <text class="tip-text">{{t}}</text>
+      </view>
+    </view>
+
+    <view class="footer">方法用于自我探索与练习，不能替代专业帮助</view>
+
+    <view class="share-bar">
+      <button class="btn ghost" bindtap="saveCard" aria-label="保存为图片">保存为图片</button>
+      <button class="btn ghost" open-type="share" aria-label="分享给好友">分享给好友</button>
+    </view>
+
+    <canvas type="2d" id="shareCanvas" class="share-canvas"></canvas>
   </view>
 
-  <view class="footer">方法用于自我探索与练习，不能替代专业帮助</view>
-
-  <view class="share-bar">
-    <button class="btn ghost" bindtap="saveCard" aria-label="保存为图片">保存为图片</button>
-    <button class="btn ghost" open-type="share" aria-label="分享给好友">分享给好友</button>
+  <view wx:else class="invalid">
+    <text class="invalid-icon">🧩</text>
+    <text class="invalid-title">未找到该方法</text>
+    <button class="btn home" bindtap="goBack">返回</button>
   </view>
-
-  <canvas type="2d" id="shareCanvas" class="share-canvas"></canvas>
-</view>
-
-<view wx:else class="invalid">
-  <text class="invalid-icon">🧩</text>
-  <text class="invalid-title">未找到该方法</text>
-  <button class="btn home" bindtap="goBack">返回</button>
 </view>

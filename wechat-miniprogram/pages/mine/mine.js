@@ -1,4 +1,5 @@
 const trainStore = require('../../utils/train-store')
+const { useTheme, THEME_MODES } = require('../../utils/theme-store')
 
 function countPractices() {
   const stored = wx.getStorageSync('ma_practices') || {}
@@ -11,6 +12,11 @@ Page({
     practiceCount: 0,
     trainCount: 0,
     recordSummary: '',
+    themeMode: THEME_MODES.AUTO,
+    currentTheme: THEME_MODES.LIGHT,
+  },
+  onLoad() {
+    useTheme(this)
   },
   onShow() {
     const hist = wx.getStorageSync('ma_history') || []
@@ -30,4 +36,9 @@ Page({
   },
   goHistory() { wx.navigateTo({ url: '/pages/history/history' }) },
   goAbout() { wx.navigateTo({ url: '/pages/about/about' }) },
+  onThemeChange(e) {
+    const mode = e.currentTarget.dataset.mode
+    this.setThemeMode(mode)
+    this.setData({ themeMode: mode })
+  },
 })

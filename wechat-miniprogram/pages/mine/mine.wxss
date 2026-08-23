@@ -56,3 +56,37 @@
 .menu-body { flex: 1; margin-left: 22rpx; overflow: hidden; }
 .menu-name { font-size: var(--font-size-2xl); color: var(--text-primary); font-weight: var(--font-weight-semibold); }
 .menu-sub { font-size: var(--font-size-sm); color: var(--text-tertiary); margin-top: 6rpx; }
+
+.menu-section-title {
+  padding: 20rpx 28rpx 8rpx;
+  margin-top: 12rpx;
+  margin-bottom: 0;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  border-radius: 0;
+}
+.menu-section-title text {
+  font-size: var(--font-size-sm);
+  color: var(--text-muted);
+  font-weight: var(--font-weight-semibold);
+}
+
+.theme-selector {
+  position: relative;
+}
+.theme-icon {
+  background: var(--color-method-light) !important;
+  color: var(--color-method) !important;
+}
+.theme-check {
+  position: absolute;
+  right: 28rpx;
+  font-size: 28rpx;
+  color: var(--color-brand);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.theme-check.show {
+  opacity: 1;
+}

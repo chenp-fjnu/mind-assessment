@@ -1,152 +1,154 @@
-<view wx:if="{{invalid}}" class="invalid">
-  <text class="invalid-icon">🧭</text>
-  <text class="invalid-title">暂无测评结果</text>
-  <text class="invalid-sub">请先在首页选择一个测评表完成测评</text>
-  <button class="btn home" style="background:{{meta.color || '#7c3aed'}};color:{{meta.colorText || '#fff'}};" bindtap="goHome" aria-label="返回首页">返回首页</button>
-</view>
+<view class="theme-wrapper {{themeClass}}">
+  <view wx:if="{{invalid}}" class="invalid">
+    <text class="invalid-icon">🧭</text>
+    <text class="invalid-title">暂无测评结果</text>
+    <text class="invalid-sub">请先在首页选择一个测评表完成测评</text>
+    <button class="btn home" style="background:{{meta.color || '#7c3aed'}};color:{{meta.colorText || '#fff'}};" bindtap="goHome" aria-label="返回首页">返回首页</button>
+  </view>
 
-<view class="scroll-page" wx:elif="{{meta.name}}">
-  <view wx:if="{{viewError}}" class="warn">结果解析出现异常，请重新测评或返回首页重试</view>
-  <view class="head" style="background:{{meta.color}};color:{{meta.colorText}};">
-    <text class="head-icon">{{meta.icon}}</text>
-    <text class="head-name">{{meta.name}}</text>
-    <view class="primary-box">
-      <text class="primary-value {{primarySize}}" aria-label="{{primaryLabel}}：{{primaryValue}}{{levelText ? '，' + levelText : ''}}">{{primaryValue}}</text>
-      <text class="primary-label">{{primaryLabel}}</text>
+  <view class="scroll-page" wx:elif="{{meta.name}}">
+    <view wx:if="{{viewError}}" class="warn">结果解析出现异常，请重新测评或返回首页重试</view>
+    <view class="head" style="background:{{meta.color}};color:{{meta.colorText}};">
+      <text class="head-icon">{{meta.icon}}</text>
+      <text class="head-name">{{meta.name}}</text>
+      <view class="primary-box">
+        <text class="primary-value {{primarySize}}" aria-label="{{primaryLabel}}：{{primaryValue}}{{levelText ? '，' + levelText : ''}}">{{primaryValue}}</text>
+        <text class="primary-label">{{primaryLabel}}</text>
+      </view>
+      <text wx:if="{{levelText}}" class="level-badge" style="background:{{levelColor}};color:{{levelColorText}};">{{levelText}}</text>
+      <text wx:if="{{descText}}" class="head-desc">{{descText}}</text>
+      <text wx:if="{{retakeHint}}" class="retake-hint">{{retakeHint}}</text>
     </view>
-    <text wx:if="{{levelText}}" class="level-badge" style="background:{{levelColor}};color:{{levelColorText}};">{{levelText}}</text>
-    <text wx:if="{{descText}}" class="head-desc">{{descText}}</text>
-    <text wx:if="{{retakeHint}}" class="retake-hint">{{retakeHint}}</text>
-  </view>
 
-  <view wx:if="{{testedTime}}" class="test-meta">
-    <text class="test-time">测评于 {{testedTime}}</text>
-    <text wx:if="{{retestGap}}" class="test-gap">距上次重测 {{retestGap}}</text>
-    <text wx:if="{{timeText}}" class="test-gap">用时 {{timeText}}</text>
-  </view>
-
-  <!-- 分组得分 -->
-  <view wx:if="{{showGroups}}" class="card sec">
-    <text class="sec-title">维度得分</text>
-    <view class="group" wx:for="{{groups}}" wx:key="key" wx:for-item="g">
-      <view class="group-head">
-        <text>{{g.label}}</text>
-        <text class="group-num">{{g.display || g.percent + '%'}}</text>
-      </view>
-      <view class="bar">
-        <view class="bar-fill" style="width:{{g.percent}}%;background:{{meta.color}};"></view>
-      </view>
+    <view wx:if="{{testedTime}}" class="test-meta">
+      <text class="test-time">测评于 {{testedTime}}</text>
+      <text wx:if="{{retestGap}}" class="test-gap">距上次重测 {{retestGap}}</text>
+      <text wx:if="{{timeText}}" class="test-gap">用时 {{timeText}}</text>
     </view>
-  </view>
 
-  <!-- 双极维度（MBTI） -->
-  <view wx:if="{{showBipolar}}" class="card sec">
-    <text class="sec-title">类型维度</text>
-    <view class="bipolar" wx:for="{{dims}}" wx:key="key" wx:for-item="d">
-      <text class="bp-name">{{d.leftName}} {{d.rightName}}</text>
-      <view class="bp-bar">
-        <view class="bp-left" style="width:{{d.leftPercent}}%;">{{d.leftPercent}}%</view>
-        <view class="bp-right" style="width:{{d.rightPercent}}%;background:{{meta.color}};color:{{meta.colorText}};">{{d.rightPercent}}%</view>
-      </view>
-      <text class="bp-desc">{{d.dominantDesc}}</text>
-    </view>
-  </view>
-
-  <!-- 测评表维度（大五 / 16PF） -->
-  <view wx:if="{{showDims}}" class="card sec">
-    <text class="sec-title">维度剖析</text>
-    <view class="dim" wx:for="{{dims}}" wx:key="key" wx:for-item="d">
-      <view class="dim-head">
-        <text class="dim-name">{{d.name}}</text>
-        <text class="dim-pct">{{d.percent}}%</text>
-      </view>
-      <view class="bar">
-        <view class="bar-fill" style="width:{{d.percent}}%;background:{{meta.color}};"></view>
-      </view>
-      <text wx:if="{{d.text}}" class="dim-text">{{d.text}}</text>
-    </view>
-  </view>
-
-  <!-- 分测验（韦氏） -->
-  <view wx:if="{{showSubtests}}" class="card sec">
-    <text class="sec-title">分测验表现</text>
-    <view class="sub" wx:for="{{subtests}}" wx:key="name" wx:for-item="s">
-      <view class="sub-head">
-        <text>{{s.name}}</text>
-        <text class="sub-num">{{s.correct}}/{{s.total}}</text>
-      </view>
-      <view class="bar">
-        <view class="bar-fill" style="width:{{s.scalePercent}}%;background:{{meta.color}};"></view>
+    <!-- 分组得分 -->
+    <view wx:if="{{showGroups}}" class="card sec">
+      <text class="sec-title">维度得分</text>
+      <view class="group" wx:for="{{groups}}" wx:key="key" wx:for-item="g">
+        <view class="group-head">
+          <text>{{g.label}}</text>
+          <text class="group-num">{{g.display || g.percent + '%'}}</text>
+        </view>
+        <view class="bar">
+          <view class="bar-fill" style="width:{{g.percent}}%;background:{{meta.color}};"></view>
+        </view>
       </view>
     </view>
-  </view>
 
-  <!-- 解读 -->
-  <view wx:if="{{interpretations.length}}" class="card sec">
-    <text class="sec-title">结果解读</text>
-    <view class="interp" wx:for="{{interpretations}}" wx:key="title" wx:for-item="it">
-      <text class="interp-title">{{it.title}}</text>
-      <text class="interp-text">{{it.text}}</text>
-    </view>
-  </view>
-
-  <!-- 历史趋势 -->
-  <view wx:if="{{showTrend}}" class="card sec">
-    <text class="sec-title">历史趋势（近 {{trendValues.length}} 次）</text>
-    <canvas type="2d" id="trendCanvas" class="trend-canvas" role="img" aria-label="历史测评趋势折线图"></canvas>
-    <text class="trend-delta {{trendDelta>0?'up':(trendDelta<0?'down':'flat')}}">
-      较上次 {{trendDelta>0?'↑':(trendDelta<0?'↓':'→')}} {{trendDelta>0?'+':''}}{{trendDelta}}
-    </text>
-    <text class="trend-range">首次 {{firstValue}} → 最近 {{lastValue}}（{{rangeDelta>0?'+':''}}{{rangeDelta}}）</text>
-  </view>
-  <view wx:elif="{{catList.length}}" class="card sec">
-    <text class="sec-title">历史记录（共 {{catList.length}} 次）</text>
-    <view wx:if="{{firstSummary && lastSummary && firstSummary !== lastSummary}}" class="trend-range">
-      首次 {{firstSummary}} → 最近 {{lastSummary}}
-    </view>
-    <view class="cat-list">
-      <view class="cat-item" wx:for="{{catList}}" wx:key="timeText" wx:for-item="c">
-        <text class="cat-sum">{{c.summary}}</text>
-        <text class="cat-time">{{c.timeText}}</text>
+    <!-- 双极维度（MBTI） -->
+    <view wx:if="{{showBipolar}}" class="card sec">
+      <text class="sec-title">类型维度</text>
+      <view class="bipolar" wx:for="{{dims}}" wx:key="key" wx:for-item="d">
+        <text class="bp-name">{{d.leftName}} {{d.rightName}}</text>
+        <view class="bp-bar">
+          <view class="bp-left" style="width:{{d.leftPercent}}%;">{{d.leftPercent}}%</view>
+          <view class="bp-right" style="width:{{d.rightPercent}}%;background:{{meta.color}};color:{{meta.colorText}};">{{d.rightPercent}}%</view>
+        </view>
+        <text class="bp-desc">{{d.dominantDesc}}</text>
       </view>
     </view>
-  </view>
 
-  <view wx:if="{{recommend.length}}" class="card sec">
-    <text class="sec-title">🧰 相关方法论</text>
-    <view
-      class="rec"
-      wx:for="{{recommend}}"
-      wx:key="id"
-      wx:for-item="m"
-      bindtap="goMethod"
-      data-id="{{m.id}}"
-      role="button"
-      aria-label="{{m.name}}，{{m.summary}}"
-    >
-      <text class="rec-icon">{{m.icon}}</text>
-      <view class="rec-body">
-        <text class="rec-name">{{m.name}}</text>
-        <text class="rec-sum">{{m.summary}}</text>
+    <!-- 测评表维度（大五 / 16PF） -->
+    <view wx:if="{{showDims}}" class="card sec">
+      <text class="sec-title">维度剖析</text>
+      <view class="dim" wx:for="{{dims}}" wx:key="key" wx:for-item="d">
+        <view class="dim-head">
+          <text class="dim-name">{{d.name}}</text>
+          <text class="dim-pct">{{d.percent}}%</text>
+        </view>
+        <view class="bar">
+          <view class="bar-fill" style="width:{{d.percent}}%;background:{{meta.color}};"></view>
+        </view>
+        <text wx:if="{{d.text}}" class="dim-text">{{d.text}}</text>
       </view>
-      <text wx:if="{{m.interactive}}" class="rec-badge">可练</text>
-      <text class="arrow">›</text>
     </view>
-  </view>
 
-  <view class="disclaimer">本结果基于自陈量表，题目部分参考公开心理测评表题库整理，仅供自我探索与学习参考，非标准化临床诊断工具，不构成医学或专业建议。</view>
-
-  <view wx:if="{{noteText}}" class="note-box">{{noteText}}</view>
-
-  <view class="brand-foot">心智探索局 · 测评 · 方法 · 训练</view>
-
-  <view class="bottom-bar">
-    <button class="btn save" bindtap="saveCard" aria-label="保存结果卡片到相册">保存结果卡片</button>
-    <view class="btn-row">
-      <button class="btn ghost" bindtap="retest" aria-label="重新测评">重新测评</button>
-      <button class="btn home" style="background:{{meta.color}};color:{{meta.colorText}};" bindtap="goHome" aria-label="返回首页">返回首页</button>
+    <!-- 分测验（韦氏） -->
+    <view wx:if="{{showSubtests}}" class="card sec">
+      <text class="sec-title">分测验表现</text>
+      <view class="sub" wx:for="{{subtests}}" wx:key="name" wx:for-item="s">
+        <view class="sub-head">
+          <text>{{s.name}}</text>
+          <text class="sub-num">{{s.correct}}/{{s.total}}</text>
+        </view>
+        <view class="bar">
+          <view class="bar-fill" style="width:{{s.scalePercent}}%;background:{{meta.color}};"></view>
+        </view>
+      </view>
     </view>
-  </view>
 
-  <canvas type="2d" id="cardCanvas" class="card-canvas"></canvas>
+    <!-- 解读 -->
+    <view wx:if="{{interpretations.length}}" class="card sec">
+      <text class="sec-title">结果解读</text>
+      <view class="interp" wx:for="{{interpretations}}" wx:key="title" wx:for-item="it">
+        <text class="interp-title">{{it.title}}</text>
+        <text class="interp-text">{{it.text}}</text>
+      </view>
+    </view>
+
+    <!-- 历史趋势 -->
+    <view wx:if="{{showTrend}}" class="card sec">
+      <text class="sec-title">历史趋势（近 {{trendValues.length}} 次）</text>
+      <canvas type="2d" id="trendCanvas" class="trend-canvas" role="img" aria-label="历史测评趋势折线图"></canvas>
+      <text class="trend-delta {{trendDelta>0?'up':(trendDelta<0?'down':'flat')}}">
+        较上次 {{trendDelta>0?'↑':(trendDelta<0?'↓':'→')}} {{trendDelta>0?'+':''}}{{trendDelta}}
+      </text>
+      <text class="trend-range">首次 {{firstValue}} → 最近 {{lastValue}}（{{rangeDelta>0?'+':''}}{{rangeDelta}}）</text>
+    </view>
+    <view wx:elif="{{catList.length}}" class="card sec">
+      <text class="sec-title">历史记录（共 {{catList.length}} 次）</text>
+      <view wx:if="{{firstSummary && lastSummary && firstSummary !== lastSummary}}" class="trend-range">
+        首次 {{firstSummary}} → 最近 {{lastSummary}}
+      </view>
+      <view class="cat-list">
+        <view class="cat-item" wx:for="{{catList}}" wx:key="timeText" wx:for-item="c">
+          <text class="cat-sum">{{c.summary}}</text>
+          <text class="cat-time">{{c.timeText}}</text>
+        </view>
+      </view>
+    </view>
+
+    <view wx:if="{{recommend.length}}" class="card sec">
+      <text class="sec-title">🧰 相关方法论</text>
+      <view
+        class="rec"
+        wx:for="{{recommend}}"
+        wx:key="id"
+        wx:for-item="m"
+        bindtap="goMethod"
+        data-id="{{m.id}}"
+        role="button"
+        aria-label="{{m.name}}，{{m.summary}}"
+      >
+        <text class="rec-icon">{{m.icon}}</text>
+        <view class="rec-body">
+          <text class="rec-name">{{m.name}}</text>
+          <text class="rec-sum">{{m.summary}}</text>
+        </view>
+        <text wx:if="{{m.interactive}}" class="rec-badge">可练</text>
+        <text class="arrow">›</text>
+      </view>
+    </view>
+
+    <view class="disclaimer">本结果基于自陈量表，题目部分参考公开心理测评表题库整理，仅供自我探索与学习参考，非标准化临床诊断工具，不构成医学或专业建议。</view>
+
+    <view wx:if="{{noteText}}" class="note-box">{{noteText}}</view>
+
+    <view class="brand-foot">心智探索局 · 测评 · 方法 · 训练</view>
+
+    <view class="bottom-bar">
+      <button class="btn save" bindtap="saveCard" aria-label="保存结果卡片到相册">保存结果卡片</button>
+      <view class="btn-row">
+        <button class="btn ghost" bindtap="retest" aria-label="重新测评">重新测评</button>
+        <button class="btn home" style="background:{{meta.color}};color:{{meta.colorText}};" bindtap="goHome" aria-label="返回首页">返回首页</button>
+      </view>
+    </view>
+
+    <canvas type="2d" id="cardCanvas" class="card-canvas"></canvas>
+  </view>
 </view>

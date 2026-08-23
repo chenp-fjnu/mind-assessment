@@ -1,6 +1,7 @@
 const { gamesByDim, DIM_LABELS } = require('../../utils/game-registry')
 const { hexToRgba } = require('../../utils/color')
 const trainStore = require('../../utils/train-store')
+const { useTheme } = require('../../utils/theme-store')
 
 const DIM_ORDER = ['attention', 'memory', 'reaction', 'relax', 'exec']
 
@@ -21,6 +22,7 @@ Page({
     recordCount: 0,
   },
   onLoad() {
+    useTheme(this)
     const byDim = gamesByDim()
     const groups = DIM_ORDER.filter((d) => byDim[d]).map((d) => ({
       dim: d,

@@ -3,6 +3,7 @@ const { hexToRgba } = require('../../utils/color')
 const methodsData = require('../../utils/methods-data')
 const gameReg = require('../../utils/game-registry')
 const trainStore = require('../../utils/train-store')
+const { useTheme } = require('../../utils/theme-store')
 
 // 热门推荐配置：跨板块精选，按当前热度排序
 const HOT_CONFIG = [
@@ -108,6 +109,7 @@ Page({
     hotPicks: [],
   },
   onLoad() {
+    useTheme(this)
     this.loadFeatured()
   },
   onShow() {

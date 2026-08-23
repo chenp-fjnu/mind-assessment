@@ -3,6 +3,7 @@ const { getGame } = require('../../utils/game-registry')
 const trainStore = require('../../utils/train-store')
 const { getModule } = require('../../utils/registry')
 const { withPrivacy } = require('../../utils/privacy')
+const { useTheme } = require('../../utils/theme-store')
 
 function fmt(ts) {
   const d = new Date(ts)
@@ -117,6 +118,7 @@ Page({
     inProgressAssess: [],
   },
   onLoad(query) {
+    useTheme(this)
     if (query && ['assess', 'method', 'train'].indexOf(query.tab) >= 0) {
       this.setData({ tab: query.tab })
     }
