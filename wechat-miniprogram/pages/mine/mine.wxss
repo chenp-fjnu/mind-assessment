@@ -90,3 +90,10 @@
 .theme-check.show {
   opacity: 1;
 }
+
+.footer {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: var(--font-size-xs);
+  padding: 36rpx 24rpx 12rpx;
+}

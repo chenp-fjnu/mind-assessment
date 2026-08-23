@@ -87,10 +87,11 @@ function initThemeListener() {
 function useTheme(pageInstance) {
   const updateTheme = () => {
     const effectiveTheme = getEffectiveTheme();
+    const storedTheme = getStoredTheme();
     const themeClass = `theme-${effectiveTheme}`;
     pageInstance.setData({ 
       currentTheme: effectiveTheme,
-      themeMode: getStoredTheme(),
+      themeMode: storedTheme,
       themeClass: themeClass,
     });
   };
@@ -115,6 +116,7 @@ function useTheme(pageInstance) {
   pageInstance.onThemeChange = (theme) => {
     pageInstance.setData({ 
       currentTheme: theme,
+      themeMode: getStoredTheme(),
       themeClass: `theme-${theme}`,
     });
   };
