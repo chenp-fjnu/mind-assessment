@@ -35,7 +35,7 @@
         bindtap="onFilter"
         data-id="{{f.id}}"
         role="button"
-        aria-label="筛选 {{f.name}} 量表记录"
+        aria-label="筛选 {{f.name}} 测评表记录"
       >
         <text class="chip-icon">{{f.icon}}</text>
         <text>{{f.name}}</text>
@@ -45,7 +45,7 @@
     <view wx:if="{{!list.length}}" class="empty">
       <text class="empty-icon">📭</text>
       <text class="empty-text">还没有测评记录</text>
-      <text class="empty-sub">去首页选择一个量表开始吧</text>
+      <text class="empty-sub">去首页选择一个测评表开始吧</text>
     </view>
 
     <view wx:else class="list">

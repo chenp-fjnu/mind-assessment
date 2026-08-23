@@ -1,15 +1,19 @@
 <view class="scroll-page">
   <view class="hero">
     <text class="hero-title">心理测评</text>
-    <text class="hero-sub">用科学量表，先看清自己</text>
-    <text class="hero-tag">{{moduleCount}} 套量表 · 9 大心理维度</text>
+    <text class="hero-sub">用科学测评表，先看清自己</text>
+    <view class="hero-meta">
+      <text class="pill"><text class="num">{{moduleCount}}</text> 套测评表</text>
+      <text class="pill"><text class="num">{{typeCount}}</text> 大心理维度</text>
+      <text class="pill link" bindtap="goRecords" role="button" aria-label="我的测评记录">我的记录 {{assessRecordCount}} ›</text>
+    </view>
   </view>
 
   <view class="search-bar">
     <text class="search-icon">🔍</text>
     <input
       class="search-input"
-      placeholder="搜索量表名称 / 关键字"
+      placeholder="搜索测评表名称 / 关键字"
       placeholder-class="search-ph"
       value="{{keyword}}"
       bindinput="onSearch"
@@ -32,7 +36,7 @@
 
   <view wx:if="{{!groups.length}}" class="empty-search">
     <text class="empty-search-icon">🔎</text>
-    <text class="empty-search-text">没有找到匹配的量表</text>
+    <text class="empty-search-text">没有找到匹配的测评表</text>
   </view>
 
   <view class="group" wx:for="{{groups}}" wx:key="type" wx:for-item="g">

@@ -76,7 +76,7 @@ Page({
         retestGap = gap <= 0 ? '今天' : gap + ' 天前'
       }
     }
-    // 距上次重测间隔（retakeHint）：与本次记录时间不同的同量表最近一条历史比较
+    // 距上次重测间隔（retakeHint）：与本次记录时间不同的同测评表最近一条历史比较
     let retakeHint = ''
     try {
       const selfTimeSrc = (app.globalData.lastResult && app.globalData.lastResult.time) || (myHist[0] && myHist[0].time) || Date.now()
@@ -127,7 +127,7 @@ Page({
     }
     const NOTE_MAP = {
       spm: '本题为原创图形推理练习，按正确率换算近似推理水平，非标准化智力常模，仅供能力练习参考。',
-      wechsler: '本题为原创分测验图形题，按正确率换算近似量表分，非标准化常模，仅供能力练习参考。',
+      wechsler: '本题为原创分测验图形题，按正确率换算近似测评表分，非标准化常模，仅供能力练习参考。',
     }
     const noteText = NOTE_MAP[mod.id] || ''
 
@@ -151,7 +151,7 @@ Page({
     const showBipolar = view.showBipolar
     const interpretations = view.interpretations
 
-    // 同一量表的历史趋势（计算逻辑抽离至 utils/trend.js，便于单测）
+    // 同一测评表的历史趋势（计算逻辑抽离至 utils/trend.js，便于单测）
     const t = computeTrend(wx.getStorageSync('ma_history'), id)
     const showTrend = t.showTrend
     const trendValues = t.trendValues

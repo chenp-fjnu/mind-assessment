@@ -38,6 +38,8 @@ Page({
     keyword: '',
     activeType: '',
     moduleCount: 0,
+    typeCount: 0,
+    assessRecordCount: 0,
   },
   onLoad(query) {
     const allModules = buildModuleList()
@@ -50,8 +52,17 @@ Page({
       types,
       groups: buildGroups(allModules),
       moduleCount: allModules.length,
+      typeCount: types.length,
       keyword: kw,
     }, () => { if (kw) this.applyFilter() })
+    this.refreshRecords()
+  },
+  onShow() {
+    this.refreshRecords()
+  },
+  refreshRecords() {
+    const assessRecordCount = (wx.getStorageSync('ma_history') || []).length
+    this.setData({ assessRecordCount })
   },
   applyFilter() {
     const { allModules, keyword, activeType } = this.data
@@ -75,5 +86,8 @@ Page({
   goDetail(e) {
     const id = e.currentTarget.dataset.id
     wx.navigateTo({ url: `/pages/detail/detail?id=${id}` })
+  },
+  goRecords() {
+    wx.navigateTo({ url: '/pages/history/history?tab=assess' })
   },
 })

@@ -23,6 +23,8 @@ Page({
     activeCategory: '',
     count: 0,
     interactiveCount: 0,
+    categoryCount: 0,
+    methodRecordCount: 0,
   },
   onLoad() {
     const allMethods = buildList()
@@ -40,7 +42,18 @@ Page({
       groups: buildGroups(allMethods),
       count: allMethods.length,
       interactiveCount: allMethods.filter((m) => m.interactive).length,
+      categoryCount: categories.length,
     })
+    this.refreshRecords()
+  },
+  onShow() {
+    this.refreshRecords()
+  },
+  refreshRecords() {
+    const practices = wx.getStorageSync('ma_practices') || {}
+    let methodRecordCount = 0
+    Object.keys(practices).forEach((k) => { methodRecordCount += (practices[k] || []).length })
+    this.setData({ methodRecordCount })
   },
   applyFilter() {
     const { allMethods, keyword, activeCategory } = this.data
@@ -67,5 +80,8 @@ Page({
   goDetail(e) {
     const id = e.currentTarget.dataset.id
     wx.navigateTo({ url: `/pages/methods/detail?id=${id}` })
+  },
+  goRecords() {
+    wx.navigateTo({ url: '/pages/history/history?tab=method' })
   },
 })

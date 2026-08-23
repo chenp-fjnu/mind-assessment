@@ -12,7 +12,7 @@
     <text class="q-index">第 {{current+1}} 题</text>
     <text class="q-text">{{q.prompt || '请观察下方图形，选择正确的一项'}}</text>
 
-    <!-- 量表题 -->
+    <!-- 测评表题 -->
     <view wx:if="{{qType==='scale'}}" class="scale-list">
       <view
         class="scale-opt {{answers[current]===idx?'sel':''}}"

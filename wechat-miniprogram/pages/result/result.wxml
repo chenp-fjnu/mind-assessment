@@ -1,7 +1,7 @@
 <view wx:if="{{invalid}}" class="invalid">
   <text class="invalid-icon">🧭</text>
   <text class="invalid-title">暂无测评结果</text>
-  <text class="invalid-sub">请先在首页选择一个量表完成测评</text>
+  <text class="invalid-sub">请先在首页选择一个测评表完成测评</text>
   <button class="btn home" style="background:{{meta.color || '#7c3aed'}};color:{{meta.colorText || '#fff'}};" bindtap="goHome" aria-label="返回首页">返回首页</button>
 </view>
 
@@ -52,7 +52,7 @@
     </view>
   </view>
 
-  <!-- 量表维度（大五 / 16PF） -->
+  <!-- 测评表维度（大五 / 16PF） -->
   <view wx:if="{{showDims}}" class="card sec">
     <text class="sec-title">维度剖析</text>
     <view class="dim" wx:for="{{dims}}" wx:key="key" wx:for-item="d">
@@ -134,7 +134,7 @@
     </view>
   </view>
 
-  <view class="disclaimer">本结果基于自陈量表，题目部分参考公开心理量表题库整理，仅供自我探索与学习参考，非标准化临床诊断工具，不构成医学或专业建议。</view>
+  <view class="disclaimer">本结果基于自陈测评表，题目部分参考公开心理测评表题库整理，仅供自我探索与学习参考，非标准化临床诊断工具，不构成医学或专业建议。</view>
 
   <view wx:if="{{noteText}}" class="note-box">{{noteText}}</view>
 

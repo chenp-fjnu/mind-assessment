@@ -311,7 +311,7 @@ Page({
       if (this.data.qType === 'matrix') this.drawFigures()
       this.stopCountdown()
       this.saveProgress()
-      // 图形/矩阵题给用户更长时间观察，普通量表题快速跳入下一题
+      // 图形/矩阵题给用户更长时间观察，普通测评表题快速跳入下一题
       const delay = this.data.showFigureOptions || this.data.qType === 'matrix' ? 900 : 350
       this.scheduleNext(delay)
     })
@@ -421,7 +421,7 @@ Page({
     if (unanswered > 0) {
       wx.showModal({
         title: '还有题目未作答',
-        content: `剩余 ${unanswered} 题未作答，未答题目将按量表默认分值计入，确定提交？`,
+        content: `剩余 ${unanswered} 题未作答，未答题目将按测评表默认分值计入，确定提交？`,
         success: (r) => {
           if (r.confirm) proceed()
         },
