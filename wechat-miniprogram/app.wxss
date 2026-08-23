@@ -3,19 +3,18 @@
    所有页面必须通过 CSS 变量使用颜色，禁止硬编码
    单一事实来源：此文件定义所有语义化变量
    支持 .theme-light / .theme-dark 类切换，配合 theme-store.js
+   变量仅定义在 .theme-wrapper 上，所有页面内容必须包裹在 theme-wrapper 内
    ============================================ */
 
+/* 基础布局 - 不定义颜色变量，由 theme-wrapper 提供 */
 page {
   min-height: 100vh;
-  background: var(--bg-primary);
-  color: var(--text-primary);
   font-family: -apple-system, "PingFang SC", "Helvetica Neue", sans-serif;
   overflow-x: hidden;
 }
 
 .scroll-page {
   min-height: 100vh;
-  background: var(--bg-primary);
   font-family: -apple-system, "PingFang SC", "Helvetica Neue", sans-serif;
   overflow-x: hidden;
 }
@@ -25,14 +24,16 @@ page {
   min-height: 100vh;
   width: 100%;
   display: block;
+  background: var(--bg-primary);
+  color: var(--text-primary);
 }
 
 /* ============================================
    CSS 变量定义 - 浅色模式 (默认)
+   仅在 .theme-wrapper 上定义，确保作用域正确
    ============================================ */
 .theme-wrapper,
-.theme-wrapper.theme-light,
-.theme-wrapper.theme-dark {
+.theme-wrapper.theme-light {
   /* ===== 背景层级 ===== */
   --bg-primary: #fefefe;           /* 页面主背景 - 更柔和的白 */
   --bg-secondary: #fafafa;         /* 区块背景 */

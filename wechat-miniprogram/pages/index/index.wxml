@@ -24,7 +24,6 @@
     <view wx:if="{{hotPicks.length}}" class="section hot-section">
       <view class="section-head">
         <text class="section-title">🔥 热门推荐</text>
-        <view class="section-desc">跨板块精选，一键直达</view>
       </view>
       <view class="hot-grid">
         <view
