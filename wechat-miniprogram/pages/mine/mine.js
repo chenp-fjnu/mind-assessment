@@ -34,50 +34,26 @@ Page({
       recordSummary: parts.length ? parts.join(' · ') + ' 条记录' : '还没有任何记录',
     })
   },
-  goHistory() { wx.navigateTo({ url: '/pages/history/history' }) },
+goHistory() { wx.navigateTo({ url: '/pages/history/history' }) },
   goAbout() { wx.navigateTo({ url: '/pages/about/about' }) },
-  onThemeChange(e) {
-    const mode = e.currentTarget.dataset.mode
-    console.log('[mine] === THEME CHANGE START ===', { mode, timestamp: Date.now() })
-    console.log('[mine] setThemeMode exists:', typeof this.setThemeMode)
-    console.log('[mine] current themeClass:', this.data.themeClass)
-    console.log('[mine] current themeMode:', this.data.themeMode)
-    
-    if (typeof this.setThemeMode === 'function') {
-      console.log('[mine] calling setThemeMode...')
-      this.setThemeMode(mode)
-      
-      // Check immediately after
-      setTimeout(() => {
-        console.log('[mine] after setTimeout, themeClass:', this.data.themeClass)
-        console.log('[mine] after setTimeout, themeMode:', this.data.themeMode)
-      }, 100)
-      
-      // 强制刷新
-      setTimeout(() => {
-        if (typeof this.forceThemeUpdate === 'function') {
-          console.log('[mine] calling forceThemeUpdate...')
-          this.forceThemeUpdate()
-        } else {
-          console.error('[mine] forceThemeUpdate not found!')
-        }
-      }, 200)
-    } else {
-      console.error('[mine] setThemeMode not found on page instance')
-    }
-    console.log('[mine] === THEME CHANGE END ===')
-  },
   onTestClick() {
     console.log('[mine] TEST CLICK WORKS')
     wx.showToast({ title: '点击生效', icon: 'none' })
   },
-  onThemeTest() {
-    console.log('[mine] onThemeTest called - direct handler test')
+
+  setThemeAuto() {
+    console.log('[mine] setThemeAuto called')
+    this.setThemeMode('auto')
+    setTimeout(() => this.forceThemeUpdate && this.forceThemeUpdate(), 0)
+  },
+  setThemeLight() {
+    console.log('[mine] setThemeLight called')
     this.setThemeMode('light')
-    setTimeout(() => {
-      if (typeof this.forceThemeUpdate === 'function') {
-        this.forceThemeUpdate()
-      }
-    }, 0)
+    setTimeout(() => this.forceThemeUpdate && this.forceThemeUpdate(), 0)
+  },
+  setThemeDark() {
+    console.log('[mine] setThemeDark called')
+    this.setThemeMode('dark')
+    setTimeout(() => this.forceThemeUpdate && this.forceThemeUpdate(), 0)
   },
 })

@@ -26,7 +26,7 @@
         <text>外观</text>
       </view>
 
-      <view class="card menu-item theme-selector" data-mode="auto" bindtap="onThemeChange" catchtap="onThemeChange" role="button" aria-label="跟随系统主题 {{themeMode==='auto'?'✓':''}}">
+      <view class="card menu-item" bindtap="setThemeAuto" catchtap="setThemeAuto" role="button" aria-label="跟随系统主题 {{themeMode==='auto'?'✓':''}}">
         <view class="menu-icon theme-icon">🖥️</view>
         <view class="menu-body">
           <text class="menu-name">跟随系统</text>
@@ -34,7 +34,7 @@
         <view class="theme-check {{themeMode==='auto'?'show':''}}">✓</view>
       </view>
 
-      <view class="card menu-item theme-selector" data-mode="light" bindtap="onThemeChange" catchtap="onThemeChange" role="button" aria-label="浅色模式 {{themeMode==='light'?'✓':''}}">
+      <view class="card menu-item" bindtap="setThemeLight" catchtap="setThemeLight" role="button" aria-label="浅色模式 {{themeMode==='light'?'✓':''}}">
         <view class="menu-icon theme-icon">☀️</view>
         <view class="menu-body">
           <text class="menu-name">浅色模式</text>
@@ -42,20 +42,12 @@
         <view class="theme-check {{themeMode==='light'?'show':''}}">✓</view>
       </view>
 
-      <view class="card menu-item theme-selector" data-mode="dark" bindtap="onThemeChange" catchtap="onThemeChange" role="button" aria-label="深色模式 {{themeMode==='dark'?'✓':''}}">
+      <view class="card menu-item" bindtap="setThemeDark" catchtap="setThemeDark" role="button" aria-label="深色模式 {{themeMode==='dark'?'✓':''}}">
         <view class="menu-icon theme-icon">🌙</view>
         <view class="menu-body">
           <text class="menu-name">深色模式</text>
         </view>
         <view class="theme-check {{themeMode==='dark'?'show':''}}">✓</view>
-      </view>
-
-      <view class="card menu-item" bindtap="onThemeTest" catchtap="onThemeTest" role="button" aria-label="测试主题处理器">
-        <view class="menu-icon">🔧</view>
-        <view class="menu-body">
-          <text class="menu-name">测试主题处理器</text>
-          <text class="menu-sub">直接调用 onThemeChange('light')</text>
-        </view>
       </view>
 
       <view class="card menu-item" bindtap="onTestClick" catchtap="onTestClick" role="button">
