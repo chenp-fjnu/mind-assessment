@@ -25,24 +25,6 @@ function buildModules() {
   return { all, featuredAssess: pick(FEATURED_ASSESS, all, 4) }
 }
 
-function buildTypeChips() {
-  const chips = [{ key: '', label: '全部' }]
-  Object.keys(TYPE_LABELS).forEach((k) => chips.push({ key: k, label: TYPE_LABELS[k] }))
-  return chips
-}
-
-function filterList(allList, keyword, activeType) {
-  const kw = (keyword || '').trim().toLowerCase()
-  return allList.filter((m) => {
-    if (activeType && m.type !== activeType) return false
-    if (!kw) return true
-    const hay = [m.name, m.shortName, m.desc]
-      .concat(m.tag || [])
-      .join(' ')
-      .toLowerCase()
-    return hay.indexOf(kw) >= 0
-  })
-}
 function buildMethods() {
   const all = methodsData.METHODS.map((m) => Object.assign({}, m, { tint: hexToRgba(m.color, 0.12) }))
   const byId = {}
@@ -80,11 +62,7 @@ Page({
     featuredMethods: [],
     featuredGames: [],
     resume: null,
-    keyword: '',
-    allList: [],
     filteredList: [],
-    typeChips: [],
-    activeType: '',
   },
   onLoad() {
     const mod = buildModules()
@@ -99,10 +77,8 @@ Page({
       featuredAssess: mod.featuredAssess,
       featuredMethods: met.featuredMethods,
       featuredGames: gam.featuredGames,
-      allList: mod.all,
-      typeChips: buildTypeChips(),
+      filteredList: mod.all,
     })
-    this.applyFilter()
   },
   onShow() {
     this.refreshResume()
@@ -117,24 +93,6 @@ Page({
     this.setData({
       resume: { id: last.id, name: last.name, icon: last.icon, timeText: fmtTime(last.time) },
     })
-  },
-  onSearch(e) {
-    const kw = e.detail.value
-    this.setData({ keyword: kw })
-    this.applyFilter()
-  },
-  clearSearch() {
-    this.setData({ keyword: '' })
-    this.applyFilter()
-  },
-  onSelectType(e) {
-    const key = e.currentTarget.dataset.key
-    this.setData({ activeType: key })
-    this.applyFilter()
-  },
-  applyFilter() {
-    const { allList, keyword, activeType } = this.data
-    this.setData({ filteredList: filterList(allList, keyword, activeType) })
   },
   goAssess() { wx.switchTab({ url: '/pages/assess/assess' }) },
   goMethods() { wx.switchTab({ url: '/pages/methods/methods' }) },
