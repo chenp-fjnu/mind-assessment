@@ -66,7 +66,7 @@
 
   <view class="card section tip">
     <text class="tip-title">温馨提示</text>
-    <text class="tip-text">本测评结果基于自陈测评表，仅供自我探索与娱乐参考，不构成任何医学诊断或专业建议。请凭第一直觉作答。</text>
+    <text class="tip-text">本测评结果基于自陈量表，仅供自我探索与娱乐参考，不构成任何医学诊断或专业建议。请凭第一直觉作答。</text>
   </view>
 
   <view class="bottom-bar">

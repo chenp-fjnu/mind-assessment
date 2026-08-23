@@ -65,13 +65,24 @@
   background: #fffbeb;
 }
 .btn.home {
-  margin: 32rpx 32rpx 0;
+  display: block;
+  width: fit-content;
+  margin: 32rpx auto 0;
+  padding: 0 56rpx;
   height: 88rpx;
   line-height: 88rpx;
   font-size: 30rpx;
   border-radius: 999rpx;
   background: #7c3aed;
   color: #fff;
+}
+.link {
+  display: block;
+  text-align: center;
+  margin: 24rpx 32rpx 0;
+  font-size: 26rpx;
+  color: #7c3aed;
+  text-decoration: underline;
 }
 .brand-foot {
   text-align: center;
@@ -104,6 +115,9 @@
   }
   .btn.home {
     background: #8b5cf6;
+  }
+  .link {
+    color: #a78bfa;
   }
   .brand-foot {
     color: var(--muted);

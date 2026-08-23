@@ -50,12 +50,9 @@ describe('首页 index', () => {
     expect(ctx.data.practiceCount).toBeGreaterThanOrEqual(0)
     expect(ctx.data.gameCount).toBeGreaterThan(0)
     expect(ctx.data.dimCount).toBeGreaterThan(0)
-    expect(ctx.data.featuredAssess.length).toBeGreaterThan(0)
-    expect(ctx.data.featuredAssess.length).toBeLessThanOrEqual(4)
-    expect(ctx.data.featuredMethods.length).toBeGreaterThan(0)
-    expect(ctx.data.featuredMethods.length).toBeLessThanOrEqual(4)
-    expect(ctx.data.featuredGames.length).toBeGreaterThan(0)
-    expect(ctx.data.featuredGames.length).toBeLessThanOrEqual(4)
+    expect(ctx.data.featuredAssess.length).toBe(5)
+    expect(ctx.data.featuredMethods.length).toBe(5)
+    expect(ctx.data.featuredGames.length).toBe(5)
   })
 
   test('goTrain 跳转到训练 tab', () => {

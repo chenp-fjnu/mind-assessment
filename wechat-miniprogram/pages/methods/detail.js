@@ -101,7 +101,7 @@ Page({
     const m = this.data.method
     if (!m) return {}
     return {
-      title: '推荐一个心理学方法：' + m.name,
+      title: '推荐一个方法：' + m.name,
       path: '/pages/methods/detail?id=' + this._id,
       imageUrl: this._shareImage || '',
     }

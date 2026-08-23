@@ -134,7 +134,7 @@
     </view>
   </view>
 
-  <view class="disclaimer">本结果基于自陈测评表，题目部分参考公开心理测评表题库整理，仅供自我探索与学习参考，非标准化临床诊断工具，不构成医学或专业建议。</view>
+  <view class="disclaimer">本结果基于自陈量表，题目部分参考公开心理测评表题库整理，仅供自我探索与学习参考，非标准化临床诊断工具，不构成医学或专业建议。</view>
 
   <view wx:if="{{noteText}}" class="note-box">{{noteText}}</view>
 

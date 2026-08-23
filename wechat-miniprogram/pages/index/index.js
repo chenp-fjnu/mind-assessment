@@ -10,46 +10,50 @@ function fmtTime(ts) {
   return d.getFullYear() + '-' + p(d.getMonth() + 1) + '-' + p(d.getDate()) + ' ' + p(d.getHours()) + ':' + p(d.getMinutes())
 }
 
-const FEATURED_ASSESS = ['big5', 'phq9', 'pss', 'mbti', 'sds', 'gad7']
-const FEATURED_METHODS = ['smart', 'grow', 'woop', 'abc', 'threegood', 'fogg']
-const FEATURED_GAMES = ['schulte', 'n-back', 'stroop', 'hanoi', 'box-breathing']
+function lastTimes() {
+  const map = { assess: {}, method: {}, train: {} }
+  const hist = wx.getStorageSync('ma_history') || []
+  hist.forEach((h) => { map.assess[h.id] = Math.max(map.assess[h.id] || 0, h.time) })
+  const practices = wx.getStorageSync('ma_practices') || {}
+  Object.keys(practices).forEach((mid) => {
+    ;(practices[mid] || []).forEach((e) => { map.method[mid] = Math.max(map.method[mid] || 0, e.time) })
+  })
+  trainStore.allRecords().forEach((r) => { map.train[r.gameId] = Math.max(map.train[r.gameId] || 0, r.time) })
+  return map
+}
 
-function buildModules() {
+function orderByRecent(list, lastMap) {
+  return list
+    .map((item) => ({ item, t: lastMap[item.id] || 0 }))
+    .sort((a, b) => {
+      const ax = a.t ? 1 : 0
+      const bx = b.t ? 1 : 0
+      if (ax !== bx) return bx - ax
+      if (ax) return b.t - a.t
+      return 0
+    })
+    .map((x) => x.item)
+}
+
+function buildModules(lastMap) {
   const all = getMetaList().map((m) => ({
     id: m.id, type: m.type, typeLabel: TYPE_LABELS[m.type] || m.type, icon: m.icon, name: m.name, shortName: m.shortName,
     desc: m.desc, duration: m.duration, questionCount: m.questionCount,
     color: m.color, tint: hexToRgba(m.color, 0.12),
   }))
-  const byId = {}
-  all.forEach((m) => (byId[m.id] = m))
-  const pick = (ids, pool, n) => ids.filter((id) => byId[id]).map((id) => byId[id]).concat(pool.filter((m) => ids.indexOf(m.id) < 0)).slice(0, n)
-  return { all, featuredAssess: pick(FEATURED_ASSESS, all, 4) }
+  return { all, featuredAssess: orderByRecent(all, lastMap.assess).slice(0, 5) }
 }
 
-function buildMethods() {
+function buildMethods(lastMap) {
   const all = methodsData.METHODS.map((m) => Object.assign({}, m, { tint: hexToRgba(m.color, 0.12) }))
-  const byId = {}
-  all.forEach((m) => (byId[m.id] = m))
-  const featured = FEATURED_METHODS.filter((id) => byId[id]).map((id) => byId[id]).concat(all.filter((m) => FEATURED_METHODS.indexOf(m.id) < 0)).slice(0, 4)
-  return { all, featuredMethods: featured }
+  return { all, featuredMethods: orderByRecent(all, lastMap.method).slice(0, 5) }
 }
 
-function buildGames() {
-  const all = gameReg.getMetaList()
-  const byId = {}
-  all.forEach((g) => (byId[g.id] = g))
-  const featured = FEATURED_GAMES.filter((id) => byId[id]).map((id) => {
-    const g = byId[id]
-    return {
-      id: g.id,
-      name: g.name,
-      icon: g.icon,
-      color: g.color,
-      tint: hexToRgba(g.color, 0.12),
-      dimLabel: g.dimLabel,
-    }
-  }).slice(0, 4)
-  return { all, featuredGames: featured }
+function buildGames(lastMap) {
+  const all = gameReg.getMetaList().map((g) => ({
+    id: g.id, name: g.name, icon: g.icon, color: g.color, tint: hexToRgba(g.color, 0.12), dimLabel: g.dimLabel,
+  }))
+  return { all, featuredGames: orderByRecent(all, lastMap.train).slice(0, 5) }
 }
 
 Page({
@@ -65,9 +69,17 @@ Page({
     resumes: [],
   },
   onLoad() {
-    const mod = buildModules()
-    const met = buildMethods()
-    const gam = buildGames()
+    this.loadFeatured()
+  },
+  onShow() {
+    this.loadFeatured()
+    this.refreshResume()
+  },
+  loadFeatured() {
+    const lastMap = lastTimes()
+    const mod = buildModules(lastMap)
+    const met = buildMethods(lastMap)
+    const gam = buildGames(lastMap)
     this.setData({
       moduleCount: mod.all.length,
       methodCount: met.all.length,
@@ -78,9 +90,6 @@ Page({
       featuredMethods: met.featuredMethods,
       featuredGames: gam.featuredGames,
     })
-  },
-  onShow() {
-    this.refreshResume()
   },
   refreshResume() {
     const resumes = []
