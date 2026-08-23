@@ -1,3 +1,7 @@
+/* ============================================
+   呼吸训练组件 - 统一设计系统
+   ============================================ */
+
 .bb {
   width: 100%;
   display: flex;
@@ -8,7 +12,7 @@
   width: 100%;
   aspect-ratio: 1 / 1;
   border-radius: 50%;
-  border: 6rpx solid #10b981;
+  border: 6rpx solid var(--color-method);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -21,19 +25,19 @@
   align-items: center;
 }
 .phase {
-  font-size: 44rpx;
-  font-weight: 700;
-  color: #10b981;
+  font-size: var(--font-size-4xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-method);
 }
 .count {
   font-size: 80rpx;
-  font-weight: 800;
-  color: var(--text);
+  font-weight: var(--font-weight-extrabold);
+  color: var(--text-primary);
   line-height: 1.1;
 }
 .hint {
-  color: var(--sub);
-  font-size: 26rpx;
+  color: var(--text-tertiary);
+  font-size: var(--font-size-lg);
   margin: 16rpx 0 30rpx;
 }
 .ctrls {
@@ -43,11 +47,14 @@
 .btn-start,
 .btn-stop {
   padding: 18rpx 60rpx;
-  border-radius: 999rpx;
-  font-size: 32rpx;
-  font-weight: 700;
-  color: #fff;
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-extrabold);
+  color: var(--text-inverse);
+}
+.btn-start {
+  background: var(--color-method);
 }
 .btn-stop {
-  background: #ef4444;
+  background: var(--color-error);
 }

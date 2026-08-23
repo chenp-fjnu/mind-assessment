@@ -13,16 +13,16 @@
   position: absolute;
   top: calc(24rpx + env(safe-area-inset-top));
   left: 28rpx;
-  font-size: 30rpx;
-  color: #fff;
+  font-size: var(--font-size-2xl);
+  color: var(--text-inverse);
   background: rgba(255, 255, 255, 0.16);
   padding: 8rpx 24rpx;
-  border-radius: 999rpx;
+  border-radius: var(--radius-full);
 }
 .h-icon {
   width: 96rpx;
   height: 96rpx;
-  border-radius: 24rpx;
+  border-radius: var(--radius-xxl);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -32,33 +32,33 @@
 }
 .hero-title {
   display: block;
-  color: #fff;
-  font-size: 48rpx;
-  font-weight: 800;
+  color: var(--text-inverse);
+  font-size: var(--font-size-5xl);
+  font-weight: var(--font-weight-extrabold);
   letter-spacing: 2rpx;
 }
 .hero-sub {
   display: block;
   color: rgba(255, 255, 255, 0.9);
-  font-size: 26rpx;
+  font-size: var(--font-size-md);
   margin-top: 12rpx;
-  line-height: 1.5;
+  line-height: var(--line-height-normal);
 }
 .hero-tag {
   display: inline-block;
   margin-top: 18rpx;
   padding: 8rpx 22rpx;
-  font-size: 22rpx;
-  color: #fff;
+  font-size: var(--font-size-sm);
+  color: var(--text-inverse);
   background: rgba(255, 255, 255, 0.18);
-  border-radius: 999rpx;
+  border-radius: var(--radius-full);
 }
 .levels {
   margin: 28rpx 32rpx 0;
 }
 .lv-title {
-  font-size: 26rpx;
-  font-weight: 600;
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
   color: var(--text-secondary);
 }
 .lv-bar {
@@ -69,21 +69,21 @@
   display: inline-flex;
   flex-direction: column;
   align-items: center;
-  font-size: 24rpx;
+  font-size: var(--font-size-md);
   color: var(--text-tertiary);
-  background: var(--bg-tertiary);
+  background: var(--chip-bg);
   border: 2rpx solid var(--border-light);
   padding: 12rpx 26rpx;
-  border-radius: 999rpx;
+  border-radius: var(--radius-full);
   margin-right: 16rpx;
 }
 .lv-chip .lv-best {
-  font-size: 20rpx;
+  font-size: var(--font-size-xs);
   opacity: 0.8;
   margin-top: 4rpx;
 }
 .lv-chip.on {
-  color: #fff;
+  color: var(--text-inverse);
   background: var(--color-train);
   border-color: var(--color-train);
 }
@@ -102,10 +102,14 @@
 .result {
   margin: 28rpx 32rpx 0;
   padding: 32rpx;
+  background: var(--card-bg);
+  border: 1rpx solid var(--card-border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--card-shadow);
 }
 .res-title {
-  font-size: 30rpx;
-  font-weight: 700;
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
   color: var(--text-primary);
 }
 .res-chips {
@@ -118,25 +122,25 @@
   flex: 1 1 30%;
   min-width: 150rpx;
   background: var(--bg-tertiary);
-  border-radius: 18rpx;
+  border-radius: var(--radius-xxl);
   padding: 20rpx;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 .res-val {
-  font-size: 38rpx;
-  font-weight: 800;
+  font-size: var(--font-size-4xl);
+  font-weight: var(--font-weight-extrabold);
   color: var(--text-primary);
 }
 .res-lab {
-  font-size: 22rpx;
+  font-size: var(--font-size-sm);
   color: var(--text-tertiary);
   margin-top: 6rpx;
 }
 .trend {
   margin-top: 24rpx;
-  font-size: 24rpx;
+  font-size: var(--font-size-md);
   color: var(--text-tertiary);
   text-align: center;
 }
@@ -150,10 +154,13 @@
   flex: 1;
   text-align: center;
   padding: 22rpx 0;
-  border-radius: 999rpx;
-  font-size: 30rpx;
-  font-weight: 700;
-  color: #fff;
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-extrabold);
+  color: var(--text-inverse);
+}
+.btn-primary {
+  background: var(--color-train);
 }
 .btn-ghost {
   background: var(--bg-tertiary);
@@ -162,17 +169,6 @@
 .footer {
   text-align: center;
   color: var(--text-muted);
-  font-size: 22rpx;
+  font-size: var(--font-size-sm);
   padding: 40rpx 40rpx 40rpx;
-}
-
-@media (prefers-color-scheme: dark) {
-  .lv-title { color: var(--text-secondary); }
-  .lv-chip { color: var(--text-tertiary); }
-  .res-title { color: var(--text-primary); }
-  .res-val { color: var(--text-primary); }
-  .res-lab { color: var(--text-tertiary); }
-  .trend { color: var(--text-tertiary); }
-  .btn-ghost { color: var(--text-secondary); }
-  .footer { color: var(--text-muted); }
 }

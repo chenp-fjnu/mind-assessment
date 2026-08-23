@@ -1,68 +1,78 @@
+/* ============================================
+   关于页面 - 统一设计系统
+   ============================================ */
+
 .hero {
   padding: 56rpx 40rpx 40rpx;
-  background: linear-gradient(135deg, #1e293b, #7c3aed);
+  background: var(--grad-hero);
 }
 .hero-title {
   display: block;
-  color: #fff;
-  font-size: 48rpx;
-  font-weight: 800;
+  color: var(--text-inverse);
+  font-size: var(--font-size-5xl);
+  font-weight: var(--font-weight-extrabold);
   letter-spacing: 2rpx;
 }
 .hero-sub {
   display: block;
   color: rgba(255, 255, 255, 0.92);
-  font-size: 26rpx;
+  font-size: var(--font-size-lg);
   margin-top: 14rpx;
-  font-weight: 500;
+  font-weight: var(--font-weight-medium);
 }
 .section {
   margin: 24rpx 32rpx 0;
   padding: 32rpx;
+  background: var(--card-bg);
+  border: 1rpx solid var(--card-border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--card-shadow);
 }
 .sec-title {
-  font-size: 30rpx;
-  font-weight: 700;
-  color: #1e293b;
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-primary);
   display: block;
   margin-bottom: 16rpx;
 }
 .sec-text {
   display: block;
-  font-size: 27rpx;
-  color: #475569;
-  line-height: 1.8;
+  font-size: var(--font-size-lg);
+  color: var(--text-tertiary);
+  line-height: var(--line-height-loose);
   white-space: pre-wrap;
 }
 .sec-note {
   display: block;
-  font-size: 24rpx;
-  color: #64748b;
-  line-height: 1.7;
+  font-size: var(--font-size-md);
+  color: var(--text-tertiary);
+  line-height: var(--line-height-relaxed);
   margin-top: 16rpx;
 }
 .src {
   display: flex;
   flex-direction: column;
   padding: 16rpx 0;
-  border-bottom: 2rpx solid #f1f5f9;
+  border-bottom: 2rpx solid var(--border-light);
 }
 .src:last-child {
   border-bottom: none;
 }
 .src-name {
-  font-size: 27rpx;
-  font-weight: 600;
-  color: #1e293b;
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
 }
 .src-desc {
-  font-size: 24rpx;
-  color: #64748b;
-  line-height: 1.6;
+  font-size: var(--font-size-md);
+  color: var(--text-tertiary);
+  line-height: var(--line-height-normal);
   margin-top: 6rpx;
 }
 .tip {
-  background: #fffbeb;
+  background: var(--result-note-bg);
+  border: 2rpx solid var(--result-note-border);
+  border-radius: var(--radius-xl);
 }
 .btn.home {
   display: block;
@@ -71,55 +81,22 @@
   padding: 0 56rpx;
   height: 88rpx;
   line-height: 88rpx;
-  font-size: 30rpx;
-  border-radius: 999rpx;
-  background: #7c3aed;
-  color: #fff;
+  font-size: var(--font-size-xl);
+  border-radius: var(--radius-full);
+  background: var(--color-brand);
+  color: var(--text-inverse);
 }
 .link {
   display: block;
   text-align: center;
   margin: 24rpx 32rpx 0;
-  font-size: 26rpx;
-  color: #7c3aed;
+  font-size: var(--font-size-lg);
+  color: var(--color-brand);
   text-decoration: underline;
 }
 .brand-foot {
   text-align: center;
-  color: #64748b;
-  font-size: 22rpx;
+  color: var(--text-muted);
+  font-size: var(--font-size-sm);
   padding: 32rpx 40rpx 40rpx;
-}
-
-@media (prefers-color-scheme: dark) {
-  .sec-title {
-    color: var(--text);
-  }
-  .sec-text {
-    color: var(--text2);
-  }
-  .sec-note {
-    color: var(--muted);
-  }
-  .src {
-    border-bottom-color: var(--border);
-  }
-  .src-name {
-    color: var(--text);
-  }
-  .src-desc {
-    color: var(--muted);
-  }
-  .tip {
-    background: #2a2410;
-  }
-  .btn.home {
-    background: #8b5cf6;
-  }
-  .link {
-    color: #a78bfa;
-  }
-  .brand-foot {
-    color: var(--muted);
-  }
 }

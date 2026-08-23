@@ -8,17 +8,17 @@
 }
 .hero-title {
   display: block;
-  color: #fff;
-  font-size: 52rpx;
-  font-weight: 800;
+  color: var(--text-inverse);
+  font-size: var(--font-size-hero);
+  font-weight: var(--font-weight-extrabold);
   letter-spacing: 4rpx;
 }
 .hero-sub {
   display: block;
   color: rgba(255, 255, 255, 0.92);
-  font-size: 27rpx;
+  font-size: var(--font-size-lg);
   margin-top: 16rpx;
-  font-weight: 500;
+  font-weight: var(--font-weight-medium);
 }
 .hero-meta {
   display: flex;
@@ -32,25 +32,25 @@
   align-items: center;
   padding: 8rpx 20rpx;
   background: rgba(255, 255, 255, 0.16);
-  border-radius: 999rpx;
-  font-size: 22rpx;
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-sm);
   color: rgba(255, 255, 255, 0.95);
 }
 .pill .num {
-  font-weight: 700;
+  font-weight: var(--font-weight-bold);
   margin-right: 4rpx;
 }
 .pill.link {
   background: rgba(255, 255, 255, 0.26);
-  color: #fff;
-  font-weight: 600;
+  color: var(--text-inverse);
+  font-weight: var(--font-weight-semibold);
 }
 .group {
   margin: 24rpx 32rpx 0;
 }
 .group-title {
-  font-size: 28rpx;
-  font-weight: 600;
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
   color: var(--text-secondary);
   margin: 16rpx 4rpx;
 }
@@ -63,7 +63,7 @@
 .item-icon {
   width: 88rpx;
   height: 88rpx;
-  border-radius: 22rpx;
+  border-radius: var(--radius-xxl);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -80,35 +80,35 @@
   align-items: center;
 }
 .item-name {
-  font-size: 31rpx;
-  font-weight: 600;
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-semibold);
   color: var(--text-primary);
 }
 .badge-free {
-  font-size: 22rpx;
-  color: var(--success);
-  background: var(--bg-brand);
+  font-size: var(--font-size-xs);
+  color: var(--text-success);
+  background: var(--badge-success-bg);
   padding: 2rpx 12rpx;
-  border-radius: 999rpx;
+  border-radius: var(--radius-full);
   margin-left: 12rpx;
 }
 .item-desc {
   display: block;
-  font-size: 25rpx;
+  font-size: var(--font-size-md);
   color: var(--text-tertiary);
   margin-top: 8rpx;
-  line-height: 1.5;
+  line-height: var(--line-height-normal);
 }
 .item-meta {
   display: flex;
   align-items: center;
-  font-size: 23rpx;
+  font-size: var(--font-size-sm);
   color: var(--text-tertiary);
   margin-top: 12rpx;
 }
 .arrow {
   color: var(--border-medium);
-  font-size: 44rpx;
+  font-size: var(--font-size-4xl);
   margin-left: 8rpx;
 }
 .search-bar {
@@ -117,25 +117,25 @@
   margin: 24rpx 32rpx 0;
   padding: 0 24rpx;
   height: 72rpx;
-  background: var(--card);
-  border-radius: 999rpx;
-  box-shadow: var(--shadow-sm);
+  background: var(--search-bg);
+  border-radius: var(--radius-full);
+  box-shadow: var(--search-shadow);
 }
 .search-icon {
-  font-size: 28rpx;
+  font-size: var(--font-size-2xl);
   margin-right: 12rpx;
   opacity: 0.6;
 }
 .search-input {
   flex: 1;
-  font-size: 28rpx;
+  font-size: var(--font-size-2xl);
   color: var(--text-primary);
 }
 .search-ph {
   color: var(--text-muted);
 }
 .search-clear {
-  font-size: 28rpx;
+  font-size: var(--font-size-2xl);
   color: var(--text-muted);
   padding: 0 8rpx;
 }
@@ -145,15 +145,15 @@
 }
 .type-chip {
   display: inline-block;
-  font-size: 25rpx;
+  font-size: var(--font-size-md);
   color: var(--text-tertiary);
-  background: var(--bg-tertiary);
+  background: var(--chip-bg);
   padding: 10rpx 28rpx;
-  border-radius: 999rpx;
+  border-radius: var(--radius-full);
   margin-right: 16rpx;
 }
 .type-chip.on {
-  color: #fff;
+  color: var(--text-inverse);
   background: var(--color-assess);
 }
 .empty-search {
@@ -168,28 +168,12 @@
 }
 .empty-search-text {
   margin-top: 16rpx;
-  font-size: 26rpx;
+  font-size: var(--font-size-md);
   color: var(--text-tertiary);
 }
 .footer {
   text-align: center;
   color: var(--text-muted);
-  font-size: 22rpx;
+  font-size: var(--font-size-sm);
   padding: 40rpx 40rpx 40rpx;
-}
-
-@media (prefers-color-scheme: dark) {
-  .group-title { color: var(--text-secondary); }
-  .item-name { color: var(--text-primary); }
-  .item-desc { color: var(--text-tertiary); }
-  .item-meta { color: var(--text-tertiary); }
-  .arrow { color: var(--border-medium); }
-  .footer { color: var(--text-muted); }
-  .search-bar { background: var(--card); }
-  .search-input { color: var(--text-primary); }
-  .search-ph { color: var(--text-muted); }
-  .search-clear { color: var(--text-muted); }
-  .type-chip { color: var(--text-tertiary); background: var(--bg-tertiary); }
-  .type-chip.on { color: #fff; background: var(--color-assess); }
-  .empty-search-text { color: var(--text-tertiary); }
 }

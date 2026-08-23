@@ -1,7 +1,10 @@
-@import "../../pages/index/index.wxss";
+/* ============================================
+   我的页面 - 统一设计系统
+   ============================================ */
+
 .mine-hero {
   padding: 64rpx 40rpx 40rpx;
-  background: linear-gradient(135deg, #1e293b, #7c3aed);
+  background: var(--grad-hero);
 }
 .mine-avatar {
   width: 110rpx;
@@ -12,18 +15,19 @@
   align-items: center;
   justify-content: center;
   font-size: 56rpx;
+  color: var(--text-inverse);
 }
 .mine-name {
   display: block;
-  color: #fff;
-  font-size: 38rpx;
-  font-weight: 700;
+  color: var(--text-inverse);
+  font-size: var(--font-size-4xl);
+  font-weight: var(--font-weight-bold);
   margin-top: 20rpx;
 }
 .mine-sub {
   display: block;
   color: rgba(255, 255, 255, 0.85);
-  font-size: 24rpx;
+  font-size: var(--font-size-md);
   margin-top: 8rpx;
 }
 .menu { margin: 24rpx 32rpx 0; }
@@ -32,18 +36,23 @@
   align-items: center;
   padding: 30rpx 28rpx;
   margin-bottom: 18rpx;
+  background: var(--card-bg);
+  border: 1rpx solid var(--card-border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--card-shadow);
 }
 .menu-icon {
   width: 64rpx;
   height: 64rpx;
-  border-radius: 18rpx;
+  border-radius: var(--radius-xxl);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 34rpx;
-  background: rgba(124, 58, 237, 0.12);
+  background: var(--color-brand-50);
+  color: var(--color-brand);
   flex-shrink: 0;
 }
 .menu-body { flex: 1; margin-left: 22rpx; overflow: hidden; }
-.menu-name { font-size: 30rpx; color: #1e293b; font-weight: 600; }
-.menu-sub { font-size: 23rpx; color: #64748b; margin-top: 6rpx; }
+.menu-name { font-size: var(--font-size-2xl); color: var(--text-primary); font-weight: var(--font-weight-semibold); }
+.menu-sub { font-size: var(--font-size-sm); color: var(--text-tertiary); margin-top: 6rpx; }

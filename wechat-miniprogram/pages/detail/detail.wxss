@@ -1,37 +1,46 @@
+/* ============================================
+   详情页 - 统一设计系统
+   ============================================ */
+
 .banner {
   padding: 56rpx 40rpx 48rpx;
   display: flex;
   flex-direction: column;
   align-items: center;
-  color: #fff;
+  background: var(--grad-assess-page);
+  color: var(--text-inverse);
 }
 .banner-icon {
   font-size: 80rpx;
 }
 .banner-name {
-  font-size: 40rpx;
-  font-weight: 700;
+  font-size: var(--font-size-5xl);
+  font-weight: var(--font-weight-bold);
   margin-top: 16rpx;
 }
 .banner-short {
-  font-size: 26rpx;
+  font-size: var(--font-size-lg);
   opacity: 0.85;
   margin-top: 8rpx;
 }
 .card.section {
   margin: 24rpx 32rpx 0;
   padding: 32rpx;
+  background: var(--card-bg);
+  border: 1rpx solid var(--card-border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--card-shadow);
 }
 .sec-title {
-  font-size: 30rpx;
-  font-weight: 700;
-  color: #1e293b;
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-primary);
 }
 .sec-text {
   display: block;
-  font-size: 27rpx;
-  color: #475569;
-  line-height: 1.7;
+  font-size: var(--font-size-lg);
+  color: var(--text-tertiary);
+  line-height: var(--line-height-relaxed);
   margin-top: 16rpx;
 }
 .tags {
@@ -40,26 +49,29 @@
   margin-top: 20rpx;
 }
 .tag {
-  font-size: 23rpx;
-  color: #475569;
-  background: #f1f5f9;
+  font-size: var(--font-size-sm);
+  color: var(--text-tertiary);
+  background: var(--bg-tertiary);
   padding: 6rpx 18rpx;
-  border-radius: 999rpx;
+  border-radius: var(--radius-full);
   margin: 0 12rpx 12rpx 0;
 }
 .free-tag {
-  color: #16a34a;
-  background: #dcfce7;
+  color: var(--text-success);
+  background: var(--badge-success-bg);
 }
 .paid-tag {
-  color: #d97706;
-  background: #fef3c7;
+  color: var(--text-warning);
+  background: var(--badge-warning-bg);
 }
 .resume {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: #eff6ff;
+  background: var(--color-brand-50);
+  padding: 24rpx 32rpx;
+  border-radius: var(--radius-xl);
+  margin: 24rpx 32rpx 0;
 }
 .resume-info {
   display: flex;
@@ -67,21 +79,24 @@
   flex: 1;
 }
 .resume-title {
-  font-size: 28rpx;
-  font-weight: 600;
-  color: #1d4ed8;
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-brand-700);
 }
 .resume-sub {
-  font-size: 23rpx;
-  color: #475569;
+  font-size: var(--font-size-sm);
+  color: var(--text-tertiary);
   margin-top: 6rpx;
 }
 .resume-btn {
   width: 200rpx;
   height: 72rpx;
   line-height: 72rpx;
-  font-size: 28rpx;
+  font-size: var(--font-size-lg);
   margin-left: 20rpx;
+  background: var(--color-brand);
+  color: var(--text-inverse);
+  border-radius: var(--radius-full);
 }
 .hist-row {
   display: flex;
@@ -92,19 +107,19 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  border-right: 2rpx solid #f1f5f9;
+  border-right: 2rpx solid var(--border-light);
 }
 .hist-col:last-child {
   border-right: none;
 }
 .hist-col-num {
-  font-size: 38rpx;
-  font-weight: 700;
-  color: #1e293b;
+  font-size: var(--font-size-4xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-primary);
 }
 .hist-col-label {
-  font-size: 22rpx;
-  color: #64748b;
+  font-size: var(--font-size-sm);
+  color: var(--text-tertiary);
   margin-top: 6rpx;
 }
 .row {
@@ -117,28 +132,32 @@
   align-items: center;
 }
 .stat-num {
-  font-size: 40rpx;
-  font-weight: 700;
-  color: #1e293b;
+  font-size: var(--font-size-5xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-primary);
 }
 .stat-label {
-  font-size: 23rpx;
-  color: #64748b;
+  font-size: var(--font-size-sm);
+  color: var(--text-tertiary);
   margin-top: 6rpx;
 }
 .tip {
-  background: #fffbeb;
+  background: var(--result-note-bg);
+  border: 2rpx solid var(--result-note-border);
+  border-radius: var(--radius-xl);
+  margin: 24rpx 32rpx 0;
+  padding: 32rpx;
 }
 .tip-title {
-  font-size: 27rpx;
-  font-weight: 700;
-  color: #b45309;
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  color: var(--result-note-text);
 }
 .tip-text {
   display: block;
-  font-size: 25rpx;
-  color: #92701a;
-  line-height: 1.7;
+  font-size: var(--font-size-md);
+  color: var(--text-tertiary);
+  line-height: var(--line-height-relaxed);
   margin-top: 12rpx;
 }
 .bottom-bar {
@@ -148,14 +167,16 @@
 .start-btn {
   height: 92rpx;
   line-height: 92rpx;
-  font-size: 32rpx;
+  font-size: var(--font-size-xl);
   background: var(--grad-assess-card);
+  color: var(--text-inverse);
+  border-radius: var(--radius-full);
 }
 .brand-foot {
   text-align: center;
-  color: #64748b;
-  font-size: 22rpx;
-  padding: 32rpx;
+  color: var(--text-muted);
+  font-size: var(--font-size-sm);
+  padding: 32rpx 40rpx 40rpx;
 }
 .share-bar {
   display: flex;
@@ -166,11 +187,11 @@
   flex: 1;
   height: 84rpx;
   line-height: 84rpx;
-  background: var(--card);
-  color: #7c3aed;
-  border: 2rpx solid #7c3aed;
-  font-size: 28rpx;
-  border-radius: 16rpx;
+  background: var(--btn-ghost-bg);
+  color: var(--color-brand);
+  border: 2rpx solid var(--color-brand);
+  font-size: var(--font-size-lg);
+  border-radius: var(--radius-xl);
 }
 .share-canvas {
   position: fixed;
@@ -187,20 +208,20 @@
   align-items: center;
   justify-content: center;
   padding: 0 60rpx;
-  background: var(--bg);
+  background: var(--bg-primary);
 }
 .invalid-icon {
   font-size: 96rpx;
 }
 .invalid-title {
-  font-size: 34rpx;
-  font-weight: 700;
-  color: var(--text);
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-primary);
   margin-top: 24rpx;
 }
 .invalid-sub {
-  font-size: 25rpx;
-  color: var(--muted);
+  font-size: var(--font-size-md);
+  color: var(--text-muted);
   margin-top: 12rpx;
   text-align: center;
 }
@@ -209,63 +230,8 @@
   width: 60%;
   height: 88rpx;
   line-height: 88rpx;
-  font-size: 30rpx;
-  border-radius: 999rpx;
-}
-
-@media (prefers-color-scheme: dark) {
-  .sec-title {
-    color: var(--text);
-  }
-  .sec-text {
-    color: var(--text2);
-  }
-  .tag {
-    color: var(--text2);
-    background: var(--chip);
-  }
-  .free-tag {
-    color: #4ade80;
-    background: #14331f;
-  }
-  .brand-foot {
-    color: var(--muted);
-  }
-  .paid-tag {
-    color: #fbbf24;
-    background: #3a2c0a;
-  }
-  .resume {
-    background: #16243f;
-  }
-  .resume-title {
-    color: #93c5fd;
-  }
-  .resume-sub {
-    color: var(--text2);
-  }
-  .hist-col {
-    border-right-color: var(--border);
-  }
-  .hist-col-num {
-    color: var(--text);
-  }
-  .hist-col-label {
-    color: var(--muted);
-  }
-  .stat-num {
-    color: var(--text);
-  }
-  .stat-label {
-    color: var(--muted);
-  }
-  .tip {
-    background: #2a2410;
-  }
-  .tip-title {
-    color: #fbbf24;
-  }
-  .tip-text {
-    color: #d6b25e;
-  }
+  font-size: var(--font-size-xl);
+  border-radius: var(--radius-full);
+  background: var(--color-brand);
+  color: var(--text-inverse);
 }

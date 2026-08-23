@@ -1,28 +1,28 @@
 /* ============================================
-   方法页样式
+   方法页样式 - 统一设计系统
    ============================================ */
 
 .scroll-page {
-  background: var(--bg, #f8fafc);
+  background: var(--bg-primary);
   min-height: 100vh;
 }
 
 /* Hero */
 .hero {
   padding: 48rpx 24rpx 40rpx;
-  background: linear-gradient(135deg, #0d9488 0%, #059669 100%);
+  background: var(--grad-method-page);
 }
 .hero-title {
   display: block;
-  color: #fff;
-  font-size: 44rpx;
-  font-weight: 800;
+  color: var(--text-inverse);
+  font-size: var(--font-size-5xl);
+  font-weight: var(--font-weight-extrabold);
   letter-spacing: 2rpx;
 }
 .hero-sub {
   display: block;
   color: rgba(255, 255, 255, 0.9);
-  font-size: 24rpx;
+  font-size: var(--font-size-md);
   margin-top: 10rpx;
 }
 .hero-meta {
@@ -36,18 +36,18 @@
   align-items: center;
   padding: 8rpx 18rpx;
   background: rgba(255, 255, 255, 0.18);
-  border-radius: 999rpx;
-  font-size: 22rpx;
-  color: #fff;
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-sm);
+  color: var(--text-inverse);
 }
 .pill .num {
-  font-weight: 700;
+  font-weight: var(--font-weight-bold);
   margin-right: 4rpx;
 }
 .pill.link {
   background: rgba(255, 255, 255, 0.28);
-  color: #fff;
-  font-weight: 600;
+  color: var(--text-inverse);
+  font-weight: var(--font-weight-semibold);
 }
 
 /* 搜索栏 */
@@ -57,27 +57,27 @@
   margin: 20rpx 20rpx 0;
   padding: 0 20rpx;
   height: 68rpx;
-  background: var(--card, #fff);
-  border-radius: 999rpx;
-  box-shadow: 0 4rpx 16rpx rgba(15, 23, 42, 0.05);
+  background: var(--search-bg);
+  border-radius: var(--radius-full);
+  box-shadow: var(--search-shadow);
 }
 .search-icon {
-  font-size: 26rpx;
+  font-size: var(--font-size-2xl);
   margin-right: 10rpx;
   opacity: 0.6;
 }
 .search-input {
   flex: 1;
-  font-size: 26rpx;
-  color: var(--text, #1e293b);
+  font-size: var(--font-size-2xl);
+  color: var(--text-primary);
   height: 68rpx;
 }
 .search-ph {
-  color: var(--muted, #94a3b8);
+  color: var(--text-muted);
 }
 .search-clear {
-  font-size: 26rpx;
-  color: var(--muted, #94a3b8);
+  font-size: var(--font-size-2xl);
+  color: var(--text-muted);
   padding: 0 6rpx;
 }
 
@@ -89,16 +89,16 @@
 }
 .type-chip {
   display: inline-block;
-  font-size: 24rpx;
-  color: #475569;
-  background: #eef2f7;
+  font-size: var(--font-size-md);
+  color: var(--text-tertiary);
+  background: var(--chip-bg);
   padding: 8rpx 24rpx;
-  border-radius: 999rpx;
+  border-radius: var(--radius-full);
   margin-right: 12rpx;
 }
 .type-chip.on {
-  color: #fff;
-  background: #0d9488;
+  color: var(--text-inverse);
+  background: var(--color-method);
 }
 
 /* 空状态 */
@@ -114,8 +114,8 @@
 }
 .empty-search-text {
   margin-top: 16rpx;
-  font-size: 26rpx;
-  color: #64748b;
+  font-size: var(--font-size-md);
+  color: var(--text-tertiary);
 }
 
 /* 分组列表 */
@@ -123,16 +123,16 @@
   margin: 24rpx 20rpx 0;
 }
 .group-title {
-  font-size: 26rpx;
-  font-weight: 700;
-  color: #1e293b;
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-primary);
   margin: 12rpx 4rpx 16rpx;
 }
 .card {
-  background: var(--card, #fff);
-  border-radius: 16rpx;
-  box-shadow: 0 4rpx 16rpx rgba(15, 23, 42, 0.06);
-  border: 1rpx solid var(--border, #e2e8f0);
+  background: var(--card-bg);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-md);
+  border: 1rpx solid var(--card-border);
 }
 .item {
   display: flex;
@@ -143,7 +143,7 @@
 .item-icon {
   width: 72rpx;
   height: 72rpx;
-  border-radius: 16rpx;
+  border-radius: var(--radius-xl);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -162,9 +162,9 @@
   flex-wrap: wrap;
 }
 .item-name {
-  font-size: 28rpx;
-  font-weight: 600;
-  color: #1e293b;
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
   max-width: 60%;
   white-space: nowrap;
   overflow: hidden;
@@ -172,72 +172,32 @@
 }
 .badge-practice {
   margin-left: 12rpx;
-  font-size: 20rpx;
-  color: #0d9488;
-  background: #ccfbf1;
+  font-size: var(--font-size-xs);
+  color: var(--color-method-dark);
+  background: var(--color-method-light);
   padding: 2rpx 10rpx;
-  border-radius: 999rpx;
+  border-radius: var(--radius-full);
 }
 .item-desc {
   display: block;
-  font-size: 24rpx;
-  color: #64748b;
+  font-size: var(--font-size-md);
+  color: var(--text-tertiary);
   margin-top: 8rpx;
-  line-height: 1.5;
+  line-height: var(--line-height-normal);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 100%;
 }
 .arrow {
-  color: #cbd5e1;
+  color: var(--border-medium);
   font-size: 40rpx;
   margin-left: 8rpx;
 }
 
 .footer {
   text-align: center;
-  color: #64748b;
-  font-size: 20rpx;
+  color: var(--text-muted);
+  font-size: var(--font-size-xs);
   padding: 36rpx 20rpx 20rpx;
-}
-
-/* Dark Mode */
-@media (prefers-color-scheme: dark) {
-  .scroll-page {
-    background: var(--bg, #0f172a);
-  }
-  .search-bar {
-    background: var(--card, #1e293b);
-  }
-  .type-chip {
-    color: var(--text2, #94a3b8);
-    background: var(--chip, #1e293b);
-  }
-  .type-chip.on {
-    background: #0d9488;
-  }
-  .group-title {
-    color: var(--text, #f1f5f9);
-  }
-  .card {
-    background: var(--card, #1e293b);
-    border-color: var(--border, #334155);
-  }
-  .item-name {
-    color: var(--text, #f1f5f9);
-  }
-  .badge-practice {
-    color: #5eead4;
-    background: #0f3b34;
-  }
-  .item-desc {
-    color: var(--sub, #94a3b8);
-  }
-  .arrow {
-    color: #475569;
-  }
-  .footer {
-    color: var(--muted, #94a3b8);
-  }
 }
