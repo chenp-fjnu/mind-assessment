@@ -50,6 +50,14 @@
         <view class="theme-check {{themeMode==='dark'?'show':''}}">✓</view>
       </view>
 
+      <view class="card menu-item" bindtap="onThemeTest" catchtap="onThemeTest" role="button" aria-label="测试主题处理器">
+        <view class="menu-icon">🔧</view>
+        <view class="menu-body">
+          <text class="menu-name">测试主题处理器</text>
+          <text class="menu-sub">直接调用 onThemeChange('light')</text>
+        </view>
+      </view>
+
       <view class="card menu-item" bindtap="onTestClick" catchtap="onTestClick" role="button">
         <view class="menu-icon">🧪</view>
         <view class="menu-body">

@@ -71,4 +71,13 @@ Page({
     console.log('[mine] TEST CLICK WORKS')
     wx.showToast({ title: '点击生效', icon: 'none' })
   },
+  onThemeTest() {
+    console.log('[mine] onThemeTest called - direct handler test')
+    this.setThemeMode('light')
+    setTimeout(() => {
+      if (typeof this.forceThemeUpdate === 'function') {
+        this.forceThemeUpdate()
+      }
+    }, 0)
+  },
 })
