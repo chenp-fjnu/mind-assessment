@@ -12,8 +12,8 @@ module.exports = {
     '!**/node_modules/**',
   ],
   coveragePathIgnorePatterns: ['/node_modules/', '/test/'],
-  // 适度门槛：随测试补全可逐步抬高
+  // 随测试补全逐步抬高；当前实际约 74/48/76/77
   coverageThreshold: {
-    global: { statements: 35, branches: 25, functions: 25, lines: 35 },
+    global: { statements: 60, branches: 45, functions: 65, lines: 65 },
   },
 }

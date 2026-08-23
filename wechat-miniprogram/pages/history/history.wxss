@@ -25,6 +25,26 @@
   font-weight: 600;
   box-shadow: 0 2rpx 10rpx rgba(15, 23, 42, 0.08);
 }
+.search {
+  display: flex;
+  align-items: center;
+  margin: 16rpx 32rpx 0;
+  padding: 0 24rpx;
+  background: var(--card);
+  border-radius: 999rpx;
+  box-shadow: 0 2rpx 10rpx rgba(15, 23, 42, 0.05);
+}
+.search-input {
+  flex: 1;
+  height: 72rpx;
+  font-size: 27rpx;
+  color: var(--text);
+}
+.search-clear {
+  font-size: 28rpx;
+  color: var(--text2);
+  padding: 0 8rpx;
+}
 .m-tag {
   font-size: 22rpx;
   color: #0d9488;

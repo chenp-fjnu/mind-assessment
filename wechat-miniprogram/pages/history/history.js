@@ -49,6 +49,7 @@ Page({
     mList: [],
     filters: [],
     active: '',
+    kw: '',
   },
   onShow() {
     this.load()
@@ -71,18 +72,33 @@ Page({
       if (!map[h.id]) map[h.id] = { id: h.id, name: h.name, icon: h.icon }
     })
     const filters = [{ id: '', name: '全部', icon: '🗂' }].concat(Object.keys(map).map((k) => map[k]))
-    const active = this.data.active
-    const list = active ? all.filter((h) => h.id === active) : all
     const mList = buildMethodRecords()
-    this.setData({ all, filters, list, mList })
+    this._all = all
+    this._mAll = mList
+    this.setData({ all, filters, mList })
+    this.applyFilter()
+  },
+  applyFilter() {
+    const kw = (this.data.kw || '').trim().toLowerCase()
+    const active = this.data.active
+    let list = active ? (this._all || []).filter((h) => h.id === active) : (this._all || []).slice()
+    if (kw) list = list.filter((h) => (h.name || '').toLowerCase().indexOf(kw) !== -1)
+    let mList = (this._mAll || []).slice()
+    if (kw) mList = mList.filter((p) => (p.name || '').toLowerCase().indexOf(kw) !== -1)
+    this.setData({ list, mList })
   },
   onTab(e) {
     this.setData({ tab: e.currentTarget.dataset.tab })
   },
   onFilter(e) {
     const id = e.currentTarget.dataset.id
-    const list = id ? this.data.all.filter((h) => h.id === id) : this.data.all
-    this.setData({ active: id, list })
+    this.setData({ active: id }, () => this.applyFilter())
+  },
+  onSearch(e) {
+    this.setData({ kw: e.detail.value }, () => this.applyFilter())
+  },
+  clearSearch() {
+    this.setData({ kw: '' }, () => this.applyFilter())
   },
   open(e) {
     const idx = e.currentTarget.dataset.idx

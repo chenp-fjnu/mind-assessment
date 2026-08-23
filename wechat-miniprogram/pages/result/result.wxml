@@ -6,6 +6,7 @@
 </view>
 
 <view class="scroll-page" wx:elif="{{meta.name}}">
+  <view wx:if="{{viewError}}" class="warn">结果解析出现异常，请重新测评或返回首页重试</view>
   <view class="head" style="background:{{meta.color}};color:{{meta.colorText}};">
     <text class="head-icon">{{meta.icon}}</text>
     <text class="head-name">{{meta.name}}</text>

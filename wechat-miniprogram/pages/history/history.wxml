@@ -7,6 +7,18 @@
     </view>
   </view>
 
+  <view class="search">
+    <input
+      class="search-input"
+      placeholder="搜索记录名称"
+      value="{{kw}}"
+      bindinput="onSearch"
+      confirm-type="search"
+      aria-label="搜索记录"
+    />
+    <text wx:if="{{kw}}" class="search-clear" bindtap="clearSearch" role="button" aria-label="清空搜索">✕</text>
+  </view>
+
   <view class="tabs">
     <view class="tab {{tab === 'assess' ? 'on' : ''}}" bindtap="onTab" data-tab="assess" role="button" aria-label="测评记录">测评</view>
     <view class="tab {{tab === 'method' ? 'on' : ''}}" bindtap="onTab" data-tab="method" role="button" aria-label="方法练习记录">方法</view>

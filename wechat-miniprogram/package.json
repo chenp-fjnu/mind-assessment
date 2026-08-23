@@ -7,7 +7,8 @@
     "test": "node test/smoke.js",
     "test:simulate": "jest --forceExit",
     "test:coverage": "jest --coverage --forceExit",
-    "test:all": "node test/smoke.js && jest --forceExit",
+    "validate": "node scripts/check-meta.js",
+    "test:all": "node scripts/check-meta.js && node test/smoke.js && jest --coverage --forceExit",
     "lint": "eslint \"**/*.js\" --ignore-pattern node_modules --ignore-pattern utils/questions.js",
     "format": "prettier --write \"**/*.{js,json,wxml,wxss}\"",
     "format:check": "prettier --check \"**/*.{js,json,wxml,wxss}\""

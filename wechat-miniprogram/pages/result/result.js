@@ -135,10 +135,12 @@ Page({
     const levelText = r.level && String(r.level) !== String(primaryValue) ? r.level : '已完成'
 
     let view
+    let viewError = false
     try {
       view = getResultView(mod, r, layout)
     } catch (e) {
       console.warn('[result] getResultView failed:', e)
+      viewError = true
       view = { groups: [], dims: [], subtests: [], interpretations: [], showBipolar: false }
     }
     const groups = view.groups
@@ -187,6 +189,7 @@ Page({
       showBipolar,
       showDims: !!(dims && dims.length) && !showBipolar && !(groups && groups.length),
       showSubtests: !!(subtests && subtests.length),
+      viewError,
       showTrend,
       trendValues,
       trendDelta,

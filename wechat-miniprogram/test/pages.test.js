@@ -22,6 +22,16 @@ describe('方法页 methods', () => {
     expect(filtered).toBeLessThanOrEqual(total)
     expect(filtered).toBeGreaterThanOrEqual(1)
   })
+  test('goDetail 跳转方法详情', () => {
+    let nav = null
+    global.wx.navigateTo = (o) => {
+      nav = o.url
+    }
+    const ctx = loadPage('pages/methods/methods.js')
+    ctx.goDetail({ currentTarget: { dataset: { id: 'box' } } })
+    expect(nav).toContain('/pages/methods/detail?id=box')
+    global.wx.navigateTo = () => {}
+  })
 })
 
 describe('我的页 mine', () => {
@@ -29,6 +39,18 @@ describe('我的页 mine', () => {
     const ctx = loadPage('pages/mine/mine.js')
     expect(ctx.data.methodCount).toBeGreaterThan(0)
     expect(typeof ctx.data.recordCount).toBe('number')
+  })
+  test('goHistory / goAbout 跳转', () => {
+    let nav = null
+    global.wx.navigateTo = (o) => {
+      nav = o.url
+    }
+    const ctx = loadPage('pages/mine/mine.js')
+    ctx.goHistory()
+    expect(nav).toContain('/pages/history/history')
+    ctx.goAbout()
+    expect(nav).toContain('/pages/about/about')
+    global.wx.navigateTo = () => {}
   })
 })
 
@@ -174,6 +196,13 @@ describe('历史页 history（交互 handler）', () => {
     ctx.open({ currentTarget: { dataset: { idx: 0 } } })
     expect(nav).toContain('/pages/result/result?id=sds')
   })
+  test('onSearch 按名称过滤，clearSearch 还原', () => {
+    const ctx = loadPage('pages/history/history.js')
+    ctx.onSearch({ detail: { value: '不存在的关键词' } })
+    expect(ctx.data.list.length).toBe(0)
+    ctx.clearSearch()
+    expect(ctx.data.list.length).toBe(1)
+  })
 })
 
 describe('测评页 test（提交分支 doSubmit）', () => {
@@ -273,6 +302,85 @@ describe('测评页 test（canvas memo 防重复重绘）', () => {
     // 矩阵画布签名未变 => 不会再次 ensureCanvas；仅 opt/figopt 选中态相关画布重绘
     // 至少保证整体调用数不随“整张矩阵每选一次都重画”那样线性增长
     expect(execCount).toBeLessThanOrEqual(before + ctx.data.q.options.length)
+  })
+})
+
+describe('结果页 result（交互分支 + 兜底可见）', () => {
+  const hist = [{ id: 'sds', rid: 'r1', summary: '55', time: 1000, answers: new Array(20).fill(0) }]
+  const q = {
+    in: () => q,
+    select: () => q,
+    fields: () => q,
+    exec: (cb) =>
+      cb([{ node: { getContext: () => global.__mockCtx, width: 200, height: 200 }, width: 200, height: 200 }]),
+  }
+  beforeEach(() => {
+    global.wx.createSelectorQuery = () => q
+    global.wx.getStorageSync = (k) => (k === 'ma_history' ? hist : undefined)
+    global.wx.showModal = (o) => o && o.success && o.success({ confirm: true })
+    global.wx.saveImageToPhotosAlbum = (o) => o && o.success && o.success({})
+  })
+  afterEach(() => {
+    global.wx.createSelectorQuery = undefined
+    global.wx.getStorageSync = () => []
+    global.wx.showModal = () => {}
+    global.wx.saveImageToPhotosAlbum = () => {}
+    global.wx.canvasToTempFilePath = (o) => o && o.success && o.success({ tempFilePath: 'x' })
+    global.wx.navigateTo = () => {}
+    global.wx.redirectTo = () => {}
+    global.wx.reLaunch = () => {}
+  })
+
+  test('drawTrend 不抛错', () => {
+    const ctx = loadPage('pages/result/result.js', { id: 'sds' })
+    expect(() => ctx.drawTrend()).not.toThrow()
+  })
+  test('saveCard 成功后提示已保存', () => {
+    let toast = ''
+    global.wx.showToast = (o) => {
+      toast = o.title
+    }
+    const ctx = loadPage('pages/result/result.js', { id: 'sds' })
+    ctx.saveCard()
+    expect(toast).toBe('已保存到相册')
+  })
+  test('goMethod 跳转方法详情', () => {
+    let nav = null
+    global.wx.navigateTo = (o) => {
+      nav = o.url
+    }
+    const ctx = loadPage('pages/result/result.js', { id: 'sds' })
+    ctx.goMethod({ currentTarget: { dataset: { id: 'box' } } })
+    expect(nav).toContain('/pages/methods/detail?id=box')
+  })
+  test('retest 重定向到测评页', () => {
+    let nav = null
+    global.wx.redirectTo = (o) => {
+      nav = o.url
+    }
+    const ctx = loadPage('pages/result/result.js', { id: 'sds' })
+    ctx.retest()
+    expect(nav).toContain('/pages/test/test?id=sds')
+  })
+  test('goHome reLaunch 首页', () => {
+    let nav = null
+    global.wx.reLaunch = (o) => {
+      nav = o.url
+    }
+    const ctx = loadPage('pages/result/result.js', { id: 'sds' })
+    ctx.goHome()
+    expect(nav).toContain('/pages/index/index')
+  })
+  test('getResultView 抛错 => viewError 标记且不白屏', () => {
+    const { getModule } = require('../utils/registry')
+    const mod = getModule('sds')
+    const orig = mod.getResultView
+    mod.getResultView = () => {
+      throw new Error('boom')
+    }
+    const ctx = loadPage('pages/result/result.js', { id: 'sds' })
+    mod.getResultView = orig
+    expect(ctx.data.viewError).toBe(true)
   })
 })
 
