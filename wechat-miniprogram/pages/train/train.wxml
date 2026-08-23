@@ -2,6 +2,11 @@
   <view class="hero">
     <text class="hero-title">脑力训练</text>
     <text class="hero-sub">像锻炼肌肉一样锻炼注意力与记忆</text>
+    <view class="hero-meta">
+      <text class="pill"><text class="num">{{gameCount}}</text> 个训练</text>
+      <text class="pill"><text class="num">{{dimCount}}</text> 大认知维度</text>
+      <text class="pill link" bindtap="goRecords" role="button" aria-label="我的训练记录">我的记录 {{recordCount}} ›</text>
+    </view>
   </view>
 
   <view class="search-bar">

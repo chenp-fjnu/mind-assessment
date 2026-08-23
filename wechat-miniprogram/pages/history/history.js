@@ -78,6 +78,11 @@ Page({
     active: '',
     kw: '',
   },
+  onLoad(query) {
+    if (query && ['assess', 'method', 'train'].indexOf(query.tab) >= 0) {
+      this.setData({ tab: query.tab })
+    }
+  },
   onShow() {
     this.load()
   },

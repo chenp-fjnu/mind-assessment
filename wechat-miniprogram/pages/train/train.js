@@ -16,6 +16,9 @@ Page({
     filteredGroups: [],
     typeChips: [],
     activeDim: '',
+    gameCount: 0,
+    dimCount: 0,
+    recordCount: 0,
   },
   onLoad() {
     const byDim = gamesByDim()
@@ -40,6 +43,7 @@ Page({
       DIM_ORDER.filter((d) => byDim[d]).map((d) => ({ key: d, label: DIM_LABELS[d] || d }))
     )
     this.setData({ groups, typeChips, filteredGroups: groups })
+    this.refreshStats()
     this.applyFilter()
   },
   onShow() {
@@ -54,7 +58,15 @@ Page({
       }),
     }))
     this.setData({ groups })
+    this.refreshStats()
     this.applyFilter()
+  },
+  refreshStats() {
+    const groups = this.data.groups
+    const gameCount = groups.reduce((s, g) => s + g.games.length, 0)
+    const dimCount = groups.length
+    const recordCount = trainStore.allRecords().length
+    this.setData({ gameCount, dimCount, recordCount })
   },
   onSearch(e) {
     this.setData({ keyword: e.detail.value })
@@ -86,5 +98,8 @@ Page({
   goGame(e) {
     const id = e.currentTarget.dataset.id
     wx.navigateTo({ url: '/pages/train/game?gameId=' + id })
+  },
+  goRecords() {
+    wx.navigateTo({ url: '/pages/history/history?tab=train' })
   },
 })
