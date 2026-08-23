@@ -6,6 +6,20 @@
 
 const { isDark } = require('./theme')
 
+// 兼容新旧版本获取 DPR
+function getDPR() {
+  try {
+    if (wx.getWindowInfo) {
+      const winInfo = wx.getWindowInfo()
+      if (winInfo.pixelRatio) return winInfo.pixelRatio
+    }
+  } catch {}
+  try {
+    return wx.getSystemInfoSync().pixelRatio
+  } catch {}
+  return 2
+}
+
 // 画布取色：暗色模式下用浅色，亮色模式下用深色
 function canvasPalette() {
   const dark = isDark()
@@ -80,7 +94,7 @@ function renderTrend(ctx, W, H, opts) {
 function renderCard(canvas, ctx, W, H, opts, done) {
   const { meta, primaryValue, primaryLabel, levelText, levelColor, levelColorText, dims } = opts
   const pal = canvasPalette()
-  const dpr = (wx.getWindowInfo ? wx.getWindowInfo().pixelRatio : wx.getSystemInfoSync().pixelRatio) || 2
+  const dpr = getDPR()
   canvas.width = W * dpr
   canvas.height = H * dpr
   ctx.scale(dpr, dpr)
@@ -160,7 +174,7 @@ function renderCard(canvas, ctx, W, H, opts, done) {
 function renderContentCard(canvas, ctx, W, H, opts, done) {
   const { color, icon, title, subtitle, lines, footer } = opts
   const pal = canvasPalette()
-  const dpr = (wx.getWindowInfo ? wx.getWindowInfo().pixelRatio : wx.getSystemInfoSync().pixelRatio) || 2
+  const dpr = getDPR()
   canvas.width = W * dpr
   canvas.height = H * dpr
   ctx.scale(dpr, dpr)

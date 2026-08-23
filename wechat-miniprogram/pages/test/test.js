@@ -28,7 +28,7 @@ Page({
       return
     }
     const questions = mod.getQuestions()
-    this.dpr = (wx.getWindowInfo ? wx.getWindowInfo().pixelRatio : wx.getSystemInfoSync().pixelRatio) || 2
+    this.dpr = (() => { try { if (wx.getWindowInfo) { const w = wx.getWindowInfo(); if (w.pixelRatio) return w.pixelRatio } } catch {} try { return wx.getSystemInfoSync().pixelRatio } catch {} return 2 })()
     this.mod = mod
     this._timer = null
     const setMeta = {}

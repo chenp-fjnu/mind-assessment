@@ -229,10 +229,16 @@ function generateCSSVariables() {
 // 判断当前是否深色模式
 function isDark() {
   try {
-    const systemInfo = wx.getSystemInfoSync();
-    return systemInfo.theme === 'dark';
+    if (wx.getWindowInfo) {
+      const windowInfo = wx.getWindowInfo()
+      if (windowInfo.theme) {
+        return windowInfo.theme === 'dark'
+      }
+    }
+    const systemInfo = wx.getSystemInfoSync()
+    return systemInfo.theme === 'dark'
   } catch {
-    return false;
+    return false
   }
 }
 
