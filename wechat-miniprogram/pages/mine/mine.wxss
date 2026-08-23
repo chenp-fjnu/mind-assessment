@@ -30,6 +30,11 @@
   font-size: var(--font-size-md);
   margin-top: 8rpx;
 }
+
+/* Dark mode mine hero */
+.theme-dark .mine-avatar {
+  background: rgba(255, 255, 255, 0.1);
+}
 .menu { margin: 24rpx 32rpx 0; }
 .menu-item {
   display: flex;
@@ -78,7 +83,7 @@
 }
 .theme-check {
   position: absolute;
-  right: 16rpx;
+  right: 50rpx;
   font-size: 24rpx;
   color: var(--color-brand);
   opacity: 0;

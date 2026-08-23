@@ -76,6 +76,18 @@
 .stat-num { color: var(--text-inverse); font-size: var(--font-size-4xl); font-weight: var(--font-weight-extrabold); line-height: 1; }
 .stat-label { color: rgba(255,255,255,0.85); font-size: var(--font-size-xs); margin-top: 4rpx; }
 
+/* Dark mode hero adjustments */
+.theme-dark .hero::before {
+  background: rgba(255, 255, 255, 0.05);
+}
+.theme-dark .hero::after {
+  background: rgba(76, 196, 176, 0.08);
+}
+.theme-dark .stat-item {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
 /* ============================================
    通用 Section
    ============================================ */
