@@ -20,14 +20,19 @@ page {
   overflow-x: hidden;
 }
 
+/* theme-wrapper 必须铺满整个页面，确保 CSS 变量生效 */
+.theme-wrapper {
+  min-height: 100vh;
+  width: 100%;
+  display: block;
+}
+
 /* ============================================
    CSS 变量定义 - 浅色模式 (默认)
    ============================================ */
 .theme-wrapper,
 .theme-wrapper.theme-light,
-.theme-wrapper.theme-dark,
-page {
-  min-height: 100vh;
+.theme-wrapper.theme-dark {
   /* ===== 背景层级 ===== */
   --bg-primary: #fefefe;           /* 页面主背景 - 更柔和的白 */
   --bg-secondary: #fafafa;         /* 区块背景 */
