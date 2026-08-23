@@ -27,6 +27,10 @@ const LOADERS = {
   'breath-478': () => require('../games/breath-478/index'),
   resonance: () => require('../games/resonance/index'),
   mindfulness: () => require('../games/mindfulness/index'),
+  hanoi: () => require('../games/hanoi/index'),
+  'task-switch': () => require('../games/task-switch/index'),
+  wisconsin: () => require('../games/wisconsin/index'),
+  'tower-london': () => require('../games/tower-london/index'),
 }
 
 const DIM_LABELS = {

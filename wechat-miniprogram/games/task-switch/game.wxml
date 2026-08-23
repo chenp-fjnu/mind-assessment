@@ -1,0 +1,13 @@
+<view class="ts">
+  <view class="info">第 {{idx + 1}} / {{trials}} 题</view>
+  <view wx:if="{{phase === 'play' && cur}}" class="stage">
+    <view class="cue">规则：{{cur.rule === 'color' ? '看颜色' : '看奇偶'}}</view>
+    <view class="stim {{cur.color}}">{{cur.num}}</view>
+  </view>
+  <view wx:if="{{phase === 'play'}}" class="sides">
+    <view class="side" data-side="l" bindtap="onPick" role="button" aria-label="左">左</view>
+    <view class="side" data-side="r" bindtap="onPick" role="button" aria-label="右">右</view>
+  </view>
+  <view wx:if="{{phase === 'idle'}}" class="tip">颜色：红=左 绿=右；奇偶：奇=左 偶=右</view>
+  <view wx:if="{{phase === 'done'}}" class="tip">完成！</view>
+</view>

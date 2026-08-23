@@ -1,0 +1,37 @@
+<view class="wc">
+  <view class="info">第 {{idx + 1}} / {{trials}} 题　按 {{cur.rule === 'color' ? '颜色' : cur.rule === 'shape' ? '形状' : '数量'}} 归类</view>
+  <view wx:if="{{phase === 'play' || phase === 'feedback'}}" class="board">
+    <view class="target">
+      <view class="card">
+        <text
+          wx:for="{{cur.target.glyphs}}"
+          wx:key="index"
+          class="glyph"
+          style="color:{{cur.target.color}};"
+        >{{item}}</text>
+      </view>
+    </view>
+    <view class="opts">
+      <view
+        wx:for="{{cur.options}}"
+        wx:key="index"
+        class="card opt {{feedback && index === cur.ans ? 'ok' : ''}} {{feedback && index !== cur.ans && phase === 'feedback' ? 'no' : ''}}"
+        data-i="{{index}}"
+        bindtap="onPick"
+        role="button"
+        aria-label="选项"
+      >
+        <text
+          wx:for="{{item.glyphs}}"
+          wx:for-item="g"
+          wx:key="index"
+          class="glyph"
+          style="color:{{item.color}};"
+        >{{g}}</text>
+      </view>
+    </view>
+    <view class="fb">{{feedback}}</view>
+  </view>
+  <view wx:if="{{phase === 'idle'}}" class="tip">把卡片按提示维度归到匹配的一组</view>
+  <view wx:if="{{phase === 'done'}}" class="tip">完成！</view>
+</view>

@@ -1,0 +1,24 @@
+<view class="hn">
+  <view class="info">步数 {{moves}}　最优 {{optimal}}</view>
+  <view class="pegs">
+    <view
+      wx:for="{{pegs}}"
+      wx:key="index"
+      class="peg {{selected === index ? 'sel' : ''}}"
+      data-idx="{{index}}"
+      bindtap="onPeg"
+      role="button"
+      aria-label="柱 {{index}}"
+    >
+      <view
+        wx:for="{{item}}"
+        wx:for-item="d"
+        wx:key="*this"
+        class="disk d{{d}}"
+        style="width:{{d * 64 + 60}}rpx;"
+      ></view>
+    </view>
+  </view>
+  <view wx:if="{{phase === 'idle'}}" class="tip">点柱选盘，再点目标柱移动（把全部移到最右）</view>
+  <view wx:if="{{phase === 'done'}}" class="tip">完成！</view>
+</view>

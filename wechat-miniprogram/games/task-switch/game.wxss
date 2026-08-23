@@ -1,0 +1,52 @@
+.ts {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.info {
+  font-size: 28rpx;
+  color: var(--text2);
+  margin-bottom: 20rpx;
+}
+.stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.cue {
+  font-size: 26rpx;
+  color: var(--sub);
+  margin-bottom: 16rpx;
+}
+.stim {
+  font-size: 140rpx;
+  font-weight: 800;
+  line-height: 1;
+}
+.stim.red { color: #ef4444; }
+.stim.green { color: #22c55e; }
+.sides {
+  display: flex;
+  gap: 60rpx;
+  margin-top: 40rpx;
+}
+.side {
+  width: 160rpx;
+  height: 120rpx;
+  border-radius: 24rpx;
+  background: var(--chip);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 44rpx;
+  font-weight: 700;
+  color: var(--text);
+}
+.tip {
+  margin-top: 30rpx;
+  color: var(--sub);
+  font-size: 24rpx;
+  text-align: center;
+  max-width: 560rpx;
+}

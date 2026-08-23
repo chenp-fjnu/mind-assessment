@@ -1,0 +1,60 @@
+.wc {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.info {
+  font-size: 26rpx;
+  color: var(--text2);
+  margin-bottom: 20rpx;
+  text-align: center;
+}
+.board {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.target {
+  margin-bottom: 24rpx;
+}
+.card {
+  min-width: 150rpx;
+  min-height: 120rpx;
+  padding: 16rpx 20rpx;
+  background: var(--chip);
+  border-radius: 18rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.glyph {
+  font-size: 56rpx;
+  margin: 0 4rpx;
+}
+.opts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20rpx;
+}
+.opt {
+  transition: outline 0.1s;
+}
+.opt.ok {
+  outline: 4rpx solid #22c55e;
+}
+.opt.no {
+  outline: 4rpx solid #ef4444;
+}
+.fb {
+  height: 48rpx;
+  font-size: 44rpx;
+  font-weight: 800;
+  color: var(--text);
+}
+.tip {
+  margin-top: 30rpx;
+  color: var(--sub);
+  font-size: 24rpx;
+}

@@ -6,11 +6,11 @@ const { getMetaList, getGame } = require('../utils/game-registry')
 const trainStore = require('../utils/train-store')
 
 describe('训练游戏注册表', () => {
-  test('包含 27 个游戏且维度齐全', () => {
+  test('包含 31 个游戏且维度齐全', () => {
     const list = getMetaList()
-    expect(list.length).toBe(27)
+    expect(list.length).toBe(31)
     const dims = list.map((g) => g.dim)
-    expect(dims).toEqual(expect.arrayContaining(['attention', 'memory', 'reaction', 'relax']))
+    expect(dims).toEqual(expect.arrayContaining(['attention', 'memory', 'reaction', 'relax', 'exec']))
   })
 
   test('每个游戏暴露统一契约字段', () => {
@@ -267,6 +267,27 @@ describe('放松正念游戏', () => {
   })
   test('mindfulness 返回引导语', () => {
     expect(getGame('mindfulness').generate(4).prompts.length).toBeGreaterThan(0)
+  })
+})
+
+describe('执行功能游戏', () => {
+  test('hanoi 返回最优步数 = 2^n-1', () => {
+    expect(getGame('hanoi').generate(3).optimal).toBe(7)
+  })
+  test('task-switch 返回试次', () => {
+    expect(getGame('task-switch').generate(2).list.length).toBe(12)
+  })
+  test('wisconsin 每题有唯一正确项', () => {
+    const s = getGame('wisconsin').generate(2)
+    s.list.forEach((t) => {
+      const match = t.options.filter((o, i) => i === t.ans).length
+      expect(match).toBe(1)
+    })
+  })
+  test('tower-london 返回起止配置', () => {
+    const s = getGame('tower-london').generate(4)
+    expect(s.start.length).toBe(3)
+    expect(s.goal.length).toBe(3)
   })
 })
 

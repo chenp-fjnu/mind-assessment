@@ -27,6 +27,10 @@
     "double-decision-game": "../../games/double-decision/game",
     "breath-478-game": "../../games/breath-478/game",
     "resonance-game": "../../games/resonance/game",
-    "mindfulness-game": "../../games/mindfulness/game"
+    "mindfulness-game": "../../games/mindfulness/game",
+    "hanoi-game": "../../games/hanoi/game",
+    "task-switch-game": "../../games/task-switch/game",
+    "wisconsin-game": "../../games/wisconsin/game",
+    "tower-london-game": "../../games/tower-london/game"
   }
 }

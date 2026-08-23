@@ -1,0 +1,38 @@
+<view class="tl">
+  <view class="info">步数 {{moves}}</view>
+  <view class="goal">
+    <text class="gl">目标</text>
+    <view class="gpegs">
+      <view wx:for="{{goal}}" wx:key="index" class="gpeg">
+        <view
+          wx:for="{{item}}"
+          wx:for-item="b"
+          wx:key="*this"
+          class="ball"
+          style="background:{{balls[b]}};"
+        ></view>
+      </view>
+    </view>
+  </view>
+  <view class="pegs">
+    <view
+      wx:for="{{pegs}}"
+      wx:key="index"
+      class="peg {{selected === index ? 'sel' : ''}}"
+      data-idx="{{index}}"
+      bindtap="onPeg"
+      role="button"
+      aria-label="柱 {{index}}"
+    >
+      <view
+        wx:for="{{item}}"
+        wx:for-item="b"
+        wx:key="*this"
+        class="ball"
+        style="background:{{balls[b]}};"
+      ></view>
+    </view>
+  </view>
+  <view wx:if="{{phase === 'idle'}}" class="tip">点柱选球，再点目标柱移动（达成上方目标）</view>
+  <view wx:if="{{phase === 'done'}}" class="tip">完成！</view>
+</view>
