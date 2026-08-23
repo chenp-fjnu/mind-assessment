@@ -98,6 +98,8 @@ Page({
     this.setData({ result: null, finished: false })
   },
   goBack() {
-    wx.navigateBack()
+    wx.navigateBack({
+      fail: () => wx.switchTab({ url: '/pages/train/train' })
+    })
   },
 })
