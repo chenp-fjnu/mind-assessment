@@ -22,7 +22,5 @@ jobs:
           cache: npm
           cache-dependency-path: wechat-miniprogram/package-lock.json
       - run: npm install
-      - name: 冒烟测试（无依赖）
-        run: npm test
-      - name: Jest 单元/页面测试 + 覆盖率
-        run: npm run test:coverage
+      - name: 冒烟 + Jest 单元/页面测试 + 覆盖率
+        run: npm run test:all

@@ -98,6 +98,147 @@ describe('结果页 result（趋势分支）', () => {
   })
 })
 
+describe('历史页 history（交互 handler）', () => {
+  const sample = [{ id: 'sds', rid: 'r1', name: '抑郁自评', icon: '🌧', summary: '55', level: '轻度', time: 1000, answers: [] }]
+  let store
+  beforeEach(() => {
+    store = { ma_history: sample.slice(), ma_practices: {} }
+    global.wx.getStorageSync = (k) => (k in store ? store[k] : undefined)
+    global.wx.setStorageSync = (k, v) => {
+      store[k] = v
+    }
+    global.wx.removeStorageSync = (k) => {
+      delete store[k]
+    }
+    global.wx.showModal = (o) => o && o.success && o.success({ confirm: true })
+  })
+  afterEach(() => {
+    // 还原为与 setup.js 一致的默认实现，避免污染后续 describe
+    global.wx.getStorageSync = () => []
+    global.wx.showModal = () => {}
+    global.wx.setStorageSync = () => {}
+    global.wx.removeStorageSync = () => {}
+  })
+
+  test('deleteOne 确认 => 从 ma_history 移除该 rid', () => {
+    const ctx = loadPage('pages/history/history.js')
+    expect(ctx.data.list.length).toBe(1)
+    ctx.deleteOne({ currentTarget: { dataset: { idx: 0 } } })
+    expect(store.ma_history).toEqual([])
+  })
+  test('deleteOne 取消 => 不改动记录', () => {
+    global.wx.showModal = (o) => o.success({ confirm: false })
+    const ctx = loadPage('pages/history/history.js')
+    ctx.deleteOne({ currentTarget: { dataset: { idx: 0 } } })
+    expect(store.ma_history.length).toBe(1)
+  })
+  test('clearAll 确认 => 清空 ma_history', () => {
+    let removed = null
+    global.wx.removeStorageSync = (k) => {
+      removed = k
+    }
+    const ctx = loadPage('pages/history/history.js')
+    ctx.clearAll()
+    expect(removed).toBe('ma_history')
+  })
+  test('exportAll 有记录 => 复制 JSON 到剪贴板', () => {
+    let clip = null
+    global.wx.setClipboardData = (o) => {
+      clip = o.data
+    }
+    const ctx = loadPage('pages/history/history.js')
+    ctx.exportAll()
+    expect(typeof clip).toBe('string')
+    expect(clip).toContain('sds')
+  })
+  test('exportAll 无记录 => 提示暂无', () => {
+    global.wx.getStorageSync = () => []
+    let toast = ''
+    global.wx.showToast = (o) => {
+      toast = o.title
+    }
+    const ctx = loadPage('pages/history/history.js')
+    ctx.exportAll()
+    expect(toast).toMatch(/暂无记录/)
+  })
+  test('onTab / onFilter / open 基本行为', () => {
+    let nav = null
+    global.wx.navigateTo = (o) => {
+      nav = o.url
+    }
+    const ctx = loadPage('pages/history/history.js')
+    ctx.onTab({ currentTarget: { dataset: { tab: 'method' } } })
+    expect(ctx.data.tab).toBe('method')
+    ctx.onFilter({ currentTarget: { dataset: { id: 'sds' } } })
+    expect(ctx.data.active).toBe('sds')
+    ctx.open({ currentTarget: { dataset: { idx: 0 } } })
+    expect(nav).toContain('/pages/result/result?id=sds')
+  })
+})
+
+describe('测评页 test（提交分支 doSubmit）', () => {
+  let execCount
+  beforeEach(() => {
+    execCount = 0
+    const q = {
+      select: () => q,
+      fields: () => q,
+      exec: (cb) => {
+        execCount++
+        cb([{ node: { getContext: () => global.__mockCtx, width: 200, height: 200 }, width: 200, height: 200 }])
+      },
+    }
+    global.wx.createSelectorQuery = () => q
+    global.wx.getStorageSync = (k) => (k === 'ma_history' ? [] : undefined)
+    global.wx.showModal = (o) => o && o.success && o.success({ confirm: true })
+  })
+  afterEach(() => {
+    // 还原为与 setup.js 一致的默认实现，避免污染后续 describe
+    global.wx.createSelectorQuery = undefined
+    global.wx.getStorageSync = () => []
+    global.wx.showModal = () => {}
+    global.wx.setStorageSync = () => {}
+    global.wx.removeStorageSync = () => {}
+    global.wx.reLaunch = () => {}
+  })
+
+  function spy() {
+    const relaunch = []
+    const writes = []
+    global.wx.reLaunch = (o) => relaunch.push(o)
+    global.wx.setStorageSync = (k, v) => {
+      if (k === 'ma_history') writes.push(v)
+    }
+    return { relaunch, writes }
+  }
+
+  test('全部已答 => submit 写入历史并 reLaunch', () => {
+    const { relaunch, writes } = spy()
+    const ctx = loadPage('pages/test/test.js', { id: 'spm' })
+    ctx.data.answers = ctx.data.questions.map(() => 0)
+    ctx.submit()
+    expect(relaunch.length).toBe(1)
+    expect(writes.length).toBe(1)
+    expect(writes[0].length).toBe(1) // 新建 1 条记录
+  })
+  test('用户取消 => 不提交、不 reLaunch', () => {
+    global.wx.showModal = (o) => o.success({ confirm: false })
+    const { relaunch } = spy()
+    const ctx = loadPage('pages/test/test.js', { id: 'spm' })
+    ctx.data.answers = ctx.data.questions.map(() => 0)
+    ctx.submit()
+    expect(relaunch.length).toBe(0)
+  })
+  test('存在未答 => 走“未完成”弹窗后仍能提交', () => {
+    const { relaunch } = spy()
+    const ctx = loadPage('pages/test/test.js', { id: 'spm' })
+    ctx.data.answers = ctx.data.questions.map(() => 0)
+    ctx.data.answers[0] = null // 制造未答
+    ctx.submit()
+    expect(relaunch.length).toBe(1)
+  })
+})
+
 describe('测评页 test（canvas memo 防重复重绘）', () => {
   let execCount
   beforeEach(() => {
