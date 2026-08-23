@@ -86,6 +86,7 @@
   color: var(--color-brand);
   opacity: 0;
   transition: opacity 0.2s;
+  pointer-events: none;
 }
 .theme-check.show {
   opacity: 1;
