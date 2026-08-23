@@ -252,7 +252,7 @@ Page({
           ctx.clearRect(0, 0, W, H)
           const s = Math.min(W, H)
           drawCell(ctx, opt, (W - s) / 2, (H - s) / 2, s)
-          drawBadge(ctx, W, H, idx)
+          // drawBadge removed - letter badge (A/B/C/D) is sufficient
           drawLetterBadge(ctx, W, H, idx)
           if (sel === idx) {
             ctx.strokeStyle = '#2563eb'
