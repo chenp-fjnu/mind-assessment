@@ -45,4 +45,8 @@ Page({
       console.error('[mine] setThemeMode not found on page instance')
     }
   },
+  onTestClick() {
+    console.log('[mine] TEST CLICK WORKS')
+    wx.showToast({ title: '点击生效', icon: 'none' })
+  },
 })
