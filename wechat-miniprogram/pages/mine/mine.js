@@ -41,6 +41,12 @@ Page({
     console.log('[mine] theme change clicked:', mode, 'setThemeMode exists:', typeof this.setThemeMode, 'full event:', e)
     if (typeof this.setThemeMode === 'function') {
       this.setThemeMode(mode)
+      // 强制刷新
+      setTimeout(() => {
+        if (typeof this.forceThemeUpdate === 'function') {
+          this.forceThemeUpdate()
+        }
+      }, 0)
     } else {
       console.error('[mine] setThemeMode not found on page instance')
     }

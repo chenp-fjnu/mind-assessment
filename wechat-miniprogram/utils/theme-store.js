@@ -116,6 +116,16 @@ function useTheme(pageInstance) {
     console.log('[theme-store] after updateTheme, themeClass should be:', `theme-${getEffectiveTheme()}`)
   };
 
+  // 强制刷新页面主题类的辅助函数
+  pageInstance.forceThemeUpdate = () => {
+    console.log('[theme-store] forceThemeUpdate called')
+    const effectiveTheme = getEffectiveTheme();
+    const themeClass = `theme-${effectiveTheme}`;
+    pageInstance.setData({ themeClass }, () => {
+      console.log('[theme-store] forceThemeUpdate setData callback fired, themeClass:', themeClass)
+    })
+  };
+
   pageInstance.onThemeChange = (theme) => {
     pageInstance.setData({ 
       currentTheme: theme,
