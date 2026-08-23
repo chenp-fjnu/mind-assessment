@@ -184,6 +184,29 @@ Page({
       ctx.textBaseline = 'alphabetic'
     }
 
+    // 矩阵选项字母徽标（A–F 对应 idx）：白字 + 深色描边，置于画布右下角，
+    // 使矩阵选项像图形选择题的 figopt-key 一样有可见字母（色盲不依赖颜色即可区分）。
+    const drawLetterBadge = (ctx, W, H, idx) => {
+      const letter = String.fromCharCode(65 + idx)
+      const r = 11
+      const cx = W - r - 4
+      const cy = H - r - 4
+      ctx.save()
+      ctx.fillStyle = 'rgba(15,23,42,0.85)'
+      ctx.beginPath()
+      ctx.arc(cx, cy, r, 0, Math.PI * 2)
+      ctx.fill()
+      ctx.font = 'bold 13px sans-serif'
+      ctx.textAlign = 'center'
+      ctx.textBaseline = 'middle'
+      ctx.lineWidth = Math.max(1.5, r * 0.18)
+      ctx.strokeStyle = 'rgba(15,23,42,0.85)'
+      ctx.strokeText(letter, cx, cy)
+      ctx.fillStyle = '#ffffff'
+      ctx.fillText(letter, cx, cy)
+      ctx.restore()
+    }
+
     if (q.type === 'matrix') {
       this.ensureCanvas('matrixCanvas', (ctx, W, H) => {
         ctx.clearRect(0, 0, W, H)
@@ -214,6 +237,7 @@ Page({
           const s = Math.min(W, H)
           drawCell(ctx, opt, (W - s) / 2, (H - s) / 2, s)
           drawBadge(ctx, W, H, idx)
+          drawLetterBadge(ctx, W, H, idx)
           if (sel === idx) {
             ctx.strokeStyle = '#2563eb'
             ctx.lineWidth = 4

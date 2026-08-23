@@ -22,6 +22,7 @@ Page({
     interpretations: [],
     testedTime: '',
     retestGap: '',
+    retakeHint: '',
     showGroups: false,
     showBipolar: false,
     showDims: false,
@@ -72,6 +73,28 @@ Page({
         const gap = Math.round((myHist[0].time - myHist[1].time) / 86400000)
         retestGap = gap <= 0 ? '今天' : gap + ' 天前'
       }
+    }
+    // 距上次重测间隔（retakeHint）：与本次记录时间不同的同量表最近一条历史比较
+    let retakeHint = ''
+    try {
+      const selfTimeSrc = (app.globalData.lastResult && app.globalData.lastResult.time) || (myHist[0] && myHist[0].time) || Date.now()
+      const selfTs = new Date(selfTimeSrc).getTime()
+      if (!isNaN(selfTs)) {
+        const prev = myHist
+          .filter((h) => h.id === id && h.time !== selfTimeSrc)
+          .sort((a, b) => b.time - a.time)
+        if (prev.length) {
+          const prevTs = new Date(prev[0].time).getTime()
+          if (!isNaN(prevTs)) {
+            const days = Math.round((selfTs - prevTs) / 86400000)
+            retakeHint = days <= 0 ? '距上次测评不到 1 天' : '距上次测评 ' + days + ' 天'
+          }
+        } else {
+          retakeHint = '首次测评'
+        }
+      }
+    } catch (e) {
+      retakeHint = ''
     }
 
     this.dpr = (wx.getWindowInfo ? wx.getWindowInfo().pixelRatio : wx.getSystemInfoSync().pixelRatio) || 2
@@ -170,6 +193,7 @@ Page({
       trendDates,
       testedTime,
       retestGap,
+      retakeHint,
       timeText,
       noteText,
       recommend: methodsData.recommendFor(mod.type),

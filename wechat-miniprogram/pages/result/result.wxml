@@ -15,6 +15,7 @@
     </view>
     <text wx:if="{{levelText}}" class="level-badge" style="background:{{levelColor}};color:{{levelColorText}};">{{levelText}}</text>
     <text wx:if="{{descText}}" class="head-desc">{{descText}}</text>
+    <text wx:if="{{retakeHint}}" class="retake-hint">{{retakeHint}}</text>
   </view>
 
   <view wx:if="{{testedTime}}" class="test-meta">

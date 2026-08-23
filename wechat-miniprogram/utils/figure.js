@@ -5,6 +5,32 @@
  * 数据格式：cell = { bg, shapes: [{ type, size, color, rotation, fill, count }] }
  */
 
+// 色盲无障碍：颜色 → 填充纹理 的冗余通道。
+// 当 shape.fill 未显式设置时，按 shape.color 推导默认纹理，使颜色同时带可辨纹理。
+const COLOR_TEXTURE = {
+  // 颜色名（兼容可能的命名用法）
+  red: 'striped',
+  blue: 'dotted',
+  green: 'hollow',
+  yellow: 'solid',
+  black: 'solid',
+  gray: 'solid',
+  grey: 'solid',
+  // 题面实际使用的 hex 调色板
+  '#dc2626': 'striped', // 红
+  '#2563eb': 'dotted', // 蓝
+  '#16a34a': 'hollow', // 绿
+  '#d97706': 'solid', // 琥珀/黄
+  '#1f2937': 'solid', // 黑/灰
+}
+
+// 由颜色推导默认 fill 纹理，找不到时回退 'solid'
+function textureForColor(color) {
+  if (!color) return 'solid'
+  const key = String(color).toLowerCase()
+  return COLOR_TEXTURE[key] || 'solid'
+}
+
 function shapePath(ctx, type, r) {
   ctx.beginPath()
   switch (type) {
@@ -78,7 +104,9 @@ function drawShape(ctx, shape, cx, cy, cellSize) {
   ctx.lineWidth = Math.max(2, cellSize * 0.02)
   ctx.lineJoin = 'round'
 
-  const fill = shape.fill || 'solid'
+  // 仅当 fill 未显式设置（undefined/空字符串）时，按 color 从 COLOR_TEXTURE 推导默认纹理；
+  // 若已显式设置则保持原值（不改变任何既有图形的正确答案含义）。
+  const fill = shape.fill || textureForColor(shape.color)
   shapePath(ctx, shape.type, r)
 
   if (fill === 'hollow') {
@@ -169,4 +197,4 @@ function drawCell(ctx, cell, x, y, size) {
   ctx.restore()
 }
 
-module.exports = { drawCell, drawShape, shapePath }
+module.exports = { drawCell, drawShape, shapePath, COLOR_TEXTURE, textureForColor }

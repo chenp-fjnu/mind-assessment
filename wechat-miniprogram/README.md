@@ -192,8 +192,13 @@ CI（`.github/workflows/ci.yml`）：push/PR 触及 `wechat-miniprogram/**` 时�
 - **趋势对比增强**：`utils/trend.js` 数值趋势补充「首次/最近」值与区间差；类型趋势新增「首次 → 最近」对比（路线图第 3 项）。
 - **结果视图统一契约**：22 个模块全部实现单一 `getResultView(r, layout)`（零鸭子类型分支），`utils/result-view.js` 仅做标准化兜底；返回结构 `{ groups, dims, subtests, interpretations, showBipolar }`（路线图第 1 项，已完成）。
 - **色盲无障碍（图形）**：`utils/figure.js` 支持图形单元 `label` 叠加（白字+深色描边，任意底色可读）；韦氏积木 `sq`/`tri` 按颜色自动打标（R/W/B/G/Y），色盲用户可凭字母而非仅颜色区分积木。
+- **色盲无障碍（形状/纹理）**：`utils/figure.js` 新增颜色→纹理冗余通道 `COLOR_TEXTURE`，`drawShape` 在 `fill` 未显式设置时按颜色推导纹理（红=striped/蓝=dotted/绿=hollow/黄= solid），颜色同时带可辨纹理；矩阵题选项画布叠加可见字母徽标（A–F），色盲无需依赖颜色即可区分选项（路线图色盲项）。
+- **常模/计分文献标注**：`utils/modules-meta.js` 为 22 个量表补充 `scoring` 字段（计分方式与常模说明），详情页「参考来源与版本」区块新增展示「计分方式」，便于溯源与校准（路线图第 14 项）。
+- **结果页重测提示**：`pages/result/result.js` 展示「距上次测评 N 天 / 首次测评」，便于跟踪变化。
+- **详情页续答入口**：`pages/detail/detail.wxml` 在存在未完成进度时显示「继续未完成测评（已答 X/Y，Z%）」按钮，点击即恢复（路线图第 6 项）。
+- **首页搜索与分类筛选**：`pages/index` 新增搜索框（按名称/简称/简介/标签匹配）与按 `type` 的分类 chips，实时过滤「全部量表」列表，含空态提示（路线图第 7 项）。
 
-> 仍未做（高成本/高风险，建议后续单独评估）：图形题形状/纹理色盲区分（已通过序号/字母徽标缓解）、常模文献逐条标注。
+> 路线图全部高/中优先项均已完成；仅余低优先工程化项（CI 接入 Jest + `@miniprogram/simulate` 完整链路、`.gitattributes` 行尾统一）可按需推进。
 
 ## 许可
 

@@ -18,7 +18,8 @@ module.exports = [
       "性格",
       "自我认知"
     ],
-    "reference": "Myers, I.B. & Briggs, K.C. — MBTI® 类型指标；本题源为公开领域 70 题标准化版整理（简体中文译）"
+    "reference": "Myers, I.B. & Briggs, K.C. — MBTI® 类型指标；本题源为公开领域 70 题标准化版整理（简体中文译）",
+    "scoring": "四维度二分计分（E/I、S/N、T/F、J/P），按题项倾向归类型，无临床常模"
   },
   {
     "id": "big5",
@@ -37,7 +38,8 @@ module.exports = [
       "性格",
       "OCEAN"
     ],
-    "reference": "Goldberg, L.R. — IPIP-50 大五人格量表（OCEAN 五因素模型）"
+    "reference": "Goldberg, L.R. — IPIP-50 大五人格量表（OCEAN 五因素模型）",
+    "scoring": "0–5 Likert 累加法，按维度 T 分／百分位常模"
   },
   {
     "id": "epq",
@@ -56,7 +58,8 @@ module.exports = [
       "性格",
       "EPQ"
     ],
-    "reference": "Eysenck, H.J. & Eysenck, S.B.G. — EPQ-RSC 艾森克人格问卷（简式中文版，E/N/P/L 四量表）"
+    "reference": "Eysenck, H.J. & Eysenck, S.B.G. — EPQ-RSC 艾森克人格问卷（简式中文版，E/N/P/L 四量表）",
+    "scoring": "是/否计分（含 L 掩饰量表），标准 T 分常模（E/N/P/L 四量表）"
   },
   {
     "id": "disc",
@@ -75,7 +78,8 @@ module.exports = [
       "职场",
       "沟通"
     ],
-    "reference": "Marston, W.M. — DISC 行为风格模型（Dominance/Influence/Steadiness/Conscientiousness）"
+    "reference": "Marston, W.M. — DISC 行为风格模型（Dominance/Influence/Steadiness/Conscientiousness）",
+    "scoring": "四因子倾向计分，按主导风格归类"
   },
   {
     "id": "pf16",
@@ -94,7 +98,8 @@ module.exports = [
       "性格",
       "16因素"
     ],
-    "reference": "Cattell, R.B. — 16PF 卡特尔十六种人格因素问卷（IPIP 版因子题）"
+    "reference": "Cattell, R.B. — 16PF 卡特尔十六种人格因素问卷（IPIP 版因子题）",
+    "scoring": "0–2 计分累加法，按 16 因素标准十（stens）常模"
   },
   {
     "id": "sds",
@@ -114,7 +119,8 @@ module.exports = [
       "心理健康",
       "筛查"
     ],
-    "reference": "Zung, W.W.K. (1965) — 抑郁自评量表（SDS）"
+    "reference": "Zung, W.W.K. (1965) — 抑郁自评量表（SDS）",
+    "scoring": "20 题 1–4 Likert 累加法，抑郁指数=总分×1.25，常模分级"
   },
   {
     "id": "sas",
@@ -134,7 +140,8 @@ module.exports = [
       "心理健康",
       "筛查"
     ],
-    "reference": "Zung, W.W.K. (1971) — 焦虑自评量表（SAS）"
+    "reference": "Zung, W.W.K. (1971) — 焦虑自评量表（SAS）",
+    "scoring": "20 题 1–4 Likert 累加法，焦虑指数=总分×1.25，常模分级"
   },
   {
     "id": "gad7",
@@ -154,7 +161,8 @@ module.exports = [
       "心理健康",
       "筛查"
     ],
-    "reference": "Spitzer, R.L. et al. (2006) — 广泛性焦虑量表（GAD-7）"
+    "reference": "Spitzer, R.L. et al. (2006) — 广泛性焦虑量表（GAD-7）",
+    "scoring": "7 题 0–3 Likert 累加法，总分常模分级（≥10 轻中度）"
   },
   {
     "id": "dass21",
@@ -176,7 +184,8 @@ module.exports = [
       "心理健康",
       "筛查"
     ],
-    "reference": "Lovibond, S.H. & Lovibond, P.F. (1995) — 抑郁-焦虑-压力量表（DASS-21）"
+    "reference": "Lovibond, S.H. & Lovibond, P.F. (1995) — 抑郁-焦虑-压力量表（DASS-21）",
+    "scoring": "21 题 0–3 Likert 累加法，三维度分量表计分，常模分级"
   },
   {
     "id": "ses",
@@ -195,7 +204,8 @@ module.exports = [
       "自尊",
       "自我价值"
     ],
-    "reference": "Rosenberg, M. (1965) — 自尊量表（SES）"
+    "reference": "Rosenberg, M. (1965) — 自尊量表（SES）",
+    "scoring": "10 题 4 点计分（反向题校正），总分累加法，常模分级"
   },
   {
     "id": "las",
@@ -214,7 +224,8 @@ module.exports = [
       "爱情",
       "亲密关系"
     ],
-    "reference": "Hendrick, C. & Hendrick, S. (1986) — 爱情态度量表（LAS，六型浪漫风格）"
+    "reference": "Hendrick, C. & Hendrick, S. (1986) — 爱情态度量表（LAS，六型浪漫风格）",
+    "scoring": "42 题 Likert 计分，六型爱情风格分量表累加法"
   },
   {
     "id": "holland",
@@ -233,7 +244,8 @@ module.exports = [
       "兴趣",
       "RIASEC"
     ],
-    "reference": "Holland, J.L. — RIASEC 霍兰德职业兴趣理论（现实/研究/艺术/社会/企业/常规）"
+    "reference": "Holland, J.L. — RIASEC 霍兰德职业兴趣理论（现实/研究/艺术/社会/企业/常规）",
+    "scoring": "48 题 Likert 计分，RIASEC 六型累加成职业代码"
   },
   {
     "id": "spm",
@@ -252,7 +264,8 @@ module.exports = [
       "图形",
       "非言语"
     ],
-    "reference": "Raven, J.C. — 瑞文标准推理测验（SPM）；本题为原创图形推理练习，按正确率换算近似推理水平，非标准化常模"
+    "reference": "Raven, J.C. — 瑞文标准推理测验（SPM）；本题为原创图形推理练习，按正确率换算近似推理水平，非标准化常模",
+    "scoring": "60 题正确率计分，按正确数换算近似推理水平，非标准化常模"
   },
   {
     "id": "wechsler",
@@ -272,7 +285,8 @@ module.exports = [
       "操作",
       "综合"
     ],
-    "reference": "Wechsler, D. — 韦氏成人智力量表（WAIS）；本题为原创分测验图形练习，按正确率换算近似量表分，非标准化常模"
+    "reference": "Wechsler, D. — 韦氏成人智力量表（WAIS）；本题为原创分测验图形练习，按正确率换算近似量表分，非标准化常模",
+    "scoring": "分测验正确率计分，换算近似量表分，非标准化常模"
   },
   {
     "id": "phq9",
@@ -292,7 +306,8 @@ module.exports = [
       "筛查",
       "DSM-IV"
     ],
-    "reference": "Kroenke, K. et al. (2001) — 患者健康问卷抑郁模块（PHQ-9）"
+    "reference": "Kroenke, K. et al. (2001) — 患者健康问卷抑郁模块（PHQ-9）",
+    "scoring": "9 题 0–3 Likert 累加法，总分常模分级（≥10 中重度）"
   },
   {
     "id": "pss",
@@ -312,7 +327,8 @@ module.exports = [
       "心理健康",
       "筛查"
     ],
-    "reference": "Cohen, S., Kamarck, T. & Mermelstein, R. (1983) — 知觉压力量表（PSS-10）"
+    "reference": "Cohen, S., Kamarck, T. & Mermelstein, R. (1983) — 知觉压力量表（PSS-10）",
+    "scoring": "10 题 0–4 Likert 计分（反向题校正），总分累加法，常模分级"
   },
   {
     "id": "psqi",
@@ -332,7 +348,8 @@ module.exports = [
       "生活质量",
       "筛查"
     ],
-    "reference": "Buysse, D.J. et al. (1989) — 匹兹堡睡眠质量指数（PSQI，7 个成分）"
+    "reference": "Buysse, D.J. et al. (1989) — 匹兹堡睡眠质量指数（PSQI，7 个成分）",
+    "scoring": "19 自评+5 他评，7 成分累加成总分（0–21），常模分级"
   },
   {
     "id": "gses",
@@ -352,7 +369,8 @@ module.exports = [
       "自我效能",
       "积极心理"
     ],
-    "reference": "Schwarzer, R. & Jerusalem, M. (1995) — 一般自我效能感量表（GSES）"
+    "reference": "Schwarzer, R. & Jerusalem, M. (1995) — 一般自我效能感量表（GSES）",
+    "scoring": "10 题 4 点计分累加法，总分常模分级"
   },
   {
     "id": "ucla",
@@ -372,7 +390,8 @@ module.exports = [
       "关系",
       "心理健康"
     ],
-    "reference": "Russell, D. et al. (1978/1980 第三版) — UCLA 孤独量表"
+    "reference": "Russell, D. et al. (1978/1980 第三版) — UCLA 孤独量表",
+    "scoring": "20 题 Likert 计分（反向题校正），总分累加法，常模分级"
   },
   {
     "id": "cdrise",
@@ -392,7 +411,8 @@ module.exports = [
       "抗压",
       "自我成长"
     ],
-    "reference": "Connor, K.M. & Davidson, J.R.T. (2003) — 心理韧性量表（CD-RISC-10）"
+    "reference": "Connor, K.M. & Davidson, J.R.T. (2003) — 心理韧性量表（CD-RISC-10）",
+    "scoring": "10 题 5 点 Likert 累加法，总分常模分级"
   },
   {
     "id": "enneagram",
@@ -412,7 +432,8 @@ module.exports = [
       "九型",
       "自我探索"
     ],
-    "reference": "Riso, D.R. & Hudson, R. — 九型人格理论（Enneagram，简化测评版）"
+    "reference": "Riso, D.R. & Hudson, R. — 九型人格理论（Enneagram，简化测评版）",
+    "scoring": "36 题 Likert 计分，九型倾向累加成主导类型"
   },
   {
     "id": "temperament",
@@ -432,6 +453,7 @@ module.exports = [
       "性格",
       "自我探索"
     ],
-    "reference": "气质四维度问卷（简化版；基于希波克拉底-盖伦气质学说与现代四维模型）"
+    "reference": "气质四维度问卷（简化版；基于希波克拉底-盖伦气质学说与现代四维模型）",
+    "scoring": "60 题 Likert 计分，四气质类型累加成主导气质"
   }
 ]

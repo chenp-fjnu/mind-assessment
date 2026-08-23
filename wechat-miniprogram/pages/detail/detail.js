@@ -33,6 +33,7 @@ Page({
         tags: mod.tag || [],
         type: mod.type,
         reference: (metaRef && metaRef.reference) || '',
+        scoring: (metaRef && metaRef.scoring) || '',
       },
     })
     wx.setNavigationBarTitle({ title: mod.name })
