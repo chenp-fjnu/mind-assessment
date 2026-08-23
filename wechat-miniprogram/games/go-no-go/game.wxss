@@ -1,0 +1,39 @@
+.gng {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.info {
+  font-size: 28rpx;
+  color: var(--text2);
+  margin-bottom: 20rpx;
+}
+.stage {
+  width: 300rpx;
+  height: 300rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.stim {
+  width: 220rpx;
+  height: 220rpx;
+  border-radius: 50%;
+}
+.stim.go { background: #22c55e; }
+.stim.nogo { background: #ef4444; }
+.placeholder {
+  width: 220rpx;
+  height: 220rpx;
+}
+.tap {
+  width: 300rpx;
+  height: 120rpx;
+  margin-top: 10rpx;
+}
+.tip {
+  margin-top: 20rpx;
+  color: var(--sub);
+  font-size: 24rpx;
+}

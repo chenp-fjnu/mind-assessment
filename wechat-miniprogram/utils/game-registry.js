@@ -18,6 +18,12 @@ const LOADERS = {
   simon: () => require('../games/simon/index'),
   'digit-span': () => require('../games/digit-span/index'),
   corsi: () => require('../games/corsi/index'),
+  whack: () => require('../games/whack/index'),
+  'go-no-go': () => require('../games/go-no-go/index'),
+  'bigger-number': () => require('../games/bigger-number/index'),
+  cps: () => require('../games/cps/index'),
+  'color-match': () => require('../games/color-match/index'),
+  'double-decision': () => require('../games/double-decision/index'),
 }
 
 const DIM_LABELS = {

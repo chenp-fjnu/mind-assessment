@@ -1,0 +1,37 @@
+.cm {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.info {
+  font-size: 28rpx;
+  color: var(--text2);
+  margin-bottom: 30rpx;
+}
+.sw {
+  width: 260rpx;
+  height: 260rpx;
+  border-radius: 32rpx;
+}
+.names {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20rpx;
+  margin-top: 36rpx;
+}
+.opt {
+  width: 200rpx;
+  padding: 30rpx 0;
+  text-align: center;
+  background: var(--chip);
+  border-radius: 20rpx;
+  font-size: 40rpx;
+  font-weight: 700;
+  color: var(--text);
+}
+.tip {
+  margin-top: 30rpx;
+  color: var(--sub);
+  font-size: 24rpx;
+}

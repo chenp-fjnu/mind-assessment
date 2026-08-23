@@ -6,9 +6,9 @@ const { getMetaList, getGame } = require('../utils/game-registry')
 const trainStore = require('../utils/train-store')
 
 describe('训练游戏注册表', () => {
-  test('包含 18 个游戏且维度齐全', () => {
+  test('包含 24 个游戏且维度齐全', () => {
     const list = getMetaList()
-    expect(list.length).toBe(18)
+    expect(list.length).toBe(24)
     const dims = list.map((g) => g.dim)
     expect(dims).toEqual(expect.arrayContaining(['attention', 'memory', 'reaction', 'relax']))
   })
@@ -230,6 +230,29 @@ describe('工作记忆游戏', () => {
   })
   test('corsi 返回长度为 level 的序列', () => {
     expect(getGame('corsi').generate(5).seq.length).toBe(5)
+  })
+})
+
+describe('反应速度游戏', () => {
+  test('whack 返回地鼠数', () => {
+    expect(getGame('whack').generate(4).trials).toBe(20)
+  })
+  test('go-no-go 返回试次', () => {
+    const s = getGame('go-no-go').generate(3)
+    expect(s.list.length).toBe(24)
+  })
+  test('bigger-number 返回不等数字对', () => {
+    const s = getGame('bigger-number').generate(2)
+    s.list.forEach((t) => expect(t.a).not.toBe(t.b))
+  })
+  test('cps 返回时长', () => {
+    expect(getGame('cps').generate(2).duration).toBe(10)
+  })
+  test('color-match 返回调色板', () => {
+    expect(getGame('color-match').generate(2).palette.length).toBe(4)
+  })
+  test('double-decision 返回试次', () => {
+    expect(getGame('double-decision').generate(2).list.length).toBe(12)
   })
 })
 

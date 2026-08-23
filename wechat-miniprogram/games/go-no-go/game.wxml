@@ -1,0 +1,10 @@
+<view class="gng">
+  <view class="info">第 {{idx + 1}} / {{trials}} 题　正确 {{correct}}</view>
+  <view class="stage">
+    <view wx:if="{{phase === 'play' && cur}}" class="stim {{cur.go ? 'go' : 'nogo'}}"></view>
+    <view wx:if="{{phase !== 'play'}}" class="placeholder"></view>
+  </view>
+  <view wx:if="{{phase === 'play'}}" class="tap" bindtap="onTap" role="button" aria-label="点击"></view>
+  <view wx:if="{{phase === 'idle'}}" class="tip">绿色点击 · 红色别点</view>
+  <view wx:if="{{phase === 'done'}}" class="tip">完成！</view>
+</view>

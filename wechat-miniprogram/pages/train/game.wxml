@@ -42,6 +42,12 @@
     <simon-game wx:if="{{gameId === 'simon'}}" id="trainGame" level="{{level}}" bind:finish="onFinish" />
     <digit-span-game wx:if="{{gameId === 'digit-span'}}" id="trainGame" level="{{level}}" bind:finish="onFinish" />
     <corsi-game wx:if="{{gameId === 'corsi'}}" id="trainGame" level="{{level}}" bind:finish="onFinish" />
+    <whack-game wx:if="{{gameId === 'whack'}}" id="trainGame" level="{{level}}" bind:finish="onFinish" />
+    <go-no-go-game wx:if="{{gameId === 'go-no-go'}}" id="trainGame" level="{{level}}" bind:finish="onFinish" />
+    <bigger-number-game wx:if="{{gameId === 'bigger-number'}}" id="trainGame" level="{{level}}" bind:finish="onFinish" />
+    <cps-game wx:if="{{gameId === 'cps'}}" id="trainGame" level="{{level}}" bind:finish="onFinish" />
+    <color-match-game wx:if="{{gameId === 'color-match'}}" id="trainGame" level="{{level}}" bind:finish="onFinish" />
+    <double-decision-game wx:if="{{gameId === 'double-decision'}}" id="trainGame" level="{{level}}" bind:finish="onFinish" />
   </view>
 
   <view wx:if="{{finished && result}}" class="result card">

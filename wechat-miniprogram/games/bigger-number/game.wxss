@@ -1,0 +1,35 @@
+.bn {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.info {
+  font-size: 28rpx;
+  color: var(--text2);
+  margin-bottom: 30rpx;
+}
+.row {
+  display: flex;
+  align-items: center;
+  gap: 30rpx;
+}
+.num {
+  min-width: 200rpx;
+  padding: 40rpx 30rpx;
+  background: var(--chip);
+  border-radius: 24rpx;
+  font-size: 72rpx;
+  font-weight: 800;
+  text-align: center;
+  color: var(--text);
+}
+.vs {
+  font-size: 40rpx;
+  color: var(--sub);
+}
+.tip {
+  margin-top: 30rpx;
+  color: var(--sub);
+  font-size: 24rpx;
+}

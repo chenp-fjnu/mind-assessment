@@ -1,0 +1,10 @@
+<view class="cps">
+  <view class="info" wx:if="{{phase === 'play'}}">剩余 {{left}} 秒</view>
+  <view class="info" wx:else>连点测试</view>
+  <view class="big {{phase === 'play' ? 'on' : ''}}" bindtap="onTap" role="button" aria-label="点击">
+    <text class="n">{{clicks}}</text>
+    <text class="t">次</text>
+  </view>
+  <view wx:if="{{phase === 'idle'}}" class="tip">开始后在限时内尽快连点</view>
+  <view wx:if="{{phase === 'done'}}" class="tip">完成！</view>
+</view>

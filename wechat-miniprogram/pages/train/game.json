@@ -18,6 +18,12 @@
     "pattern-memory-game": "../../games/pattern-memory/game",
     "simon-game": "../../games/simon/game",
     "digit-span-game": "../../games/digit-span/game",
-    "corsi-game": "../../games/corsi/game"
+    "corsi-game": "../../games/corsi/game",
+    "whack-game": "../../games/whack/game",
+    "go-no-go-game": "../../games/go-no-go/game",
+    "bigger-number-game": "../../games/bigger-number/game",
+    "cps-game": "../../games/cps/game",
+    "color-match-game": "../../games/color-match/game",
+    "double-decision-game": "../../games/double-decision/game"
   }
 }

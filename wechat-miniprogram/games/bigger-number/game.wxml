@@ -1,0 +1,10 @@
+<view class="bn">
+  <view class="info">第 {{idx + 1}} / {{trials}} 题</view>
+  <view wx:if="{{phase === 'play'}}" class="row">
+    <view class="num" data-side="l" bindtap="onPick" role="button" aria-label="左 {{cur.a}}">{{cur.a}}</view>
+    <text class="vs">></text>
+    <view class="num" data-side="r" bindtap="onPick" role="button" aria-label="右 {{cur.b}}">{{cur.b}}</view>
+  </view>
+  <view wx:if="{{phase === 'idle'}}" class="tip">点出更大的数字</view>
+  <view wx:if="{{phase === 'done'}}" class="tip">完成！</view>
+</view>

@@ -1,0 +1,46 @@
+.dd {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.info {
+  font-size: 28rpx;
+  color: var(--text2);
+  margin-bottom: 30rpx;
+}
+.row {
+  height: 160rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.arrow {
+  font-size: 140rpx;
+  font-weight: 800;
+  line-height: 1;
+}
+.arrow.blue { color: #3b82f6; }
+.arrow.red { color: #ef4444; }
+.sides {
+  display: flex;
+  gap: 60rpx;
+  margin-top: 40rpx;
+}
+.side {
+  width: 160rpx;
+  height: 160rpx;
+  border-radius: 28rpx;
+  background: var(--chip);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 80rpx;
+  font-weight: 800;
+  color: var(--text);
+}
+.tip {
+  margin-top: 30rpx;
+  color: var(--sub);
+  font-size: 24rpx;
+}

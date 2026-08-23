@@ -1,0 +1,17 @@
+<view class="cm">
+  <view class="info">第 {{idx + 1}} / {{trials}} 题</view>
+  <view wx:if="{{phase === 'play'}}" class="sw" style="background:{{cur.hex}};"></view>
+  <view wx:if="{{phase === 'play'}}" class="names">
+    <view
+      wx:for="{{palette}}"
+      wx:key="index"
+      class="opt"
+      data-i="{{index}}"
+      bindtap="onPick"
+      role="button"
+      aria-label="{{item.name}}"
+    >{{item.name}}</view>
+  </view>
+  <view wx:if="{{phase === 'idle'}}" class="tip">点出对应的颜色名</view>
+  <view wx:if="{{phase === 'done'}}" class="tip">完成！</view>
+</view>

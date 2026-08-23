@@ -1,0 +1,16 @@
+<view class="wh">
+  <view class="info">命中 {{hits}} / {{trials}}</view>
+  <view class="grid" style="grid-template-columns:repeat({{grid}},1fr);">
+    <view
+      wx:for="{{total}}"
+      wx:key="*this"
+      class="hole {{active === index ? 'up' : ''}}"
+      data-idx="{{index}}"
+      bindtap="onTap"
+      role="button"
+      aria-label="地洞"
+    ><view class="mole" wx:if="{{active === index}}">🐹</view></view>
+  </view>
+  <view wx:if="{{phase === 'idle'}}" class="tip">地鼠冒头时尽快点击</view>
+  <view wx:if="{{phase === 'done'}}" class="tip">完成！</view>
+</view>
