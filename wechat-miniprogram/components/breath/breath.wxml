@@ -1,0 +1,23 @@
+<view class="bb">
+  <view
+    class="ring"
+    style="border-color:{{color}};background:{{tint}};transform:scale({{0.6 + progress * 0.4}});"
+  >
+    <view class="ring-inner">
+      <text class="phase" style="color:{{color}};">{{phaseLabel}}</text>
+      <text class="count">{{remain}}</text>
+    </view>
+  </view>
+  <view class="hint">完成 {{completed}} / {{target}} 轮</view>
+  <view class="ctrls">
+    <view
+      wx:if="{{!running}}"
+      class="btn-start"
+      style="background:{{color}};"
+      bindtap="start"
+      role="button"
+      aria-label="开始"
+    >开始</view>
+    <view wx:else class="btn-stop" bindtap="stop" role="button" aria-label="结束">结束</view>
+  </view>
+</view>

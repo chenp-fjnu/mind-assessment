@@ -10,6 +10,7 @@ function fmtBest(value, unit) {
 Page({
   data: {
     gameId: '',
+    family: '',
     meta: null,
     levels: [],
     level: 0,
@@ -59,7 +60,8 @@ Page({
       level,
       levelLabel,
       tint: hexToRgba(g.color, 0.12),
-      bestText: fmtBest(trainStore.best(id, level, g.metric.better), g.metric.unit),
+      bestText: fmtBest(trainStore.best(this.data.gameId, level, g.metric.better), g.metric.unit),
+      family: g.family || (g.dim === 'relax' ? 'breath' : ''),
     })
     this.refreshTrend(id, g, level)
   },

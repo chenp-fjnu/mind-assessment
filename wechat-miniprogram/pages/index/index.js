@@ -18,7 +18,7 @@ function buildModules() {
   const all = getMetaList().map((m) => ({
     id: m.id, type: m.type, typeLabel: TYPE_LABELS[m.type] || m.type, icon: m.icon, name: m.name, shortName: m.shortName,
     desc: m.desc, duration: m.duration, questionCount: m.questionCount,
-    paid: m.paid, price: m.price, color: m.color, tint: hexToRgba(m.color, 0.12),
+    color: m.color, tint: hexToRgba(m.color, 0.12),
   }))
   const byId = {}
   all.forEach((m) => (byId[m.id] = m))

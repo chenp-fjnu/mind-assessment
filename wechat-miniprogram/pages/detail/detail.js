@@ -28,8 +28,6 @@ Page({
         questionCount: mod.questionCount,
         color: mod.color,
         colorText: readableTextColor(mod.color),
-        paid: mod.paid,
-        price: mod.price,
         tags: mod.tag || [],
         type: mod.type,
         reference: (metaRef && metaRef.reference) || '',

@@ -15,6 +15,7 @@ function score(state) {
 
 module.exports = {
   id: 'resonance',
+  family: 'breath',
   name: '共振呼吸',
   dim: 'relax',
   dimLabel: '放松正念',

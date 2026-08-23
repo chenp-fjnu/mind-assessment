@@ -22,9 +22,9 @@ for (const id of ids) {
     desc: m.desc,
     questionCount,
     duration: m.duration,
-    paid: m.paid,
-    price: m.price,
     tag: m.tag || [],
+    reference: m.reference || '',
+    scoring: m.scoring || '',
   })
 }
 const content =

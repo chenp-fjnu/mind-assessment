@@ -21,6 +21,7 @@ function score(state) {
 
 module.exports = {
   id: 'box-breathing',
+  family: 'breath',
   name: '箱式呼吸',
   dim: 'relax',
   dimLabel: '放松正念',

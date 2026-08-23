@@ -95,8 +95,6 @@ function allRecords() {
   return out
 }
 
-module.exports = { load, save, best, bestOverall, trend, setLast, getLast, allRecords, deleteRecord, key }
-
 // 删除某条指定训练记录（按 游戏 + 难度 + rid 唯一定位，避免同毫秒时间戳误删）
 function deleteRecord(id, level, rid) {
   const k = key(id, level)
@@ -106,3 +104,5 @@ function deleteRecord(id, level, rid) {
   else wx.removeStorageSync(k)
   return next
 }
+
+module.exports = { load, save, best, bestOverall, trend, setLast, getLast, allRecords, deleteRecord, key }

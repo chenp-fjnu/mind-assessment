@@ -31,7 +31,7 @@
     <schulte-game wx:if="{{gameId === 'schulte'}}" id="trainGame" level="{{level}}" bind:finish="onFinish" />
     <memory-match-game wx:if="{{gameId === 'memory-match'}}" id="trainGame" level="{{level}}" bind:finish="onFinish" />
     <stroop-game wx:if="{{gameId === 'stroop'}}" id="trainGame" level="{{level}}" bind:finish="onFinish" />
-    <box-breathing-game wx:if="{{gameId === 'box-breathing'}}" id="trainGame" level="{{level}}" bind:finish="onFinish" />
+    <breath-game wx:if="{{family === 'breath'}}" id="trainGame" gameId="{{gameId}}" level="{{level}}" color="{{meta.color}}" tint="{{tint}}" bind:finish="onFinish" />
     <reaction-time-game wx:if="{{gameId === 'reaction-time'}}" id="trainGame" level="{{level}}" bind:finish="onFinish" />
     <n-back-game wx:if="{{gameId === 'n-back'}}" id="trainGame" level="{{level}}" bind:finish="onFinish" />
     <flanker-game wx:if="{{gameId === 'flanker'}}" id="trainGame" level="{{level}}" bind:finish="onFinish" />
@@ -52,9 +52,6 @@
     <cps-game wx:if="{{gameId === 'cps'}}" id="trainGame" level="{{level}}" bind:finish="onFinish" />
     <color-match-game wx:if="{{gameId === 'color-match'}}" id="trainGame" level="{{level}}" bind:finish="onFinish" />
     <double-decision-game wx:if="{{gameId === 'double-decision'}}" id="trainGame" level="{{level}}" bind:finish="onFinish" />
-    <breath-478-game wx:if="{{gameId === 'breath-478'}}" id="trainGame" level="{{level}}" bind:finish="onFinish" />
-    <resonance-game wx:if="{{gameId === 'resonance'}}" id="trainGame" level="{{level}}" bind:finish="onFinish" />
-    <mindfulness-game wx:if="{{gameId === 'mindfulness'}}" id="trainGame" level="{{level}}" bind:finish="onFinish" />
     <hanoi-game wx:if="{{gameId === 'hanoi'}}" id="trainGame" level="{{level}}" bind:finish="onFinish" />
     <task-switch-game wx:if="{{gameId === 'task-switch'}}" id="trainGame" level="{{level}}" bind:finish="onFinish" />
     <wisconsin-game wx:if="{{gameId === 'wisconsin'}}" id="trainGame" level="{{level}}" bind:finish="onFinish" />

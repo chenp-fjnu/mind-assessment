@@ -1,4 +1,6 @@
-// 训练游戏注册表：懒加载，结构同 utils/registry（字面量 require 保证打包）
+// 训练游戏注册表：结构同 utils/registry（字面量 require 保证打包）。
+// 说明：index.js 均为纯逻辑（不含大体积题库），getMetaList 直接读取各模块静态字段，
+// 故此处为「按需取元数据」而非「绝不加载」；真正的懒加载体现在 games/<id>/index 仅在进入具体游戏时才被页面引用。
 const LOADERS = {
   schulte: () => require('../games/schulte/index'),
   'memory-match': () => require('../games/memory-match/index'),

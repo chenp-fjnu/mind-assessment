@@ -21,6 +21,7 @@ function score(state) {
 
 module.exports = {
   id: 'mindfulness',
+  family: 'breath',
   name: '正念呼吸',
   dim: 'relax',
   dimLabel: '放松正念',

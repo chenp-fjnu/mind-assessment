@@ -43,13 +43,15 @@ Page({
       return
     }
     // 冷启动 / 直接进入兜底：从最近历史恢复答案
+    // 优先取「题量一致」的最近一条，避免模块改题数后旧记录答案长度不匹配导致恢复失败
     if (!saved || !saved.answers) {
       const hist = (wx.getStorageSync('ma_history') || [])
         .filter((h) => h.id === id)
         .sort((a, b) => b.time - a.time)
       const qn = mod.getQuestions().length
-      if (hist.length && hist[0].answers && hist[0].answers.length === qn) {
-        saved = { id, answers: hist[0].answers, totalTime: hist[0].totalTime || 0 }
+      const hit = hist.find((h) => h.answers && h.answers.length === qn)
+      if (hit) {
+        saved = { id, answers: hit.answers, totalTime: hit.totalTime || 0 }
       }
     }
     if (!saved || !saved.answers) {

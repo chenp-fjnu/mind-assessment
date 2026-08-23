@@ -17,8 +17,7 @@
     <text class="sec-text">{{meta.desc}}</text>
     <view class="tags">
       <text class="tag" wx:for="{{meta.tags}}" wx:key="*this">{{item}}</text>
-      <text wx:if="{{meta.paid}}" class="tag paid-tag">¥{{meta.price}} 付费</text>
-      <text wx:else class="tag free-tag">免费体验</text>
+      <text class="tag free-tag">免费体验</text>
     </view>
   </view>
 

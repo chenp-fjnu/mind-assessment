@@ -16,6 +16,7 @@ function score(state) {
 
 module.exports = {
   id: 'breath-478',
+  family: 'breath',
   name: '4-7-8 呼吸',
   dim: 'relax',
   dimLabel: '放松正念',

@@ -11,8 +11,6 @@ function buildModuleList() {
     desc: m.desc,
     duration: m.duration,
     questionCount: m.questionCount,
-    paid: m.paid,
-    price: m.price,
     color: m.color,
     tint: hexToRgba(m.color, 0.12),
     keywords: (m.name + ' ' + m.desc + ' ' + (m.tag || []).join(' ') + ' ' + (TYPE_LABELS[m.type] || '')).toLowerCase(),
