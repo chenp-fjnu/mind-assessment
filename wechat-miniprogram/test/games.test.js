@@ -291,6 +291,54 @@ describe('执行功能游戏', () => {
   })
 })
 
+describe('训练游戏计分单调性（覆盖全部 31 个游戏）', () => {
+  const cases = {
+    'bigger-number': [{ total: 10, correct: 10 }, { total: 10, correct: 4 }],
+    'color-match': [{ total: 20, correct: 20 }, { total: 20, correct: 10 }],
+    'corsi': [{ total: 9, correct: 9 }, { total: 9, correct: 3 }],
+    'digit-span': [{ total: 9, correct: 9 }, { total: 9, correct: 2 }],
+    'double-decision': [{ total: 12, correct: 12 }, { total: 12, correct: 6 }],
+    'go-no-go': [{ total: 24, correct: 24 }, { total: 24, correct: 12 }],
+    'mirror': [{ total: 10, correct: 10 }, { total: 10, correct: 5 }],
+    'simon': [{ total: 8, correct: 8 }, { total: 8, correct: 3 }],
+    'task-switch': [{ total: 12, correct: 12 }, { total: 12, correct: 5 }],
+    'wisconsin': [{ total: 10, correct: 10 }, { total: 10, correct: 4 }],
+    'pattern-memory': [{ total: 9, correct: 9 }, { total: 9, correct: 3 }],
+    'breath-478': [{ cycles: 6 }, { cycles: 2 }],
+    'resonance': [{ cycles: 8 }, { cycles: 2 }],
+    'mindfulness': [{ cycles: 5 }, { cycles: 1 }],
+    'cps': [{ clicks: 60 }, { clicks: 20 }],
+    'whack': [{ hits: 18, misses: 2 }, { hits: 5, misses: 10 }],
+    'hanoi': [{ moves: 7, optimal: 7 }, { moves: 27, optimal: 7 }],
+    'tower-london': [{ moves: 3 }, { moves: 30 }],
+    'figure-tracking': [{ size: 5, time: 25, errors: 0 }, { size: 5, time: 120, errors: 10 }],
+    'find-rule': [
+      { targetCount: 8, found: 8, errors: 0, time: 8 },
+      { targetCount: 8, found: 4, errors: 5, time: 40 },
+    ],
+    'visual-search': [{ time: 2, errors: 0 }, { time: 20, errors: 10 }],
+  }
+  Object.keys(cases).forEach((id) => {
+    test(`${id} 好成绩得分高于差成绩`, () => {
+      const g = getGame(id)
+      const [good, bad] = cases[id]
+      expect(g.score(good).score).toBeGreaterThan(g.score(bad).score)
+    })
+  })
+  test('n-back 好成绩得分高于差成绩', () => {
+    const g = getGame('n-back')
+    expect(g.score({ correct: 18, total: 20, times: [600, 600] }).score).toBeGreaterThan(
+      g.score({ correct: 8, total: 20, times: [600, 600] }).score
+    )
+  })
+  test('schulte 用时短得分高', () => {
+    const g = getGame('schulte')
+    expect(g.score({ size: 5, time: 10, errors: 0 }).score).toBeGreaterThan(
+      g.score({ size: 5, time: 60, errors: 5 }).score
+    )
+  })
+})
+
 describe('训练成绩存储', () => {
   test('空记录时 best 为 null，trend 不展示', () => {
     expect(trainStore.best('schulte', 'lower')).toBeNull()
