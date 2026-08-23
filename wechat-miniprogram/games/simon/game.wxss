@@ -8,7 +8,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 20rpx;
-  width: 440rpx;
+  width: 100%;
 }
 .pad {
   aspect-ratio: 1 / 1;

@@ -10,7 +10,7 @@
 .grid {
   display: grid;
   gap: 10rpx;
-  width: 420rpx;
+  width: 100%;
   margin: 0 auto;
 }
 .cell {

@@ -7,7 +7,7 @@
 .grid {
   display: grid;
   gap: 12rpx;
-  width: 480rpx;
+  width: 100%;
 }
 .cell {
   aspect-ratio: 1 / 1;

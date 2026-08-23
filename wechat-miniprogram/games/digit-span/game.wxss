@@ -24,7 +24,7 @@
   grid-template-columns: repeat(5, 1fr);
   gap: 16rpx;
   margin-top: 30rpx;
-  width: 480rpx;
+  width: 100%;
 }
 .key {
   aspect-ratio: 1 / 1;

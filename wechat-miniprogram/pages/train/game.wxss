@@ -1,8 +1,18 @@
 .hero {
-  padding: 48rpx 40rpx 40rpx;
+  padding: calc(96rpx + env(safe-area-inset-top)) 40rpx 40rpx;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+}
+.back {
+  position: absolute;
+  top: calc(24rpx + env(safe-area-inset-top));
+  left: 28rpx;
+  font-size: 30rpx;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.16);
+  padding: 8rpx 24rpx;
+  border-radius: 999rpx;
 }
 .h-icon {
   width: 96rpx;
@@ -63,8 +73,13 @@
   color: #fff;
 }
 .board {
-  margin: 28rpx 32rpx 0;
+  width: 94vw;
+  max-width: 760rpx;
+  max-height: 60vh;
+  aspect-ratio: 1 / 1;
+  margin: 24rpx auto 0;
   padding: 32rpx 24rpx;
+  box-sizing: border-box;
 }
 .result {
   margin: 28rpx 32rpx 0;

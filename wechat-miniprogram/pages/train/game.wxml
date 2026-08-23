@@ -1,5 +1,6 @@
 <view class="scroll-page">
   <view class="hero" style="background: linear-gradient(135deg, {{meta.color}}, #1e293b);">
+    <view class="back" bindtap="goBack" role="button" aria-label="返回">‹ 返回</view>
     <view class="h-icon" style="background:{{tint}};">{{meta.icon}}</view>
     <text class="hero-title">{{meta.name}}</text>
     <text class="hero-sub">{{meta.desc}}</text>

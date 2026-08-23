@@ -1,5 +1,7 @@
 {
   "navigationBarTitleText": "训练",
+  "navigationStyle": "custom",
+  "pageOrientation": "auto",
   "usingComponents": {
     "schulte-game": "../../games/schulte/game",
     "memory-match-game": "../../games/memory-match/game",

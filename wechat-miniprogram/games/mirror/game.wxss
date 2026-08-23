@@ -12,13 +12,16 @@
 .pair {
   display: flex;
   align-items: center;
-  gap: 40rpx;
+  justify-content: center;
+  gap: 24rpx;
+  width: 100%;
 }
 .pat {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 6rpx;
-  width: 240rpx;
+  width: 42vw;
+  max-width: 42vh;
 }
 .pc {
   aspect-ratio: 1 / 1;

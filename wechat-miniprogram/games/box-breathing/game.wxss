@@ -5,8 +5,8 @@
   align-items: center;
 }
 .ring {
-  width: 360rpx;
-  height: 360rpx;
+  width: 100%;
+  aspect-ratio: 1 / 1;
   border-radius: 50%;
   background: rgba(16, 185, 129, 0.12);
   border: 6rpx solid #10b981;

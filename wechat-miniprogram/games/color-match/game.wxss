@@ -10,8 +10,8 @@
   margin-bottom: 30rpx;
 }
 .sw {
-  width: 260rpx;
-  height: 260rpx;
+  width: 100%;
+  aspect-ratio: 1 / 1;
   border-radius: 32rpx;
 }
 .names {

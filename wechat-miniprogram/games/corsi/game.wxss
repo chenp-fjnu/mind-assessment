@@ -8,7 +8,7 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 18rpx;
-  width: 420rpx;
+  width: 100%;
 }
 .blk {
   aspect-ratio: 1 / 1;

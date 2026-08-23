@@ -13,7 +13,7 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 16rpx;
-  width: 360rpx;
+  width: 100%;
 }
 .cell {
   width: 100%;
