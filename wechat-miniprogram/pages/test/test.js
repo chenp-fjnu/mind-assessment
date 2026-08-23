@@ -89,6 +89,8 @@ Page({
 
   renderCurrent() {
     this._qStart = Date.now()
+    // 切题时旧画布签名全部失效，下一帧重绘；选中态切换则保留 memo 只重绘变化项
+    this._figKeys = {}
     this.stopCountdown()
     const i = this.data.current
     const q = this.data.questions[i]
@@ -166,6 +168,15 @@ Page({
     const sel = this.data.answers[this.data.current]
     const self = this
 
+    // 轻量 memo：按画布 id + 签名跳过未发生变化的整帧重绘。
+    // 矩阵图随题号变化、候选图随选中项变化，避免每次选中都重画整张矩阵。
+    const shouldDraw = (id, sig) => {
+      this._figKeys = this._figKeys || {}
+      if (this._figKeys[id] === sig) return false
+      this._figKeys[id] = sig
+      return true
+    }
+
     // 选项序号徽标：除颜色外用编号区分选项，兼顾色盲用户与快速定位
     const drawBadge = (ctx, W, H, idx) => {
       const r = 11
@@ -208,6 +219,7 @@ Page({
     }
 
     if (q.type === 'matrix') {
+      if (shouldDraw('matrixCanvas', 'm:' + this.data.current)) {
       this.ensureCanvas('matrixCanvas', (ctx, W, H) => {
         ctx.clearRect(0, 0, W, H)
         const N = q.matrix.length
@@ -231,7 +243,9 @@ Page({
           ctx.stroke()
         }
       })
+      }
       q.options.forEach((opt, idx) => {
+        if (shouldDraw('opt' + idx, 'o:' + this.data.current + ':' + idx + ':' + sel)) {
         this.ensureCanvas('opt' + idx, (ctx, W, H) => {
           ctx.clearRect(0, 0, W, H)
           const s = Math.min(W, H)
@@ -244,11 +258,13 @@ Page({
             ctx.strokeRect(2, 2, W - 4, H - 4)
           }
         })
+        }
       })
     }
 
     const tm = this.data.targetMatrix
     if (this.data.showFigureOptions && tm) {
+      if (shouldDraw('targetCanvas', 't:' + this.data.current)) {
       this.ensureCanvas('targetCanvas', (ctx, W, H) => {
         ctx.clearRect(0, 0, W, H)
         const rows = tm.length
@@ -259,10 +275,12 @@ Page({
           row.forEach((c, col) => drawCell(ctx, c, col * cw, r * ch, Math.min(cw, ch)))
         })
       })
+      }
     }
 
     if (this.data.showFigureOptions) {
       this.data.figureOptions.forEach((m, idx) => {
+        if (shouldDraw('figopt' + idx, 'f:' + this.data.current + ':' + idx + ':' + sel)) {
         this.ensureCanvas('figopt' + idx, (ctx, W, H) => {
           ctx.clearRect(0, 0, W, H)
           const rows = m.length
@@ -279,6 +297,7 @@ Page({
             ctx.strokeRect(2, 2, W - 4, H - 4)
           }
         })
+        }
       })
     }
   },

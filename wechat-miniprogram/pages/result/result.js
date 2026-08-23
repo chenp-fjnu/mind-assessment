@@ -134,7 +134,13 @@ Page({
     const descText = r.description || (r.trait && String(r.trait) !== String(primaryValue) ? r.trait : '')
     const levelText = r.level && String(r.level) !== String(primaryValue) ? r.level : '已完成'
 
-    const view = getResultView(mod, r, layout)
+    let view
+    try {
+      view = getResultView(mod, r, layout)
+    } catch (e) {
+      console.warn('[result] getResultView failed:', e)
+      view = { groups: [], dims: [], subtests: [], interpretations: [], showBipolar: false }
+    }
     const groups = view.groups
     const subtests = view.subtests
     const dims = view.dims

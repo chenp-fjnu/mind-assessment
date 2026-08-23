@@ -26,6 +26,8 @@ function loadPage(relPath, query) {
     if (cb) cb()
   }
   if (typeof def.onLoad === 'function') def.onLoad.call(ctx, query || {})
+  // 多数页面的数据加载放在 onShow（如 history/mine），统一触发以贴近真实生命周期
+  if (typeof def.onShow === 'function') def.onShow.call(ctx)
   return ctx
 }
 
