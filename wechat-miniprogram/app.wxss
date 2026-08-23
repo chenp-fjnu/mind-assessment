@@ -25,7 +25,9 @@ page {
    ============================================ */
 .theme-wrapper,
 .theme-wrapper.theme-light,
+.theme-wrapper.theme-dark,
 page {
+  min-height: 100vh;
   /* ===== 背景层级 ===== */
   --bg-primary: #fefefe;           /* 页面主背景 - 更柔和的白 */
   --bg-secondary: #fafafa;         /* 区块背景 */
