@@ -11,10 +11,18 @@ const THEME_MODES = {
 
 function getSystemTheme() {
   try {
-    const systemInfo = wx.getSystemInfoSync();
-    return systemInfo.theme === 'dark' ? THEME_MODES.DARK : THEME_MODES.LIGHT;
+    // 新版 API (基础库 2.30.0+)
+    if (wx.getWindowInfo) {
+      const windowInfo = wx.getWindowInfo()
+      if (windowInfo.theme) {
+        return windowInfo.theme === 'dark' ? THEME_MODES.DARK : THEME_MODES.LIGHT
+      }
+    }
+    // 兼容旧版 API
+    const systemInfo = wx.getSystemInfoSync()
+    return systemInfo.theme === 'dark' ? THEME_MODES.DARK : THEME_MODES.LIGHT
   } catch {
-    return THEME_MODES.LIGHT;
+    return THEME_MODES.LIGHT
   }
 }
 
