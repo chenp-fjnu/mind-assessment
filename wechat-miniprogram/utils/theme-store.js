@@ -89,6 +89,7 @@ function useTheme(pageInstance) {
     const effectiveTheme = getEffectiveTheme();
     const storedTheme = getStoredTheme();
     const themeClass = `theme-${effectiveTheme}`;
+    console.log('[theme-store] updateTheme:', { effectiveTheme, storedTheme, themeClass })
     pageInstance.setData({ 
       currentTheme: effectiveTheme,
       themeMode: storedTheme,
@@ -109,6 +110,7 @@ function useTheme(pageInstance) {
 
   // 提供手动切换方法
   pageInstance.setThemeMode = (mode) => {
+    console.log('[theme-store] setThemeMode called:', mode)
     setStoredTheme(mode);
     updateTheme();
   };

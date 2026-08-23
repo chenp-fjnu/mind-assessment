@@ -38,7 +38,11 @@ Page({
   goAbout() { wx.navigateTo({ url: '/pages/about/about' }) },
   onThemeChange(e) {
     const mode = e.currentTarget.dataset.mode
-    this.setThemeMode(mode)
-    this.setData({ themeMode: mode })
+    console.log('[mine] theme change clicked:', mode, 'setThemeMode exists:', typeof this.setThemeMode)
+    if (typeof this.setThemeMode === 'function') {
+      this.setThemeMode(mode)
+    } else {
+      console.error('[mine] setThemeMode not found on page instance')
+    }
   },
 })
