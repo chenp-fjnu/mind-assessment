@@ -60,7 +60,9 @@
   margin-top: 14rpx;
 }
 .lv-chip {
-  display: inline-block;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
   font-size: 24rpx;
   color: var(--text2);
   background: var(--chip);
@@ -69,8 +71,16 @@
   border-radius: 999rpx;
   margin-right: 16rpx;
 }
+.lv-chip .lv-best {
+  font-size: 20rpx;
+  opacity: 0.8;
+  margin-top: 4rpx;
+}
 .lv-chip.on {
   color: #fff;
+}
+.lv-chip.on .lv-best {
+  opacity: 0.9;
 }
 .board {
   width: 94vw;

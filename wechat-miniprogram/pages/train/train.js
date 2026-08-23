@@ -23,7 +23,7 @@ Page({
       dim: d,
       dimLabel: DIM_LABELS[d] || d,
       games: byDim[d].map((g) => {
-        const best = trainStore.best(g.id, g.metric.better)
+        const best = trainStore.bestOverall(g.id, g.levels, g.metric.better)
         return {
           id: g.id,
           name: g.name,
@@ -31,6 +31,7 @@ Page({
           color: g.color,
           desc: g.desc,
           tint: hexToRgba(g.color, 0.12),
+          levelCount: (g.levels || []).length,
           bestText: fmtBest(best, g.metric.unit),
         }
       }),
@@ -48,7 +49,7 @@ Page({
       games: grp.games.map((g) => {
         const meta = gamesByDim()
         const raw = meta[grp.dim].find((x) => x.id === g.id)
-        const best = trainStore.best(g.id, raw.metric.better)
+        const best = trainStore.bestOverall(g.id, raw.levels, raw.metric.better)
         return { ...g, bestText: fmtBest(best, raw.metric.unit) }
       }),
     }))

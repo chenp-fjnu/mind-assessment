@@ -35,10 +35,12 @@ describe('方法页 methods', () => {
 })
 
 describe('我的页 mine', () => {
-  test('onShow 统计记录数与方法数', () => {
+  test('onShow 统计测评/方法/训练记录数', () => {
     const ctx = loadPage('pages/mine/mine.js')
-    expect(ctx.data.methodCount).toBeGreaterThan(0)
-    expect(typeof ctx.data.recordCount).toBe('number')
+    expect(typeof ctx.data.assessCount).toBe('number')
+    expect(typeof ctx.data.practiceCount).toBe('number')
+    expect(typeof ctx.data.trainCount).toBe('number')
+    expect(typeof ctx.data.recordSummary).toBe('string')
   })
   test('goHistory / goAbout 跳转', () => {
     let nav = null

@@ -2,8 +2,8 @@
   <view class="bar">
     <text class="title">我的记录</text>
     <view class="bar-actions">
-      <text wx:if="{{tab === 'assess' ? list.length : mList.length}}" class="export" bindtap="exportAll" aria-label="导出记录">导出</text>
-      <text wx:if="{{tab === 'assess' ? list.length : mList.length}}" class="clear" bindtap="clearAll" aria-label="清空记录">清空</text>
+      <text wx:if="{{tab === 'assess' ? list.length : (tab === 'method' ? mList.length : tList.length)}}" class="export" bindtap="exportAll" aria-label="导出记录">导出</text>
+      <text wx:if="{{tab === 'assess' ? list.length : (tab === 'method' ? mList.length : tList.length)}}" class="clear" bindtap="clearAll" aria-label="清空记录">清空</text>
     </view>
   </view>
 
@@ -22,6 +22,7 @@
   <view class="tabs">
     <view class="tab {{tab === 'assess' ? 'on' : ''}}" bindtap="onTab" data-tab="assess" role="button" aria-label="测评记录">测评</view>
     <view class="tab {{tab === 'method' ? 'on' : ''}}" bindtap="onTab" data-tab="method" role="button" aria-label="方法练习记录">方法</view>
+    <view class="tab {{tab === 'train' ? 'on' : ''}}" bindtap="onTab" data-tab="train" role="button" aria-label="训练记录">训练</view>
   </view>
 
   <block wx:if="{{tab === 'assess'}}">
@@ -73,7 +74,7 @@
     </view>
   </block>
 
-  <block wx:else>
+  <block wx:elif="{{tab === 'method'}}">
     <view wx:if="{{!mList.length}}" class="empty">
       <text class="empty-icon">🧩</text>
       <text class="empty-text">还没有方法练习记录</text>
@@ -102,6 +103,39 @@
           <text class="h-time">{{p.timeText}}</text>
         </view>
         <text class="h-del" catchtap="deleteMethodOne" data-idx="{{idx}}" role="button" aria-label="删除该记录">删除</text>
+      </view>
+    </view>
+  </block>
+
+  <block wx:else>
+    <view wx:if="{{!tList.length}}" class="empty">
+      <text class="empty-icon">🎮</text>
+      <text class="empty-text">还没有训练记录</text>
+      <text class="empty-sub">去脑力训练选个游戏挑战吧</text>
+    </view>
+
+    <view wx:else class="list">
+      <view
+        class="hist-card card"
+        wx:for="{{tList}}"
+        wx:key="time"
+        wx:for-item="t"
+        wx:for-index="idx"
+        bindtap="openTrain"
+        data-idx="{{idx}}"
+        role="button"
+        aria-label="查看 {{t.name}} {{t.levelLabel}} 训练，{{t.metricLabel}} {{t.value}}，{{t.timeText}}"
+      >
+        <text class="h-icon" style="background:{{t.color}}1f;">{{t.icon}}</text>
+        <view class="h-body">
+          <view class="h-head">
+            <text class="h-name">{{t.name}}</text>
+            <text class="t-tag">{{t.levelLabel}}</text>
+          </view>
+          <text class="h-sum">{{t.metricLabel}}：{{t.value}}</text>
+          <text class="h-time">{{t.dimLabel}} · {{t.timeText}}</text>
+        </view>
+        <text class="h-del" catchtap="deleteTrainOne" data-idx="{{idx}}" role="button" aria-label="删除该记录">删除</text>
       </view>
     </view>
   </block>

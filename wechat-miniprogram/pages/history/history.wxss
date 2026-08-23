@@ -53,6 +53,14 @@
   border-radius: 999rpx;
   margin-left: 14rpx;
 }
+.t-tag {
+  font-size: 22rpx;
+  color: #4f46e5;
+  background: #e0e7ff;
+  padding: 2rpx 14rpx;
+  border-radius: 999rpx;
+  margin-left: 14rpx;
+}
 .title {
   font-size: 36rpx;
   font-weight: 700;

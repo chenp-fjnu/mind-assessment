@@ -2,6 +2,11 @@ const { getGame } = require('../../utils/game-registry')
 const { hexToRgba } = require('../../utils/color')
 const trainStore = require('../../utils/train-store')
 
+function fmtBest(value, unit) {
+  if (value == null) return '暂无记录'
+  return '最佳 ' + value + (unit || '')
+}
+
 Page({
   data: {
     gameId: '',
@@ -24,7 +29,21 @@ Page({
       return
     }
     const levels = g.levels
-    const best = trainStore.best(id, g.metric.better)
+    // 支持通过 query 预选难度（首页「继续训练」跳转）
+    let level = levels[0].value
+    let levelLabel = levels[0].label
+    if (query.level != null) {
+      const hit = levels.find((l) => String(l.value) === String(query.level))
+      if (hit) {
+        level = hit.value
+        levelLabel = hit.label
+      }
+    }
+    // 每个难度附带各自的最佳成绩，确保最佳按等级分开统计
+    const levelsWithBest = levels.map((l) => ({
+      ...l,
+      bestText: fmtBest(trainStore.best(id, l.value, g.metric.better), g.metric.unit),
+    }))
     this.setData({
       gameId: id,
       meta: {
@@ -36,16 +55,16 @@ Page({
         metric: g.metric,
         reference: g.reference,
       },
-      levels,
-      level: levels[0].value,
-      levelLabel: levels[0].label,
+      levels: levelsWithBest,
+      level,
+      levelLabel,
       tint: hexToRgba(g.color, 0.12),
-      bestText: best == null ? '暂无记录' : '最佳 ' + best + (g.metric.unit || ''),
+      bestText: fmtBest(trainStore.best(id, level, g.metric.better), g.metric.unit),
     })
-    this.refreshTrend(id, g)
+    this.refreshTrend(id, g, level)
   },
-  refreshTrend(id, g) {
-    const t = trainStore.trend(id)
+  refreshTrend(id, g, level) {
+    const t = trainStore.trend(id, level)
     let text = ''
     if (t && t.showTrend && t.trendValues.length >= 2) {
       text =
@@ -56,13 +75,23 @@ Page({
   onSelectLevel(e) {
     const value = e.currentTarget.dataset.value
     const label = e.currentTarget.dataset.label
-    this.setData({ level: value, levelLabel: label, result: null, finished: false })
+    const g = getGame(this.data.gameId)
+    this.setData({
+      level: value,
+      levelLabel: label,
+      result: null,
+      finished: false,
+      bestText: fmtBest(trainStore.best(this.data.gameId, value, g.metric.better), g.metric.unit),
+    })
+    this.refreshTrend(this.data.gameId, g, value)
   },
   onFinish(e) {
     const g = getGame(this.data.gameId)
     const r = e.detail
     const metricVal = r[g.metric.key]
-    trainStore.save(this.data.gameId, metricVal, {
+    const level = this.data.level
+    trainStore.save(this.data.gameId, level, metricVal, {
+      levelLabel: this.data.levelLabel,
       time: r.time,
       errors: r.errors,
       score: r.score,
@@ -72,14 +101,26 @@ Page({
       moves: r.moves,
       duration: r.duration,
     })
-    const best = trainStore.best(this.data.gameId, g.metric.better)
+    trainStore.setLast(this.data.gameId, level, {
+      levelLabel: this.data.levelLabel,
+      name: g.name,
+      icon: g.icon,
+      color: g.color,
+      dimLabel: g.dimLabel,
+    })
+    const best = trainStore.best(this.data.gameId, level, g.metric.better)
+    // 同步刷新当前难度芯片上的最佳文案
+    const levels = this.data.levels.map((l) =>
+      l.value === level ? { ...l, bestText: fmtBest(best, g.metric.unit) } : l
+    )
     this.setData({
       finished: true,
       result: r,
-      bestText: '最佳 ' + best + (g.metric.unit || ''),
+      levels,
+      bestText: fmtBest(best, g.metric.unit),
       resultChips: this.buildChips(r, g),
     })
-    this.refreshTrend(this.data.gameId, g)
+    this.refreshTrend(this.data.gameId, g, level)
   },
   buildChips(r, g) {
     const chips = []

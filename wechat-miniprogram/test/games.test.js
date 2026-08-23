@@ -341,11 +341,11 @@ describe('训练游戏计分单调性（覆盖全部 31 个游戏）', () => {
 
 describe('训练成绩存储', () => {
   test('空记录时 best 为 null，trend 不展示', () => {
-    expect(trainStore.best('schulte', 'lower')).toBeNull()
-    const t = trainStore.trend('schulte')
+    expect(trainStore.best('schulte', 3, 'lower')).toBeNull()
+    const t = trainStore.trend('schulte', 3)
     expect(t.showTrend).toBe(false)
   })
   test('save 不抛错', () => {
-    expect(() => trainStore.save('schulte', 12.5, { time: 12.5 })).not.toThrow()
+    expect(() => trainStore.save('schulte', 3, 12.5, { time: 12.5 })).not.toThrow()
   })
 })

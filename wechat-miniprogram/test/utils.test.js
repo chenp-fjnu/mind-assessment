@@ -10,6 +10,7 @@ const { getResultView } = require('../utils/result-view')
 const { getModule, getMetaList, TYPE_LABELS } = require('../utils/registry')
 const { textureForColor, COLOR_TEXTURE, drawShape, drawCell } = require('../utils/figure')
 const methodsData = require('../utils/methods-data')
+const trainStore = require('../utils/train-store')
 
 function pickAnswer(q) {
   if (q.answer != null) return q.answer
@@ -170,5 +171,59 @@ describe('methods-data recommendFor', () => {
     const r = methodsData.recommendFor('intelligence')
     expect(Array.isArray(r)).toBe(true)
     expect(r.length).toBeGreaterThan(0)
+  })
+})
+
+describe('train-store 按等级分离记录与统计', () => {
+  let store
+  beforeEach(() => {
+    store = {}
+    global.wx.getStorageSync = (k) => (k in store ? store[k] : [])
+    global.wx.setStorageSync = (k, v) => {
+      store[k] = v
+    }
+    global.wx.removeStorageSync = (k) => {
+      delete store[k]
+    }
+    global.wx.getStorageInfoSync = () => ({ keys: Object.keys(store) })
+  })
+  afterEach(() => {
+    global.wx.getStorageSync = () => []
+  })
+  test('不同等级分别记录历史与最佳成绩', () => {
+    trainStore.save('schulte', 3, 10, { detail: 'a' })
+    trainStore.save('schulte', 5, 20, { detail: 'b' })
+    trainStore.save('schulte', 3, 8, { detail: 'c' })
+    expect(trainStore.best('schulte', 3, 'lower')).toBe(8)
+    expect(trainStore.best('schulte', 5, 'lower')).toBe(20)
+    expect(trainStore.bestOverall('schulte', [{ value: 3 }, { value: 5 }], 'lower')).toBe(8)
+    expect(trainStore.allRecords().length).toBe(3)
+  })
+  test('同等级内最佳不跨等级', () => {
+    trainStore.save('schulte', 3, 5, {})
+    trainStore.save('schulte', 9, 9, {})
+    expect(trainStore.best('schulte', 3, 'lower')).toBe(5)
+    expect(trainStore.best('schulte', 9, 'lower')).toBe(9)
+  })
+  test('setLast / getLast 记录最近一次训练（含难度）', () => {
+    trainStore.setLast('schulte', 5, {
+      levelLabel: '5×5 标准',
+      name: '舒尔特方格',
+      icon: '🔢',
+      color: '#7c3aed',
+      dimLabel: '注意力',
+    })
+    const last = trainStore.getLast()
+    expect(last.id).toBe('schulte')
+    expect(last.level).toBe(5)
+    expect(last.levelLabel).toBe('5×5 标准')
+  })
+  test('deleteRecord 仅删除指定等级下的一条记录', () => {
+    trainStore.save('schulte', 3, 10, {})
+    trainStore.save('schulte', 3, 12, {})
+    const rec = trainStore.load('schulte', 3)[0]
+    trainStore.deleteRecord('schulte', 3, rec.rid)
+    expect(trainStore.load('schulte', 3).length).toBe(1)
+    expect(trainStore.load('schulte', 3)[0].summary).toBe('12')
   })
 })

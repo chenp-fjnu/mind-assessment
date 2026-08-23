@@ -94,14 +94,16 @@ describe('训练播放页 game', () => {
   })
 
   test('onFinish 保存成绩到 train-store 并展示结果卡片', () => {
-    let saved = null
+    const writes = []
     global.wx.setStorageSync = (k, v) => {
-      saved = { k, v }
+      writes.push({ k, v })
     }
     const ctx = loadPage('pages/train/game.js', { gameId: 'schulte' })
     ctx.onFinish({ detail: { time: 12.5, errors: 0, score: 900 } })
-    expect(saved).not.toBeNull()
-    expect(saved.k).toContain('ma_train_schulte')
+    expect(writes.length).toBeGreaterThan(0)
+    // 成绩按「游戏 + 难度」分别写入独立键（含难度等级）
+    const scoreWrite = writes.find((w) => w.k.indexOf('ma_train_schulte__') === 0)
+    expect(scoreWrite).toBeTruthy()
     expect(ctx.data.finished).toBe(true)
     expect(ctx.data.result.time).toBe(12.5)
     const labels = ctx.data.resultChips.map((c) => c.label)

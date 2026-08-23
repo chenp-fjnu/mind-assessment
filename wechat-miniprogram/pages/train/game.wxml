@@ -10,7 +10,7 @@
   <view class="levels">
     <text class="lv-title">难度</text>
     <scroll-view class="lv-bar" scroll-x="true">
-      <text
+      <view
         wx:for="{{levels}}"
         wx:key="value"
         class="lv-chip {{level === item.value ? 'on' : ''}}"
@@ -19,8 +19,11 @@
         data-label="{{item.label}}"
         bindtap="onSelectLevel"
         role="button"
-        aria-label="{{item.label}}"
-      >{{item.label}}</text>
+        aria-label="{{item.label}}，最佳 {{item.bestText}}"
+      >
+        <text class="lv-label">{{item.label}}</text>
+        <text class="lv-best">{{item.bestText}}</text>
+      </view>
     </scroll-view>
   </view>
 

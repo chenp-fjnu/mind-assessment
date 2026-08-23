@@ -1,4 +1,6 @@
 const methodsData = require('../../utils/methods-data')
+const { getGame } = require('../../utils/game-registry')
+const trainStore = require('../../utils/train-store')
 const { withPrivacy } = require('../../utils/privacy')
 
 function fmt(ts) {
@@ -41,12 +43,37 @@ function buildMethodRecords() {
   return out
 }
 
+function buildTrainRecords() {
+  return trainStore.allRecords().map((r) => {
+    const g = getGame(r.gameId)
+    const meta = g || {}
+    const levelLabel = r.levelLabel || (meta.levels || []).find((l) => String(l.value) === String(r.level)) || { label: r.level }
+    const unit = (meta.metric && meta.metric.unit) || ''
+    const label = (meta.metric && meta.metric.label) || '成绩'
+    return {
+      gameId: r.gameId,
+      level: r.level,
+      rid: r.rid,
+      levelLabel: levelLabel.label || r.level,
+      name: meta.name || r.gameId,
+      icon: meta.icon || '🧠',
+      color: meta.color || '#7c3aed',
+      dimLabel: meta.dimLabel || '',
+      metricLabel: label,
+      value: r.summary + unit,
+      time: r.time,
+      timeText: fmt(r.time),
+    }
+  })
+}
+
 Page({
   data: {
     tab: 'assess',
     all: [],
     list: [],
     mList: [],
+    tList: [],
     filters: [],
     active: '',
     kw: '',
@@ -73,9 +100,11 @@ Page({
     })
     const filters = [{ id: '', name: '全部', icon: '🗂' }].concat(Object.keys(map).map((k) => map[k]))
     const mList = buildMethodRecords()
+    const tList = buildTrainRecords()
     this._all = all
     this._mAll = mList
-    this.setData({ all, filters, mList })
+    this._tAll = tList
+    this.setData({ all, filters, mList, tList })
     this.applyFilter()
   },
   applyFilter() {
@@ -85,7 +114,9 @@ Page({
     if (kw) list = list.filter((h) => (h.name || '').toLowerCase().indexOf(kw) !== -1)
     let mList = (this._mAll || []).slice()
     if (kw) mList = mList.filter((p) => (p.name || '').toLowerCase().indexOf(kw) !== -1)
-    this.setData({ list, mList })
+    let tList = (this._tAll || []).slice()
+    if (kw) tList = tList.filter((t) => (t.name || '').toLowerCase().indexOf(kw) !== -1)
+    this.setData({ list, mList, tList })
   },
   onTab(e) {
     this.setData({ tab: e.currentTarget.dataset.tab })
@@ -112,6 +143,12 @@ Page({
     const item = this.data.mList[idx]
     if (!item) return
     wx.navigateTo({ url: '/pages/methods/detail?id=' + item.mid })
+  },
+  openTrain(e) {
+    const idx = e.currentTarget.dataset.idx
+    const item = this.data.tList[idx]
+    if (!item) return
+    wx.navigateTo({ url: '/pages/train/game?gameId=' + item.gameId + '&level=' + item.level })
   },
   deleteOne(e) {
     const idx = e.currentTarget.dataset.idx
@@ -151,31 +188,66 @@ Page({
       },
     })
   },
+  deleteTrainOne(e) {
+    const idx = e.currentTarget.dataset.idx
+    const item = this.data.tList[idx]
+    if (!item) return
+    wx.showModal({
+      title: '删除记录',
+      content: '确定删除「' + item.name + ' · ' + item.levelLabel + '」的这条训练吗？',
+      success: (r) => {
+        if (!r.confirm) return
+        trainStore.deleteRecord(item.gameId, item.level, item.rid)
+        this.load()
+      },
+    })
+  },
   clearAll() {
-    const isMethod = this.data.tab === 'method'
-    const list = isMethod ? this.data.mList : this.data.list
+    const tab = this.data.tab
+    const list = tab === 'method' ? this.data.mList : tab === 'train' ? this.data.tList : this.data.list
     if (!list.length) return
     wx.showModal({
       title: '清空全部记录',
-      content: isMethod
-        ? '确定清空所有方法练习记录吗？此操作不可恢复。'
-        : '确定清空所有测评记录吗？此操作不可恢复。',
+      content:
+        tab === 'method'
+          ? '确定清空所有方法练习记录吗？此操作不可恢复。'
+          : tab === 'train'
+          ? '确定清空所有训练记录吗？各难度的成绩将分别清空，此操作不可恢复。'
+          : '确定清空所有测评记录吗？此操作不可恢复。',
       success: (r) => {
         if (r.confirm) {
-          if (isMethod) wx.removeStorageSync('ma_practices')
-          else wx.removeStorageSync('ma_history')
+          if (tab === 'method') wx.removeStorageSync('ma_practices')
+          else if (tab === 'train') {
+            const info = (wx.getStorageInfoSync && wx.getStorageInfoSync()) || { keys: [] }
+            ;(info.keys || [])
+              .filter((k) => k.indexOf('ma_train_') === 0 && k !== 'ma_train_last')
+              .forEach((k) => wx.removeStorageSync(k))
+            wx.removeStorageSync('ma_train_last')
+          } else wx.removeStorageSync('ma_history')
           this.load()
         }
       },
     })
   },
   exportAll() {
-    const isMethod = this.data.tab === 'method'
-    const data = isMethod
-      ? wx.getStorageSync('ma_practices') || {}
-      : wx.getStorageSync('ma_history') || []
-    const empty = isMethod ? !Object.keys(data).length : !data.length
-    if (empty) {
+    const tab = this.data.tab
+    let data
+    if (tab === 'method') data = wx.getStorageSync('ma_practices') || {}
+    else if (tab === 'train') {
+      const info = (wx.getStorageInfoSync && wx.getStorageInfoSync()) || { keys: [] }
+      data = {}
+      ;(info.keys || [])
+        .filter((k) => k.indexOf('ma_train_') === 0 && k !== 'ma_train_last')
+        .forEach((k) => {
+          data[k] = wx.getStorageSync(k) || []
+        })
+    } else data = wx.getStorageSync('ma_history') || []
+    const empty = tab === 'assess' ? !data.length : !Object.keys(data).length && !data.length
+    if (tab === 'train' && !Object.keys(data).length) {
+      wx.showToast({ title: '暂无记录', icon: 'none' })
+      return
+    }
+    if (tab !== 'train' && empty) {
       wx.showToast({ title: '暂无记录', icon: 'none' })
       return
     }

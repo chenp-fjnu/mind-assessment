@@ -368,7 +368,21 @@
 .pillar-sub { display: block; color: rgba(255, 255, 255, 0.85); font-size: 20rpx; margin-top: 4rpx; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .pillar .arrow { color: rgba(255, 255, 255, 0.8); flex-shrink: 0; }
 
-.resume { display: flex; align-items: center; margin: 24rpx 32rpx 0; padding: 24rpx 28rpx; }
+.resume-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20rpx;
+  margin: 24rpx 32rpx 0;
+}
+.resume {
+  flex: 1 1 200rpx;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  padding: 24rpx 28rpx;
+  border-left: 8rpx solid transparent;
+  box-sizing: border-box;
+}
 
 .section { margin: 32rpx 32rpx 0; }
 .section-head {
