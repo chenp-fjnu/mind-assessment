@@ -24,6 +24,9 @@ const LOADERS = {
   cps: () => require('../games/cps/index'),
   'color-match': () => require('../games/color-match/index'),
   'double-decision': () => require('../games/double-decision/index'),
+  'breath-478': () => require('../games/breath-478/index'),
+  resonance: () => require('../games/resonance/index'),
+  mindfulness: () => require('../games/mindfulness/index'),
 }
 
 const DIM_LABELS = {

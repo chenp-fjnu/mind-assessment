@@ -6,9 +6,9 @@ const { getMetaList, getGame } = require('../utils/game-registry')
 const trainStore = require('../utils/train-store')
 
 describe('训练游戏注册表', () => {
-  test('包含 24 个游戏且维度齐全', () => {
+  test('包含 27 个游戏且维度齐全', () => {
     const list = getMetaList()
-    expect(list.length).toBe(24)
+    expect(list.length).toBe(27)
     const dims = list.map((g) => g.dim)
     expect(dims).toEqual(expect.arrayContaining(['attention', 'memory', 'reaction', 'relax']))
   })
@@ -253,6 +253,20 @@ describe('反应速度游戏', () => {
   })
   test('double-decision 返回试次', () => {
     expect(getGame('double-decision').generate(2).list.length).toBe(12)
+  })
+})
+
+describe('放松正念游戏', () => {
+  test('breath-478 返回 4-7-8 节律', () => {
+    const s = getGame('breath-478').generate(3)
+    expect(s.phases.map((p) => p.dur)).toEqual([4, 7, 8])
+    expect(s.cycles).toBe(3)
+  })
+  test('resonance 返回吸气4呼气6', () => {
+    expect(getGame('resonance').generate(5).phases.map((p) => p.dur)).toEqual([4, 6])
+  })
+  test('mindfulness 返回引导语', () => {
+    expect(getGame('mindfulness').generate(4).prompts.length).toBeGreaterThan(0)
   })
 })
 

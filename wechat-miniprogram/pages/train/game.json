@@ -24,6 +24,9 @@
     "bigger-number-game": "../../games/bigger-number/game",
     "cps-game": "../../games/cps/game",
     "color-match-game": "../../games/color-match/game",
-    "double-decision-game": "../../games/double-decision/game"
+    "double-decision-game": "../../games/double-decision/game",
+    "breath-478-game": "../../games/breath-478/game",
+    "resonance-game": "../../games/resonance/game",
+    "mindfulness-game": "../../games/mindfulness/game"
   }
 }

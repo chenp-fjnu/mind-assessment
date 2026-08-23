@@ -1,0 +1,8 @@
+<view class="mf">
+  <view class="circle {{running ? 'on' : ''}}">
+    <text class="lab">{{phaseLabel}}</text>
+    <text class="sec">{{secLeft}}</text>
+  </view>
+  <view class="prompt">{{prompt}}</view>
+  <view class="info">第 {{cycle + 1}} / {{cycles}} 轮</view>
+</view>

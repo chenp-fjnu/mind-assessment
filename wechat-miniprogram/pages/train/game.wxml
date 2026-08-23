@@ -48,6 +48,9 @@
     <cps-game wx:if="{{gameId === 'cps'}}" id="trainGame" level="{{level}}" bind:finish="onFinish" />
     <color-match-game wx:if="{{gameId === 'color-match'}}" id="trainGame" level="{{level}}" bind:finish="onFinish" />
     <double-decision-game wx:if="{{gameId === 'double-decision'}}" id="trainGame" level="{{level}}" bind:finish="onFinish" />
+    <breath-478-game wx:if="{{gameId === 'breath-478'}}" id="trainGame" level="{{level}}" bind:finish="onFinish" />
+    <resonance-game wx:if="{{gameId === 'resonance'}}" id="trainGame" level="{{level}}" bind:finish="onFinish" />
+    <mindfulness-game wx:if="{{gameId === 'mindfulness'}}" id="trainGame" level="{{level}}" bind:finish="onFinish" />
   </view>
 
   <view wx:if="{{finished && result}}" class="result card">

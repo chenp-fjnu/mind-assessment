@@ -1,0 +1,42 @@
+.mf {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.circle {
+  width: 320rpx;
+  height: 320rpx;
+  border-radius: 50%;
+  background: var(--chip);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: transform 1s ease-in-out;
+}
+.circle.on {
+  background: #a7f3d0;
+}
+.lab {
+  font-size: 36rpx;
+  font-weight: 700;
+  color: var(--text);
+}
+.sec {
+  font-size: 84rpx;
+  font-weight: 800;
+  color: var(--text);
+}
+.prompt {
+  margin-top: 36rpx;
+  font-size: 30rpx;
+  color: var(--text2);
+  text-align: center;
+  max-width: 520rpx;
+}
+.info {
+  margin-top: 24rpx;
+  font-size: 28rpx;
+  color: var(--text2);
+}
