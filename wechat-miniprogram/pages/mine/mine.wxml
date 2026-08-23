@@ -49,14 +49,6 @@
         </view>
         <view class="theme-check {{themeMode==='dark'?'show':''}}">✓</view>
       </view>
-
-      <view class="card menu-item" bindtap="onTestClick" catchtap="onTestClick" role="button">
-        <view class="menu-icon">🧪</view>
-        <view class="menu-body">
-          <text class="menu-name">测试点击</text>
-          <text class="menu-sub">验证事件绑定</text>
-        </view>
-      </view>
     </view>
 
     <view class="footer">结果与练习仅供自我探索，不构成专业建议</view>

@@ -72,17 +72,14 @@
   font-weight: var(--font-weight-semibold);
 }
 
-.theme-selector {
-  position: relative;
-}
 .theme-icon {
   background: var(--color-method-light) !important;
   color: var(--color-method) !important;
 }
 .theme-check {
   position: absolute;
-  right: 28rpx;
-  font-size: 28rpx;
+  right: 16rpx;
+  font-size: 24rpx;
   color: var(--color-brand);
   opacity: 0;
   transition: opacity 0.2s;

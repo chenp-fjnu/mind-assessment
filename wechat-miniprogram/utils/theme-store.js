@@ -11,14 +11,12 @@ const THEME_MODES = {
 
 function getSystemTheme() {
   try {
-    // 新版 API (基础库 2.30.0+)
     if (wx.getWindowInfo) {
       const windowInfo = wx.getWindowInfo()
       if (windowInfo.theme) {
         return windowInfo.theme === 'dark' ? THEME_MODES.DARK : THEME_MODES.LIGHT
       }
     }
-    // 基础库 2.30.0+ 使用 wx.getDeviceInfo
     if (wx.getDeviceInfo) {
       const deviceInfo = wx.getDeviceInfo()
       if (deviceInfo.theme) {
@@ -54,9 +52,6 @@ function applyTheme(theme) {
   const effectiveTheme = theme === THEME_MODES.AUTO ? getSystemTheme() : theme;
   const root = page.getOpenerEventChannel ? page : null;
 
-  // 在页面根节点设置 data-theme 属性
-  // 通过 setData 触发 wxml 更新，或直接操作 DOM (小程序不支持)
-  // 这里使用 wx.setStorage 同步，页面通过 onShow 读取并 setData
   wx.setStorageSync('current-effective-theme', effectiveTheme);
 }
 
@@ -68,7 +63,6 @@ function getEffectiveTheme() {
   return stored;
 }
 
-// 监听系统主题变化
 let systemThemeListener = null;
 
 function initThemeListener() {
@@ -80,7 +74,6 @@ function initThemeListener() {
       if (stored === THEME_MODES.AUTO) {
         const newTheme = result.theme === 'dark' ? THEME_MODES.DARK : THEME_MODES.LIGHT;
         wx.setStorageSync('current-effective-theme', newTheme);
-        // 通知所有页面更新
         const pages = getCurrentPages();
         pages.forEach(page => {
           if (page.onThemeChange) {
@@ -95,14 +88,11 @@ function initThemeListener() {
   }
 }
 
-// 页面混入：自动应用主题
-// 使用方式：在页面 onLoad 中调用 useTheme(this)，在 wxml 根节点添加 <view class="theme-wrapper {{themeClass}}"> 包裹内容
 function useTheme(pageInstance) {
   const updateTheme = () => {
     const effectiveTheme = getEffectiveTheme();
     const storedTheme = getStoredTheme();
     const themeClass = `theme-${effectiveTheme}`;
-    console.log('[theme-store] updateTheme:', { effectiveTheme, storedTheme, themeClass })
     pageInstance.setData({ 
       currentTheme: effectiveTheme,
       themeMode: storedTheme,
@@ -110,39 +100,24 @@ function useTheme(pageInstance) {
     });
   };
 
-  // 初始化
   updateTheme();
   initThemeListener();
 
-  // 页面显示时同步（处理从设置页返回）
   const originalOnShow = pageInstance.onShow;
   pageInstance.onShow = function(...args) {
     updateTheme();
     if (originalOnShow) originalOnShow.apply(this, args);
   };
 
-  // 提供手动切换方法
   pageInstance.setThemeMode = (mode) => {
-    console.log('[theme-store] === SET THEME MODE START ===', { mode, timestamp: Date.now() })
-    console.log('[theme-store] stored theme before:', getStoredTheme())
     setStoredTheme(mode);
-    console.log('[theme-store] stored theme after:', getStoredTheme())
-    console.log('[theme-store] effective theme:', getEffectiveTheme())
     updateTheme();
-    console.log('[theme-store] after updateTheme, themeClass should be:', `theme-${getEffectiveTheme()}`)
-    console.log('[theme-store] === SET THEME MODE END ===')
   };
 
-  // 强制刷新页面主题类的辅助函数
   pageInstance.forceThemeUpdate = () => {
-    console.log('[theme-store] forceThemeUpdate called')
     const effectiveTheme = getEffectiveTheme();
     const themeClass = `theme-${effectiveTheme}`;
-    console.log('[theme-store] forceThemeUpdate will set themeClass:', themeClass)
-    pageInstance.setData({ themeClass }, () => {
-      console.log('[theme-store] forceThemeUpdate setData callback fired, themeClass:', themeClass)
-      console.log('[theme-store] page data after callback:', { themeClass: pageInstance.data.themeClass, themeMode: pageInstance.data.themeMode })
-    })
+    pageInstance.setData({ themeClass });
   };
 
   pageInstance.onThemeChange = (theme) => {

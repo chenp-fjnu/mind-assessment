@@ -34,25 +34,18 @@ Page({
       recordSummary: parts.length ? parts.join(' · ') + ' 条记录' : '还没有任何记录',
     })
   },
-goHistory() { wx.navigateTo({ url: '/pages/history/history' }) },
+  goHistory() { wx.navigateTo({ url: '/pages/history/history' }) },
   goAbout() { wx.navigateTo({ url: '/pages/about/about' }) },
-  onTestClick() {
-    console.log('[mine] TEST CLICK WORKS')
-    wx.showToast({ title: '点击生效', icon: 'none' })
-  },
 
   setThemeAuto() {
-    console.log('[mine] setThemeAuto called')
     this.setThemeMode('auto')
     setTimeout(() => this.forceThemeUpdate && this.forceThemeUpdate(), 0)
   },
   setThemeLight() {
-    console.log('[mine] setThemeLight called')
     this.setThemeMode('light')
     setTimeout(() => this.forceThemeUpdate && this.forceThemeUpdate(), 0)
   },
   setThemeDark() {
-    console.log('[mine] setThemeDark called')
     this.setThemeMode('dark')
     setTimeout(() => this.forceThemeUpdate && this.forceThemeUpdate(), 0)
   },
