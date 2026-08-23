@@ -1,0 +1,22 @@
+<view class="stroop">
+  <view wx:if="{{!done && current}}" class="stage">
+    <text class="word" style="color:{{current.inkHex}};">{{current.word}}</text>
+    <view class="progress">第 {{index + 1}} / {{trials.length}} 题</view>
+    <view class="opts">
+      <view
+        wx:for="{{options}}"
+        wx:key="key"
+        class="opt"
+        style="background:{{item.hex}};"
+        data-key="{{item.key}}"
+        bindtap="onPick"
+        role="button"
+        aria-label="{{item.name}}色"
+      >
+        <text class="opt-label">{{item.name}}</text>
+      </view>
+    </view>
+    <view class="hint">点击墨水的颜色（不是字的意思）</view>
+  </view>
+  <view wx:else class="done-tip">完成！</view>
+</view>

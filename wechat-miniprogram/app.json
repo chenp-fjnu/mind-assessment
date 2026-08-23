@@ -9,7 +9,9 @@
     "pages/methods/methods",
     "pages/methods/detail",
     "pages/assess/assess",
-    "pages/mine/mine"
+    "pages/mine/mine",
+    "pages/train/train",
+    "pages/train/game"
   ],
   "window": {
     "navigationBarTextStyle": "white",
@@ -27,6 +29,7 @@
       { "pagePath": "pages/index/index", "text": "首页", "iconPath": "assets/tabicons/home.png", "selectedIconPath": "assets/tabicons/home_on.png" },
       { "pagePath": "pages/assess/assess", "text": "测评", "iconPath": "assets/tabicons/assess.png", "selectedIconPath": "assets/tabicons/assess_on.png" },
       { "pagePath": "pages/methods/methods", "text": "方法", "iconPath": "assets/tabicons/method.png", "selectedIconPath": "assets/tabicons/method_on.png" },
+      { "pagePath": "pages/train/train", "text": "训练", "iconPath": "assets/tabicons/train.png", "selectedIconPath": "assets/tabicons/train_on.png" },
       { "pagePath": "pages/mine/mine", "text": "我的", "iconPath": "assets/tabicons/mine.png", "selectedIconPath": "assets/tabicons/mine_on.png" }
     ]
   },

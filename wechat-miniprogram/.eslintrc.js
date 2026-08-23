@@ -18,6 +18,7 @@ module.exports = {
   },
   globals: {
     Page: 'readonly',
+    Component: 'readonly',
     App: 'readonly',
     getApp: 'readonly',
     wx: 'readonly',

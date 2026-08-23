@@ -1,0 +1,63 @@
+<view class="scroll-page">
+  <view class="hero">
+    <text class="hero-title">脑力训练</text>
+    <text class="hero-sub">像锻炼肌肉一样锻炼注意力与记忆</text>
+  </view>
+
+  <view class="search-bar">
+    <text class="search-icon">🔍</text>
+    <input
+      class="search-input"
+      placeholder="搜索训练游戏"
+      placeholder-class="search-ph"
+      value="{{keyword}}"
+      bindinput="onSearch"
+      confirm-type="search"
+    />
+    <text wx:if="{{keyword}}" class="search-clear" bindtap="clearSearch" role="button" aria-label="清除搜索">✕</text>
+  </view>
+
+  <scroll-view class="type-bar" scroll-x="true">
+    <text
+      wx:for="{{typeChips}}"
+      wx:key="key"
+      class="type-chip {{activeDim === item.key ? 'on' : ''}}"
+      data-key="{{item.key}}"
+      bindtap="onSelectDim"
+      role="button"
+      aria-label="{{item.label}}"
+    >{{item.label}}</text>
+  </scroll-view>
+
+  <view wx:for="{{filteredGroups}}" wx:key="dim" class="group">
+    <view class="group-title">{{item.dimLabel}}</view>
+    <view
+      wx:for="{{item.games}}"
+      wx:key="id"
+      wx:for-item="g"
+      class="item card"
+      bindtap="goGame"
+      data-id="{{g.id}}"
+      role="button"
+      aria-label="{{g.name}}"
+    >
+      <view class="item-icon" style="background:{{g.tint}};">{{g.icon}}</view>
+      <view class="item-body">
+        <view class="item-head"><text class="item-name">{{g.name}}</text></view>
+        <text class="item-desc">{{g.desc}}</text>
+        <text class="item-meta">{{g.bestText}}</text>
+      </view>
+      <text class="arrow">›</text>
+    </view>
+    <view wx:if="{{item.games.length === 0}}" class="empty-search">
+      <text class="empty-search-text">该分类暂无游戏</text>
+    </view>
+  </view>
+
+  <view wx:if="{{filteredGroups.length === 0}}" class="empty-search">
+    <text class="empty-search-icon">🔍</text>
+    <text class="empty-search-text">没有找到匹配的训练</text>
+  </view>
+
+  <view class="footer">训练游戏仅供自我探索与热身，不构成医学诊断</view>
+</view>

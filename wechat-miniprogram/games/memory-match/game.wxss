@@ -1,0 +1,40 @@
+.mm {
+  width: 100%;
+}
+.grid {
+  display: grid;
+  gap: 12rpx;
+}
+.card {
+  aspect-ratio: 1 / 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 16rpx;
+  background: #e2e8f0;
+  color: #64748b;
+  font-size: 44rpx;
+  font-weight: 700;
+  transition: transform 0.15s, background 0.15s;
+}
+.card.up {
+  background: var(--card);
+  border: 2rpx solid var(--border);
+}
+.card.matched {
+  background: rgba(14, 165, 233, 0.14);
+  border-color: transparent;
+}
+.face {
+  font-size: 48rpx;
+}
+.back {
+  font-size: 40rpx;
+  opacity: 0.5;
+}
+.hint {
+  margin-top: 24rpx;
+  text-align: center;
+  color: var(--sub);
+  font-size: 26rpx;
+}

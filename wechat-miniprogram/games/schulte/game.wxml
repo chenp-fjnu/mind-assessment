@@ -1,0 +1,20 @@
+<view class="schulte">
+  <view
+    class="board"
+    style="display:grid;grid-template-columns:repeat({{size}},1fr);gap:8rpx;"
+  >
+    <view
+      wx:for="{{cells}}"
+      wx:key="idx"
+      class="cell {{item.found ? 'found' : ''}}"
+      data-n="{{item.n}}"
+      data-idx="{{index}}"
+      bindtap="onTap"
+      role="button"
+      aria-label="数字 {{item.n}}"
+    >
+      <text wx:if="{{!item.found}}">{{item.n}}</text>
+    </view>
+  </view>
+  <view class="hint">下一个：{{next}} / {{total}}　错误：{{errors}}</view>
+</view>

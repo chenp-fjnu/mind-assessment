@@ -1,0 +1,20 @@
+<view class="mm">
+  <view
+    class="grid"
+    style="grid-template-columns:repeat({{cols}},1fr);"
+  >
+    <view
+      wx:for="{{cards}}"
+      wx:key="id"
+      class="card {{item.faceUp || item.matched ? 'up' : ''}} {{item.matched ? 'matched' : ''}}"
+      data-idx="{{index}}"
+      bindtap="onTap"
+      role="button"
+      aria-label="卡片"
+    >
+      <text wx:if="{{item.faceUp || item.matched}}" class="face">{{item.sym}}</text>
+      <text wx:else class="back">?</text>
+    </view>
+  </view>
+  <view class="hint">步数：{{moves}}　已配对：{{matched}} / {{level}}</view>
+</view>

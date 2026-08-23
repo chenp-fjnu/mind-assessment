@@ -170,6 +170,19 @@ function drawMine(c) {
   fillTriangle(px, [16, 70], [40, 44], [64, 70], c)
   return px
 }
+// 训练：哑铃（力量/锻炼隐喻）
+function drawTrain(c) {
+  const px = newPx()
+  // 两端配重
+  for (let a = 0; a < 360; a += 2) {
+    const rad = (a * Math.PI) / 180
+    fillRect(px, Math.round(16 + Math.cos(rad) * 9), Math.round(40 + Math.sin(rad) * 9), Math.round(16 + Math.cos(rad) * 9), Math.round(40 + Math.sin(rad) * 9), c)
+    fillRect(px, Math.round(64 + Math.cos(rad) * 9), Math.round(40 + Math.sin(rad) * 9), Math.round(64 + Math.cos(rad) * 9), Math.round(40 + Math.sin(rad) * 9), c)
+  }
+  // 横杆
+  fillRect(px, 16, 37, 64, 43, c)
+  return px
+}
 
 const outDir = path.join(process.cwd(), 'assets', 'tabicons')
 fs.mkdirSync(outDir, { recursive: true })
@@ -188,6 +201,8 @@ const files = {
   'method_on.png': drawMethod(ACTIVE),
   'mine.png': drawMine(NORMAL),
   'mine_on.png': drawMine(ACTIVE),
+  'train.png': drawTrain(NORMAL),
+  'train_on.png': drawTrain(ACTIVE),
 }
 for (const [name, px] of Object.entries(files)) {
   fs.writeFileSync(path.join(outDir, name), makePNG(px))

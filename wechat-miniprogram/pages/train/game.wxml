@@ -1,0 +1,49 @@
+<view class="scroll-page">
+  <view class="hero" style="background: linear-gradient(135deg, {{meta.color}}, #1e293b);">
+    <view class="h-icon" style="background:{{tint}};">{{meta.icon}}</view>
+    <text class="hero-title">{{meta.name}}</text>
+    <text class="hero-sub">{{meta.desc}}</text>
+    <text class="hero-tag">{{meta.dimLabel}} · {{bestText}}</text>
+  </view>
+
+  <view class="levels">
+    <text class="lv-title">难度</text>
+    <scroll-view class="lv-bar" scroll-x="true">
+      <text
+        wx:for="{{levels}}"
+        wx:key="value"
+        class="lv-chip {{level === item.value ? 'on' : ''}}"
+        style="{{level === item.value ? 'background:' + meta.color + ';border-color:' + meta.color + ';' : ''}}"
+        data-value="{{item.value}}"
+        data-label="{{item.label}}"
+        bindtap="onSelectLevel"
+        role="button"
+        aria-label="{{item.label}}"
+      >{{item.label}}</text>
+    </scroll-view>
+  </view>
+
+  <view wx:if="{{!finished}}" class="board card">
+    <schulte-game wx:if="{{gameId === 'schulte'}}" id="trainGame" level="{{level}}" bind:finish="onFinish" />
+    <memory-match-game wx:if="{{gameId === 'memory-match'}}" id="trainGame" level="{{level}}" bind:finish="onFinish" />
+    <stroop-game wx:if="{{gameId === 'stroop'}}" id="trainGame" level="{{level}}" bind:finish="onFinish" />
+    <box-breathing-game wx:if="{{gameId === 'box-breathing'}}" id="trainGame" level="{{level}}" bind:finish="onFinish" />
+  </view>
+
+  <view wx:if="{{finished && result}}" class="result card">
+    <text class="res-title">本局结果</text>
+    <view class="res-chips">
+      <view wx:for="{{resultChips}}" wx:key="label" class="res-chip">
+        <text class="res-val">{{item.value}}</text>
+        <text class="res-lab">{{item.label}}</text>
+      </view>
+    </view>
+    <view wx:if="{{trendText}}" class="trend">{{trendText}}</view>
+    <view class="res-actions">
+      <view class="btn-primary" style="background:{{meta.color}};" bindtap="replay" role="button" aria-label="再玩一次">再玩一次</view>
+      <view class="btn-ghost" bindtap="goBack" role="button" aria-label="返回列表">返回列表</view>
+    </view>
+  </view>
+
+  <view class="footer">{{meta.reference}}</view>
+</view>

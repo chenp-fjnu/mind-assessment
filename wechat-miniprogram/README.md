@@ -29,14 +29,22 @@ wechat-miniprogram/
 │   ├── holland/                      # 职业兴趣
 │   ├── spm/                          # 瑞文图形推理（questions.js 懒加载）
 │   └── wechsler/                     # 韦氏智力（积木题含真实候选图形数据）
+├── games/                            # 训练游戏（每个 <id>/ 含 index.js 逻辑 + game.js 组件）
+│   ├── schulte/                      # 舒尔特方格（注意力）
+│   ├── memory-match/                 # 记忆配对（工作记忆）
+│   ├── stroop/                       # 斯特鲁普（反应速度）
+│   └── box-breathing/                # 箱式呼吸（放松正念）
 ├── pages/
 │   ├── index/                        # 首页：分类量表 + 最近测评
 │   ├── detail/                       # 量表说明页
 │   ├── test/                         # 答题页（量表题 / 选择题 / 矩阵题 / 图形四选一）
 │   ├── result/                       # 结果页（维度 / 双极 / 分测验 / 解读 / 趋势 / 存图）
-│   └── history/                      # 全部测评记录（按量表筛选 / 单条删除 / 清空）
+│   ├── history/                      # 全部测评记录（按量表筛选 / 单条删除 / 清空）
+│   └── train/                        # 训练 Tab：train 列表页 + game 通用播放器
 ├── utils/
 │   ├── registry.js                   # 模块注册表与查询（getModule / modulesByType）
+│   ├── game-registry.js              # 训练游戏注册表（getGame / gamesByDim / getMetaList）
+│   ├── train-store.js                # 训练成绩存储（ma_train_<id>，趋势复用 trend.js）
 │   ├── figure.js                     # canvas 图形渲染（circle/square/triangle/…）
 │   ├── scoring.js                    # SPM 评分与常模（百分位→IQ）
 │   ├── scale-scoring.js              # 通用量表评分（反向计分 / 求和 / 百分比 / 等级）
@@ -75,6 +83,36 @@ wechat-miniprogram/
 | `cdrise` | 心理韧性量表 | 积极心理 | 10 | 量表 | 韧性评分 |
 | `enneagram` | 九型人格测试 | 人格性格 | 36 | 量表 | 主导类型 |
 | `temperament` | 气质类型问卷 | 人格性格 | 60 | 量表 | 气质类型 |
+
+---
+
+## 训练游戏模块（脑力训练）
+
+除 22 套自评量表外，小程序新增独立 **「训练」Tab**，提供类舒尔特方格的互动脑力训练游戏，覆盖全部认知维度。所有游戏均为**离线、本地记录、无后端**，仅供自我探索与训练热身，不构成医学诊断。
+
+### 已落地首批游戏（每维度一个）
+
+| 游戏 id | 名称 | 维度 | 玩法 | 主指标 |
+| --- | --- | --- | --- | --- |
+| `schulte` | 舒尔特方格 | 注意力 | N×N 网格按 1→N 顺序点选（3×3~9×9） | 用时↓ |
+| `memory-match` | 记忆配对 | 工作记忆 | 翻牌找成对图案（6~16 对） | 用时↓ |
+| `stroop` | 斯特鲁普 | 反应速度 | 选墨水颜色而非词义（10~30 题） | 得分↑ |
+| `box-breathing` | 箱式呼吸 | 放松正念 | 4-4-4-4 节律引导呼吸（3~8 轮） | 轮数↑ |
+
+### 架构与契约
+
+- **注册表**：`utils/game-registry.js`（结构同 `utils/registry`，字面量 require 保证打包），提供 `getMetaList / gamesByDim / getGame`。
+- **游戏实现**：`games/<id>/` 下含可单测的 `index.js`（纯逻辑 + 元数据）与 `game.js`（`Component` 组件，负责交互渲染）。统一契约：
+  ```
+  { id, name, dim, dimLabel, icon, color, desc, reference,
+    levels:[{value,label}], metric:{key,label,unit,better},
+    generate(level), score(state) }
+  ```
+- **播放器**：`pages/train/game` 通过 `usingComponents` 按 `gameId` 渲染对应组件，统一处理难度选择、计时、成绩保存、最佳/趋势展示。
+- **列表页**：`pages/train/train` 按维度分区（注意力/工作记忆/反应速度/放松正念/执行功能），支持搜索与分类筛选。
+- **成绩存储**：`utils/train-store.js`，键 `ma_train_<id>`（上限 50 条），趋势复用 `utils/trend.js` 的 `computeTrend`。
+
+> 资料与候选清单见 `docs/brain-games-catalog.md`（含数字划消、N-Back、Flanker、打地鼠、反应时间、4-7-8 呼吸等可后续增量补齐的游戏）。
 
 ---
 
@@ -205,6 +243,7 @@ CI（`.github/workflows/ci.yml`）：push/PR 触及 `wechat-miniprogram/**` 时�
 - **首页搜索与分类筛选**：`pages/index` 新增搜索框（按名称/简称/简介/标签匹配）与按 `type` 的分类 chips，实时过滤「全部量表」列表，含空态提示（路线图第 7 项）。
 - **测试体系完善**：新增 `jest.config.js` + `test/setup.js`（mock 运行时 `wx`/`Page`/`Component`）+ `test/page-helper.js`（加载页面并执行 `onLoad`）；`utils.test.js` 补足工具层单测，`index.page.test.js` 改为零依赖页面单测；`npm run test:all` 串联冒烟与 Jest、`test:coverage` 附覆盖率；新增 `.github/workflows/ci.yml`（Node 18 跑冒烟 + Jest）。移除源中不可用的 `@miniprogram/simulate` 依赖。
 - **代码清理**：ESLint 清零（修复 `figure.js` switch-case 词法声明、`gen-tab-icons.js` 常量条件；`result.js`/`audit-questions.js` 改用 `const`）；删除 22 模块迁移遗留的未用 `makeLabeler` 导入与 `DIM_LABELS` 常量等死代码；合并 `test/unit.js`/`assert.js`/`simulate.js` 冗余断言到 Jest 后删除。
+- **训练游戏模块（新增「训练」Tab）**：`app.json` 注册第五个底部导航（新增 train 图标由 `tools/gen-tab-icons.js` 生成）；`pages/train` 列表页（按认知维度分区 + 搜索/筛选）+ 通用播放器 `pages/train/game`；首批 4 个游戏 `games/{schulte,memory-match,stroop,box-breathing}`，统一 `index.js` 纯逻辑 + `game.js` 组件契约；`utils/game-registry.js` 注册表与 `utils/train-store.js` 本地成绩存储（趋势复用 `utils/trend.js`）；详见 `docs/brain-games-catalog.md` 候选清单。
 
 > 路线图全部高/中优先项均已完成；CI 已接入 Jest + 覆盖率。仅余极低优先工程化项（`.gitattributes` 行尾统一）可按需推进。
 

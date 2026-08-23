@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "训练",
+  "usingComponents": {
+    "schulte-game": "../../games/schulte/game",
+    "memory-match-game": "../../games/memory-match/game",
+    "stroop-game": "../../games/stroop/game",
+    "box-breathing-game": "../../games/box-breathing/game"
+  }
+}
