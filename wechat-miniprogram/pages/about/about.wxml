@@ -6,7 +6,7 @@
 
   <view class="card section">
     <text class="sec-title">我们做什么</text>
-    <text class="sec-text">心智探索局是一款心理成长小程序，覆盖人格、情绪、智力、职业兴趣、自我认知等 {{typeCount}} 大类共 {{moduleCount}} 套量表；并提供「方法论工具箱」，收录 {{methodCount}} 个经典心理学方法与理论，其中 {{practiceCount}} 个支持互动练习。除此之外，我们还内置「脑力训练」板块，包含 {{gameCount}} 个改编自成熟认知心理学范式的游戏，按注意力、工作记忆、反应速度、放松正念、执行功能 {{dimCount}} 大维度组织，帮助你把测评洞察转化为日常可练的心智训练。</text>
+    <text class="sec-text">心智探索局是一款心理成长小程序，覆盖人格、情绪、智力、职业兴趣、自我认知等 {{typeCount}} 大类共 {{moduleCount}} 套量表；并提供「方法库」，收录 {{methodCount}} 个经典心理学方法与理论，其中 {{practiceCount}} 个支持互动练习。除此之外，我们还内置「脑力训练」板块，包含 {{gameCount}} 个改编自成熟认知心理学范式的游戏，按注意力、工作记忆、反应速度、放松正念、执行功能 {{dimCount}} 大维度组织，帮助你把测评洞察转化为日常可练的心智训练。</text>
   </view>
 
   <view class="card section">
@@ -23,7 +23,7 @@
   </view>
 
   <view class="card section">
-    <text class="sec-title">方法论工具箱</text>
+    <text class="sec-title">方法库</text>
     <text class="sec-text">我们把常用的心理学方法分为四大类，便于你按场景取用，并把 GROW、SMART、WOOP、ABC 认知重构等经典方法做成图文讲解与可填写的练习，帮助把测评洞察转化为日常行动：
 · 目标与行动：SMART、GROW、WOOP、番茄工作法、PDCA
 · 情绪与认知：ABC 认知重构、三件好事、正念呼吸、非暴力沟通、费斯汀格法则

@@ -1,6 +1,6 @@
 <view class="scroll-page">
   <view class="hero">
-    <text class="hero-title">方法论工具箱</text>
+    <text class="hero-title">方法库</text>
     <text class="hero-sub">把心理学方法，变成每天可用的练习</text>
     <text class="hero-tag">{{count}} 个方法 · {{interactiveCount}} 个可互动练习</text>
   </view>

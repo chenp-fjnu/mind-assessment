@@ -78,7 +78,7 @@
     <view wx:if="{{!mList.length}}" class="empty">
       <text class="empty-icon">🧩</text>
       <text class="empty-text">还没有方法练习记录</text>
-      <text class="empty-sub">去方法论工具箱选个方法练练吧</text>
+      <text class="empty-sub">去方法库选个方法练练吧</text>
     </view>
 
     <view wx:else class="list">
