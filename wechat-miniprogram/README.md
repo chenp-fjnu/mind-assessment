@@ -29,14 +29,12 @@ wechat-miniprogram/
 │   ├── holland/                      # 职业兴趣
 │   ├── spm/                          # 瑞文图形推理（questions.js 懒加载）
 │   └── wechsler/                     # 韦氏智力（积木题含真实候选图形数据）
-├── games/                            # 训练游戏（每个 <id>/ 含 index.js 逻辑 + game.js 组件）
-│   ├── schulte/                      # 舒尔特方格（注意力）
-│   ├── memory-match/                 # 记忆配对（工作记忆）
-│   ├── stroop/                       # 斯特鲁普（反应速度）
-│   ├── box-breathing/                # 箱式呼吸（放松正念）
-│   ├── reaction-time/                # 反应时间（反应速度）
-│   ├── n-back/                       # N-Back 视觉位置（工作记忆）
-│   └── flanker/                      # Flanker 侧抑制（反应速度）
+├── games/                            # 训练游戏（每个 <id>/ 含 index.js 逻辑 + game.js 组件，共 31 个）
+│   ├── schulte/ cancellation/ visual-search/ find-rule/ figure-tracking/ number-maze/ mirror/ number-code/   # 注意力（8）
+│   ├── memory-match/ pattern-memory/ simon/ digit-span/ corsi/ n-back/                                    # 工作记忆（6）
+│   ├── stroop/ reaction-time/ flanker/ whack/ go-no-go/ bigger-number/ cps/ color-match/ double-decision/  # 反应速度（9）
+│   ├── box-breathing/ breath-478/ resonance/ mindfulness/                                                  # 放松正念（4）
+│   └── hanoi/ task-switch/ wisconsin/ tower-london/                                                        # 执行功能（4）
 ├── pages/
 │   ├── index/                        # 首页：分类量表 + 最近测评
 │   ├── detail/                       # 量表说明页
@@ -275,6 +273,7 @@ CI（`.github/workflows/ci.yml`）：push/PR 触及 `wechat-miniprogram/**` 时�
 - **代码清理**：ESLint 清零（修复 `figure.js` switch-case 词法声明、`gen-tab-icons.js` 常量条件；`result.js`/`audit-questions.js` 改用 `const`）；删除 22 模块迁移遗留的未用 `makeLabeler` 导入与 `DIM_LABELS` 常量等死代码；合并 `test/unit.js`/`assert.js`/`simulate.js` 冗余断言到 Jest 后删除。
 - **训练游戏模块（新增「训练」Tab）**：`app.json` 注册第五个底部导航（新增 train 图标由 `tools/gen-tab-icons.js` 生成）；`pages/train` 列表页（按认知维度分区 + 搜索/筛选）+ 通用播放器 `pages/train/game`；首批 4 个游戏 `games/{schulte,memory-match,stroop,box-breathing}`，统一 `index.js` 纯逻辑 + `game.js` 组件契约；`utils/game-registry.js` 注册表与 `utils/train-store.js` 本地成绩存储（趋势复用 `utils/trend.js`）；详见 `docs/brain-games-catalog.md` 候选清单。
 - **训练游戏扩充（+3）**：新增 `reaction-time`（反应时间）、`n-back`（视觉位置 N-Back）、`flanker`（侧抑制）三个游戏，覆盖反应速度/工作记忆维度更多范式；`game-registry.js` 注册、`pages/train/game` 播放器 `usingComponents` 与 `wx:if` 分支同步接入，`test/games.test.js` 单测增至 18 项。
+- **训练游戏全量落地（共 31 个）**：按 `docs/brain-games-catalog.md` 候选清单补齐全部 5 个认知维度——注意力（+7：数字划消/视觉搜索/按要求找方格/图形追踪/数字迷宫/镜像沙漏/数字密码）、工作记忆（+4：方块记忆/序列记忆 Simon/数字广度/科西方块）、反应速度（+6：打地鼠/Go-NoGo/更大数字/连点CPS/颜色匹配/双重决策）、放松正念（+3：4-7-8 呼吸/共振呼吸/正念呼吸）、执行功能（+4：汉诺塔/任务切换/威斯康星/伦敦塔）；统一 `index.js` 纯逻辑 + `game.js` 组件契约，注册表/播放器/单测（`test/games.test.js` 现 46 项）与冒烟（`test/smoke.js` 152 项）同步通过，README「已落地游戏」表与目录结构更新。
 
 > 路线图全部高/中优先项均已完成；CI 已接入 Jest + 覆盖率。仅余极低优先工程化项（`.gitattributes` 行尾统一）可按需推进。
 
