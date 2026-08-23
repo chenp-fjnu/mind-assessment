@@ -9,6 +9,61 @@ const THEME_MODES = {
   DARK: 'dark',
 };
 
+// 浅色模式 tabBar 配置
+const LIGHT_TAB_BAR = {
+  color: '#64748b',
+  selectedColor: '#7c3aed',
+  backgroundColor: '#ffffff',
+  borderStyle: 'black',
+};
+
+// 深色模式 tabBar 配置
+const DARK_TAB_BAR = {
+  color: '#888888',
+  selectedColor: '#a8acf0',
+  backgroundColor: '#141416',
+  borderStyle: 'white',
+};
+
+// 浅色模式导航栏配置
+const LIGHT_NAV_BAR = {
+  frontColor: '#ffffff',
+  backgroundColor: '#1e293b',
+  animation: { duration: 300, timingFunc: 'easeInOut' },
+};
+
+// 深色模式导航栏配置
+const DARK_NAV_BAR = {
+  frontColor: '#ffffff',
+  backgroundColor: '#0a0a0c',
+  animation: { duration: 300, timingFunc: 'easeInOut' },
+};
+
+function updateTabBar(theme) {
+  const config = theme === THEME_MODES.DARK ? DARK_TAB_BAR : LIGHT_TAB_BAR;
+  try {
+    wx.setTabBarStyle(config);
+    // 更新各 tab 项的图标 (如果需要)
+    // wx.setTabBarItem({ index, iconPath, selectedIconPath })
+  } catch (e) {
+    console.warn('setTabBarStyle failed', e);
+  }
+}
+
+function updateNavBar(theme) {
+  const config = theme === THEME_MODES.DARK ? DARK_NAV_BAR : LIGHT_NAV_BAR;
+  try {
+    wx.setNavigationBarColor(config);
+  } catch (e) {
+    console.warn('setNavigationBarColor failed', e);
+  }
+}
+
+function updateNativeUI(theme) {
+  updateTabBar(theme);
+  updateNavBar(theme);
+}
+
 function getSystemTheme() {
   try {
     if (wx.getWindowInfo) {
@@ -112,6 +167,7 @@ function useTheme(pageInstance) {
   pageInstance.setThemeMode = (mode) => {
     setStoredTheme(mode);
     updateTheme();
+    updateNativeUI(getEffectiveTheme());
   };
 
   pageInstance.forceThemeUpdate = () => {
@@ -126,6 +182,7 @@ function useTheme(pageInstance) {
       themeMode: getStoredTheme(),
       themeClass: `theme-${theme}`,
     });
+    updateNativeUI(theme);
   };
 
   return {
@@ -146,4 +203,5 @@ module.exports = {
   applyTheme,
   initThemeListener,
   useTheme,
+  updateNativeUI,
 };

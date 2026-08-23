@@ -1,6 +1,6 @@
 const { TYPE_LABELS } = require('./utils/registry')
 const { registerPrivacyModal } = require('./utils/privacy')
-const { initThemeListener, getEffectiveTheme } = require('./utils/theme-store')
+const { initThemeListener, getEffectiveTheme, updateNativeUI } = require('./utils/theme-store')
 
 App({
   globalData: {
@@ -12,6 +12,9 @@ App({
     // 初始化主题监听
     initThemeListener()
     // 设置初始有效主题
-    wx.setStorageSync('current-effective-theme', getEffectiveTheme())
+    const effectiveTheme = getEffectiveTheme()
+    wx.setStorageSync('current-effective-theme', effectiveTheme)
+    // 同步原生 UI (tabBar, 导航栏)
+    updateNativeUI(effectiveTheme)
   },
 })
