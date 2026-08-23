@@ -1,0 +1,18 @@
+<view class="mr">
+  <view class="info">第 {{idx + 1}} / {{trials}} 题</view>
+  <view wx:if="{{phase === 'show' && cur}}" class="pair">
+    <view class="pat">
+      <view wx:for="{{cur.p}}" wx:key="index" class="pc {{item ? 'on' : ''}}"></view>
+    </view>
+    <text class="vs">?</text>
+    <view class="pat">
+      <view wx:for="{{cur.q}}" wx:key="index" class="pc {{item ? 'on' : ''}}"></view>
+    </view>
+  </view>
+  <view wx:if="{{phase === 'idle'}}" class="tip">两个图形是否互为镜像？</view>
+  <view wx:if="{{phase === 'show'}}" class="answers">
+    <view class="abtn yes" bindtap="onAnswer" data-ans="1" role="button" aria-label="是">是 镜像</view>
+    <view class="abtn no" bindtap="onAnswer" data-ans="0" role="button" aria-label="否">否</view>
+  </view>
+  <view wx:if="{{phase === 'done'}}" class="tip">完成！</view>
+</view>

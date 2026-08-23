@@ -1,0 +1,15 @@
+<view class="fr">
+  <view class="tip">点所有 <view class="sw" style="background:{{ruleHex}};"></view> 色方格（{{found}}/{{targetCount}}，误点 {{errors}}）</view>
+  <view class="grid" style="grid-template-columns:repeat({{size}},1fr);">
+    <view
+      wx:for="{{cells}}"
+      wx:key="idx"
+      class="cell {{item.hit ? 'hit' : ''}} {{item.wrong ? 'wrong' : ''}}"
+      style="background:{{item.hex}};"
+      data-idx="{{index}}"
+      bindtap="onTap"
+      role="button"
+      aria-label="方格"
+    ></view>
+  </view>
+</view>

@@ -1,0 +1,19 @@
+.vs {
+  width: 100%;
+}
+.tip {
+  font-size: 26rpx;
+  color: var(--sub);
+  text-align: center;
+  margin-bottom: 20rpx;
+}
+.grid {
+  display: grid;
+  gap: 10rpx;
+  width: 420rpx;
+  margin: 0 auto;
+}
+.cell {
+  aspect-ratio: 1 / 1;
+  border-radius: 16rpx;
+}

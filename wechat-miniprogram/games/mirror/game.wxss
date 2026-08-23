@@ -1,0 +1,59 @@
+.mr {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.info {
+  font-size: 28rpx;
+  color: var(--text2);
+  margin-bottom: 30rpx;
+}
+.pair {
+  display: flex;
+  align-items: center;
+  gap: 40rpx;
+}
+.pat {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6rpx;
+  width: 240rpx;
+}
+.pc {
+  aspect-ratio: 1 / 1;
+  background: #e2e8f0;
+  border-radius: 6rpx;
+}
+.pc.on {
+  background: #0ea5e9;
+}
+.vs {
+  font-size: 56rpx;
+  font-weight: 800;
+  color: var(--sub);
+}
+.answers {
+  display: flex;
+  gap: 24rpx;
+  margin-top: 40rpx;
+}
+.abtn {
+  padding: 20rpx 56rpx;
+  border-radius: 999rpx;
+  font-size: 32rpx;
+  font-weight: 700;
+  color: #fff;
+}
+.abtn.yes {
+  background: #22c55e;
+}
+.abtn.no {
+  background: #64748b;
+}
+.tip {
+  margin-top: 30rpx;
+  color: var(--sub);
+  font-size: 24rpx;
+  text-align: center;
+}

@@ -7,6 +7,13 @@ const LOADERS = {
   'reaction-time': () => require('../games/reaction-time/index'),
   'n-back': () => require('../games/n-back/index'),
   flanker: () => require('../games/flanker/index'),
+  cancellation: () => require('../games/cancellation/index'),
+  'visual-search': () => require('../games/visual-search/index'),
+  'find-rule': () => require('../games/find-rule/index'),
+  'figure-tracking': () => require('../games/figure-tracking/index'),
+  'number-maze': () => require('../games/number-maze/index'),
+  mirror: () => require('../games/mirror/index'),
+  'number-code': () => require('../games/number-code/index'),
 }
 
 const DIM_LABELS = {

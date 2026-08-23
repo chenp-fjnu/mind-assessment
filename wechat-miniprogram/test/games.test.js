@@ -6,9 +6,9 @@ const { getMetaList, getGame } = require('../utils/game-registry')
 const trainStore = require('../utils/train-store')
 
 describe('训练游戏注册表', () => {
-  test('包含 7 个游戏且维度齐全', () => {
+  test('包含 14 个游戏且维度齐全', () => {
     const list = getMetaList()
-    expect(list.length).toBe(7)
+    expect(list.length).toBe(14)
     const dims = list.map((g) => g.dim)
     expect(dims).toEqual(expect.arrayContaining(['attention', 'memory', 'reaction', 'relax']))
   })
@@ -127,6 +127,91 @@ describe('Flanker', () => {
   test('score 正确率越高得分越高', () => {
     const good = g.score({ correct: 19, total: 20, times: [450] })
     const bad = g.score({ correct: 9, total: 20, times: [450] })
+    expect(good.score).toBeGreaterThan(bad.score)
+  })
+})
+
+describe('数字划消', () => {
+  const g = getGame('cancellation')
+  test('generate 返回含目标数字的矩阵', () => {
+    const s = g.generate(0)
+    expect(s.target).toBe('0')
+    expect(s.targetCount).toBeGreaterThan(0)
+    expect(s.cells.filter((c) => c === '0').length).toBe(s.targetCount)
+  })
+  test('score 用时越短得分越高', () => {
+    const fast = g.score({ targetCount: 10, found: 10, errors: 0, time: 8 })
+    const slow = g.score({ targetCount: 10, found: 8, errors: 3, time: 40 })
+    expect(fast.score).toBeGreaterThan(slow.score)
+  })
+})
+
+describe('视觉搜索', () => {
+  const g = getGame('visual-search')
+  test('generate 返回唯一不同项', () => {
+    const s = g.generate(2)
+    expect(s.oddIdx).toBeGreaterThanOrEqual(0)
+    expect(s.cells[s.oddIdx]).not.toBe(s.cells[(s.oddIdx + 1) % s.cells.length])
+  })
+  test('score 用时越短得分越高', () => {
+    const fast = g.score({ errors: 0, time: 2 })
+    const slow = g.score({ errors: 4, time: 12 })
+    expect(fast.score).toBeGreaterThan(slow.score)
+  })
+})
+
+describe('按要求找方格', () => {
+  const g = getGame('find-rule')
+  test('generate 含目标方格', () => {
+    const s = g.generate(2)
+    expect(s.targetCount).toBeGreaterThan(0)
+    expect(s.cells.filter((c) => c.target).length).toBe(s.targetCount)
+  })
+})
+
+describe('图形追踪', () => {
+  const g = getGame('figure-tracking')
+  test('generate 返回 1..N 排列', () => {
+    const s = g.generate(4)
+    expect(s.cells.length).toBe(16)
+    expect([...s.cells].sort((a, b) => a - b)).toEqual(
+      Array.from({ length: 16 }, (_, i) => i + 1)
+    )
+  })
+})
+
+describe('数字迷宫', () => {
+  const g = getGame('number-maze')
+  test('generate 返回迷宫与出口', () => {
+    const s = g.generate(5)
+    expect(s.size).toBe(5)
+    expect(s.exit).toBe(24)
+    expect(s.walls.length).toBe(5)
+  })
+  test('score 步数越少得分越高', () => {
+    const good = g.score({ steps: 24, time: 10, optimal: 24 })
+    const bad = g.score({ steps: 60, time: 40, optimal: 24 })
+    expect(good.score).toBeGreaterThan(bad.score)
+  })
+})
+
+describe('镜像沙漏', () => {
+  const g = getGame('mirror')
+  test('generate 返回试次与答案', () => {
+    const s = g.generate(2)
+    expect(s.list.length).toBe(10)
+    s.list.forEach((t) => expect(typeof t.answer).toBe('boolean'))
+  })
+})
+
+describe('数字密码', () => {
+  const g = getGame('number-code')
+  test('generate 返回序列长度 = level', () => {
+    expect(g.generate(6).seq.length).toBe(6)
+  })
+  test('score 正确率越高得分越高', () => {
+    const good = g.score({ correct: 6, total: 6 })
+    const bad = g.score({ correct: 3, total: 6 })
     expect(good.score).toBeGreaterThan(bad.score)
   })
 })

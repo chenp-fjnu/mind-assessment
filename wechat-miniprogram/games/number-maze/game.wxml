@@ -1,0 +1,18 @@
+<view class="nm">
+  <view class="tip">从 <text class="s">起</text> 走到 <text class="e">终</text>（步数 {{steps}}）</view>
+  <view class="grid" style="grid-template-columns:repeat({{size}},1fr);">
+    <view
+      wx:for="{{cells}}"
+      wx:key="idx"
+      class="cell {{item.idx === cur ? 'cur' : ''}} {{item.idx === exit ? 'exit' : ''}}"
+      style="{{item.style}}"
+      data-idx="{{index}}"
+      bindtap="onTap"
+      role="button"
+      aria-label="格子"
+    >
+      <text wx:if="{{item.idx === exit}}">🚩</text>
+      <text wx:elif="{{item.idx === cur}}">🙂</text>
+    </view>
+  </view>
+</view>

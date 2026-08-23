@@ -1,0 +1,41 @@
+.can {
+  width: 100%;
+}
+.tip {
+  font-size: 26rpx;
+  color: var(--sub);
+  text-align: center;
+  margin-bottom: 20rpx;
+}
+.tg {
+  font-weight: 800;
+  color: #0d9488;
+  font-size: 32rpx;
+}
+.grid {
+  display: grid;
+  gap: 6rpx;
+}
+.cell {
+  aspect-ratio: 1 / 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--card);
+  border: 2rpx solid var(--border);
+  border-radius: 10rpx;
+  font-size: 34rpx;
+  font-weight: 600;
+  color: var(--text);
+}
+.cell.hit {
+  color: #0d9488;
+  text-decoration: line-through;
+  background: rgba(13, 148, 136, 0.12);
+  border-color: transparent;
+}
+.cell.wrong {
+  color: #ef4444;
+  background: rgba(239, 68, 68, 0.12);
+  border-color: transparent;
+}
