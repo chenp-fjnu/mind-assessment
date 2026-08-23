@@ -350,6 +350,7 @@
 }
 .pillar.assess { background: linear-gradient(135deg, #1e293b, #334155); }
 .pillar.method { background: linear-gradient(135deg, #0d9488, #7c3aed); }
+.pillar.train { background: linear-gradient(135deg, #f43f5e, #f59e0b); }
 .pillar-icon {
   width: 72rpx;
   height: 72rpx;

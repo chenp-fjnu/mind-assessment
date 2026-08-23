@@ -1,6 +1,7 @@
 const { getMetaList, TYPE_LABELS } = require('../../utils/registry')
 const { hexToRgba } = require('../../utils/color')
 const methodsData = require('../../utils/methods-data')
+const gameReg = require('../../utils/game-registry')
 
 function fmtTime(ts) {
   const d = new Date(ts)
@@ -10,6 +11,7 @@ function fmtTime(ts) {
 
 const FEATURED_ASSESS = ['big5', 'phq9', 'pss', 'mbti', 'sds', 'gad7']
 const FEATURED_METHODS = ['smart', 'grow', 'woop', 'abc', 'threegood', 'fogg']
+const FEATURED_GAMES = ['schulte', 'n-back', 'stroop', 'hanoi', 'box-breathing']
 
 function buildModules() {
   const all = getMetaList().map((m) => ({
@@ -49,13 +51,34 @@ function buildMethods() {
   return { all, featuredMethods: featured }
 }
 
+function buildGames() {
+  const all = gameReg.getMetaList()
+  const byId = {}
+  all.forEach((g) => (byId[g.id] = g))
+  const featured = FEATURED_GAMES.filter((id) => byId[id]).map((id) => {
+    const g = byId[id]
+    return {
+      id: g.id,
+      name: g.name,
+      icon: g.icon,
+      color: g.color,
+      tint: hexToRgba(g.color, 0.12),
+      dimLabel: g.dimLabel,
+    }
+  }).slice(0, 4)
+  return { all, featuredGames: featured }
+}
+
 Page({
   data: {
     moduleCount: 0,
     methodCount: 0,
     practiceCount: 0,
+    gameCount: 0,
+    dimCount: 0,
     featuredAssess: [],
     featuredMethods: [],
+    featuredGames: [],
     resume: null,
     keyword: '',
     allList: [],
@@ -66,12 +89,16 @@ Page({
   onLoad() {
     const mod = buildModules()
     const met = buildMethods()
+    const gam = buildGames()
     this.setData({
       moduleCount: mod.all.length,
       methodCount: met.all.length,
       practiceCount: met.all.filter((m) => m.interactive).length,
+      gameCount: gam.all.length,
+      dimCount: Object.keys(gameReg.DIM_LABELS).length,
       featuredAssess: mod.featuredAssess,
       featuredMethods: met.featuredMethods,
+      featuredGames: gam.featuredGames,
       allList: mod.all,
       typeChips: buildTypeChips(),
     })
@@ -111,8 +138,10 @@ Page({
   },
   goAssess() { wx.switchTab({ url: '/pages/assess/assess' }) },
   goMethods() { wx.switchTab({ url: '/pages/methods/methods' }) },
+  goTrain() { wx.switchTab({ url: '/pages/train/train' }) },
   goDetail(e) { wx.navigateTo({ url: `/pages/detail/detail?id=${e.currentTarget.dataset.id}` }) },
   goMethodDetail(e) { wx.navigateTo({ url: `/pages/methods/detail?id=${e.currentTarget.dataset.id}` }) },
+  goGame(e) { wx.navigateTo({ url: `/pages/train/game?gameId=${e.currentTarget.dataset.id}` }) },
   goResume() {
     if (!this.data.resume) return
     wx.navigateTo({ url: `/pages/result/result?id=${this.data.resume.id}` })

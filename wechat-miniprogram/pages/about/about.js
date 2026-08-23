@@ -1,5 +1,6 @@
 const { getMetaList, TYPE_LABELS } = require('../../utils/registry')
 const methodsData = require('../../utils/methods-data')
+const gameReg = require('../../utils/game-registry')
 const { openPrivacyContract } = require('../../utils/privacy')
 
 Page({
@@ -19,15 +20,20 @@ Page({
     typeCount: 0,
     methodCount: 0,
     practiceCount: 0,
+    gameCount: 0,
+    dimCount: 0,
   },
   onLoad() {
     const allModules = getMetaList()
     const typeCount = Object.keys(TYPE_LABELS).filter((t) => allModules.some((m) => m.type === t)).length
+    const games = gameReg.getMetaList()
     this.setData({
       moduleCount: allModules.length,
       typeCount,
       methodCount: methodsData.METHODS.length,
       practiceCount: methodsData.METHODS.filter((m) => m.interactive).length,
+      gameCount: games.length,
+      dimCount: Object.keys(gameReg.DIM_LABELS).length,
     })
   },
   goHome() {

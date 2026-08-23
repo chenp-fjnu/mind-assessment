@@ -1,8 +1,8 @@
 <view class="scroll-page">
   <view class="hero">
     <text class="hero-title">心智探索局</text>
-    <text class="hero-sub">认识自己，从测评与方法开始</text>
-    <text class="hero-tag">{{moduleCount}} 套量表 · {{methodCount}} 个方法</text>
+    <text class="hero-sub">测评 · 方法 · 训练，陪你认识并锻炼心智</text>
+    <text class="hero-tag">{{moduleCount}} 套量表 · {{methodCount}} 个方法 · {{gameCount}} 个训练</text>
   </view>
 
   <view class="search-bar">
@@ -44,6 +44,14 @@
       <view class="pillar-text">
         <text class="pillar-title">行动方法</text>
         <text class="pillar-sub">每天可用的练习</text>
+      </view>
+      <text class="arrow">›</text>
+    </view>
+    <view class="pillar train" bindtap="goTrain" role="button" aria-label="去训练">
+      <view class="pillar-icon">🧠</view>
+      <view class="pillar-text">
+        <text class="pillar-title">脑力训练</text>
+        <text class="pillar-sub">{{gameCount}} 个游戏练起来</text>
       </view>
       <text class="arrow">›</text>
     </view>
@@ -102,6 +110,29 @@
         <view class="mini-icon" style="background:{{m.tint}};">{{m.icon}}</view>
         <text class="mini-name">{{m.name}}</text>
         <text class="mini-meta">{{m.interactive ? '可练习' : '方法'}}</text>
+      </view>
+    </scroll-view>
+  </view>
+
+  <view class="section">
+    <view class="section-head">
+      <text class="section-title">脑力训练</text>
+      <text class="section-more" bindtap="goTrain" role="button">全部 ›</text>
+    </view>
+    <scroll-view class="card-row" scroll-x="true">
+      <view
+        wx:for="{{featuredGames}}"
+        wx:key="id"
+        wx:for-item="g"
+        bindtap="goGame"
+        data-id="{{g.id}}"
+        style="border-color:{{g.tint}};"
+        role="button"
+        aria-label="{{g.name}}"
+      >
+        <view class="mini-icon" style="background:{{g.tint}};">{{g.icon}}</view>
+        <text class="mini-name">{{g.name}}</text>
+        <text class="mini-meta">{{g.dimLabel}}</text>
       </view>
     </scroll-view>
   </view>

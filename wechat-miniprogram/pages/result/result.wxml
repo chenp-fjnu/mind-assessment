@@ -138,7 +138,7 @@
 
   <view wx:if="{{noteText}}" class="note-box">{{noteText}}</view>
 
-  <view class="brand-foot">心智探索局 · 认识自己，从测评与方法开始</view>
+  <view class="brand-foot">心智探索局 · 测评 · 方法 · 训练</view>
 
   <view class="bottom-bar">
     <button class="btn save" bindtap="saveCard" aria-label="保存结果卡片到相册">保存结果卡片</button>

@@ -1,12 +1,12 @@
 <view class="scroll-page">
   <view class="hero">
     <text class="hero-title">关于心智探索局</text>
-    <text class="hero-sub">认识自己，从测评与方法开始</text>
+    <text class="hero-sub">测评 · 方法 · 训练，陪你认识并锻炼心智</text>
   </view>
 
   <view class="card section">
     <text class="sec-title">我们做什么</text>
-    <text class="sec-text">心智探索局是一款心理成长小程序，覆盖人格、情绪、智力、职业兴趣、自我认知等 {{typeCount}} 大类共 {{moduleCount}} 套量表；此外还提供「方法论工具箱」，收录 {{methodCount}} 个经典心理学方法与理论，其中 {{practiceCount}} 个支持互动练习。</text>
+    <text class="sec-text">心智探索局是一款心理成长小程序，覆盖人格、情绪、智力、职业兴趣、自我认知等 {{typeCount}} 大类共 {{moduleCount}} 套量表；并提供「方法论工具箱」，收录 {{methodCount}} 个经典心理学方法与理论，其中 {{practiceCount}} 个支持互动练习。除此之外，我们还内置「脑力训练」板块，包含 {{gameCount}} 个改编自成熟认知心理学范式的游戏，按注意力、工作记忆、反应速度、放松正念、执行功能 {{dimCount}} 大维度组织，帮助你把测评洞察转化为日常可练的心智训练。</text>
   </view>
 
   <view class="card section">
@@ -33,6 +33,11 @@
   </view>
 
   <view class="card section">
+    <text class="sec-title">脑力训练</text>
+    <text class="sec-text">「训练」Tab 提供 {{gameCount}} 个游戏，覆盖注意力、工作记忆、反应速度、放松正念、执行功能 {{dimCount}} 大认知维度（如舒尔特方格、N-Back、斯特鲁普、打地鼠、汉诺塔、威斯康星等）。每个游戏支持多档难度，完成后成绩仅保存在本机，可在游戏页查看最佳成绩与近期趋势，方便你持续追踪与循序渐进。所有游戏均改编自公开认知范式，仅作娱乐与自我探索用途，不构成任何专业能力评估。</text>
+  </view>
+
+  <view class="card section">
     <text class="sec-title">题库来源</text>
     <view class="src" wx:for="{{sources}}" wx:key="name" wx:for-item="s">
       <text class="src-name">{{s.name}}</text>
@@ -47,5 +52,5 @@
 
   <button class="btn home" bindtap="goHome" aria-label="返回首页">返回首页</button>
   <button class="btn link" bindtap="openPrivacy" aria-label="查看隐私保护指引">查看隐私保护指引</button>
-  <view class="brand-foot">心智探索局 · 认识自己，从测评与方法开始</view>
+  <view class="brand-foot">心智探索局 · 测评 · 方法 · 训练</view>
 </view>
