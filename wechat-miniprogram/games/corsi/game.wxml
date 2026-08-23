@@ -1,0 +1,19 @@
+<view class="co">
+  <view class="grid">
+    <view
+      wx:for="{{9}}"
+      wx:key="*this"
+      class="blk {{flash === index ? 'flash' : ''}}"
+      data-idx="{{index}}"
+      bindtap="onTap"
+      role="button"
+      aria-label="方块 {{index}}"
+    ></view>
+  </view>
+  <view class="bar">
+    <text wx:if="{{phase === 'show'}}">记住点亮顺序…</text>
+    <text wx:if="{{phase === 'input'}}">依序点出（{{inputIdx}}/{{seq.length}}）</text>
+    <text wx:if="{{phase === 'idle'}}">记住并复述方块顺序</text>
+    <text wx:if="{{phase === 'done'}}">完成！</text>
+  </view>
+</view>

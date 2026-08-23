@@ -1,0 +1,38 @@
+.pm {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.grid {
+  display: grid;
+  gap: 12rpx;
+  width: 480rpx;
+}
+.cell {
+  aspect-ratio: 1 / 1;
+  background: var(--chip);
+  border-radius: 14rpx;
+  transition: background 0.15s;
+}
+.cell.lit {
+  background: #f59e0b;
+}
+.cell.tap {
+  opacity: 0.9;
+}
+.bar {
+  margin-top: 28rpx;
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+  color: var(--sub);
+  font-size: 26rpx;
+}
+.submit {
+  padding: 14rpx 44rpx;
+  background: var(--accent);
+  color: #fff;
+  border-radius: 999rpx;
+  font-weight: 700;
+}

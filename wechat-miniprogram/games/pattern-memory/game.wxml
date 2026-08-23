@@ -1,0 +1,20 @@
+<view class="pm">
+  <view class="grid" style="grid-template-columns:repeat({{size}},1fr);">
+    <view
+      wx:for="{{cells}}"
+      wx:key="index"
+      class="cell {{item ? 'lit' : ''}} {{phase === 'input' ? 'tap' : ''}}"
+      data-idx="{{index}}"
+      bindtap="onTap"
+      role="button"
+      aria-label="方块"
+    ></view>
+  </view>
+  <view class="bar">
+    <text wx:if="{{phase === 'show'}}">记住高亮方块…</text>
+    <text wx:if="{{phase === 'input'}}">点出刚才高亮的方块（{{selected.length}}）</text>
+    <view wx:if="{{phase === 'input'}}" class="submit" bindtap="onSubmit" role="button" aria-label="提交">提交</view>
+    <text wx:if="{{phase === 'idle'}}">记住高亮方块后复现</text>
+    <text wx:if="{{phase === 'done'}}">完成！</text>
+  </view>
+</view>

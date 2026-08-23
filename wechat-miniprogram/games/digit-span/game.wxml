@@ -1,0 +1,18 @@
+<view class="ds">
+  <view class="info">长度 {{len}} 位</view>
+  <view wx:if="{{phase === 'show'}}" class="show">{{showText}}</view>
+  <view wx:if="{{phase === 'input'}}" class="show dim">{{input.join(' ') || '—'}}</view>
+  <view wx:if="{{phase === 'idle'}}" class="tip">记住短暂显示的数字，再依次点出</view>
+  <view wx:if="{{phase === 'input'}}" class="pad">
+    <view
+      wx:for="{{10}}"
+      wx:key="*this"
+      class="key"
+      data-d="{{index}}"
+      bindtap="onPad"
+      role="button"
+      aria-label="数字 {{index}}"
+    >{{index}}</view>
+  </view>
+  <view wx:if="{{phase === 'done'}}" class="tip">完成！</view>
+</view>

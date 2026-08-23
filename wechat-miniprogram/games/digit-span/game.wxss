@@ -1,0 +1,45 @@
+.ds {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.info {
+  font-size: 28rpx;
+  color: var(--text2);
+  margin-bottom: 30rpx;
+}
+.show {
+  font-size: 72rpx;
+  font-weight: 800;
+  letter-spacing: 12rpx;
+  color: var(--text);
+  min-height: 100rpx;
+}
+.show.dim {
+  color: var(--sub);
+}
+.pad {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 16rpx;
+  margin-top: 30rpx;
+  width: 480rpx;
+}
+.key {
+  aspect-ratio: 1 / 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--chip);
+  border-radius: 16rpx;
+  font-size: 40rpx;
+  font-weight: 700;
+  color: var(--text);
+}
+.tip {
+  margin-top: 30rpx;
+  color: var(--sub);
+  font-size: 24rpx;
+  text-align: center;
+}

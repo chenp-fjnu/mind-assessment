@@ -1,0 +1,29 @@
+.co {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18rpx;
+  width: 420rpx;
+}
+.blk {
+  aspect-ratio: 1 / 1;
+  background: var(--chip);
+  border-radius: 18rpx;
+  opacity: 0.6;
+  transition: opacity 0.1s, transform 0.1s;
+}
+.blk.flash {
+  background: #8b5cf6;
+  opacity: 1;
+  transform: scale(1.05);
+}
+.bar {
+  margin-top: 28rpx;
+  color: var(--sub);
+  font-size: 26rpx;
+}

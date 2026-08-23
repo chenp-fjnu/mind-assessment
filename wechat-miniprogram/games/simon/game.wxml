@@ -1,0 +1,19 @@
+<view class="sm">
+  <view class="pads">
+    <view
+      wx:for="{{4}}"
+      wx:key="*this"
+      class="pad p{{index}} {{flash === index ? 'flash' : ''}}"
+      data-d="{{index}}"
+      bindtap="onPad"
+      role="button"
+      aria-label="色块 {{index}}"
+    ></view>
+  </view>
+  <view class="bar">
+    <text wx:if="{{phase === 'show'}}">记住闪烁顺序…</text>
+    <text wx:if="{{phase === 'input'}}">复述顺序（{{inputIdx}}/{{seq.length}}）</text>
+    <text wx:if="{{phase === 'idle'}}">记住并复述色块顺序</text>
+    <text wx:if="{{phase === 'done'}}">完成！</text>
+  </view>
+</view>

@@ -6,9 +6,9 @@ const { getMetaList, getGame } = require('../utils/game-registry')
 const trainStore = require('../utils/train-store')
 
 describe('训练游戏注册表', () => {
-  test('包含 14 个游戏且维度齐全', () => {
+  test('包含 18 个游戏且维度齐全', () => {
     const list = getMetaList()
-    expect(list.length).toBe(14)
+    expect(list.length).toBe(18)
     const dims = list.map((g) => g.dim)
     expect(dims).toEqual(expect.arrayContaining(['attention', 'memory', 'reaction', 'relax']))
   })
@@ -213,6 +213,23 @@ describe('数字密码', () => {
     const good = g.score({ correct: 6, total: 6 })
     const bad = g.score({ correct: 3, total: 6 })
     expect(good.score).toBeGreaterThan(bad.score)
+  })
+})
+
+describe('工作记忆游戏', () => {
+  test('pattern-memory 返回高亮方块', () => {
+    const g = getGame('pattern-memory')
+    const s = g.generate(6)
+    expect(s.cells.filter((v) => v).length).toBe(6)
+  })
+  test('simon 返回长度为 level 的序列', () => {
+    expect(getGame('simon').generate(7).seq.length).toBe(7)
+  })
+  test('digit-span 返回长度为 level 的序列', () => {
+    expect(getGame('digit-span').generate(8).seq.length).toBe(8)
+  })
+  test('corsi 返回长度为 level 的序列', () => {
+    expect(getGame('corsi').generate(5).seq.length).toBe(5)
   })
 })
 
