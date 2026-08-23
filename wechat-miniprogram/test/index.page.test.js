@@ -43,34 +43,29 @@ describe('结果页 result', () => {
 })
 
 describe('首页 index', () => {
-  test('onLoad 列出全部量表且分类 chips 完整', () => {
+  test('onLoad 汇总量表/方法/训练数量与精选列表', () => {
     const ctx = loadPage('pages/index/index.js')
-    expect(ctx.data.filteredList.length).toBe(IDS.length)
-    expect(ctx.data.typeChips.length).toBeGreaterThanOrEqual(2)
-    expect(ctx.data.typeChips[0].key).toBe('')
+    expect(ctx.data.moduleCount).toBe(IDS.length)
+    expect(ctx.data.methodCount).toBeGreaterThan(0)
+    expect(ctx.data.practiceCount).toBeGreaterThanOrEqual(0)
+    expect(ctx.data.gameCount).toBeGreaterThan(0)
+    expect(ctx.data.dimCount).toBeGreaterThan(0)
+    expect(ctx.data.featuredAssess.length).toBeGreaterThan(0)
+    expect(ctx.data.featuredAssess.length).toBeLessThanOrEqual(4)
+    expect(ctx.data.featuredMethods.length).toBeGreaterThan(0)
+    expect(ctx.data.featuredMethods.length).toBeLessThanOrEqual(4)
+    expect(ctx.data.featuredGames.length).toBeGreaterThan(0)
+    expect(ctx.data.featuredGames.length).toBeLessThanOrEqual(4)
   })
 
-  test('onSearch 按名称过滤', () => {
+  test('goTrain 跳转到训练 tab', () => {
+    let nav = null
+    global.wx.switchTab = (o) => {
+      nav = o.url
+    }
     const ctx = loadPage('pages/index/index.js')
-    ctx.onSearch({ detail: { value: 'MBTI' } })
-    expect(ctx.data.keyword).toBe('MBTI')
-    expect(ctx.data.filteredList.every((m) => /mbti/i.test(m.name + m.shortName + m.desc))).toBe(true)
-    expect(ctx.data.filteredList.length).toBeGreaterThanOrEqual(1)
-  })
-
-  test('onSelectType 按分类过滤', () => {
-    const ctx = loadPage('pages/index/index.js')
-    const personality = ctx.data.typeChips.find((c) => c.label === '人格') || ctx.data.typeChips[1]
-    ctx.onSelectType({ currentTarget: { dataset: { key: personality.key } } })
-    expect(ctx.data.filteredList.every((m) => m.type === personality.key)).toBe(true)
-  })
-
-  test('clearSearch 清空过滤', () => {
-    const ctx = loadPage('pages/index/index.js')
-    ctx.onSearch({ detail: { value: 'xzqv' } })
-    expect(ctx.data.filteredList.length).toBe(0)
-    ctx.clearSearch()
-    expect(ctx.data.filteredList.length).toBe(IDS.length)
+    ctx.goTrain()
+    expect(nav).toContain('/pages/train/train')
   })
 })
 

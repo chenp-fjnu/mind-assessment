@@ -28,6 +28,17 @@ function loadPage(relPath, query) {
   if (typeof def.onLoad === 'function') def.onLoad.call(ctx, query || {})
   // 多数页面的数据加载放在 onShow（如 history/mine），统一触发以贴近真实生命周期
   if (typeof def.onShow === 'function') def.onShow.call(ctx)
+  // 清理页面内部定时器（如测评倒计时 setInterval / 自动跳题 setTimeout），
+  // 避免泄漏到后续测试、在 wx mock 被还原后回调抛错（与 onUnload 行为一致）。
+  if (typeof ctx.stopCountdown === 'function') ctx.stopCountdown()
+  if (ctx._timer) {
+    clearTimeout(ctx._timer)
+    ctx._timer = null
+  }
+  if (ctx._timer2) {
+    clearInterval(ctx._timer2)
+    ctx._timer2 = null
+  }
   return ctx
 }
 
