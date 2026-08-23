@@ -29,6 +29,7 @@ module.exports = {
   color: '#10b981',
   desc: '4-4-4-4 节律引导呼吸，缓解紧张、复位专注。',
   reference: '美国海豹突击队 / 急救人员呼吸技术',
+  hot: true,
   levels: [
     { value: 3, label: '3 轮 轻松' },
     { value: 5, label: '5 轮' },

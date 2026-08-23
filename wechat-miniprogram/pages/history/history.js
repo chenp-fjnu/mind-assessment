@@ -1,6 +1,7 @@
 const methodsData = require('../../utils/methods-data')
 const { getGame } = require('../../utils/game-registry')
 const trainStore = require('../../utils/train-store')
+const { getModule } = require('../../utils/registry')
 const { withPrivacy } = require('../../utils/privacy')
 
 function fmt(ts) {
@@ -67,6 +68,42 @@ function buildTrainRecords() {
   })
 }
 
+// 构建进行中的测评进度（从 ma_progress_<id> 读取）
+function buildInProgressAssess() {
+  try {
+    const info = (wx.getStorageInfoSync && wx.getStorageInfoSync()) || { keys: [] }
+    const progKeys = (info.keys || []).filter((k) => k.indexOf('ma_progress_') === 0)
+    const out = []
+    progKeys.forEach((k) => {
+      const id = k.replace('ma_progress_', '')
+      const mod = getModule(id)
+      if (!mod) return
+      const prog = wx.getStorageSync(k)
+      if (!prog || !prog.answers) return
+      const answered = prog.answers.filter((a) => a !== null).length
+      if (answered === 0) return
+      const total = mod.questionCount || 0
+      const percent = total ? Math.round((answered / total) * 100) : 0
+      out.push({
+        id,
+        rid: k,
+        name: mod.name,
+        icon: mod.icon,
+        color: mod.color,
+        answered,
+        total,
+        percent,
+        updated: prog.current || 0,
+        updatedText: fmt(prog.current || 0),
+      })
+    })
+    out.sort((a, b) => b.updated - a.updated)
+    return out
+  } catch (e) {
+    return []
+  }
+}
+
 Page({
   data: {
     tab: 'assess',
@@ -77,6 +114,7 @@ Page({
     filters: [],
     active: '',
     kw: '',
+    inProgressAssess: [],
   },
   onLoad(query) {
     if (query && ['assess', 'method', 'train'].indexOf(query.tab) >= 0) {
@@ -106,10 +144,11 @@ Page({
     const filters = [{ id: '', name: '全部', icon: '🗂' }].concat(Object.keys(map).map((k) => map[k]))
     const mList = buildMethodRecords()
     const tList = buildTrainRecords()
+    const inProgressAssess = buildInProgressAssess()
     this._all = all
     this._mAll = mList
     this._tAll = tList
-    this.setData({ all, filters, mList, tList })
+    this.setData({ all, filters, mList, tList, inProgressAssess })
     this.applyFilter()
   },
   applyFilter() {
@@ -207,7 +246,7 @@ Page({
       },
     })
   },
-  clearAll() {
+clearAll() {
     const tab = this.data.tab
     const list = tab === 'method' ? this.data.mList : tab === 'train' ? this.data.tList : this.data.list
     if (!list.length) return
@@ -229,10 +268,15 @@ Page({
               .forEach((k) => wx.removeStorageSync(k))
             wx.removeStorageSync('ma_train_last')
           } else wx.removeStorageSync('ma_history')
-          this.load()
+            this.load()
         }
       },
     })
+  },
+  openInProgressAssess(e) {
+    const item = e.currentTarget.dataset.item
+    if (!item) return
+    wx.navigateTo({ url: `/pages/test/test?id=${item.id}` })
   },
   exportAll() {
     const tab = this.data.tab

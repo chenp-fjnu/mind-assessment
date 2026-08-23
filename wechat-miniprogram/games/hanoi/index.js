@@ -22,6 +22,7 @@ module.exports = {
   color: '#f43f5e',
   desc: '把整叠圆盘从最左移到最右，大盘不能压小盘，训练计划与执行功能。',
   reference: 'shuertefangge.com「汉诺塔」',
+  hot: true,
   levels: [
     { value: 3, label: '3 盘' },
     { value: 4, label: '4 盘' },

@@ -25,6 +25,29 @@
   background: rgba(255, 255, 255, 0.14);
   border-radius: 999rpx;
 }
+.hot-section {
+  margin: 24rpx 32rpx 0;
+}
+.hot-card {
+  width: 220rpx;
+}
+.hot-icon {
+  width: 88rpx;
+  height: 88rpx;
+  border-radius: 22rpx;
+  font-size: 46rpx;
+}
+.hot-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 4rpx 14rpx;
+  font-size: 21rpx;
+  font-weight: 600;
+  color: #7c3aed;
+  background: rgba(124, 58, 237, 0.12);
+  border-radius: 999rpx;
+  margin-top: 8rpx;
+}
 .hero-meta {
   display: flex;
   flex-wrap: wrap;
@@ -410,6 +433,21 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+.pillar-btn {
+  margin-top: auto;
+  padding: 12rpx 24rpx;
+  font-size: 22rpx;
+  font-weight: 600;
+  color: #fff;
+  background: #7c3aed;
+  border-radius: 999rpx;
+  white-space: nowrap;
+  align-self: flex-end;
+}
+.pillar.assess .pillar-btn { background: #7c3aed; }
+.pillar.method .pillar-btn { background: #0d9488; }
+.pillar.train .pillar-btn { background: #f59e0b; }
+.pillar-btn:active { opacity: 0.85; }
 
 .resume-list {
   display: flex;

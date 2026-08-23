@@ -25,6 +25,7 @@ const METHODS = [
     example: '把“我想更健康”改成：“每周三、五晚慢跑 30 分钟（S/M），强度以能边跑边说话为准（A/R），连续 8 周后体测心率下降（T）。”',
     relatedTypes: ['self', 'career', 'wellbeing'],
     interactive: true,
+    hot: true,
     schema: [
       { key: 'specific', label: 'S 具体', type: 'textarea', placeholder: '目标是什么？要达成什么具体结果？', rows: 2 },
       { key: 'measurable', label: 'M 可衡量', type: 'textarea', placeholder: '如何衡量进度与完成？', rows: 2 },
@@ -105,6 +106,7 @@ const METHODS = [
     example: 'W=每天读书；O2=晚上刷手机忘了；P=“如果拿起手机前还没读书，那么我先读 5 页再刷。”',
     relatedTypes: ['self', 'wellbeing', 'career'],
     interactive: true,
+    hot: true,
     schema: [
       { key: 'wish', label: 'W 愿望', type: 'textarea', placeholder: '你最想做出的一项改变是什么？', rows: 2 },
       { key: 'outcome', label: 'O 结果', type: 'textarea', placeholder: '设想它实现后最好的结果、你的感受？', rows: 2 },
@@ -144,6 +146,7 @@ const METHODS = [
     example: '写报告拖延？设番茄钟 25 分钟只写大纲，休息 5 分钟，再一个番茄写正文——三四个番茄就能出初稿。',
     relatedTypes: ['self', 'career'],
     interactive: true,
+    hot: true,
     schema: [
       { key: 'task', label: '今日任务', type: 'textarea', placeholder: '选 1-3 件今天要专注完成的事', rows: 2 },
       { key: 'count', label: '番茄目标', type: 'textarea', placeholder: '打算完成几个番茄钟？（每个 25 分钟）', rows: 2 },
@@ -215,6 +218,7 @@ const METHODS = [
     example: 'A=同事没回消息；B=“他肯定讨厌我”；C=焦虑；D=“他可能在开会”；E=松了口气，晚点再问。',
     relatedTypes: ['mood', 'stress', 'wellbeing'],
     interactive: true,
+    hot: true,
     schema: [
       { key: 'event', label: 'A 事件', type: 'textarea', placeholder: '发生了什么？（客观事实）', rows: 2 },
       { key: 'belief', label: 'B 信念', type: 'textarea', placeholder: '你当时在想什么？对自己说了什么？', rows: 2 },
@@ -256,6 +260,7 @@ const METHODS = [
     example: '①同事分享了零食（因为我对人友好）；②准时下班（因为我提前规划）；③天气好去散步（因为我留了时间）。',
     relatedTypes: ['wellbeing', 'mood', 'self'],
     interactive: true,
+    hot: true,
     schema: [
       { key: 'good1', label: '好事 1', type: 'textarea', placeholder: '今天发生的好事？为什么会发生？', rows: 2 },
       { key: 'good2', label: '好事 2', type: 'textarea', placeholder: '第二件好事？为什么会发生？', rows: 2 },

@@ -138,6 +138,62 @@
     color: #5eead4;
     background: #0f3b34;
   }
+  .in-progress-tag {
+    background: #f59e0b;
+  }
+}
+.section {
+  margin: 16rpx 32rpx 0;
+}
+.section-head {
+  margin-bottom: 12rpx;
+}
+.section-title {
+  font-size: 28rpx;
+  font-weight: 700;
+  color: var(--text);
+}
+.in-progress-section {
+  margin-top: 8rpx;
+}
+.in-progress-section .h-icon {
+  width: 56rpx;
+  height: 56rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 16rpx;
+}
+.in-progress-tag {
+  background: #f59e0b;
+  color: #fff;
+}
+.progress-row {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  margin: 10rpx 0;
+}
+.progress-text {
+  font-size: 23rpx;
+  color: var(--text2);
+}
+.progress-bar {
+  flex: 1;
+  height: 8rpx;
+}
+.h-del {
+  font-size: 24rpx;
+  color: #dc2626;
+  padding: 8rpx 16rpx;
+  margin-left: 12rpx;
+  flex-shrink: 0;
+}
+.brand-foot {
+  text-align: center;
+  color: var(--muted);
+  font-size: 22rpx;
+  padding: 32rpx;
 }
 .hist-card {
   display: flex;

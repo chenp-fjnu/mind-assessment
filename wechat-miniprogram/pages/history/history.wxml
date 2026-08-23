@@ -26,6 +26,39 @@
   </view>
 
   <block wx:if="{{tab === 'assess'}}">
+    <!-- 进行中的测评 -->
+    <view wx:if="{{inProgressAssess.length}}" class="section in-progress-section">
+      <view class="section-head">
+        <text class="section-title">📝 进行中</text>
+      </view>
+      <view class="list">
+        <view
+          class="hist-card card in-progress"
+          wx:for="{{inProgressAssess}}"
+          wx:key="rid"
+          wx:for-item="p"
+          wx:for-index="idx"
+          bindtap="openInProgressAssess"
+          data-item="{{p}}"
+          role="button"
+          aria-label="继续 {{p.name}} 测评，已答 {{p.answered}}/{{p.total}}，{{p.percent}}%"
+        >
+          <text class="h-icon" style="background:{{p.color}}1f;">{{p.icon}}</text>
+          <view class="h-body">
+            <view class="h-head">
+              <text class="h-name">{{p.name}}</text>
+              <text class="h-level in-progress-tag">进行中</text>
+            </view>
+            <view class="progress-row">
+              <text class="progress-text">已答 {{p.answered}}/{{p.total}}（{{p.percent}}%）</text>
+              <progress class="progress-bar" percent="{{p.percent}}" stroke-width="6" activeColor="{{p.color}}" backgroundColor="#e2e8f0" />
+            </view>
+            <text class="h-time">上次编辑：{{p.updatedText}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
     <scroll-view wx:if="{{filters.length > 1}}" class="filter-bar" scroll-x="true">
       <view
         class="chip {{active === f.id ? 'on' : ''}}"
@@ -42,7 +75,7 @@
       </view>
     </scroll-view>
 
-    <view wx:if="{{!list.length}}" class="empty">
+    <view wx:if="{{!list.length && !inProgressAssess.length}}" class="empty">
       <text class="empty-icon">📭</text>
       <text class="empty-text">还没有测评记录</text>
       <text class="empty-sub">去首页选择一个测评表开始吧</text>

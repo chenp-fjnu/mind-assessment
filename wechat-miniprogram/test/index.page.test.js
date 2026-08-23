@@ -43,26 +43,21 @@ describe('结果页 result', () => {
 })
 
 describe('首页 index', () => {
-  test('onLoad 汇总量表/方法/训练数量与精选列表', () => {
+  test('onLoad 汇总量表数量与精选/热门列表', () => {
     const ctx = loadPage('pages/index/index.js')
     expect(ctx.data.moduleCount).toBe(IDS.length)
-    expect(ctx.data.methodCount).toBeGreaterThan(0)
-    expect(ctx.data.practiceCount).toBeGreaterThanOrEqual(0)
-    expect(ctx.data.gameCount).toBeGreaterThan(0)
-    expect(ctx.data.dimCount).toBeGreaterThan(0)
     expect(ctx.data.featuredAssess.length).toBe(5)
-    expect(ctx.data.featuredMethods.length).toBe(5)
-    expect(ctx.data.featuredGames.length).toBe(5)
+    expect(ctx.data.hotPicks.length).toBe(7)
   })
 
-  test('goTrain 跳转到训练 tab', () => {
+  test('goAssess 跳转到测评 tab', () => {
     let nav = null
     global.wx.switchTab = (o) => {
       nav = o.url
     }
     const ctx = loadPage('pages/index/index.js')
-    ctx.goTrain()
-    expect(nav).toContain('/pages/train/train')
+    ctx.goAssess()
+    expect(nav).toContain('/pages/assess/assess')
   })
 })
 

@@ -25,6 +25,7 @@ for (const id of ids) {
     tag: m.tag || [],
     reference: m.reference || '',
     scoring: m.scoring || '',
+    hot: !!m.hot,
   })
 }
 const content =

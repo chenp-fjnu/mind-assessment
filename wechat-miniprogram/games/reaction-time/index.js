@@ -22,6 +22,7 @@ module.exports = {
   color: '#ef4444',
   desc: '屏幕变绿后尽快点击，测你的视觉反应速度。',
   reference: 'reactiontester.com 简单反应时范式',
+  hot: true,
   levels: [
     { value: 5, label: '5 次 热身' },
     { value: 10, label: '10 次' },

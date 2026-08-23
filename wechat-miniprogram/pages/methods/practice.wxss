@@ -1,0 +1,2 @@
+@import "../../pages/index/index.wxss";
+@import "../../pages/methods/detail.wxss";

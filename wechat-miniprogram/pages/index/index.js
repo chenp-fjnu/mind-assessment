@@ -4,10 +4,41 @@ const methodsData = require('../../utils/methods-data')
 const gameReg = require('../../utils/game-registry')
 const trainStore = require('../../utils/train-store')
 
-function fmtTime(ts) {
-  const d = new Date(ts)
-  const p = (n) => (n < 10 ? '0' + n : '' + n)
-  return d.getFullYear() + '-' + p(d.getMonth() + 1) + '-' + p(d.getDate()) + ' ' + p(d.getHours()) + ':' + p(d.getMinutes())
+// 热门推荐配置：跨板块精选，按当前热度排序
+const HOT_CONFIG = [
+  // 测评类
+  { kind: 'assess', id: 'mbti' },       // 社交破冰全民热点
+  { kind: 'assess', id: 'holland' },    // 高考志愿/职业规划权威首选
+  { kind: 'assess', id: 'big5' },       // 学术界黄金标准
+  // 方法类
+  { kind: 'method', id: 'smart' },      // 目标管理国民工具
+  { kind: 'method', id: 'pomodoro' },   // 番茄工作法 国民级时间管理
+  // 训练类
+  { kind: 'train', id: 'schulte' },     // 注意力训练 国民级/飞行员背书
+  { kind: 'train', id: 'n-back' },      // 唯一有RCT证据提升流体智力
+]
+
+function buildHotPicks() {
+  const modules = getMetaList()
+  const methods = methodsData.METHODS
+  const games = gameReg.getMetaList()
+  return HOT_CONFIG.map((cfg) => {
+    const src = cfg.kind === 'assess' ? modules : cfg.kind === 'method' ? methods : games
+    const item = src.find((x) => x.id === cfg.id)
+    if (!item) return null
+    const kindLabel = { assess: '测评', method: '方法', train: '训练' }[cfg.kind]
+    const tint = hexToRgba(item.color, 0.12)
+    return {
+      kind: cfg.kind,
+      kindLabel,
+      id: item.id,
+      name: item.name,
+      icon: item.icon,
+      color: item.color,
+      tint,
+      desc: item.desc,
+    }
+  }).filter(Boolean)
 }
 
 function lastTimes() {
@@ -66,20 +97,20 @@ Page({
     featuredAssess: [],
     featuredMethods: [],
     featuredGames: [],
-    resumes: [],
+    hotPicks: [],
   },
   onLoad() {
     this.loadFeatured()
   },
   onShow() {
     this.loadFeatured()
-    this.refreshResume()
   },
   loadFeatured() {
     const lastMap = lastTimes()
     const mod = buildModules(lastMap)
     const met = buildMethods(lastMap)
     const gam = buildGames(lastMap)
+    const hotPicks = buildHotPicks()
     this.setData({
       moduleCount: mod.all.length,
       methodCount: met.all.length,
@@ -89,60 +120,8 @@ Page({
       featuredAssess: mod.featuredAssess,
       featuredMethods: met.featuredMethods,
       featuredGames: gam.featuredGames,
+      hotPicks,
     })
-  },
-  refreshResume() {
-    const resumes = []
-    // 测评：取最近一条测评记录
-    const hist = wx.getStorageSync('ma_history') || []
-    if (hist.length) {
-      const last = hist.slice().sort((a, b) => b.time - a.time)[0]
-      resumes.push({
-        type: 'assess',
-        id: last.id,
-        level: '',
-        icon: last.icon,
-        title: '继续测评：' + last.name,
-        sub: '上次测评于 ' + fmtTime(last.time),
-        color: '#7c3aed',
-      })
-    }
-    // 方法：取最近一次练习
-    const stored = wx.getStorageSync('ma_practices') || {}
-    let lastMethod = null
-    Object.keys(stored).forEach((mid) => {
-      ;(stored[mid] || []).forEach((entry) => {
-        if (!lastMethod || entry.time > lastMethod.time) lastMethod = { mid, time: entry.time }
-      })
-    })
-    if (lastMethod) {
-      const m = methodsData.getMethod(lastMethod.mid)
-      if (m) {
-        resumes.push({
-          type: 'method',
-          id: m.id,
-          level: '',
-          icon: m.icon,
-          title: '继续方法：' + m.name,
-          sub: '上次练习于 ' + fmtTime(lastMethod.time),
-          color: '#10b981',
-        })
-      }
-    }
-    // 训练：取最近一次（游戏 + 难度）
-    const lastTrain = trainStore.getLast()
-    if (lastTrain) {
-      resumes.push({
-        type: 'train',
-        id: lastTrain.id,
-        level: lastTrain.level,
-        icon: lastTrain.icon,
-        title: '继续训练：' + lastTrain.name,
-        sub: lastTrain.levelLabel + ' · 上次训练于 ' + fmtTime(lastTrain.time),
-        color: lastTrain.color || '#3b82f6',
-      })
-    }
-    this.setData({ resumes })
   },
   goAssess() { wx.switchTab({ url: '/pages/assess/assess' }) },
   goMethods() { wx.switchTab({ url: '/pages/methods/methods' }) },
@@ -150,17 +129,17 @@ Page({
   goDetail(e) { wx.navigateTo({ url: `/pages/detail/detail?id=${e.currentTarget.dataset.id}` }) },
   goMethodDetail(e) { wx.navigateTo({ url: `/pages/methods/detail?id=${e.currentTarget.dataset.id}` }) },
   goGame(e) { wx.navigateTo({ url: `/pages/train/game?gameId=${e.currentTarget.dataset.id}` }) },
-  goResumeItem(e) {
-    const item = e.currentTarget.dataset.item
-    if (!item) return
-    if (item.type === 'assess') {
-      wx.navigateTo({ url: `/pages/result/result?id=${item.id}` })
-    } else if (item.type === 'method') {
-      wx.navigateTo({ url: `/pages/methods/detail?id=${item.id}` })
-    } else if (item.type === 'train') {
-      wx.navigateTo({ url: `/pages/train/game?gameId=${item.id}&level=${item.level}` })
-    }
-  },
   goHistory() { wx.navigateTo({ url: '/pages/history/history' }) },
   goAbout() { wx.navigateTo({ url: '/pages/about/about' }) },
+  goHot(e) {
+    const item = e.currentTarget.dataset.item
+    if (!item) return
+    if (item.kind === 'assess') {
+      wx.navigateTo({ url: `/pages/detail/detail?id=${item.id}` })
+    } else if (item.kind === 'method') {
+      wx.navigateTo({ url: `/pages/methods/detail?id=${item.id}` })
+    } else if (item.kind === 'train') {
+      wx.navigateTo({ url: `/pages/train/game?gameId=${item.id}` })
+    }
+  },
 })

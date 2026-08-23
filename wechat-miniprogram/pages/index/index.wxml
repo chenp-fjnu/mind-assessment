@@ -5,54 +5,32 @@
     <text class="hero-tag">{{moduleCount}} 套测评表 · {{methodCount}} 个方法 · {{gameCount}} 个训练</text>
   </view>
 
-  <view class="pillars">
-    <view class="pillar assess" bindtap="goAssess" role="button" aria-label="去测评">
-      <view class="pillar-icon">📋</view>
-      <view class="pillar-text">
-        <text class="pillar-title">心理测评</text>
-        <text class="pillar-sub">看清自己在哪里</text>
-      </view>
+  <view wx:if="{{hotPicks.length}}" class="section hot-section">
+    <view class="section-head">
+      <text class="section-title">🔥 热门推荐</text>
     </view>
-    <view class="pillar method" bindtap="goMethods" role="button" aria-label="去方法">
-      <view class="pillar-icon">🧰</view>
-      <view class="pillar-text">
-        <text class="pillar-title">行动方法</text>
-        <text class="pillar-sub">每天可用的练习</text>
+    <scroll-view class="card-row" scroll-x="true">
+      <view
+        class="mini-card hot-card"
+        wx:for="{{hotPicks}}"
+        wx:key="index"
+        wx:for-item="h"
+        bindtap="goHot"
+        data-item="{{h}}"
+        style="border-color:{{h.tint}};"
+        role="button"
+        aria-label="{{h.name}}"
+      >
+        <view class="mini-icon hot-icon" style="background:{{h.tint}};">{{h.icon}}</view>
+        <text class="mini-name">{{h.name}}</text>
+        <text class="mini-meta hot-tag">{{h.kindLabel}}</text>
       </view>
-    </view>
-    <view class="pillar train" bindtap="goTrain" role="button" aria-label="去训练">
-      <view class="pillar-icon">🧠</view>
-      <view class="pillar-text">
-        <text class="pillar-title">脑力训练</text>
-        <text class="pillar-sub">{{gameCount}} 个游戏练起来</text>
-      </view>
-    </view>
-  </view>
-
-  <view wx:if="{{resumes.length}}" class="resume-list">
-    <view
-      wx:for="{{resumes}}"
-      wx:key="type"
-      wx:for-item="r"
-      class="resume card"
-      style="border-left-color:{{r.color}};"
-      bindtap="goResumeItem"
-      data-item="{{r}}"
-      role="button"
-      aria-label="{{r.title}}"
-    >
-      <view class="item-icon" style="background:{{r.color}}1f;">{{r.icon}}</view>
-      <view class="item-body">
-        <view class="item-head"><text class="item-name">{{r.title}}</text></view>
-        <text class="item-desc">{{r.sub}}</text>
-      </view>
-      <text class="arrow">›</text>
-    </view>
+    </scroll-view>
   </view>
 
   <view class="section">
     <view class="section-head">
-      <text class="section-title">热门测评</text>
+      <text class="section-title">心理测评</text>
       <text class="section-more" bindtap="goAssess" role="button">全部 ›</text>
     </view>
     <scroll-view class="card-row" scroll-x="true">

@@ -27,6 +27,7 @@ module.exports = {
   color: '#8b5cf6',
   desc: '判断当前方块位置是否与 N 步前相同，训练工作记忆。',
   reference: 'Jaeggi et al. (2008) 工作记忆训练范式（视觉位置版）',
+  hot: true,
   levels: [
     { value: 1, label: 'N=1 入门' },
     { value: 2, label: 'N=2' },

@@ -150,6 +150,7 @@ module.exports = {
   questionCount: 48,
   tag: ['职业', '兴趣', 'RIASEC'],
   questionType: 'scale',
+  hot: true,
 
   getQuestions() {
     return QUESTIONS.map((q) => ({

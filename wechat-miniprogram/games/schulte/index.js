@@ -39,6 +39,7 @@ module.exports = {
   color: '#7c3aed',
   desc: '按 1→N 顺序尽快点选，训练视觉搜索速度与专注度。',
   reference: '国际通行视觉定向搜索训练范式（shuertefangge.com / App Store 多款同类）',
+  hot: true,
   levels: [
     { value: 3, label: '3×3 入门' },
     { value: 4, label: '4×4' },

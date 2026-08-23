@@ -126,6 +126,7 @@ module.exports = {
   questionCount: 50,
   tag: ['人格', '性格', 'OCEAN'],
   questionType: 'scale',
+  hot: true,
 
   getQuestions() {
     return QUESTIONS.map((q) => ({

@@ -181,6 +181,7 @@ module.exports = {
   questionCount: 70,
   tag: ['人格', '性格', '自我认知'],
   questionType: 'choice',
+  hot: true,
 
   getQuestions() {
     return QUESTIONS.map((q) => ({

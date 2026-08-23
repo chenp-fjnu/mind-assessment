@@ -45,10 +45,6 @@
     </view>
   </view>
 
-  <view wx:if="{{resume}}" class="card section resume">
-    <button class="btn start-btn" style="background:{{meta.color}};color:{{meta.colorText}};" bindtap="resumeTest" aria-label="继续未完成测评：{{meta.name}}">继续未完成测评（已答 {{resume.answered}}/{{resume.total}}，{{resume.percent}}%）</button>
-  </view>
-
   <view class="card section row">
     <view class="stat">
       <text class="stat-num">{{meta.questionCount}}</text>

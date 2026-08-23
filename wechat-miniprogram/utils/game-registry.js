@@ -68,6 +68,7 @@ function getMetaList() {
       levels: g.levels,
       metric: g.metric,
       reference: g.reference,
+      hot: !!g.hot,
     }
   })
 }

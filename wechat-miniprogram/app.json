@@ -8,6 +8,7 @@
     "pages/about/about",
     "pages/methods/methods",
     "pages/methods/detail",
+    "pages/methods/practice",
     "pages/assess/assess",
     "pages/mine/mine",
     "pages/train/train",

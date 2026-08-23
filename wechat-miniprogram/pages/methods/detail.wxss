@@ -30,6 +30,20 @@
   margin-top: 18rpx;
   line-height: 1.6;
 }
+.head-practice {
+  align-self: flex-end;
+  margin-top: 24rpx;
+  padding: 12rpx 32rpx;
+  font-size: 26rpx;
+  font-weight: 600;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.2);
+  border: 2rpx solid rgba(255, 255, 255, 0.3);
+  border-radius: 999rpx;
+}
+.head-practice:active {
+  background: rgba(255, 255, 255, 0.3);
+}
 .sec {
   margin: 24rpx 32rpx 0;
   padding: 28rpx 32rpx;
@@ -119,6 +133,13 @@
   margin-top: 8rpx;
   height: 84rpx;
   font-size: 30rpx;
+  border-radius: 999rpx;
+}
+.btn.practice {
+  margin-top: 20rpx;
+  height: 84rpx;
+  font-size: 30rpx;
+  color: #fff;
   border-radius: 999rpx;
 }
 .save-tip {
@@ -269,6 +290,9 @@
   .tip-text {
     color: var(--sub);
   }
+  .step-sep {
+    color: #a78bfa;
+  }
   .practice {
     border-top-color: var(--border);
   }
@@ -294,7 +318,7 @@
   flex: none;
   width: 40rpx;
   height: 40rpx;
-  margin-right: 16rpx;
+  margin-right: 8rpx;
   text-align: center;
   line-height: 40rpx;
   font-size: 24rpx;
@@ -303,9 +327,16 @@
   background: #7c3aed;
   border-radius: 50%;
 }
+.step-sep {
+  flex: none;
+  margin-right: 12rpx;
+  font-size: 27rpx;
+  font-weight: 700;
+  color: #7c3aed;
+}
 .step-text {
   flex: 1;
-  font-size: 27rpx;
+  font-size: 25rpx;
   color: #475569;
   line-height: 1.7;
 }
@@ -316,7 +347,7 @@
   border-radius: 12rpx;
 }
 .example-text {
-  font-size: 27rpx;
+  font-size: 25rpx;
   color: #4c3aa3;
   line-height: 1.7;
 }
@@ -334,7 +365,7 @@
 }
 .tip-text {
   flex: 1;
-  font-size: 27rpx;
+  font-size: 25rpx;
   color: #475569;
   line-height: 1.7;
 }

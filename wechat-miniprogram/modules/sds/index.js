@@ -148,6 +148,7 @@ module.exports = {
   questionCount: 20,
   tag: ['情绪', '抑郁', '心理健康', '筛查'],
   questionType: 'scale',
+  hot: true,
 
   getQuestions() {
     return QUESTIONS.map((q) => ({

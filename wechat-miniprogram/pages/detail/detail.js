@@ -7,7 +7,6 @@ Page({
     id: '',
     meta: {},
     invalid: false,
-    resume: null,
     history: { count: 0 },
   },
   onLoad(query) {
@@ -35,21 +34,7 @@ Page({
       },
     })
     wx.setNavigationBarTitle({ title: mod.name })
-    this.loadResume(mod)
     this.loadHistory(mod)
-  },
-  loadResume(mod) {
-    const prog = wx.getStorageSync('ma_progress_' + mod.id)
-    if (prog && prog.answers && prog.answers.some((a) => a !== null)) {
-      const answered = prog.answers.filter((a) => a !== null).length
-      this.setData({
-        resume: {
-          percent: Math.round((answered / mod.questionCount) * 100),
-          answered,
-          total: mod.questionCount,
-        },
-      })
-    }
   },
   loadHistory(mod) {
     const all = wx.getStorageSync('ma_history') || []
@@ -61,9 +46,6 @@ Page({
     this.setData({ history: info })
   },
   start() {
-    wx.navigateTo({ url: `/pages/test/test?id=${this.data.id}` })
-  },
-  resumeTest() {
     wx.navigateTo({ url: `/pages/test/test?id=${this.data.id}` })
   },
   goHome() {
