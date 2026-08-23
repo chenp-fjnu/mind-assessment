@@ -112,40 +112,6 @@
     </scroll-view>
   </view>
 
-  <view class="group">
-    <view class="group-title">全部量表（{{filteredList.length}}）</view>
-    <view
-      wx:for="{{filteredList}}"
-      wx:key="id"
-      wx:for-item="m"
-      class="item card"
-      bindtap="goDetail"
-      data-id="{{m.id}}"
-      role="button"
-      aria-label="{{m.name}}"
-    >
-      <view class="item-icon" style="background:{{m.tint}};">{{m.icon}}</view>
-      <view class="item-body">
-        <view class="item-head">
-          <text class="item-name">{{m.name}}</text>
-          <text wx:if="{{!m.paid}}" class="badge-free">免费</text>
-          <text wx:else class="badge-paid">¥{{m.price}}</text>
-        </view>
-        <text class="item-desc">{{m.desc}}</text>
-        <view class="item-meta">
-          <text>{{m.questionCount}} 题</text>
-          <text class="dot">·</text>
-          <text>{{m.typeLabel}}</text>
-        </view>
-      </view>
-      <text class="arrow">›</text>
-    </view>
-    <view wx:if="{{filteredList.length === 0}}" class="empty-search">
-      <text class="empty-search-icon">🔍</text>
-      <text class="empty-search-text">没有找到匹配的量表</text>
-    </view>
-  </view>
-
   <view class="footer">结果仅供自我探索与娱乐，不构成医学诊断</view>
   <view class="about-link" bindtap="goAbout" role="button" aria-label="关于心智探索局">关于心智探索局 ›</view>
 </view>

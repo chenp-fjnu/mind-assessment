@@ -62,7 +62,6 @@ Page({
     featuredMethods: [],
     featuredGames: [],
     resume: null,
-    filteredList: [],
   },
   onLoad() {
     const mod = buildModules()
@@ -77,7 +76,6 @@ Page({
       featuredAssess: mod.featuredAssess,
       featuredMethods: met.featuredMethods,
       featuredGames: gam.featuredGames,
-      filteredList: mod.all,
     })
   },
   onShow() {
