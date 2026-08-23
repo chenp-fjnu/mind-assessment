@@ -6,9 +6,9 @@ const { getMetaList, getGame } = require('../utils/game-registry')
 const trainStore = require('../utils/train-store')
 
 describe('训练游戏注册表', () => {
-  test('包含 4 个首批游戏且维度齐全', () => {
+  test('包含 7 个游戏且维度齐全', () => {
     const list = getMetaList()
-    expect(list.length).toBe(4)
+    expect(list.length).toBe(7)
     const dims = list.map((g) => g.dim)
     expect(dims).toEqual(expect.arrayContaining(['attention', 'memory', 'reaction', 'relax']))
   })
@@ -86,6 +86,48 @@ describe('箱式呼吸', () => {
     const a = g.score({ rounds: 8, duration: 120 })
     const b = g.score({ rounds: 3, duration: 120 })
     expect(a.score).toBeGreaterThan(b.score)
+  })
+})
+
+describe('反应时间', () => {
+  const g = getGame('reaction-time')
+  test('generate 返回试次数', () => {
+    expect(g.generate(10).trials).toBe(10)
+  })
+  test('score 平均反应越短得分越高', () => {
+    const fast = g.score({ times: [200, 210, 220], total: 3, early: 0 })
+    const slow = g.score({ times: [500, 520, 540], total: 3, early: 0 })
+    expect(fast.score).toBeGreaterThan(slow.score)
+    expect(fast.avg).toBeLessThan(slow.avg)
+  })
+})
+
+describe('N-Back', () => {
+  const g = getGame('n-back')
+  test('generate 返回序列长度 = trials', () => {
+    const s = g.generate({ n: 2, trials: 20 })
+    expect(s.seq.length).toBe(20)
+    expect(s.n).toBe(2)
+  })
+  test('score 正确率越高得分越高', () => {
+    const good = g.score({ correct: 18, total: 20, times: [600, 600] })
+    const bad = g.score({ correct: 8, total: 20, times: [600, 600] })
+    expect(good.score).toBeGreaterThan(bad.score)
+    expect(good.accuracy).toBe(0.9)
+  })
+})
+
+describe('Flanker', () => {
+  const g = getGame('flanker')
+  test('generate 返回试次与方向', () => {
+    const s = g.generate(10)
+    expect(s.list.length).toBe(10)
+    s.list.forEach((t) => expect(['left', 'right']).toContain(t.dir))
+  })
+  test('score 正确率越高得分越高', () => {
+    const good = g.score({ correct: 19, total: 20, times: [450] })
+    const bad = g.score({ correct: 9, total: 20, times: [450] })
+    expect(good.score).toBeGreaterThan(bad.score)
   })
 })
 

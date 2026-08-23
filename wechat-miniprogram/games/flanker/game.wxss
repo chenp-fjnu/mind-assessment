@@ -1,0 +1,41 @@
+.fl {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.info {
+  font-size: 28rpx;
+  color: var(--text2);
+  margin-bottom: 30rpx;
+}
+.row {
+  display: flex;
+  gap: 16rpx;
+  font-size: 80rpx;
+  font-weight: 800;
+  color: var(--text);
+  margin-bottom: 40rpx;
+}
+.arrow {
+  width: 80rpx;
+  text-align: center;
+}
+.answers {
+  display: flex;
+  gap: 24rpx;
+}
+.abtn {
+  padding: 20rpx 56rpx;
+  border-radius: 999rpx;
+  font-size: 32rpx;
+  font-weight: 700;
+  color: #fff;
+  background: #f97316;
+}
+.tip {
+  margin-top: 30rpx;
+  color: var(--sub);
+  font-size: 24rpx;
+  text-align: center;
+}

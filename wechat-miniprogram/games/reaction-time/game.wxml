@@ -1,0 +1,12 @@
+<view class="rt">
+  <view
+    class="pad {{phase === 'go' ? 'go' : ''}} {{phase === 'early' ? 'early' : ''}} {{phase === 'wait' ? 'wait' : ''}} {{phase === 'idle' || phase === 'done' ? 'idle' : ''}}"
+    bindtap="onTap"
+    role="button"
+    aria-label="反应区"
+  >
+    <text class="pad-text">{{hint}}</text>
+    <text wx:if="{{phase === 'go'}}" class="pad-sub">越快越好</text>
+  </view>
+  <view class="hint">进度 {{idx}} / {{trials}}　有效 {{times.length}} 次</view>
+</view>

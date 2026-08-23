@@ -1,0 +1,44 @@
+.rt {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.pad {
+  width: 100%;
+  height: 420rpx;
+  border-radius: 28rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #e2e8f0;
+  transition: background 0.08s;
+}
+.pad.wait {
+  background: #e2e8f0;
+}
+.pad.go {
+  background: #22c55e;
+}
+.pad.early {
+  background: #ef4444;
+}
+.pad.idle {
+  background: #334155;
+}
+.pad-text {
+  font-size: 44rpx;
+  font-weight: 800;
+  color: #fff;
+}
+.pad-sub {
+  font-size: 24rpx;
+  color: rgba(255, 255, 255, 0.85);
+  margin-top: 10rpx;
+}
+.hint {
+  margin-top: 24rpx;
+  color: var(--sub);
+  font-size: 26rpx;
+}

@@ -4,6 +4,9 @@
     "schulte-game": "../../games/schulte/game",
     "memory-match-game": "../../games/memory-match/game",
     "stroop-game": "../../games/stroop/game",
-    "box-breathing-game": "../../games/box-breathing/game"
+    "box-breathing-game": "../../games/box-breathing/game",
+    "reaction-time-game": "../../games/reaction-time/game",
+    "n-back-game": "../../games/n-back/game",
+    "flanker-game": "../../games/flanker/game"
   }
 }

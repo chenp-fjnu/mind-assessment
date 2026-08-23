@@ -4,6 +4,9 @@ const LOADERS = {
   'memory-match': () => require('../games/memory-match/index'),
   stroop: () => require('../games/stroop/index'),
   'box-breathing': () => require('../games/box-breathing/index'),
+  'reaction-time': () => require('../games/reaction-time/index'),
+  'n-back': () => require('../games/n-back/index'),
+  flanker: () => require('../games/flanker/index'),
 }
 
 const DIM_LABELS = {

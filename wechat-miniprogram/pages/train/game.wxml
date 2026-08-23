@@ -28,6 +28,9 @@
     <memory-match-game wx:if="{{gameId === 'memory-match'}}" id="trainGame" level="{{level}}" bind:finish="onFinish" />
     <stroop-game wx:if="{{gameId === 'stroop'}}" id="trainGame" level="{{level}}" bind:finish="onFinish" />
     <box-breathing-game wx:if="{{gameId === 'box-breathing'}}" id="trainGame" level="{{level}}" bind:finish="onFinish" />
+    <reaction-time-game wx:if="{{gameId === 'reaction-time'}}" id="trainGame" level="{{level}}" bind:finish="onFinish" />
+    <n-back-game wx:if="{{gameId === 'n-back'}}" id="trainGame" level="{{level}}" bind:finish="onFinish" />
+    <flanker-game wx:if="{{gameId === 'flanker'}}" id="trainGame" level="{{level}}" bind:finish="onFinish" />
   </view>
 
   <view wx:if="{{finished && result}}" class="result card">

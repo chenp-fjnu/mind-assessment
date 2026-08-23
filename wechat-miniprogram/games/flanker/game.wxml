@@ -1,0 +1,12 @@
+<view class="fl">
+  <view class="info">第 {{idx + 1}} / {{trials}} 题</view>
+  <view wx:if="{{phase === 'show'}}" class="row">
+    <text wx:for="{{arrows}}" wx:key="index" class="arrow">{{item.glyph}}</text>
+  </view>
+  <view wx:if="{{phase === 'idle'}}" class="tip">只看中间箭头方向，忽略两侧干扰</view>
+  <view wx:if="{{phase === 'show'}}" class="answers">
+    <view class="abtn" bindtap="onAnswer" data-dir="left" role="button" aria-label="左">← 左</view>
+    <view class="abtn" bindtap="onAnswer" data-dir="right" role="button" aria-label="右">右 →</view>
+  </view>
+  <view wx:if="{{phase === 'done'}}" class="tip">完成！</view>
+</view>

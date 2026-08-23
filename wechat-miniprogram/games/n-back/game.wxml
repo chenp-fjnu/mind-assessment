@@ -1,0 +1,17 @@
+<view class="nb">
+  <view class="info">N = {{n}}　第 {{roundIdx + 1}} / {{trials}} 题</view>
+  <view class="grid">
+    <view
+      wx:for="{{9}}"
+      wx:key="*this"
+      class="cell {{phase === 'show' && index === shownPos ? 'on' : ''}}"
+    ></view>
+  </view>
+  <view wx:if="{{phase === 'answer'}}" class="answers">
+    <view class="abtn yes" bindtap="onAnswer" data-match="1" role="button" aria-label="匹配">匹配</view>
+    <view class="abtn no" bindtap="onAnswer" data-match="0" role="button" aria-label="不匹配">不匹配</view>
+  </view>
+  <view wx:if="{{phase === 'idle'}}" class="tip">当前方块与 {{n}} 步前相同位置就点「匹配」</view>
+  <view wx:if="{{phase === 'show'}}" class="tip">记住位置…</view>
+  <view wx:if="{{phase === 'done'}}" class="tip">完成！</view>
+</view>
