@@ -113,6 +113,7 @@ function useTheme(pageInstance) {
     console.log('[theme-store] setThemeMode called:', mode)
     setStoredTheme(mode);
     updateTheme();
+    console.log('[theme-store] after updateTheme, themeClass should be:', `theme-${getEffectiveTheme()}`)
   };
 
   pageInstance.onThemeChange = (theme) => {

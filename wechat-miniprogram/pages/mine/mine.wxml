@@ -3,7 +3,6 @@
     <view class="mine-hero">
       <view class="mine-avatar">🧠</view>
       <text class="mine-name">我的心智档案</text>
-      <text class="mine-sub">记录、方法与关于，都在这里</text>
     </view>
 
     <view class="menu">
@@ -27,29 +26,26 @@
         <text>外观</text>
       </view>
 
-      <view class="card menu-item theme-selector" data-mode="auto" catchtap="onThemeChange" role="button" aria-label="跟随系统主题 {{themeMode==='auto'?'✓':''}}">
+      <view class="card menu-item theme-selector" data-mode="auto" bindtap="onThemeChange" role="button" aria-label="跟随系统主题 {{themeMode==='auto'?'✓':''}}">
         <view class="menu-icon theme-icon">🖥️</view>
         <view class="menu-body">
           <text class="menu-name">跟随系统</text>
-          <text class="menu-sub">自动适配浅色/深色模式</text>
         </view>
         <view class="theme-check {{themeMode==='auto'?'show':''}}">✓</view>
       </view>
 
-      <view class="card menu-item theme-selector" data-mode="light" catchtap="onThemeChange" role="button" aria-label="浅色模式 {{themeMode==='light'?'✓':''}}">
+      <view class="card menu-item theme-selector" data-mode="light" bindtap="onThemeChange" role="button" aria-label="浅色模式 {{themeMode==='light'?'✓':''}}">
         <view class="menu-icon theme-icon">☀️</view>
         <view class="menu-body">
           <text class="menu-name">浅色模式</text>
-          <text class="menu-sub">始终使用浅色界面</text>
         </view>
         <view class="theme-check {{themeMode==='light'?'show':''}}">✓</view>
       </view>
 
-      <view class="card menu-item theme-selector" data-mode="dark" catchtap="onThemeChange" role="button" aria-label="深色模式 {{themeMode==='dark'?'✓':''}}">
+      <view class="card menu-item theme-selector" data-mode="dark" bindtap="onThemeChange" role="button" aria-label="深色模式 {{themeMode==='dark'?'✓':''}}">
         <view class="menu-icon theme-icon">🌙</view>
         <view class="menu-body">
           <text class="menu-name">深色模式</text>
-          <text class="menu-sub">始终使用深色界面</text>
         </view>
         <view class="theme-check {{themeMode==='dark'?'show':''}}">✓</view>
       </view>

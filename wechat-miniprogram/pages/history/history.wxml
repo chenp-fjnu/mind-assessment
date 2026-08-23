@@ -60,21 +60,6 @@
         </view>
       </view>
 
-      <scroll-view wx:if="{{filters.length > 1}}" class="filter-bar" scroll-x="true">
-        <view
-          class="chip {{active === f.id ? 'on' : ''}}"
-          wx:for="{{filters}}"
-          wx:key="id"
-          wx:for-item="f"
-          bindtap="onFilter"
-          data-id="{{f.id}}"
-          role="button"
-          aria-label="筛选 {{f.name}} 测评表记录"
-        >
-          <text class="chip-icon">{{f.icon}}</text>
-          <text>{{f.name}}</text>
-        </view>
-      </scroll-view>
 
       <view wx:if="{{!list.length && !inProgressAssess.length}}" class="empty">
         <text class="empty-icon">📭</text>

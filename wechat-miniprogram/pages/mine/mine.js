@@ -38,7 +38,7 @@ Page({
   goAbout() { wx.navigateTo({ url: '/pages/about/about' }) },
   onThemeChange(e) {
     const mode = e.currentTarget.dataset.mode
-    console.log('[mine] theme change clicked:', mode, 'setThemeMode exists:', typeof this.setThemeMode)
+    console.log('[mine] theme change clicked:', mode, 'setThemeMode exists:', typeof this.setThemeMode, 'full event:', e)
     if (typeof this.setThemeMode === 'function') {
       this.setThemeMode(mode)
     } else {
