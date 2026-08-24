@@ -11,8 +11,8 @@
   padding: 0;
   margin: 0;
   border-radius: var(--radius-full);
-  background: var(--bg-tertiary);
-  border: 2rpx solid var(--border-light);
+  background: transparent;
+  border: none;
   overflow: hidden;
   line-height: normal;
 }
