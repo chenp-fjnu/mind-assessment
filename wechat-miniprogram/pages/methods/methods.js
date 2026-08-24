@@ -86,4 +86,15 @@ Page({
   goRecords() {
     wx.navigateTo({ url: '/pages/history/history?tab=method' })
   },
+  onShareAppMessage() {
+    return {
+      title: '精选方法库 - 实用心智工具与思维模型',
+      path: '/pages/methods/methods',
+    }
+  },
+  onShareTimeline() {
+    return {
+      title: '精选方法库 - 实用心智工具与思维模型',
+    }
+  },
 })

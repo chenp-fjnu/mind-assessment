@@ -1,2 +1,247 @@
-@import "../../pages/index/index.wxss";
-@import "../../pages/methods/detail.wxss";
+/* ============================================
+   互动练习页面 - 完整样式
+   使用全局设计系统变量 (app.wxss)
+   ============================================ */
+
+/* -------- Hub 模式：方法列表页 -------- */
+
+.group {
+  padding: 24rpx 20rpx 40rpx;
+}
+
+.card.item {
+  display: flex;
+  align-items: center;
+  padding: 24rpx;
+  background: var(--card-bg);
+  border: 1rpx solid var(--card-border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--card-shadow);
+  margin-bottom: 16rpx;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.card.item:active {
+  transform: scale(0.99);
+  box-shadow: var(--shadow-sm);
+}
+
+.item-icon {
+  width: 64rpx;
+  height: 64rpx;
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28rpx;
+  color: var(--text-inverse);
+  flex-shrink: 0;
+  margin-right: 20rpx;
+}
+
+.item-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.item-name {
+  display: block;
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-primary);
+  line-height: var(--line-height-tight);
+  margin-bottom: 6rpx;
+}
+
+.item-desc {
+  display: block;
+  font-size: var(--font-size-md);
+  color: var(--text-tertiary);
+  line-height: var(--line-height-normal);
+}
+
+.arrow {
+  font-size: var(--font-size-xl);
+  color: var(--text-muted);
+  flex-shrink: 0;
+  margin-left: 16rpx;
+}
+
+/* -------- Form 模式：练习表单页 -------- */
+
+.head {
+  padding: 56rpx 40rpx 48rpx;
+  display: flex;
+  flex-direction: column;
+  color: var(--text-inverse);
+}
+
+.head-icon {
+  font-size: 72rpx;
+}
+
+.head-name {
+  display: block;
+  color: var(--text-inverse);
+  font-size: var(--font-size-5xl);
+  font-weight: var(--font-weight-extrabold);
+  margin-top: 16rpx;
+}
+
+.head-cat {
+  display: inline-block;
+  align-self: flex-start;
+  margin-top: 16rpx;
+  padding: 4rpx 18rpx;
+  font-size: var(--font-size-sm);
+  color: var(--text-inverse);
+  background: rgba(255, 255, 255, 0.18);
+  border-radius: var(--radius-full);
+}
+
+.head-sum {
+  display: block;
+  color: rgba(255, 255, 255, 0.92);
+  font-size: var(--font-size-lg);
+  margin-top: 18rpx;
+  line-height: var(--line-height-normal);
+}
+
+.card.sec {
+  margin: 24rpx 32rpx 0;
+  padding: 28rpx 32rpx;
+  background: var(--card-bg);
+  border: 1rpx solid var(--card-border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--card-shadow);
+}
+
+.sec-title {
+  display: block;
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-primary);
+  margin-bottom: 18rpx;
+}
+
+.field {
+  margin-bottom: 24rpx;
+}
+
+.field-label {
+  display: block;
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-secondary);
+  margin-bottom: 10rpx;
+}
+
+.field-input {
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 80rpx;
+  padding: 18rpx 20rpx;
+  font-size: var(--font-size-lg);
+  line-height: var(--line-height-normal);
+  color: var(--input-text);
+  background: var(--input-bg);
+  border: 2rpx solid var(--input-border);
+  border-radius: var(--radius-xl);
+}
+
+.field-input:focus {
+  border-color: var(--input-border-focus);
+  outline: none;
+}
+
+.ph {
+  color: var(--input-placeholder);
+}
+
+.scale-row {
+  padding: 6rpx 8rpx 0;
+}
+
+.btn.save {
+  margin-top: 8rpx;
+  height: 84rpx;
+  font-size: var(--font-size-xl);
+  border-radius: var(--radius-full);
+}
+
+.save-tip {
+  display: block;
+  text-align: center;
+  font-size: var(--font-size-sm);
+  color: var(--text-tertiary);
+  margin-top: 14rpx;
+}
+
+.practice {
+  padding: 20rpx 0;
+  border-top: 2rpx solid var(--border-light);
+}
+
+.practice:first-of-type {
+  border-top: none;
+}
+
+.practice-time {
+  display: block;
+  font-size: var(--font-size-sm);
+  color: var(--text-tertiary);
+  margin-bottom: 12rpx;
+}
+
+.practice-body {
+  margin-bottom: 10rpx;
+}
+
+.practice-label {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-secondary);
+  margin-right: 12rpx;
+}
+
+.practice-value {
+  font-size: var(--font-size-lg);
+  color: var(--text-tertiary);
+}
+
+.footer {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: var(--font-size-xs);
+  padding: 36rpx 24rpx 12rpx;
+}
+
+/* -------- 无效状态 -------- */
+
+.invalid {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 140rpx 60rpx;
+}
+
+.invalid-icon {
+  font-size: 80rpx;
+  opacity: 0.5;
+}
+
+.invalid-title {
+  margin-top: 20rpx;
+  font-size: var(--font-size-2xl);
+  color: var(--text-secondary);
+}
+
+.btn.home {
+  margin-top: 36rpx;
+  width: 240rpx;
+  height: 80rpx;
+  background: var(--color-brand);
+  color: var(--text-inverse);
+  font-size: var(--font-size-lg);
+  border-radius: var(--radius-full);
+}

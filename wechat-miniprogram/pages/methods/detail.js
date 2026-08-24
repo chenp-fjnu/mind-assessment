@@ -57,6 +57,14 @@ Page({
       imageUrl: this._shareImage || '',
     }
   },
+  onShareTimeline() {
+    const m = this.data.method
+    if (!m) return {}
+    return {
+      title: '推荐一个方法：' + m.name,
+      imageUrl: this._shareImage || '',
+    }
+  },
   saveCard() {
     const m = this.data.method
     if (!m) return

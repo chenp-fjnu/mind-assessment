@@ -92,4 +92,15 @@ Page({
   goRecords() {
     wx.navigateTo({ url: '/pages/history/history?tab=assess' })
   },
+  onShareAppMessage() {
+    return {
+      title: '心理测评库 - 专业量表助你自我探索',
+      path: '/pages/assess/assess',
+    }
+  },
+  onShareTimeline() {
+    return {
+      title: '心理测评库 - 专业量表助你自我探索',
+    }
+  },
 })

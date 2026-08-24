@@ -49,4 +49,15 @@ Page({
     this.setThemeMode('dark')
     setTimeout(() => this.forceThemeUpdate && this.forceThemeUpdate(), 0)
   },
+  onShareAppMessage() {
+    return {
+      title: '我的心智探索档案 - 记录成长轨迹',
+      path: '/pages/mine/mine',
+    }
+  },
+  onShareTimeline() {
+    return {
+      title: '我的心智探索档案 - 记录成长轨迹',
+    }
+  },
 })

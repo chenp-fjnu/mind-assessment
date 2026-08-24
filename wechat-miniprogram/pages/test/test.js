@@ -491,4 +491,9 @@ Page({
       path: '/pages/detail/detail?id=' + this.data.meta.id,
     }
   },
+  onShareTimeline() {
+    return {
+      title: this.data.meta.name + ' - 心智探索局',
+    }
+  },
 })

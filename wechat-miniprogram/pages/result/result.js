@@ -392,4 +392,10 @@ Page({
       imageUrl: this._shareImage || '',
     }
   },
+  onShareTimeline() {
+    return {
+      title: this.data.meta.name + '测评结果 - 心智探索局',
+      imageUrl: this._shareImage || '',
+    }
+  },
 })

@@ -88,6 +88,12 @@ Page({
       imageUrl: this._shareImage || '',
     }
   },
+  onShareTimeline() {
+    return {
+      title: this.data.meta.name + ' - 心智探索局',
+      imageUrl: this._shareImage || '',
+    }
+  },
   saveCard() {
     const m = this.data.meta
     if (!m || !m.name) return

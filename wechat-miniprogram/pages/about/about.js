@@ -44,4 +44,15 @@ Page({
   openPrivacy() {
     openPrivacyContract()
   },
+  onShareAppMessage() {
+    return {
+      title: '关于心智探索局 - 数据来源、隐私与致谢',
+      path: '/pages/about/about',
+    }
+  },
+  onShareTimeline() {
+    return {
+      title: '关于心智探索局 - 数据来源、隐私与致谢',
+    }
+  },
 })

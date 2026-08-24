@@ -104,4 +104,15 @@ Page({
   goRecords() {
     wx.navigateTo({ url: '/pages/history/history?tab=train' })
   },
+  onShareAppMessage() {
+    return {
+      title: '脑力训练营 - 科学训练注意力、记忆力与反应力',
+      path: '/pages/train/train',
+    }
+  },
+  onShareTimeline() {
+    return {
+      title: '脑力训练营 - 科学训练注意力、记忆力与反应力',
+    }
+  },
 })

@@ -309,4 +309,15 @@ clearAll() {
       })
     })
   },
+  onShareAppMessage() {
+    return {
+      title: '我的心智探索记录 - 测评、方法练习与训练成果',
+      path: '/pages/history/history',
+    }
+  },
+  onShareTimeline() {
+    return {
+      title: '我的心智探索记录 - 测评、方法练习与训练成果',
+    }
+  },
 })

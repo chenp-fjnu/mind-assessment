@@ -1,4 +1,5 @@
-<view wx:if="{{mode === 'hub'}}" class="scroll-page">
+<view class="theme-wrapper {{themeClass}}">
+  <view wx:if="{{mode === 'hub'}}" class="scroll-page">
   <view class="hero">
     <text class="hero-title">互动练习</text>
     <text class="hero-sub">挑一个方法，马上开始填写练习</text>
@@ -85,7 +86,8 @@
 </view>
 
 <view wx:else class="invalid">
-  <text class="invalid-icon">🧩</text>
-  <text class="invalid-title">未找到该方法</text>
-  <button class="btn home" bindtap="goBack">返回</button>
+    <text class="invalid-icon">🧩</text>
+    <text class="invalid-title">未找到该方法</text>
+    <button class="btn home" bindtap="goBack">返回</button>
+  </view>
 </view>

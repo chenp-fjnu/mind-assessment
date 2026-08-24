@@ -154,4 +154,15 @@ Page({
       wx.navigateTo({ url: `/pages/train/game?gameId=${item.id}` })
     }
   },
+  onShareAppMessage() {
+    return {
+      title: '心智探索局 - 测评 · 方法 · 训练，陪你认识并锻炼心智',
+      path: '/pages/index/index',
+    }
+  },
+  onShareTimeline() {
+    return {
+      title: '心智探索局 - 测评 · 方法 · 训练，陪你认识并锻炼心智',
+    }
+  },
 })

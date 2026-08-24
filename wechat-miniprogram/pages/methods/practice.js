@@ -1,4 +1,5 @@
 const methodsData = require('../../utils/methods-data')
+const { useTheme } = require('../../utils/theme-store')
 
 const STORE_KEY = 'ma_practices'
 
@@ -10,8 +11,10 @@ Page({
     formFields: [],
     practices: [],
     list: [],
+    themeClass: 'theme-light',
   },
   onLoad(query) {
+    useTheme(this)
     if (query && query.id) {
       this.loadForm(query.id)
     } else {
@@ -108,5 +111,29 @@ Page({
   },
   goBack() {
     wx.navigateBack({ delta: 1 })
+  },
+  onShareAppMessage() {
+    if (this.data.mode === 'hub') {
+      return {
+        title: '互动练习 - 选一个方法，马上开始填写练习',
+        path: '/pages/methods/practice',
+      }
+    }
+    if (this.data.method) {
+      return {
+        title: '互动练习：「' + this.data.method.name + '」- 来一起练习吧',
+        path: '/pages/methods/practice?id=' + this._id,
+      }
+    }
+    return {}
+  },
+  onShareTimeline() {
+    if (this.data.mode === 'hub') {
+      return { title: '互动练习 - 选一个方法，马上开始填写练习' }
+    }
+    if (this.data.method) {
+      return { title: '互动练习：「' + this.data.method.name + '」- 来一起练习吧' }
+    }
+    return {}
   },
 })

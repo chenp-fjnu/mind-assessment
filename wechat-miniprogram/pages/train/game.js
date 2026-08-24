@@ -147,4 +147,19 @@ Page({
       fail: () => wx.switchTab({ url: '/pages/train/train' })
     })
   },
+  onShareAppMessage() {
+    const { meta } = this.data
+    if (!meta) return {}
+    return {
+      title: '来挑战『' + meta.name + '』，锻炼' + (meta.dimLabel || '脑力') + '！',
+      path: '/pages/train/game?gameId=' + this.data.gameId,
+    }
+  },
+  onShareTimeline() {
+    const { meta } = this.data
+    if (!meta) return {}
+    return {
+      title: '来挑战『' + meta.name + '』，锻炼' + (meta.dimLabel || '脑力') + '！',
+    }
+  },
 })
