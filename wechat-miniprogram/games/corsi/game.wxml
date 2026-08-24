@@ -1,13 +1,14 @@
 <view class="co">
-  <view class="grid">
+  <view class="grid" style="grid-template-columns:repeat({{cols}},1fr);gap:18rpx;justify-content:center;">
     <view
-      wx:for="{{9}}"
+      wx:for="{{blocks}}"
       wx:key="*this"
       class="blk {{flash === index ? 'flash' : ''}}"
       data-idx="{{index}}"
       bindtap="onTap"
       role="button"
       aria-label="方块 {{index}}"
+      style="width:{{cellSize}}rpx;height:{{cellSize}}rpx;"
     ></view>
   </view>
   <view class="bar">

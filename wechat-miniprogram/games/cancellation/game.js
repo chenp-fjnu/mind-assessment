@@ -40,6 +40,7 @@ Component({
     },
     computeCellSize(rows, cols) {
       // 基于 94vw - 32rpx padding 计算可用宽度，预留间隙
+      // 让网格始终占满可用宽度：格子越少，单个格子越大
       const maxCols = Math.max(rows, cols)
       const gap = 6 // rpx
       const padding = 32 // rpx
@@ -47,7 +48,7 @@ Component({
       const availableWidth = viewportWidth - padding * 2 - gap * (maxCols - 1)
       const cellSize = Math.floor(availableWidth / maxCols)
       const minCellSize = 48 // 最小 48rpx 确保可点击
-      const finalSize = Math.max(minCellSize, Math.min(cellSize, 80))
+      const finalSize = Math.max(minCellSize, cellSize) // 移除上限，让格子自动变大填满框
       const fontSize = Math.floor(finalSize * 0.55)
       return { cellSize: finalSize, fontSize }
     },

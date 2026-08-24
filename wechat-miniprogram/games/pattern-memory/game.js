@@ -12,6 +12,7 @@ Component({
     phase: 'idle', // idle | show | input | done
     correct: 0,
     total: 0,
+    cellSize: 0,
   },
   lifetimes: {
     attached() { this.reset() },
@@ -24,6 +25,7 @@ Component({
     reset() {
       this.clearTimer()
       const seed = mod.generate(this.data.level)
+      const { cellSize } = this.computeCellSize(seed.size)
       this.setData({
         size: seed.size,
         pattern: seed.cells,
@@ -32,7 +34,18 @@ Component({
         phase: 'idle',
         correct: 0,
         total: 0,
+        cellSize,
       })
+    },
+    computeCellSize(size) {
+      const gap = 12 // rpx
+      const padding = 32 // rpx
+      const viewportWidth = 94 * 7.5
+      const availableWidth = viewportWidth - padding * 2 - gap * (size - 1)
+      const cellSize = Math.floor(availableWidth / size)
+      const minCellSize = 52
+      const finalSize = Math.max(minCellSize, cellSize) // 移除上限，让格子自动变大填满框
+      return { cellSize: finalSize }
     },
     start() {
       if (this.data.phase !== 'idle' && this.data.phase !== 'done') return

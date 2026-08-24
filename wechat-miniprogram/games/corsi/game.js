@@ -6,11 +6,13 @@ Component({
   },
   data: {
     blocks: 9,
+    cols: 3,
     seq: [],
     phase: 'idle',
     flash: -1,
     inputIdx: 0,
     correct: 0,
+    cellSize: 0,
   },
   lifetimes: {
     attached() { this.reset() },
@@ -24,7 +26,19 @@ Component({
       this.clearTimers()
       this.timers = []
       const seed = mod.generate(this.data.level)
-      this.setData({ blocks: seed.blocks, seq: seed.seq, phase: 'idle', flash: -1, inputIdx: 0, correct: 0 })
+      const cols = 3
+      const { cellSize } = this.computeCellSize(cols)
+      this.setData({ blocks: seed.blocks, cols, seq: seed.seq, phase: 'idle', flash: -1, inputIdx: 0, correct: 0, cellSize })
+    },
+    computeCellSize(cols) {
+      const gap = 18 // rpx
+      const padding = 32 // rpx
+      const viewportWidth = 94 * 7.5
+      const availableWidth = viewportWidth - padding * 2 - gap * (cols - 1)
+      const cellSize = Math.floor(availableWidth / cols)
+      const minCellSize = 60
+      const finalSize = Math.max(minCellSize, cellSize) // 移除上限，让格子自动变大填满框
+      return { cellSize: finalSize }
     },
     start() {
       if (this.data.phase !== 'idle' && this.data.phase !== 'done') return

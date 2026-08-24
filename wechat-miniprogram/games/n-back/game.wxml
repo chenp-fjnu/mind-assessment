@@ -64,11 +64,11 @@
   <view wx:if="{{phase === 'done'}}" class="tip done">完成！得分：{{score || '计算中...'}}</view>
 
   <view wx:if="{{lastResult && phase === 'answer'}}" class="feedback">
-    <view class="feedback-item {{lastResult.visual?.ok ? 'correct' : 'wrong'}}">
-      视觉：{{lastResult.visual?.said ? '匹配' : '不匹配'}} / 正确：{{lastResult.visual?.expected ? '匹配' : '不匹配'}}
+    <view class="feedback-item {{lastResult.visual && lastResult.visual.ok ? 'correct' : 'wrong'}}">
+      视觉：{{lastResult.visual && lastResult.visual.said ? '匹配' : '不匹配'}} / 正确：{{lastResult.visual && lastResult.visual.expected ? '匹配' : '不匹配'}}
     </view>
-    <view class="feedback-item {{lastResult.auditory?.ok ? 'correct' : 'wrong'}}">
-      听觉：{{lastResult.auditory?.said ? '匹配' : '不匹配'}} / 正确：{{lastResult.auditory?.expected ? '匹配' : '不匹配'}}
+    <view class="feedback-item {{lastResult.auditory && lastResult.auditory.ok ? 'correct' : 'wrong'}}">
+      听觉：{{lastResult.auditory && lastResult.auditory.said ? '匹配' : '不匹配'}} / 正确：{{lastResult.auditory && lastResult.auditory.expected ? '匹配' : '不匹配'}}
     </view>
   </view>
 </view>

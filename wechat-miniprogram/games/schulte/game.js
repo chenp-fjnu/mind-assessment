@@ -43,7 +43,7 @@ Component({
       const availableWidth = viewportWidth - padding * 2 - gap * (size - 1)
       const cellSize = Math.floor(availableWidth / size)
       const minCellSize = 44
-      const finalSize = Math.max(minCellSize, Math.min(cellSize, 84))
+      const finalSize = Math.max(minCellSize, cellSize) // 移除上限，让格子自动变大填满框
       const fontSize = Math.floor(finalSize * 0.45)
       return { cellSize: finalSize, fontSize }
     },
