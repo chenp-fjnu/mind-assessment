@@ -10,11 +10,15 @@
   height: 120rpx;
   padding: 0;
   margin: 0;
-  border-radius: var(--radius-full);
+  border-radius: 50%;
   background: transparent;
   border: none;
   overflow: hidden;
   line-height: normal;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
 }
 
 .avatar-btn::after {
@@ -29,6 +33,7 @@
   width: 120rpx;
   height: 120rpx;
   display: block;
+  border-radius: 50%;
 }
 
 .avatar-fallback {
@@ -37,6 +42,7 @@
   justify-content: center;
   font-size: 56rpx;
   background: var(--bg-brand);
+  border-radius: 50%;
 }
 
 .avatar-hint {
