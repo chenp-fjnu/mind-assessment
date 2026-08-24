@@ -1,11 +1,11 @@
 <view class="vs">
-  <view class="tip">找出颜色不同的那一个（误点 {{errors}}）</view>
-  <view class="grid" style="grid-template-columns:repeat({{size}},1fr);">
+  <view class="tip">找出颜色不同的那一个（第 {{trialIdx + 1}}/{{trials}}，误点 {{errors}}）</view>
+  <view class="grid" style="grid-template-columns:repeat({{size}},1fr);gap:10rpx;justify-content:center;">
     <view
       wx:for="{{cells}}"
       wx:key="index"
       class="cell"
-      style="background:{{item}};"
+      style="background:{{item}};width:{{cellSize}}rpx;height:{{cellSize}}rpx;"
       data-idx="{{index}}"
       bindtap="onTap"
       role="button"

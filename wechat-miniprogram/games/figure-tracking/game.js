@@ -11,6 +11,8 @@ Component({
     total: 25,
     running: false,
     errors: 0,
+    cellSize: 0,
+    fontSize: 0,
   },
   lifetimes: {
     attached() { this.reset() },
@@ -20,7 +22,19 @@ Component({
       const size = this.data.level
       const seed = mod.generate(size)
       const cells = seed.cells.map((n, idx) => ({ n, idx, found: false }))
-      this.setData({ size, cells, next: 1, total: size * size, running: false, errors: 0 })
+      const { cellSize, fontSize } = this.computeCellSize(size)
+      this.setData({ size, cells, next: 1, total: size * size, running: false, errors: 0, cellSize, fontSize })
+    },
+    computeCellSize(size) {
+      const gap = 8 // rpx
+      const padding = 32 // rpx
+      const viewportWidth = 94 * 7.5
+      const availableWidth = viewportWidth - padding * 2 - gap * (size - 1)
+      const cellSize = Math.floor(availableWidth / size)
+      const minCellSize = 44
+      const finalSize = Math.max(minCellSize, Math.min(cellSize, 84))
+      const fontSize = Math.floor(finalSize * 0.45)
+      return { cellSize: finalSize, fontSize }
     },
     start() {
       this.setData({ running: true, startTime: Date.now(), next: 1, errors: 0 })

@@ -1,12 +1,13 @@
-.schulte {
+.ft {
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-.board {
+.grid {
   width: 100%;
-  margin: 0 auto;
+  display: grid;
+  justify-content: center;
 }
 .cell {
   aspect-ratio: 1 / 1;
@@ -15,8 +16,8 @@
   justify-content: center;
   background: var(--card-bg);
   border: 2rpx solid var(--border-light);
-  border-radius: 16rpx;
-  font-weight: 700;
+  border-radius: 12rpx;
+  font-weight: 600;
   color: var(--text-primary);
   transition: background 0.12s, color 0.12s, border-color 0.12s;
 }

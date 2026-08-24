@@ -3,7 +3,8 @@ const DIGITS = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
 
 function generate(level) {
   const target = String(level)
-  const size = level === 7 ? 10 : 8
+  // 最大 9×9，避免 10×10 过大导致点击困难
+  const size = level === 7 ? 9 : 8
   const rows = size
   const cols = size
   const total = rows * cols
@@ -21,7 +22,7 @@ function generate(level) {
       cells.push(c)
     }
   }
-  return { rows, cols, target, cells, total, targetCount }
+  return { rows, cols, target, cells, total, targetCount, size }
 }
 
 // state: { targetCount, found, errors, time }
@@ -49,7 +50,7 @@ module.exports = {
   levels: [
     { value: 0, label: '划掉 0（8×8）' },
     { value: 3, label: '划掉 3（8×8）' },
-    { value: 7, label: '划掉 7（10×10）' },
+    { value: 7, label: '划掉 7（9×9）' },
   ],
   metric: { key: 'time', label: '用时', unit: 's', better: 'lower' },
   generate,

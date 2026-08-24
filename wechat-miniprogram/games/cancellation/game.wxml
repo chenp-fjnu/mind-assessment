@@ -1,6 +1,6 @@
 <view class="can">
   <view class="tip">划掉所有 <text class="tg">{{target}}</text>（已找 {{found}}/{{targetCount}}，误点 {{errors}}）</view>
-  <view class="grid" style="grid-template-columns:repeat({{cols}},1fr);">
+  <view class="grid" style="grid-template-columns:repeat({{cols}},1fr);gap:6rpx;">
     <view
       wx:for="{{cells}}"
       wx:key="idx"
@@ -9,6 +9,7 @@
       bindtap="onTap"
       role="button"
       aria-label="数字 {{item.ch}}"
+      style="width:{{cellSize}}rpx;height:{{cellSize}}rpx;font-size:{{fontSize}}rpx;"
     >{{item.ch}}</view>
   </view>
 </view>

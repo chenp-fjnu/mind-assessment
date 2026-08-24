@@ -1,9 +1,12 @@
 .can {
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .tip {
   font-size: 26rpx;
-  color: var(--sub);
+  color: var(--text-tertiary);
   text-align: center;
   margin-bottom: 20rpx;
 }
@@ -15,18 +18,19 @@
 .grid {
   display: grid;
   gap: 6rpx;
+  justify-content: center;
 }
 .cell {
   aspect-ratio: 1 / 1;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--card);
-  border: 2rpx solid var(--border);
+  background: var(--card-bg);
+  border: 2rpx solid var(--border-light);
   border-radius: 10rpx;
-  font-size: 34rpx;
   font-weight: 600;
-  color: var(--text);
+  color: var(--text-primary);
+  transition: background 0.12s, color 0.12s, border-color 0.12s;
 }
 .cell.hit {
   color: #0d9488;

@@ -1,7 +1,7 @@
 <view class="schulte">
   <view
     class="board"
-    style="display:grid;grid-template-columns:repeat({{size}},1fr);gap:8rpx;"
+    style="display:grid;grid-template-columns:repeat({{size}},1fr);gap:8rpx;justify-content:center;"
   >
     <view
       wx:for="{{cells}}"
@@ -12,6 +12,7 @@
       bindtap="onTap"
       role="button"
       aria-label="数字 {{item.n}}"
+      style="width:{{cellSize}}rpx;height:{{cellSize}}rpx;font-size:{{fontSize}}rpx;"
     >
       <text wx:if="{{!item.found}}">{{item.n}}</text>
     </view>

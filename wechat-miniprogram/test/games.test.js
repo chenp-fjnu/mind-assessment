@@ -152,11 +152,21 @@ describe('Flanker', () => {
 
 describe('数字划消', () => {
   const g = getGame('cancellation')
-  test('generate 返回含目标数字的矩阵', () => {
+  test('generate 返回含目标数字的矩阵 (8×8)', () => {
     const s = g.generate(0)
     expect(s.target).toBe('0')
+    expect(s.rows).toBe(8)
+    expect(s.cols).toBe(8)
+    expect(s.size).toBe(8)
     expect(s.targetCount).toBeGreaterThan(0)
     expect(s.cells.filter((c) => c === '0').length).toBe(s.targetCount)
+  })
+  test('generate level 7 返回 9×9 矩阵', () => {
+    const s = g.generate(7)
+    expect(s.rows).toBe(9)
+    expect(s.cols).toBe(9)
+    expect(s.size).toBe(9)
+    expect(s.target).toBe('7')
   })
   test('score 用时越短得分越高', () => {
     const fast = g.score({ targetCount: 10, found: 10, errors: 0, time: 8 })
@@ -167,14 +177,21 @@ describe('数字划消', () => {
 
 describe('视觉搜索', () => {
   const g = getGame('visual-search')
-  test('generate 返回唯一不同项', () => {
-    const s = g.generate(2)
-    expect(s.oddIdx).toBeGreaterThanOrEqual(0)
-    expect(s.cells[s.oddIdx]).not.toBe(s.cells[(s.oddIdx + 1) % s.cells.length])
+  test('generate 返回多轮次数据', () => {
+    const s = g.generate({ level: 2, trials: 5 })
+    expect(s.trials).toBe(5)
+    expect(s.trialsData.length).toBe(5)
+    expect(s.trialsData[0].size).toBeGreaterThanOrEqual(3)
+    expect(s.trialsData[0].oddIdx).toBeGreaterThanOrEqual(0)
+  })
+  test('generate 不同等级网格大小递增', () => {
+    const s1 = g.generate({ level: 1, trials: 1 })
+    const s5 = g.generate({ level: 5, trials: 1 })
+    expect(s5.trialsData[0].size).toBeGreaterThanOrEqual(s1.trialsData[0].size)
   })
   test('score 用时越短得分越高', () => {
-    const fast = g.score({ errors: 0, time: 2 })
-    const slow = g.score({ errors: 4, time: 12 })
+    const fast = g.score({ errors: 0, time: 2, trials: 8 })
+    const slow = g.score({ errors: 4, time: 12, trials: 8 })
     expect(fast.score).toBeGreaterThan(slow.score)
   })
 })
