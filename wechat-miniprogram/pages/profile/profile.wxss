@@ -5,27 +5,33 @@
   padding: 48rpx 32rpx 24rpx;
 }
 
-.avatar-wrap {
+.avatar-btn {
   width: 160rpx;
   height: 160rpx;
+  padding: 0;
+  margin: 0;
   border-radius: var(--radius-full);
   background: var(--bg-tertiary);
   border: 2rpx solid var(--border-light);
   overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  line-height: normal;
 }
 
-.avatar {
+.avatar-btn::after {
+  border: none;
+}
+
+.avatar-hover {
+  opacity: 0.85;
+}
+
+.avatar-img {
   width: 160rpx;
   height: 160rpx;
   display: block;
 }
 
 .avatar-fallback {
-  width: 160rpx;
-  height: 160rpx;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -33,24 +39,10 @@
   background: var(--bg-brand);
 }
 
-.avatar-actions {
-  display: flex;
-  margin-top: 24rpx;
-}
-
-.avatar-btn.ghost {
-  margin: 0 10rpx;
-  padding: 0 36rpx;
-  height: 72rpx;
-  line-height: 72rpx;
-  font-size: var(--font-size-base);
-  color: var(--text-brand);
-  background: var(--bg-brand);
-  border-radius: var(--radius-full);
-}
-
-.avatar-btn.ghost::after {
-  border: none;
+.avatar-hint {
+  margin-top: 16rpx;
+  font-size: var(--font-size-sm);
+  color: var(--text-muted);
 }
 
 .nickname-input {

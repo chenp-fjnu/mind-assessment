@@ -393,15 +393,13 @@ describe("个人资料页 profile", () => {
     expect(typeof ctx.data.avatarUrl).toBe("string")
     expect(typeof ctx.data.nickname).toBe("string")
   })
-  test("chooseFromAlbum 在 mock 环境下不抛错（走 chooseImage）", () => {
-    let chosen = false
-    global.wx.chooseImage = (o) => {
-      chosen = true
-      o.success && o.success({ tempFilePaths: ["x"] })
-    }
+  test("onChooseAvatar 将临时头像持久化到本地", () => {
+    global.wx.getFileSystemManager = () => ({
+      saveFile: (o) => o.success({ savedFilePath: "/saved/a.png" }),
+    })
     const ctx = loadPage("pages/profile/profile.js")
-    ctx.chooseFromAlbum()
-    expect(chosen).toBe(true)
+    ctx.onChooseAvatar({ detail: { avatarUrl: "/tmp/a.png" } })
+    expect(ctx.data.avatarUrl).toBe("/saved/a.png")
   })
 })
 
