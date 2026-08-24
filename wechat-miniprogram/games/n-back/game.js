@@ -7,18 +7,38 @@ Component({
   data: {
     n: 1,
     trials: 20,
-    seq: [],
+    mode: 'dual',
+    gridSize: 'small',
+    visualSeq: [],
+    auditorySeq: [],
     roundIdx: 0,
     shownPos: -1,
+    shownLetter: '',
     phase: 'idle', // idle | show | answer | done
     correct: 0,
     total: 0,
+    visualCorrect: 0,
+    visualTotal: 0,
+    auditoryCorrect: 0,
+    auditoryTotal: 0,
     times: [],
     answerTs: 0,
+    visualMatch: false,
+    auditoryMatch: false,
+    gridCols: 3,
+    lastResult: null,
+    score: 0,
   },
   lifetimes: {
-    attached() { this.reset() },
-    detached() { this.clearTimer() },
+    attached() {
+      this.audioCtx = wx.createInnerAudioContext()
+      this.audioCtx.autoplay = true
+      this.reset()
+    },
+    detached() {
+      this.clearTimer()
+      if (this.audioCtx) this.audioCtx.destroy()
+    },
   },
   methods: {
     clearTimer() {
@@ -29,53 +49,161 @@ Component({
     },
     reset() {
       this.clearTimer()
-      const seed = mod.generate({ n: this.data.level, trials: 20 })
+      const levelMeta = this.getLevelMeta(this.data.level)
+      const seed = mod.generate({
+        n: levelMeta.n,
+        trials: levelMeta.trials,
+        mode: levelMeta.mode,
+        gridSize: levelMeta.gridSize,
+      })
+      const gridCols = mod.GRID_SIZES[seed.gridSize]
       this.setData({
         n: seed.n,
         trials: seed.trials,
-        seq: seed.seq,
+        mode: seed.mode,
+        gridSize: seed.gridSize,
+        visualSeq: seed.visualSeq,
+        auditorySeq: seed.auditorySeq,
         roundIdx: 0,
         shownPos: -1,
+        shownLetter: '',
         phase: 'idle',
         correct: 0,
         total: 0,
+        visualCorrect: 0,
+        visualTotal: 0,
+        auditoryCorrect: 0,
+        auditoryTotal: 0,
         times: [],
         answerTs: 0,
+        visualMatch: false,
+        auditoryMatch: false,
+        gridCols,
+        lastResult: null,
+        score: 0,
       })
+      this.updateComputed()
+    },
+    getLevelMeta(level) {
+      const g = mod
+      const lvl = g.levels.find((x) => x.value === level) || g.levels[0]
+      return {
+        n: lvl.n,
+        trials: lvl.trials,
+        mode: lvl.mode,
+        gridSize: lvl.gridSize,
+      }
+    },
+    updateComputed() {
+      const modeLabels = { dual: '双重', visual: '仅视觉', auditory: '仅听觉' }
+      const gridLabels = { small: '3×3', medium: '4×4' }
+      this.setData({
+        modeLabel: modeLabels[this.data.mode] || this.data.mode,
+        gridLabel: gridLabels[this.data.gridSize] || this.data.gridSize,
+        idleTip: this.getIdleTip(),
+        showTip: this.getShowTip(),
+      })
+    },
+    getIdleTip() {
+      const { mode, n } = this.data
+      if (mode === 'dual') return `同时判断视觉位置和听觉字母是否与 ${n} 步前匹配`
+      if (mode === 'visual') return `判断当前方块位置是否与 ${n} 步前相同`
+      return `判断当前字母是否与 ${n} 步前相同`
+    },
+    getShowTip() {
+      const { mode } = this.data
+      if (mode === 'dual') return '记住位置与字母…'
+      if (mode === 'visual') return '记住位置…'
+      return '记住字母…'
     },
     start() {
       if (this.data.phase !== 'idle' && this.data.phase !== 'done') return
       this.showRound()
     },
     showRound() {
-      const pos = this.data.seq[this.data.roundIdx]
-      this.setData({ phase: 'show', shownPos: pos })
-      this.timer = setTimeout(() => {
-        this.setData({ phase: 'answer', shownPos: -1, answerTs: Date.now() })
-      }, 700)
-    },
-    onAnswer(e) {
-      if (this.data.phase !== 'answer') return
-      const saidMatch = e.currentTarget.dataset.match === '1'
       const i = this.data.roundIdx
-      const expected = i >= this.data.n && this.data.seq[i] === this.data.seq[i - this.data.n]
+      const pos = this.data.visualSeq[i]
+      const letter = mod.AUDIO_LETTERS[this.data.auditorySeq[i]]
+
+      this.setData({
+        phase: 'show',
+        shownPos: pos,
+        shownLetter: letter,
+        lastResult: null,
+      })
+
+      this.playLetter(letter)
+
+      this.timer = setTimeout(() => {
+        this.setData({
+          phase: 'answer',
+          shownPos: -1,
+          shownLetter: '',
+          answerTs: Date.now(),
+        })
+      }, 600)
+    },
+    playLetter(letter) {
+      if (!this.audioCtx) return
+      // 实际项目可接入 TTS 服务播放字母发音
+      // 这里用振动作为听觉提示的替代
+      wx.vibrateShort({ type: 'light' })
+    },
+    onVisualAnswer(e) {
+      if (this.data.phase !== 'answer' || this.data.mode === 'auditory') return
+      const saidMatch = e.currentTarget.dataset.match === '1'
+      this.processAnswer('visual', saidMatch)
+    },
+    onAuditoryAnswer(e) {
+      if (this.data.phase !== 'answer' || this.data.mode === 'visual') return
+      const saidMatch = e.currentTarget.dataset.match === '1'
+      this.processAnswer('auditory', saidMatch)
+    },
+    onDualAnswer(e) {
+      if (this.data.phase !== 'answer' || this.data.mode !== 'dual') return
+      const visualSaid = e.currentTarget.dataset.visual === '1'
+      const auditorySaid = e.currentTarget.dataset.auditory === '1'
+      this.processAnswer('visual', visualSaid)
+      this.processAnswer('auditory', auditorySaid)
+    },
+    processAnswer(modality, saidMatch) {
+      const i = this.data.roundIdx
+      const expected = mod.isMatch(this.data[modality + 'Seq'], i, this.data.n)
       const ok = saidMatch === expected
-      const correct = this.data.correct + (ok ? 1 : 0)
-      const total = this.data.total + 1
-      const rt = Date.now() - this.data.answerTs
-      const times = this.data.times.concat(rt)
+
+      const updates = {
+        total: this.data.total + 1,
+        correct: this.data.correct + (ok ? 1 : 0),
+        [modality + 'Total']: this.data[modality + 'Total'] + 1,
+        [modality + 'Correct']: this.data[modality + 'Correct'] + (ok ? 1 : 0),
+        roundIdx: i + 1,
+        times: this.data.times.concat(Date.now() - this.data.answerTs),
+        lastResult: {
+          ...this.data.lastResult,
+          [modality]: { said: saidMatch, expected, ok },
+        },
+      }
+
       const next = i + 1
       if (next >= this.data.trials) {
-        this.finish(correct, total, times)
+        this.finish(updates)
       } else {
-        this.setData({ correct, total, times, roundIdx: next, phase: 'show' })
+        this.setData({ ...updates, phase: 'show' })
         this.showRound()
       }
     },
-    finish(correct, total, times) {
+    finish(updates) {
       this.clearTimer()
-      const result = mod.score({ correct, total, times })
-      this.setData({ phase: 'done' })
+      const result = mod.score({
+        correct: updates.correct,
+        total: updates.total,
+        times: updates.times,
+        visualCorrect: updates.visualCorrect,
+        visualTotal: updates.visualTotal,
+        auditoryCorrect: updates.auditoryCorrect,
+        auditoryTotal: updates.auditoryTotal,
+      })
+      this.setData({ phase: 'done', ...updates, score: result.score })
       this.triggerEvent('finish', result)
     },
   },

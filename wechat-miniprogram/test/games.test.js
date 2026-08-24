@@ -104,16 +104,35 @@ describe('反应时间', () => {
 
 describe('N-Back', () => {
   const g = getGame('n-back')
-  test('generate 返回序列长度 = trials', () => {
-    const s = g.generate({ n: 2, trials: 20 })
-    expect(s.seq.length).toBe(20)
+  test('generate 返回视觉和听觉序列', () => {
+    const s = g.generate({ n: 2, trials: 20, mode: 'dual', gridSize: 'small' })
+    expect(s.visualSeq.length).toBe(20)
+    expect(s.auditorySeq.length).toBe(20)
     expect(s.n).toBe(2)
+    expect(s.mode).toBe('dual')
+    expect(s.gridSize).toBe('small')
+  })
+  test('generate visual only 模式', () => {
+    const s = g.generate({ n: 2, trials: 15, mode: 'visual', gridSize: 'medium' })
+    expect(s.visualSeq.length).toBe(15)
+    expect(s.auditorySeq.length).toBe(15)
+    expect(s.mode).toBe('visual')
+    expect(s.gridSize).toBe('medium')
   })
   test('score 正确率越高得分越高', () => {
-    const good = g.score({ correct: 18, total: 20, times: [600, 600] })
-    const bad = g.score({ correct: 8, total: 20, times: [600, 600] })
+    const good = g.score({ correct: 18, total: 20, times: [600, 600], visualCorrect: 18, visualTotal: 20, auditoryCorrect: 18, auditoryTotal: 20 })
+    const bad = g.score({ correct: 8, total: 20, times: [600, 600], visualCorrect: 8, visualTotal: 20, auditoryCorrect: 8, auditoryTotal: 20 })
     expect(good.score).toBeGreaterThan(bad.score)
     expect(good.accuracy).toBe(0.9)
+    expect(good.visualAccuracy).toBe(0.9)
+    expect(good.auditoryAccuracy).toBe(0.9)
+  })
+  test('isMatch 正确判断 N 步匹配', () => {
+    const seq = [1, 2, 3, 1, 2, 3]
+    expect(g.isMatch(seq, 3, 3)).toBe(true)  // seq[3] === seq[0]
+    expect(g.isMatch(seq, 4, 3)).toBe(true)  // seq[4] === seq[1]
+    expect(g.isMatch(seq, 2, 3)).toBe(false) // idx < n
+    expect(g.isMatch(seq, 5, 3)).toBe(true)  // seq[5] === seq[2]
   })
 })
 
