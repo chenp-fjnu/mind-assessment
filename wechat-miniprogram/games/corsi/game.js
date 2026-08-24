@@ -3,6 +3,7 @@ const mod = require('./index')
 Component({
   properties: {
     level: { type: Number, value: 3, observer() { this.reset() } },
+    boardWidth: { type: Number, value: 705, observer() { this.applySizing() } },
   },
   data: {
     blocks: 9,
@@ -33,7 +34,7 @@ Component({
     computeCellSize(cols) {
       const gap = 18 // rpx
       const padding = 32 // rpx
-      const viewportWidth = 94 * 7.5
+      const viewportWidth = this.data.boardWidth || 705
       const availableWidth = viewportWidth - padding * 2 - gap * (cols - 1)
       const cellSize = Math.floor(availableWidth / cols)
       const minCellSize = 60
@@ -43,6 +44,10 @@ Component({
     start() {
       if (this.data.phase !== 'idle' && this.data.phase !== 'done') return
       this.playSeq()
+    },
+    applySizing() {
+      const { cellSize } = this.computeCellSize(this.data.cols)
+      this.setData({ cellSize })
     },
     playSeq() {
       this.setData({ phase: 'show', flash: -1, inputIdx: 0 })

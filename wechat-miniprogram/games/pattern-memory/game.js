@@ -3,6 +3,7 @@ const mod = require('./index')
 Component({
   properties: {
     level: { type: Number, value: 4, observer() { this.reset() } },
+    boardWidth: { type: Number, value: 705, observer() { this.applySizing() } },
   },
   data: {
     size: 4,
@@ -40,12 +41,16 @@ Component({
     computeCellSize(size) {
       const gap = 12 // rpx
       const padding = 32 // rpx
-      const viewportWidth = 94 * 7.5
+      const viewportWidth = this.data.boardWidth || 705
       const availableWidth = viewportWidth - padding * 2 - gap * (size - 1)
       const cellSize = Math.floor(availableWidth / size)
       const minCellSize = 52
       const finalSize = Math.max(minCellSize, cellSize) // 移除上限，让格子自动变大填满框
       return { cellSize: finalSize }
+    },
+    applySizing() {
+      const { cellSize } = this.computeCellSize(this.data.size)
+      this.setData({ cellSize })
     },
     start() {
       if (this.data.phase !== 'idle' && this.data.phase !== 'done') return

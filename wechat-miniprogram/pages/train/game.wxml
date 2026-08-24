@@ -28,8 +28,9 @@
       </scroll-view>
     </view>
 
-    <view wx:if="{{!finished}}" class="board card">
+    <view wx:if="{{!finished}}" class="board card {{fullscreen ? 'fullscreen' : ''}}">
       <include src="games-block.wxml" />
+      <view class="fs-toggle" bindtap="toggleFullscreen" role="button" aria-label="{{fullscreen ? '退出全屏' : '全屏放大'}}">{{fullscreen ? '✕ 退出' : '⛶ 全屏'}}</view>
     </view>
 
     <view wx:if="{{finished && result}}" class="result card">

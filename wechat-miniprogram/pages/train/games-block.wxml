@@ -1,29 +1,29 @@
 <!-- 本文件由 tools/gen-game-player.js 自动生成，请勿手动修改 -->
-    <schulte-game wx:if="{{gameId === 'schulte'}}" id="trainGame" level="{{level}}" bind:finish="onFinish" />
-    <memory-match-game wx:if="{{gameId === 'memory-match'}}" id="trainGame" level="{{level}}" bind:finish="onFinish" />
-    <stroop-game wx:if="{{gameId === 'stroop'}}" id="trainGame" level="{{level}}" bind:finish="onFinish" />
-    <breath-game wx:if="{{family === 'breath'}}" id="trainGame" gameId="{{gameId}}" level="{{level}}" color="{{meta.color}}" tint="{{tint}}" bind:finish="onFinish" />
-    <reaction-time-game wx:if="{{gameId === 'reaction-time'}}" id="trainGame" level="{{level}}" bind:finish="onFinish" />
-    <n-back-game wx:if="{{gameId === 'n-back'}}" id="trainGame" level="{{level}}" bind:finish="onFinish" />
-    <flanker-game wx:if="{{gameId === 'flanker'}}" id="trainGame" level="{{level}}" bind:finish="onFinish" />
-    <cancellation-game wx:if="{{gameId === 'cancellation'}}" id="trainGame" level="{{level}}" bind:finish="onFinish" />
-    <visual-search-game wx:if="{{gameId === 'visual-search'}}" id="trainGame" level="{{level}}" bind:finish="onFinish" />
-    <find-rule-game wx:if="{{gameId === 'find-rule'}}" id="trainGame" level="{{level}}" bind:finish="onFinish" />
-    <figure-tracking-game wx:if="{{gameId === 'figure-tracking'}}" id="trainGame" level="{{level}}" bind:finish="onFinish" />
-    <number-maze-game wx:if="{{gameId === 'number-maze'}}" id="trainGame" level="{{level}}" bind:finish="onFinish" />
-    <mirror-game wx:if="{{gameId === 'mirror'}}" id="trainGame" level="{{level}}" bind:finish="onFinish" />
-    <number-code-game wx:if="{{gameId === 'number-code'}}" id="trainGame" level="{{level}}" bind:finish="onFinish" />
-    <pattern-memory-game wx:if="{{gameId === 'pattern-memory'}}" id="trainGame" level="{{level}}" bind:finish="onFinish" />
-    <simon-game wx:if="{{gameId === 'simon'}}" id="trainGame" level="{{level}}" bind:finish="onFinish" />
-    <digit-span-game wx:if="{{gameId === 'digit-span'}}" id="trainGame" level="{{level}}" bind:finish="onFinish" />
-    <corsi-game wx:if="{{gameId === 'corsi'}}" id="trainGame" level="{{level}}" bind:finish="onFinish" />
-    <whack-game wx:if="{{gameId === 'whack'}}" id="trainGame" level="{{level}}" bind:finish="onFinish" />
-    <go-no-go-game wx:if="{{gameId === 'go-no-go'}}" id="trainGame" level="{{level}}" bind:finish="onFinish" />
-    <bigger-number-game wx:if="{{gameId === 'bigger-number'}}" id="trainGame" level="{{level}}" bind:finish="onFinish" />
-    <cps-game wx:if="{{gameId === 'cps'}}" id="trainGame" level="{{level}}" bind:finish="onFinish" />
-    <color-match-game wx:if="{{gameId === 'color-match'}}" id="trainGame" level="{{level}}" bind:finish="onFinish" />
-    <double-decision-game wx:if="{{gameId === 'double-decision'}}" id="trainGame" level="{{level}}" bind:finish="onFinish" />
-    <hanoi-game wx:if="{{gameId === 'hanoi'}}" id="trainGame" level="{{level}}" bind:finish="onFinish" />
-    <task-switch-game wx:if="{{gameId === 'task-switch'}}" id="trainGame" level="{{level}}" bind:finish="onFinish" />
-    <wisconsin-game wx:if="{{gameId === 'wisconsin'}}" id="trainGame" level="{{level}}" bind:finish="onFinish" />
-    <tower-london-game wx:if="{{gameId === 'tower-london'}}" id="trainGame" level="{{level}}" bind:finish="onFinish" />
+    <schulte-game wx:if="{{gameId === 'schulte'}}" id="trainGame" level="{{level}}" board-width="{{boardWidth}}" fullscreen="{{fullscreen}}" bind:finish="onFinish" />
+    <memory-match-game wx:if="{{gameId === 'memory-match'}}" id="trainGame" level="{{level}}" board-width="{{boardWidth}}" fullscreen="{{fullscreen}}" bind:finish="onFinish" />
+    <stroop-game wx:if="{{gameId === 'stroop'}}" id="trainGame" level="{{level}}" board-width="{{boardWidth}}" fullscreen="{{fullscreen}}" bind:finish="onFinish" />
+    <breath-game wx:if="{{family === 'breath'}}" id="trainGame" gameId="{{gameId}}" level="{{level}}" color="{{meta.color}}" tint="{{tint}}" board-width="{{boardWidth}}" fullscreen="{{fullscreen}}" bind:finish="onFinish" />
+    <reaction-time-game wx:if="{{gameId === 'reaction-time'}}" id="trainGame" level="{{level}}" board-width="{{boardWidth}}" fullscreen="{{fullscreen}}" bind:finish="onFinish" />
+    <n-back-game wx:if="{{gameId === 'n-back'}}" id="trainGame" level="{{level}}" board-width="{{boardWidth}}" fullscreen="{{fullscreen}}" bind:finish="onFinish" />
+    <flanker-game wx:if="{{gameId === 'flanker'}}" id="trainGame" level="{{level}}" board-width="{{boardWidth}}" fullscreen="{{fullscreen}}" bind:finish="onFinish" />
+    <cancellation-game wx:if="{{gameId === 'cancellation'}}" id="trainGame" level="{{level}}" board-width="{{boardWidth}}" fullscreen="{{fullscreen}}" bind:finish="onFinish" />
+    <visual-search-game wx:if="{{gameId === 'visual-search'}}" id="trainGame" level="{{level}}" board-width="{{boardWidth}}" fullscreen="{{fullscreen}}" bind:finish="onFinish" />
+    <find-rule-game wx:if="{{gameId === 'find-rule'}}" id="trainGame" level="{{level}}" board-width="{{boardWidth}}" fullscreen="{{fullscreen}}" bind:finish="onFinish" />
+    <figure-tracking-game wx:if="{{gameId === 'figure-tracking'}}" id="trainGame" level="{{level}}" board-width="{{boardWidth}}" fullscreen="{{fullscreen}}" bind:finish="onFinish" />
+    <number-maze-game wx:if="{{gameId === 'number-maze'}}" id="trainGame" level="{{level}}" board-width="{{boardWidth}}" fullscreen="{{fullscreen}}" bind:finish="onFinish" />
+    <mirror-game wx:if="{{gameId === 'mirror'}}" id="trainGame" level="{{level}}" board-width="{{boardWidth}}" fullscreen="{{fullscreen}}" bind:finish="onFinish" />
+    <number-code-game wx:if="{{gameId === 'number-code'}}" id="trainGame" level="{{level}}" board-width="{{boardWidth}}" fullscreen="{{fullscreen}}" bind:finish="onFinish" />
+    <pattern-memory-game wx:if="{{gameId === 'pattern-memory'}}" id="trainGame" level="{{level}}" board-width="{{boardWidth}}" fullscreen="{{fullscreen}}" bind:finish="onFinish" />
+    <simon-game wx:if="{{gameId === 'simon'}}" id="trainGame" level="{{level}}" board-width="{{boardWidth}}" fullscreen="{{fullscreen}}" bind:finish="onFinish" />
+    <digit-span-game wx:if="{{gameId === 'digit-span'}}" id="trainGame" level="{{level}}" board-width="{{boardWidth}}" fullscreen="{{fullscreen}}" bind:finish="onFinish" />
+    <corsi-game wx:if="{{gameId === 'corsi'}}" id="trainGame" level="{{level}}" board-width="{{boardWidth}}" fullscreen="{{fullscreen}}" bind:finish="onFinish" />
+    <whack-game wx:if="{{gameId === 'whack'}}" id="trainGame" level="{{level}}" board-width="{{boardWidth}}" fullscreen="{{fullscreen}}" bind:finish="onFinish" />
+    <go-no-go-game wx:if="{{gameId === 'go-no-go'}}" id="trainGame" level="{{level}}" board-width="{{boardWidth}}" fullscreen="{{fullscreen}}" bind:finish="onFinish" />
+    <bigger-number-game wx:if="{{gameId === 'bigger-number'}}" id="trainGame" level="{{level}}" board-width="{{boardWidth}}" fullscreen="{{fullscreen}}" bind:finish="onFinish" />
+    <cps-game wx:if="{{gameId === 'cps'}}" id="trainGame" level="{{level}}" board-width="{{boardWidth}}" fullscreen="{{fullscreen}}" bind:finish="onFinish" />
+    <color-match-game wx:if="{{gameId === 'color-match'}}" id="trainGame" level="{{level}}" board-width="{{boardWidth}}" fullscreen="{{fullscreen}}" bind:finish="onFinish" />
+    <double-decision-game wx:if="{{gameId === 'double-decision'}}" id="trainGame" level="{{level}}" board-width="{{boardWidth}}" fullscreen="{{fullscreen}}" bind:finish="onFinish" />
+    <hanoi-game wx:if="{{gameId === 'hanoi'}}" id="trainGame" level="{{level}}" board-width="{{boardWidth}}" fullscreen="{{fullscreen}}" bind:finish="onFinish" />
+    <task-switch-game wx:if="{{gameId === 'task-switch'}}" id="trainGame" level="{{level}}" board-width="{{boardWidth}}" fullscreen="{{fullscreen}}" bind:finish="onFinish" />
+    <wisconsin-game wx:if="{{gameId === 'wisconsin'}}" id="trainGame" level="{{level}}" board-width="{{boardWidth}}" fullscreen="{{fullscreen}}" bind:finish="onFinish" />
+    <tower-london-game wx:if="{{gameId === 'tower-london'}}" id="trainGame" level="{{level}}" board-width="{{boardWidth}}" fullscreen="{{fullscreen}}" bind:finish="onFinish" />

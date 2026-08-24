@@ -3,6 +3,7 @@ const mod = require('./index')
 Component({
   properties: {
     level: { type: Number, value: 0, observer() { this.reset() } },
+    boardWidth: { type: Number, value: 705, observer() { this.applySizing() } },
   },
   data: {
     rows: 8,
@@ -44,7 +45,7 @@ Component({
       const maxCols = Math.max(rows, cols)
       const gap = 6 // rpx
       const padding = 32 // rpx
-      const viewportWidth = 94 * 7.5 // 约 705rpx = 94vw 在 375px 屏幕上
+      const viewportWidth = this.data.boardWidth || 705
       const availableWidth = viewportWidth - padding * 2 - gap * (maxCols - 1)
       const cellSize = Math.floor(availableWidth / maxCols)
       const minCellSize = 48 // 最小 48rpx 确保可点击
@@ -54,6 +55,10 @@ Component({
     },
     start() {
       this.setData({ running: true, startTime: Date.now() })
+    },
+    applySizing() {
+      const { cellSize, fontSize } = this.computeCellSize(this.data.rows, this.data.cols)
+      this.setData({ cellSize, fontSize })
     },
     onTap(e) {
       const idx = e.currentTarget.dataset.idx

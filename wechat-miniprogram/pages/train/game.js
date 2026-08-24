@@ -22,6 +22,9 @@ Page({
     result: null,
     resultChips: [],
     trendText: '',
+    fullscreen: false,
+    // 棋盘可用宽度（rpx）；全屏时取满屏宽度，方格类游戏据此放大格子
+    boardWidth: 705,
   },
   onLoad(query) {
     useTheme(this)
@@ -141,6 +144,11 @@ Page({
   },
   replay() {
     this.setData({ result: null, finished: false })
+  },
+  toggleFullscreen() {
+    const fs = !this.data.fullscreen
+    // rpx 以 750 为屏幕宽度基准；全屏时棋盘占满整屏宽度，方格类游戏据此放大格子
+    this.setData({ fullscreen: fs, boardWidth: fs ? 750 : 705 })
   },
   goBack() {
     wx.navigateBack({

@@ -91,6 +91,7 @@
   opacity: 0.9;
 }
 .board {
+  position: relative;
   width: 94vw;
   max-width: 760rpx;
   max-height: 60vh;
@@ -98,6 +99,39 @@
   margin: 24rpx auto 0;
   padding: 32rpx 24rpx;
   box-sizing: border-box;
+}
+/* 全屏模式：棋盘占满整屏，方格类游戏随 boardWidth 自动放大，便于点击 */
+.board.fullscreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100vw;
+  height: 100vh;
+  max-width: none;
+  max-height: none;
+  aspect-ratio: auto;
+  margin: 0;
+  z-index: 1000;
+  border-radius: 0;
+  padding: calc(env(safe-area-inset-top) + 24rpx) 24rpx calc(env(safe-area-inset-bottom) + 24rpx);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: var(--card-bg);
+}
+.fs-toggle {
+  position: absolute;
+  top: calc(env(safe-area-inset-top) + 16rpx);
+  right: 24rpx;
+  z-index: 2;
+  padding: 10rpx 24rpx;
+  font-size: 26rpx;
+  color: var(--text-inverse);
+  background: rgba(15, 23, 42, 0.55);
+  border-radius: var(--radius-full);
 }
 .result {
   margin: 28rpx 32rpx 0;
