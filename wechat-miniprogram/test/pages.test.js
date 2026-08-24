@@ -386,3 +386,22 @@ describe('结果页 result（交互分支 + 兜底可见）', () => {
   })
 })
 
+describe("个人资料页 profile", () => {
+  test("onLoad 不抛错且初始化数据完整", () => {
+    const ctx = loadPage("pages/profile/profile.js")
+    expect(ctx.data.genderOptions.length).toBe(3)
+    expect(typeof ctx.data.avatarUrl).toBe("string")
+    expect(typeof ctx.data.nickname).toBe("string")
+  })
+  test("chooseFromAlbum 在 mock 环境下不抛错（走 chooseImage）", () => {
+    let chosen = false
+    global.wx.chooseImage = (o) => {
+      chosen = true
+      o.success && o.success({ tempFilePaths: ["x"] })
+    }
+    const ctx = loadPage("pages/profile/profile.js")
+    ctx.chooseFromAlbum()
+    expect(chosen).toBe(true)
+  })
+})
+

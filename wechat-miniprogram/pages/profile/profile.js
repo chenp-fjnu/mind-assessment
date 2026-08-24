@@ -50,19 +50,14 @@ Page({
     ageText: '',
     userId: '',
     createdText: '',
-    showWechatAvatar: true,
   },
   onLoad() {
     useTheme(this)
-    // 旧基础库不支持 chooseAvatar 时，仅展示「从相册选择」入口
-    let can = true
     try {
-      can = wx.canIUse('open-type.chooseAvatar')
+      this.refresh()
     } catch (e) {
-      can = true
+      wx.showToast({ title: '页面初始化失败', icon: 'none' })
     }
-    this.setData({ showWechatAvatar: !!can })
-    this.refresh()
   },
   onShow() {
     this.refresh()
@@ -80,22 +75,27 @@ Page({
       createdText: fmtDateTime(u.createdAt),
     })
   },
-  // 微信头像快速填入（基础库 >= 2.21.2）
+  // 微信头像快速填入（基础库 >= 2.21.2 的设备可用；不可用时可用「从相册选择」）
   onChooseAvatar(e) {
     const temp = e.detail && e.detail.avatarUrl
     if (!temp) return
     persistAvatar(temp, (p) => this.setData({ avatarUrl: p }))
   },
-  // 相册/拍照兜底选择，兼容不支持 chooseAvatar 的环境
+  // 相册/拍照选择：使用兼容性最强的 wx.chooseImage，覆盖几乎所有基础库
   chooseFromAlbum() {
-    wx.chooseMedia({
+    if (!wx.chooseImage) {
+      wx.showToast({ title: '当前环境不支持选择图片', icon: 'none' })
+      return
+    }
+    wx.chooseImage({
       count: 1,
-      mediaType: ['image'],
+      sizeType: ['original', 'compressed'],
       sourceType: ['album', 'camera'],
       success: (res) => {
-        const temp = res.tempFiles && res.tempFiles[0] && res.tempFiles[0].tempFilePath
+        const temp = res.tempFilePaths && res.tempFilePaths[0]
         if (temp) persistAvatar(temp, (p) => this.setData({ avatarUrl: p }))
       },
+      fail: () => {},
     })
   },
   onNicknameInput(e) {
