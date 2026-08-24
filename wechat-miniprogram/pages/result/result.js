@@ -2,7 +2,7 @@ const { getModule } = require('../../utils/registry')
 const { computeTrend } = require('../../utils/trend')
 const { getResultView } = require('../../utils/result-view')
 const { readableTextColor } = require('../../utils/color')
-const { renderTrend, renderCard } = require('../../utils/canvas')
+const { renderTrend, renderCard, renderFullPageCard } = require('../../utils/canvas')
 const { withPrivacy } = require('../../utils/privacy')
 const methodsData = require('../../utils/methods-data')
 const { useTheme } = require('../../utils/theme-store')
@@ -101,7 +101,7 @@ Page({
       retakeHint = ''
     }
 
-    this.dpr = (() => { try { if (wx.getWindowInfo) { const w = wx.getWindowInfo(); if (w.pixelRatio) return w.pixelRatio } } catch {} try { if (wx.getDeviceInfo) { const d = wx.getDeviceInfo(); if (d.pixelRatio) return d.pixelRatio } } catch {} return 2 })()
+    this.dpr = (() => { try { if (wx.getWindowInfo) { const w = wx.getWindowInfo(); if (w.pixelRatio) return w.pixelRatio } } catch (e) { void 0 } try { if (wx.getDeviceInfo) { const d = wx.getDeviceInfo(); if (d.pixelRatio) return d.pixelRatio } } catch (e) { void 0 } return 2 })()
     const questions = mod.getQuestions()
     const layout = mod.resultLayout || {}
     const primaryField = layout.primaryField || 'score'
@@ -244,7 +244,7 @@ Page({
   },
 
   onReady() {
-    this.dpr = (() => { try { if (wx.getWindowInfo) { const w = wx.getWindowInfo(); if (w.pixelRatio) return w.pixelRatio } } catch {} try { if (wx.getDeviceInfo) { const d = wx.getDeviceInfo(); if (d.pixelRatio) return d.pixelRatio } } catch {} return 2 })()
+    this.dpr = (() => { try { if (wx.getWindowInfo) { const w = wx.getWindowInfo(); if (w.pixelRatio) return w.pixelRatio } } catch (e) { void 0 } try { if (wx.getDeviceInfo) { const d = wx.getDeviceInfo(); if (d.pixelRatio) return d.pixelRatio } } catch (e) { void 0 } return 2 })()
     if (this.data.meta && this.data.meta.name) {
       this.drawCardToTemp((path) => {
         if (path) this._shareImage = path
@@ -278,10 +278,75 @@ Page({
       })
   },
 
+  drawFullPageCardToTemp(done) {
+    wx.createSelectorQuery()
+      .in(this)
+      .select('#cardCanvas')
+      .fields({ node: true, size: true })
+      .exec((res) => {
+        if (!res[0]) {
+          done(null)
+          return
+        }
+        const canvas = res[0].node
+        const ctx = canvas.getContext('2d')
+        const W = res[0].width
+        // 计算所需高度：基础高度 + 各区块估算高度
+        const baseH = 600
+        const groupH = (this.data.groups && this.data.groups.length ? Math.min(this.data.groups.length, 12) * 66 : 0)
+        const bipolarH = (this.data.dims && this.data.dims.length && this.data.showBipolar ? Math.min(this.data.dims.length, 8) * 90 : 0)
+        const dimsH = (this.data.dims && this.data.dims.length && this.data.showDims ? Math.min(this.data.dims.length, 12) * 80 : 0)
+        const subtestH = (this.data.subtests && this.data.subtests.length ? Math.min(this.data.subtests.length, 15) * 66 : 0)
+        const interpH = (this.data.interpretations && this.data.interpretations.length ? Math.min(this.data.interpretations.length, 6) * 120 : 0)
+        const trendH = (this.data.showTrend ? 280 : (this.data.catList && this.data.catList.length ? Math.min(this.data.catList.length, 10) * 66 : 0))
+        const recommendH = (this.data.recommend && this.data.recommend.length ? Math.min(this.data.recommend.length, 5) * 80 : 0)
+        const noteH = (this.data.noteText ? 80 : 0)
+        const descH = (this.data.descText ? 80 : 0)
+        const metaH = 100
+        const disclaimerH = 100
+        const brandH = 60
+        const estimatedH = baseH + groupH + bipolarH + dimsH + subtestH + interpH + trendH + recommendH + noteH + descH + metaH + disclaimerH + brandH
+        const H = Math.min(estimatedH, 5000)
+        renderFullPageCard(canvas, ctx, W, H, {
+          meta: this.data.meta,
+          primaryValue: this.data.primaryValue,
+          primaryLabel: this.data.primaryLabel,
+          levelText: this.data.levelText,
+          levelColor: this.data.levelColor,
+          levelColorText: this.data.levelColorText,
+          descText: this.data.descText,
+          testedTime: this.data.testedTime,
+          retestGap: this.data.retestGap,
+          timeText: this.data.timeText,
+          groups: this.data.groups,
+          showGroups: this.data.showGroups,
+          showBipolar: this.data.showBipolar,
+          showDims: this.data.showDims,
+          showSubtests: this.data.showSubtests,
+          dims: this.data.dims,
+          subtests: this.data.subtests,
+          interpretations: this.data.interpretations,
+          showTrend: this.data.showTrend,
+          trendValues: this.data.trendValues,
+          trendDelta: this.data.trendDelta,
+          trendDates: this.data.trendDates,
+          rangeDelta: this.data.rangeDelta,
+          firstValue: this.data.firstValue,
+          lastValue: this.data.lastValue,
+          firstSummary: this.data.firstSummary,
+          lastSummary: this.data.lastSummary,
+          catList: this.data.catList,
+          recommend: this.data.recommend,
+          noteText: this.data.noteText,
+          retakeHint: this.data.retakeHint,
+        }, done)
+      })
+  },
+
   saveCard() {
     withPrivacy(() => {
-      wx.showLoading({ title: '生成中' })
-      this.drawCardToTemp((path) => {
+      wx.showLoading({ title: '生成完整结果图中' })
+      this.drawFullPageCardToTemp((path) => {
         wx.hideLoading()
         if (!path) {
           wx.showToast({ title: '生成失败', icon: 'none' })
