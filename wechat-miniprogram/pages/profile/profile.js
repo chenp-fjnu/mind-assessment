@@ -22,6 +22,23 @@ function fmtDateTime(ts) {
   )
 }
 
+// 将头像临时文件持久化到本地用户目录，避免临时路径失效后头像丢失
+function persistAvatar(tempPath, cb) {
+  if (!tempPath) return cb && cb('')
+  let fs
+  try {
+    fs = wx.getFileSystemManager()
+  } catch (e) {
+    fs = null
+  }
+  if (!fs || !fs.saveFile) return cb && cb(tempPath)
+  fs.saveFile({
+    tempFilePath: tempPath,
+    success: (res) => cb && cb(res.savedFilePath || tempPath),
+    fail: () => cb && cb(tempPath),
+  })
+}
+
 Page({
   data: {
     themeClass: 'theme-light',
@@ -33,9 +50,18 @@ Page({
     ageText: '',
     userId: '',
     createdText: '',
+    showWechatAvatar: true,
   },
   onLoad() {
     useTheme(this)
+    // 旧基础库不支持 chooseAvatar 时，仅展示「从相册选择」入口
+    let can = true
+    try {
+      can = wx.canIUse('open-type.chooseAvatar')
+    } catch (e) {
+      can = true
+    }
+    this.setData({ showWechatAvatar: !!can })
     this.refresh()
   },
   onShow() {
@@ -54,9 +80,23 @@ Page({
       createdText: fmtDateTime(u.createdAt),
     })
   },
+  // 微信头像快速填入（基础库 >= 2.21.2）
   onChooseAvatar(e) {
-    const avatarUrl = (e.detail && e.detail.avatarUrl) || ''
-    this.setData({ avatarUrl })
+    const temp = e.detail && e.detail.avatarUrl
+    if (!temp) return
+    persistAvatar(temp, (p) => this.setData({ avatarUrl: p }))
+  },
+  // 相册/拍照兜底选择，兼容不支持 chooseAvatar 的环境
+  chooseFromAlbum() {
+    wx.chooseMedia({
+      count: 1,
+      mediaType: ['image'],
+      sourceType: ['album', 'camera'],
+      success: (res) => {
+        const temp = res.tempFiles && res.tempFiles[0] && res.tempFiles[0].tempFilePath
+        if (temp) persistAvatar(temp, (p) => this.setData({ avatarUrl: p }))
+      },
+    })
   },
   onNicknameInput(e) {
     this.setData({ nickname: e.detail.value })

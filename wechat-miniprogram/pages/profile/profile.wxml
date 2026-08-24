@@ -1,10 +1,14 @@
 <view class="theme-wrapper {{themeClass}}">
   <view class="scroll-page">
     <view class="profile-hero">
-      <button class="avatar-btn" open-type="chooseAvatar" bind:chooseavatar="onChooseAvatar" aria-label="选择头像">
+      <view class="avatar-wrap">
         <image wx:if="{{avatarUrl}}" class="avatar" src="{{avatarUrl}}" mode="aspectFill"></image>
         <view wx:else class="avatar avatar-fallback">🧠</view>
-      </button>
+      </view>
+      <view class="avatar-actions">
+        <button wx:if="{{showWechatAvatar}}" class="avatar-btn ghost" open-type="chooseAvatar" bind:chooseavatar="onChooseAvatar" aria-label="使用微信头像">微信头像</button>
+        <view class="avatar-btn ghost" bindtap="chooseFromAlbum" role="button" aria-label="从相册选择头像">从相册选择</view>
+      </view>
       <input
         class="nickname-input"
         type="nickname"
