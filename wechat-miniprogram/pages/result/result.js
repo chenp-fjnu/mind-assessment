@@ -2,7 +2,7 @@ const { getModule } = require('../../utils/registry')
 const { computeTrend } = require('../../utils/trend')
 const { getResultView } = require('../../utils/result-view')
 const { readableTextColor } = require('../../utils/color')
-const { renderTrend, renderCard, renderFullPageCard } = require('../../utils/canvas')
+const { renderTrend, renderCard, renderFullPageCard, makeMeasureCtx } = require('../../utils/canvas')
 const { withPrivacy } = require('../../utils/privacy')
 const methodsData = require('../../utils/methods-data')
 const { useTheme } = require('../../utils/theme-store')
@@ -304,23 +304,7 @@ Page({
         const canvas = res[0].node
         const ctx = canvas.getContext('2d')
         const W = res[0].width
-        // 计算所需高度：基础高度 + 各区块估算高度
-        const baseH = 600
-        const groupH = (this.data.groups && this.data.groups.length ? Math.min(this.data.groups.length, 12) * 66 : 0)
-        const bipolarH = (this.data.dims && this.data.dims.length && this.data.showBipolar ? Math.min(this.data.dims.length, 8) * 90 : 0)
-        const dimsH = (this.data.dims && this.data.dims.length && this.data.showDims ? Math.min(this.data.dims.length, 12) * 80 : 0)
-        const subtestH = (this.data.subtests && this.data.subtests.length ? Math.min(this.data.subtests.length, 15) * 66 : 0)
-        const interpH = (this.data.interpretations && this.data.interpretations.length ? Math.min(this.data.interpretations.length, 6) * 120 : 0)
-        const trendH = (this.data.showTrend ? 280 : (this.data.catList && this.data.catList.length ? Math.min(this.data.catList.length, 10) * 66 : 0))
-        const recommendH = (this.data.recommend && this.data.recommend.length ? Math.min(this.data.recommend.length, 5) * 80 : 0)
-        const noteH = (this.data.noteText ? 80 : 0)
-        const descH = (this.data.descText ? 80 : 0)
-        const metaH = 100
-        const disclaimerH = 100
-        const brandH = 60
-        const estimatedH = baseH + groupH + bipolarH + dimsH + subtestH + interpH + trendH + recommendH + noteH + descH + metaH + disclaimerH + brandH
-        const H = Math.min(estimatedH, 5000)
-        renderFullPageCard(canvas, ctx, W, H, {
+        const opts = {
           meta: this.data.meta,
           primaryValue: this.data.primaryValue,
           primaryLabel: this.data.primaryLabel,
@@ -352,7 +336,18 @@ Page({
           recommend: this.data.recommend,
           noteText: this.data.noteText,
           retakeHint: this.data.retakeHint,
-        }, done)
+        }
+        // 第一遍：用测量代理精确计算内容高度（不绘制、不缩放、不导出），
+        // 避免魔法常量估算导致的底部截断或大量留白。
+        let contentH = 0
+        try {
+          contentH = renderFullPageCard(canvas, makeMeasureCtx(ctx), W, 0, opts, () => {}, true)
+        } catch (e) {
+          contentH = 0
+        }
+        // 高度按真实内容 + 底部边距；上限保护极端情况下画布分配失败（极少触发）
+        const H = Math.max(240, Math.min(Math.round(contentH) + 40, 8000))
+        renderFullPageCard(canvas, ctx, W, H, opts, done, false)
       })
   },
 

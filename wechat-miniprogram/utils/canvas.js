@@ -226,8 +226,28 @@ function renderContentCard(canvas, ctx, W, H, opts, done) {
   wx.canvasToTempFilePath({ canvas, success: (r) => done(r.tempFilePath), done: () => done(null) })
 }
 
+// 测量用 ctx 代理：所有绘制方法均为空操作，仅保留 measureText 真实测量。
+// 用于在「不分配大画布、不实际绘制」的前提下，复用 renderFullPageCard 的同一套
+// 布局逻辑精确算出内容所需高度，避免魔法常量估算导致的截断/留白。
+function makeMeasureCtx(realCtx) {
+  const noop = () => {}
+  return new Proxy(realCtx, {
+    get(target, prop) {
+      if (prop === 'measureText') return (t) => target.measureText(t)
+      const orig = target[prop]
+      if (typeof orig === 'function') return noop
+      return orig
+    },
+    set(target, prop, val) {
+      target[prop] = val
+      return true
+    },
+  })
+}
+
 // 全页面内容渲染（结果页完整保存）：标题 + 所有区块
-function renderFullPageCard(canvas, ctx, W, H, opts, done) {
+// measure=true 时只计算并返回内容高度（不缩放画布、不导出图片）
+function renderFullPageCard(canvas, ctx, W, H, opts, done, measure) {
   const {
     meta,
     primaryValue,
@@ -264,9 +284,11 @@ function renderFullPageCard(canvas, ctx, W, H, opts, done) {
 
   const pal = canvasPalette()
   const dpr = getDPR()
-  canvas.width = W * dpr
-  canvas.height = H * dpr
-  ctx.scale(dpr, dpr)
+  if (!measure) {
+    canvas.width = W * dpr
+    canvas.height = H * dpr
+    ctx.scale(dpr, dpr)
+  }
 
   ctx.fillStyle = pal.bg
   ctx.fillRect(0, 0, W, H)
@@ -695,6 +717,7 @@ function renderFullPageCard(canvas, ctx, W, H, opts, done) {
   ctx.font = '20px sans-serif'
   ctx.fillText(date, centerX, y)
 
+  if (measure) return y
   wx.canvasToTempFilePath({ canvas, success: (r) => done(r.tempFilePath), done: () => done(null) })
 }
 
@@ -716,4 +739,4 @@ function wrapText(ctx, text, maxWidth) {
   return lines
 }
 
-module.exports = { canvasPalette, renderTrend, renderCard, renderContentCard, renderFullPageCard }
+module.exports = { canvasPalette, renderTrend, renderCard, renderContentCard, renderFullPageCard, makeMeasureCtx }
