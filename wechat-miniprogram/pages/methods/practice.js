@@ -1,5 +1,6 @@
 const methodsData = require('../../utils/methods-data')
 const { useTheme } = require('../../utils/theme-store')
+const { getUserId } = require('../../utils/user')
 
 const STORE_KEY = 'ma_practices'
 
@@ -98,6 +99,7 @@ Page({
       id: Date.now() + '_' + Math.random().toString(36).slice(2, 8),
       time: Date.now(),
       data: Object.assign({}, form),
+      userId: getUserId(),
     })
     if (list.length > 50) list.length = 50
     stored[id] = list

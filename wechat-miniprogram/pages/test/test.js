@@ -2,6 +2,7 @@ const { getModule } = require('../../utils/registry')
 const { drawCell } = require('../../utils/figure')
 const { readableTextColor } = require('../../utils/color')
 const { useTheme } = require('../../utils/theme-store')
+const { getUserId } = require('../../utils/user')
 
 // 历史记录硬上限：超出后仅保留最近 N 条，并对用户可见提示
 const HISTORY_LIMIT = 30
@@ -472,6 +473,7 @@ Page({
       level: r.level || '',
       totalTime: typeof r.totalTime === 'number' ? r.totalTime : 0,
       schemaVersion: SCHEMA_VERSION,
+      userId: getUserId(),
     }
     hist.unshift(record)
     // 超出上限时仅保留最近 N 条，并提示用户（避免静默丢数据）

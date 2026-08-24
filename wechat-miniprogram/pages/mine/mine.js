@@ -1,5 +1,6 @@
 const trainStore = require('../../utils/train-store')
 const { useTheme, THEME_MODES } = require('../../utils/theme-store')
+const { getUser } = require('../../utils/user')
 
 function countPractices() {
   const stored = wx.getStorageSync('ma_practices') || {}
@@ -12,6 +13,8 @@ Page({
     practiceCount: 0,
     trainCount: 0,
     recordSummary: '',
+    profileName: '我的心智档案',
+    profileAvatar: '',
     themeMode: THEME_MODES.AUTO,
     currentTheme: THEME_MODES.LIGHT,
   },
@@ -27,15 +30,19 @@ Page({
     if (assessCount) parts.push('测评 ' + assessCount)
     if (practiceCount) parts.push('方法 ' + practiceCount)
     if (trainCount) parts.push('训练 ' + trainCount)
+    const u = getUser()
     this.setData({
       assessCount,
       practiceCount,
       trainCount,
       recordSummary: parts.length ? parts.join(' · ') + ' 条记录' : '还没有任何记录',
+      profileName: u.nickname || '我的心智档案',
+      profileAvatar: u.avatarUrl || '',
     })
   },
   goHistory() { wx.navigateTo({ url: '/pages/history/history' }) },
   goAbout() { wx.navigateTo({ url: '/pages/about/about' }) },
+  goProfile() { wx.navigateTo({ url: '/pages/profile/profile' }) },
 
   setThemeAuto() {
     this.setThemeMode('auto')

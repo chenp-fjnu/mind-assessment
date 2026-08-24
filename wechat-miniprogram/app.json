@@ -11,6 +11,7 @@
     "pages/methods/practice",
     "pages/assess/assess",
     "pages/mine/mine",
+    "pages/profile/profile",
     "pages/train/train",
     "pages/train/game"
   ],

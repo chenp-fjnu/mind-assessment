@@ -17,6 +17,12 @@
   font-size: 56rpx;
   color: var(--text-inverse);
 }
+.mine-avatar-img {
+  width: 110rpx;
+  height: 110rpx;
+  border-radius: 50%;
+  display: block;
+}
 .mine-name {
   display: block;
   color: var(--text-inverse);

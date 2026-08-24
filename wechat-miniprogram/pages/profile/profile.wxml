@@ -1,0 +1,49 @@
+<view class="theme-wrapper {{themeClass}}">
+  <view class="scroll-page">
+    <view class="profile-hero">
+      <button class="avatar-btn" open-type="chooseAvatar" bind:chooseavatar="onChooseAvatar" aria-label="选择头像">
+        <image wx:if="{{avatarUrl}}" class="avatar" src="{{avatarUrl}}" mode="aspectFill"></image>
+        <view wx:else class="avatar avatar-fallback">🧠</view>
+      </button>
+      <input
+        class="nickname-input"
+        type="nickname"
+        placeholder="点击设置昵称"
+        placeholder-class="nickname-ph"
+        value="{{nickname}}"
+        bindinput="onNicknameInput"
+        bindblur="onNicknameInput"
+        aria-label="昵称"
+      />
+    </view>
+
+    <view class="card form">
+      <view class="row">
+        <text class="label">性别</text>
+        <picker class="picker" range="{{genderOptions}}" value="{{genderIndex}}" bindchange="onGenderChange">
+          <view class="picker-value">{{genderOptions[genderIndex]}} <text class="arrow">›</text></view>
+        </picker>
+      </view>
+      <view class="row">
+        <text class="label">生日</text>
+        <picker class="picker" mode="date" value="{{birthday}}" bindchange="onBirthdayChange">
+          <view class="picker-value">
+            <text wx:if="{{birthday}}">{{birthday}}（{{ageText}}）</text>
+            <text wx:else>未设置</text>
+            <text class="arrow">›</text>
+          </view>
+        </picker>
+      </view>
+    </view>
+
+    <view class="card meta">
+      <text class="meta-line">用户 ID：{{userId}}</text>
+      <text class="meta-line" wx:if="{{createdText}}">创建于：{{createdText}}</text>
+      <text class="meta-tip">资料仅保存在本机，接入账号后可同步到云端。</text>
+    </view>
+
+    <view class="actions">
+      <view class="btn save-btn" bindtap="save" role="button" aria-label="保存">保存</view>
+    </view>
+  </view>
+</view>

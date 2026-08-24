@@ -1,6 +1,7 @@
 // 训练成绩存储：按「游戏 + 难度等级」分别记录与统计（不同等级的历史与最佳相互隔离）。
 // 复用 utils/trend.js 的趋势计算。
 const { computeTrend } = require('./trend')
+const { getUserId } = require('./user')
 
 const PREFIX = 'ma_train_'
 const LAST_KEY = 'ma_train_last'
@@ -18,7 +19,7 @@ function save(id, level, metricValue, detail) {
   const k = key(id, level)
   let arr = wx.getStorageSync(k) || []
   const rec = Object.assign(
-    { rid: Date.now() + '_' + Math.random().toString(36).slice(2, 8), level: level, time: Date.now(), summary: String(metricValue) },
+    { rid: Date.now() + '_' + Math.random().toString(36).slice(2, 8), level: level, time: Date.now(), summary: String(metricValue), userId: getUserId() },
     detail || {}
   )
   arr.push(rec)
