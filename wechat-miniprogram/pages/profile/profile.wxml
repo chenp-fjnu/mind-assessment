@@ -9,6 +9,7 @@
         <button class="avatar-btn ghost" open-type="chooseAvatar" bind:chooseavatar="onChooseAvatar" aria-label="使用微信头像">微信头像</button>
         <view class="avatar-btn ghost" bindtap="chooseFromAlbum" role="button" aria-label="从相册选择头像">从相册选择</view>
       </view>
+      <text class="avatar-tip">「微信头像」需在微信公众平台《隐私保护指引》中声明「微信头像、昵称」scope 后可用；也可直接「从相册选择」。</text>
       <input
         class="nickname-input"
         type="nickname"

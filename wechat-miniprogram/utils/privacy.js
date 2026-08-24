@@ -15,7 +15,7 @@ function registerPrivacyModal() {
   wx.onNeedPrivacyAuthorize((resolve, refuse) => {
     wx.showModal({
       title: '隐私授权提示',
-      content: '保存图片、复制内容等功能需要使用你的相册与剪贴板。本程序所有题目、计分与结果均在你的设备本地完成，不会上传任何数据。详见《隐私保护指引》。',
+      content: '设置头像、昵称，保存图片、复制内容等功能会用到你的微信头像/昵称、相册与剪贴板。本程序所有题目、计分与结果均在你的设备本地完成，不会上传任何数据。详见《隐私保护指引》。',
       confirmText: '同意并继续',
       cancelText: '暂不允许',
       success: (res) => {
