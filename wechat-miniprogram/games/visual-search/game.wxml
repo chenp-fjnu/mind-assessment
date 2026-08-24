@@ -5,7 +5,7 @@
       wx:for="{{cells}}"
       wx:key="index"
       class="cell"
-      style="background:{{item}};width:{{cellSize}}rpx;height:{{cellH}}rpx;"
+      style="background:{{item}};width:100%;height:{{cellH}}rpx;"
       data-idx="{{index}}"
       bindtap="onTap"
       role="button"

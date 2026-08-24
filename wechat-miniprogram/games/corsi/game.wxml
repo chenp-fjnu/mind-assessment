@@ -8,7 +8,7 @@
       bindtap="onTap"
       role="button"
       aria-label="方块 {{index}}"
-      style="width:{{cellSize}}rpx;height:{{cellH}}rpx;"
+      style="width:100%;height:{{cellH}}rpx;"
     ></view>
   </view>
   <view class="bar">

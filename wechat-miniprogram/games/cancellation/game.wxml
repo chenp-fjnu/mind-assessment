@@ -9,7 +9,7 @@
       bindtap="onTap"
       role="button"
       aria-label="数字 {{item.ch}}"
-      style="width:{{cellSize}}rpx;height:{{cellH}}rpx;font-size:{{fontSize}}rpx;"
+      style="width:100%;height:{{cellH}}rpx;font-size:{{fontSize}}rpx;"
     >{{item.ch}}</view>
   </view>
 </view>

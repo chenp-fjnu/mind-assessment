@@ -12,7 +12,7 @@
       bindtap="onTap"
       role="button"
       aria-label="数字 {{item.n}}"
-      style="width:{{cellSize}}rpx;height:{{cellH}}rpx;font-size:{{fontSize}}rpx;"
+      style="width:100%;height:{{cellH}}rpx;font-size:{{fontSize}}rpx;"
     >
       <text wx:if="{{!item.found}}">{{item.n}}</text>
     </view>
