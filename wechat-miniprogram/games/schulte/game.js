@@ -45,15 +45,17 @@ Component({
       const gap = 8 // rpx
       const padding = 32 // rpx
       const viewportWidth = this.data.boardWidth || 705
-      const availableWidth = viewportWidth - padding * 2 - gap * (size - 1)
-      const cellSize = Math.floor(availableWidth / size)
-      const fontSize = Math.max(16, Math.floor(cellSize * 0.4))
-      // 全屏时利用屏幕高度把格子拉高，放大更明显；非全屏则保持正方形
+      const cellW = Math.floor((viewportWidth - padding * 2 - gap * (size - 1)) / size)
+      // 全屏时同时受屏幕高度限制：取宽/高可容纳的最小值并保持正方形，保证整盘不超出屏幕
+      let final = cellW
       const bh = this.data.boardHeight
-      const cellH = bh > 0 ? Math.floor((bh - padding * 2 - gap * (size - 1)) / size) : cellSize
-      const finalSize = Math.max(40, cellSize)
-      const finalH = Math.max(40, cellH)
-      return { cellSize: finalSize, cellH: finalH, fontSize }
+      if (bh > 0) {
+        const cellH = Math.floor((bh - padding * 2 - gap * (size - 1)) / size)
+        final = Math.min(cellW, cellH)
+      }
+      final = Math.max(40, final)
+      const fontSize = Math.max(16, Math.floor(final * 0.4))
+      return { cellSize: final, cellH: final, fontSize }
     },
     start() {
       this.setData({ running: true, startTime: Date.now(), next: 1, errors: 0 })

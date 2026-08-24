@@ -43,21 +43,22 @@ Component({
       })
     },
     computeCellSize(rows, cols) {
-      // 基于 94vw - 32rpx padding 计算可用宽度，预留间隙
-      // 让网格始终占满可用宽度：格子越少，单个格子越大
+      // 基于可用宽度计算格子：网格始终占满可用宽度，格子越少单个越大
       const maxCols = Math.max(rows, cols)
       const gap = 6 // rpx
       const padding = 32 // rpx
       const viewportWidth = this.data.boardWidth || 705
-      const availableWidth = viewportWidth - padding * 2 - gap * (maxCols - 1)
-      const cellSize = Math.floor(availableWidth / maxCols)
-      const minCellSize = 48 // 最小 48rpx 确保可点击
-      const finalSize = Math.max(minCellSize, cellSize) // 移除上限，让格子自动变大填满框
-      const fontSize = Math.floor(finalSize * 0.55)
-      // 全屏时利用屏幕高度把格子拉高，放大更明显；非全屏则保持正方形
+      const cellW = Math.floor((viewportWidth - padding * 2 - gap * (maxCols - 1)) / maxCols)
+      // 全屏时同时受屏幕高度限制：取宽/高可容纳的最小值并保持正方形，保证整盘不超出屏幕
+      let final = cellW
       const bh = this.data.boardHeight
-      const cellH = bh > 0 ? Math.max(minCellSize, Math.floor((bh - padding * 2 - gap * (rows - 1)) / rows)) : finalSize
-      return { cellSize: finalSize, cellH, fontSize }
+      if (bh > 0) {
+        const cellH = Math.floor((bh - padding * 2 - gap * (rows - 1)) / rows)
+        final = Math.min(cellW, cellH)
+      }
+      final = Math.max(48, final) // 最小 48rpx 确保可点击
+      const fontSize = Math.floor(final * 0.55)
+      return { cellSize: final, cellH: final, fontSize }
     },
     start() {
       this.setData({ running: true, startTime: Date.now() })

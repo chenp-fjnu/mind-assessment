@@ -37,14 +37,18 @@ Component({
       const gap = 18 // rpx
       const padding = 32 // rpx
       const viewportWidth = this.data.boardWidth || 705
-      const availableWidth = viewportWidth - padding * 2 - gap * (cols - 1)
-      const cellSize = Math.floor(availableWidth / cols)
-      const minCellSize = 60
-      const finalSize = Math.max(minCellSize, cellSize) // 移除上限，让格子自动变大填满框
-      // 全屏时利用屏幕高度把格子拉高，放大更明显；非全屏则保持正方形
+      const cellW = Math.floor((viewportWidth - padding * 2 - gap * (cols - 1)) / cols)
+      // 全屏时同时受屏幕高度限制：取宽/高可容纳的最小值并保持正方形，保证整盘不超出屏幕
+      let final = cellW
       const bh = this.data.boardHeight
-      const cellH = bh > 0 ? Math.max(minCellSize, Math.floor((bh - padding * 2 - gap * (cols - 1)) / cols)) : finalSize
-      return { cellSize: finalSize, cellH }
+      if (bh > 0) {
+        const blocks = this.data.blocks ? this.data.blocks.length : cols * cols
+        const rows = Math.ceil(blocks / cols)
+        const cellH = Math.floor((bh - padding * 2 - gap * (rows - 1)) / rows)
+        final = Math.min(cellW, cellH)
+      }
+      final = Math.max(60, final) // 移除上限，让格子自动变大填满框
+      return { cellSize: final, cellH: final }
     },
     start() {
       if (this.data.phase !== 'idle' && this.data.phase !== 'done') return
