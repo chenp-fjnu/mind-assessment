@@ -1,3 +1,4 @@
+const { mapDimensions } = require('../../utils/result-view')
 /**
  * SPM 瑞文标准推理测验模块
  * 适配通用模块接口，内部复用现有 questions.js 与 scoring.js
@@ -71,7 +72,7 @@ const moduleDef = {
   
     };
     const groups = _mkGroup(r, layout);
-    const dims = (r && r.dimensions) ? Object.keys(r.dimensions).map((k) => { const d = r.dimensions[k]; return { key: k, name: d.name || k, percent: d.percent, text: d.text, level: d.level }; }) : [];
+    const dims = mapDimensions(r.dimensions);
     const subtests = [];
     const interpretations = _mkInterp(r, groups, dims);
     const showBipolar = !!(dims[0] && dims[0].leftPercent !== undefined);

@@ -6,6 +6,11 @@ const { renderTrend, renderCard, renderFullPageCard } = require('../../utils/can
 const { withPrivacy } = require('../../utils/privacy')
 const methodsData = require('../../utils/methods-data')
 const { useTheme } = require('../../utils/theme-store')
+const { pad2 } = require('../../utils/format')
+const { getDpr } = require('../../utils/device')
+
+// 与 pages/test/test.js 保持一致的数据结构版本
+const SCHEMA_VERSION = 1
 
 Page({
   data: {
@@ -44,16 +49,22 @@ Page({
       this.setData({ invalid: true })
       return
     }
+    // 全量历史只读一次，后续复用（避免多次同步 IO）
+    const allHist = wx.getStorageSync('ma_history') || []
     // 冷启动 / 直接进入兜底：从最近历史恢复答案
     // 优先取「题量一致」的最近一条，避免模块改题数后旧记录答案长度不匹配导致恢复失败
+    let schemaNotice = false
     if (!saved || !saved.answers) {
-      const hist = (wx.getStorageSync('ma_history') || [])
+      const hist = allHist
         .filter((h) => h.id === id)
         .sort((a, b) => b.time - a.time)
       const qn = mod.getQuestions().length
       const hit = hist.find((h) => h.answers && h.answers.length === qn)
       if (hit) {
         saved = { id, answers: hit.answers, totalTime: hit.totalTime || 0 }
+        if (hit.schemaVersion != null && hit.schemaVersion !== SCHEMA_VERSION) {
+          schemaNotice = true
+        }
       }
     }
     if (!saved || !saved.answers) {
@@ -62,8 +73,7 @@ Page({
     }
 
     // 测评时间 / 距上次重测间隔
-    const p2 = (n) => (n < 10 ? '0' + n : '' + n)
-    const myHist = (wx.getStorageSync('ma_history') || [])
+    const myHist = allHist
       .filter((h) => h.id === id)
       .sort((a, b) => b.time - a.time)
     let testedTime = ''
@@ -71,8 +81,8 @@ Page({
     if (myHist.length) {
       const t = new Date(myHist[0].time)
       testedTime =
-        t.getFullYear() + '-' + p2(t.getMonth() + 1) + '-' + p2(t.getDate()) +
-        ' ' + p2(t.getHours()) + ':' + p2(t.getMinutes())
+        t.getFullYear() + '-' + pad2(t.getMonth() + 1) + '-' + pad2(t.getDate()) +
+        ' ' + pad2(t.getHours()) + ':' + pad2(t.getMinutes())
       if (myHist.length >= 2) {
         const gap = Math.round((myHist[0].time - myHist[1].time) / 86400000)
         retestGap = gap <= 0 ? '今天' : gap + ' 天前'
@@ -101,7 +111,7 @@ Page({
       retakeHint = ''
     }
 
-    this.dpr = (() => { try { if (wx.getWindowInfo) { const w = wx.getWindowInfo(); if (w.pixelRatio) return w.pixelRatio } } catch (e) { void 0 } try { if (wx.getDeviceInfo) { const d = wx.getDeviceInfo(); if (d.pixelRatio) return d.pixelRatio } } catch (e) { void 0 } return 2 })()
+    this.dpr = getDpr()
     const questions = mod.getQuestions()
     const layout = mod.resultLayout || {}
     const primaryField = layout.primaryField || 'score'
@@ -154,7 +164,7 @@ Page({
     const interpretations = view.interpretations
 
     // 同一测评表的历史趋势（计算逻辑抽离至 utils/trend.js，便于单测）
-    const t = computeTrend(wx.getStorageSync('ma_history'), id)
+    const t = computeTrend(allHist, id)
     const showTrend = t.showTrend
     const trendValues = t.trendValues
     const trendDelta = t.trendDelta
@@ -216,6 +226,9 @@ Page({
         if (path) this._shareImage = path
       })
     })
+    if (schemaNotice) {
+      wx.showToast({ title: '量表已更新，历史结果仅供参考', icon: 'none' })
+    }
     wx.setNavigationBarTitle({ title: mod.name + ' · 结果' })
   },
 
@@ -244,7 +257,7 @@ Page({
   },
 
   onReady() {
-    this.dpr = (() => { try { if (wx.getWindowInfo) { const w = wx.getWindowInfo(); if (w.pixelRatio) return w.pixelRatio } } catch (e) { void 0 } try { if (wx.getDeviceInfo) { const d = wx.getDeviceInfo(); if (d.pixelRatio) return d.pixelRatio } } catch (e) { void 0 } return 2 })()
+    this.dpr = getDpr()
     if (this.data.meta && this.data.meta.name) {
       this.drawCardToTemp((path) => {
         if (path) this._shareImage = path

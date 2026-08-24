@@ -4,22 +4,7 @@ const trainStore = require('../../utils/train-store')
 const { getModule } = require('../../utils/registry')
 const { withPrivacy } = require('../../utils/privacy')
 const { useTheme } = require('../../utils/theme-store')
-
-function fmt(ts) {
-  const d = new Date(ts)
-  const p = (n) => (n < 10 ? '0' + n : '' + n)
-  return (
-    d.getFullYear() +
-    '-' +
-    p(d.getMonth() + 1) +
-    '-' +
-    p(d.getDate()) +
-    ' ' +
-    p(d.getHours()) +
-    ':' +
-    p(d.getMinutes())
-  )
-}
+const { fmt } = require('../../utils/format')
 
 function buildMethodRecords() {
   const stored = wx.getStorageSync('ma_practices') || {}

@@ -32,4 +32,17 @@ function getResultView(mod, r, layout) {
   }
 }
 
-module.exports = { getResultView }
+/**
+ * 统一维度映射：消除各模块 getResultView 中逐字重复的 dims 构造逻辑
+ * @param {Object|undefined} dimensions - r.dimensions
+ * @returns {Array} [{ key, name, percent, text, level }]
+ */
+function mapDimensions(dimensions) {
+  if (!dimensions) return []
+  return Object.keys(dimensions).map((k) => {
+    const d = dimensions[k]
+    return { key: k, name: d.name || k, percent: d.percent, text: d.text, level: d.level }
+  })
+}
+
+module.exports = { getResultView, mapDimensions }

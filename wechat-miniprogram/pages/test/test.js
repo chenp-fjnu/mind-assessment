@@ -3,6 +3,11 @@ const { drawCell } = require('../../utils/figure')
 const { readableTextColor } = require('../../utils/color')
 const { useTheme } = require('../../utils/theme-store')
 
+// 历史记录硬上限：超出后仅保留最近 N 条，并对用户可见提示
+const HISTORY_LIMIT = 30
+// 数据结构版本：模块题量/计分方式变更时递增，用于识别旧记录
+const SCHEMA_VERSION = 1
+
 Page({
   data: {
     meta: {},
@@ -56,7 +61,8 @@ Page({
       () => {
         const key = 'ma_progress_' + mod.id
         const saved = wx.getStorageSync(key)
-        const hasProgress = saved && saved.answers && saved.answers.some((a) => a !== null)
+        const qn = questions.length
+        const hasProgress = saved && saved.answers && saved.answers.length === qn && saved.answers.some((a) => a !== null)
         if (hasProgress) {
           wx.showModal({
             title: '继续测评',
@@ -403,6 +409,10 @@ Page({
   },
 
   saveProgress() {
+    const now = Date.now()
+    // 节流：最多每 2 秒写一次，降低低端机 Storage IO 压力
+    if (this._lastSave && now - this._lastSave < 2000) return
+    this._lastSave = now
     wx.setStorageSync('ma_progress_' + this.data.meta.id, {
       answers: this.data.answers,
       current: this.data.current,
@@ -461,11 +471,16 @@ Page({
       summary: pv == null ? '' : String(pv),
       level: r.level || '',
       totalTime: typeof r.totalTime === 'number' ? r.totalTime : 0,
-      schemaVersion: 1,
+      schemaVersion: SCHEMA_VERSION,
     }
     hist.unshift(record)
+    // 超出上限时仅保留最近 N 条，并提示用户（避免静默丢数据）
+    const dropped = Math.max(0, hist.length - HISTORY_LIMIT)
+    const trimmed = hist.slice(0, HISTORY_LIMIT)
+    if (dropped > 0) {
+      wx.showToast({ title: '仅保留最近 ' + HISTORY_LIMIT + ' 条记录', icon: 'none' })
+    }
     // 配额兜底：写入失败时 progressively 丢弃最旧记录直至成功
-    let trimmed = hist.slice(0, 30)
     for (let guard = 0; guard < trimmed.length; guard++) {
       try {
         wx.setStorageSync('ma_history', trimmed)

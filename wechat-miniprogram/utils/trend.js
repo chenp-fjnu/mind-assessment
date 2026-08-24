@@ -4,11 +4,7 @@
  * @param {string} id - 量表 id
  * @returns {{ showTrend:boolean, trendValues:number[], trendDelta:number, trendDates:string[], catList:Array }}
  */
-function fmtMD(ts) {
-  const d = new Date(ts)
-  const p = (n) => (n < 10 ? '0' + n : '' + n)
-  return p(d.getMonth() + 1) + '-' + p(d.getDate())
-}
+const { fmtMD } = require('./format')
 
 function isNumeric(s) {
   return /^\d+(\.\d+)?$/.test(s)

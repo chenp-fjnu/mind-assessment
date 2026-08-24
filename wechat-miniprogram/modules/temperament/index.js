@@ -1,3 +1,4 @@
+const { mapDimensions } = require('../../utils/result-view')
 /**
  * 气质类型问卷（基于 Eysenck 气质维度，60 题简化版）
  *
@@ -173,7 +174,7 @@ module.exports = {
   
     };
     const groups = _mkGroup(r, layout);
-    const dims = (r && r.dimensions) ? Object.keys(r.dimensions).map((k) => { const d = r.dimensions[k]; return { key: k, name: d.name || k, percent: d.percent, text: d.text, level: d.level }; }) : [];
+    const dims = mapDimensions(r.dimensions);
     const subtests = [];
     const interpretations = _mkInterp(r, groups, dims);
     const showBipolar = !!(dims[0] && dims[0].leftPercent !== undefined);
