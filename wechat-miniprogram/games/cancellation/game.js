@@ -4,6 +4,7 @@ Component({
   properties: {
     level: { type: Number, value: 0, observer() { this.reset() } },
     boardWidth: { type: Number, value: 705, observer() { this.applySizing() } },
+    boardHeight: { type: Number, value: 0, observer() { this.applySizing() } },
   },
   data: {
     rows: 8,
@@ -16,6 +17,7 @@ Component({
     running: false,
     cellSize: 0,
     fontSize: 0,
+    cellH: 0,
   },
   lifetimes: {
     attached() { this.reset() },
@@ -25,7 +27,7 @@ Component({
       const seed = mod.generate(this.data.level)
       const cells = seed.cells.map((ch, idx) => ({ ch, idx, hit: false, wrong: false }))
       // 响应式计算单元格大小
-      const { cellSize, fontSize } = this.computeCellSize(seed.rows, seed.cols)
+      const { cellSize, cellH, fontSize } = this.computeCellSize(seed.rows, seed.cols)
       this.setData({
         rows: seed.rows,
         cols: seed.cols,
@@ -36,6 +38,7 @@ Component({
         errors: 0,
         running: false,
         cellSize,
+        cellH,
         fontSize,
       })
     },
@@ -51,14 +54,17 @@ Component({
       const minCellSize = 48 // 最小 48rpx 确保可点击
       const finalSize = Math.max(minCellSize, cellSize) // 移除上限，让格子自动变大填满框
       const fontSize = Math.floor(finalSize * 0.55)
-      return { cellSize: finalSize, fontSize }
+      // 全屏时利用屏幕高度把格子拉高，放大更明显；非全屏则保持正方形
+      const bh = this.data.boardHeight
+      const cellH = bh > 0 ? Math.max(minCellSize, Math.floor((bh - padding * 2 - gap * (rows - 1)) / rows)) : finalSize
+      return { cellSize: finalSize, cellH, fontSize }
     },
     start() {
       this.setData({ running: true, startTime: Date.now() })
     },
     applySizing() {
-      const { cellSize, fontSize } = this.computeCellSize(this.data.rows, this.data.cols)
-      this.setData({ cellSize, fontSize })
+      const { cellSize, cellH, fontSize } = this.computeCellSize(this.data.rows, this.data.cols)
+      this.setData({ cellSize, cellH, fontSize })
     },
     onTap(e) {
       const idx = e.currentTarget.dataset.idx

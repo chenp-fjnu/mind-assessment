@@ -4,6 +4,7 @@ Component({
   properties: {
     level: { type: Number, value: 4, observer() { this.reset() } },
     boardWidth: { type: Number, value: 705, observer() { this.applySizing() } },
+    boardHeight: { type: Number, value: 0, observer() { this.applySizing() } },
   },
   data: {
     size: 4,
@@ -14,6 +15,7 @@ Component({
     correct: 0,
     total: 0,
     cellSize: 0,
+    cellH: 0,
   },
   lifetimes: {
     attached() { this.reset() },
@@ -26,7 +28,7 @@ Component({
     reset() {
       this.clearTimer()
       const seed = mod.generate(this.data.level)
-      const { cellSize } = this.computeCellSize(seed.size)
+      const { cellSize, cellH } = this.computeCellSize(seed.size)
       this.setData({
         size: seed.size,
         pattern: seed.cells,
@@ -36,6 +38,7 @@ Component({
         correct: 0,
         total: 0,
         cellSize,
+        cellH,
       })
     },
     computeCellSize(size) {
@@ -46,11 +49,14 @@ Component({
       const cellSize = Math.floor(availableWidth / size)
       const minCellSize = 52
       const finalSize = Math.max(minCellSize, cellSize) // 移除上限，让格子自动变大填满框
-      return { cellSize: finalSize }
+      // 全屏时利用屏幕高度把格子拉高，放大更明显；非全屏则保持正方形
+      const bh = this.data.boardHeight
+      const cellH = bh > 0 ? Math.max(minCellSize, Math.floor((bh - padding * 2 - gap * (size - 1)) / size)) : finalSize
+      return { cellSize: finalSize, cellH }
     },
     applySizing() {
-      const { cellSize } = this.computeCellSize(this.data.size)
-      this.setData({ cellSize })
+      const { cellSize, cellH } = this.computeCellSize(this.data.size)
+      this.setData({ cellSize, cellH })
     },
     start() {
       if (this.data.phase !== 'idle' && this.data.phase !== 'done') return

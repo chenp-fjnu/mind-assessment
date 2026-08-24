@@ -55,10 +55,10 @@ const lines = entries.map((e) => {
     return (
       `    <breath-game wx:if="{{family === 'breath'}}" id="trainGame" ` +
       `gameId="{{gameId}}" level="{{level}}" color="{{meta.color}}" tint="{{tint}}" ` +
-      `board-width="{{boardWidth}}" fullscreen="{{fullscreen}}" bind:finish="onFinish" />`
+      `board-width="{{boardWidth}}" board-height="{{boardHeight}}" fullscreen="{{fullscreen}}" bind:finish="onFinish" />`
     )
   }
-  return `    <${e.tag} wx:if="{{gameId === '${e.id}'}}" id="trainGame" level="{{level}}" board-width="{{boardWidth}}" fullscreen="{{fullscreen}}" bind:finish="onFinish" />`
+  return `    <${e.tag} wx:if="{{gameId === '${e.id}'}}" id="trainGame" level="{{level}}" board-width="{{boardWidth}}" board-height="{{boardHeight}}" fullscreen="{{fullscreen}}" bind:finish="onFinish" />`
 })
 const block =
   '<!-- 本文件由 tools/gen-game-player.js 自动生成，请勿手动修改 -->\n' + lines.join('\n') + '\n'

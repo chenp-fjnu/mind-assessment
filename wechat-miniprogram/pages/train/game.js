@@ -23,8 +23,9 @@ Page({
     resultChips: [],
     trendText: '',
     fullscreen: false,
-    // 棋盘可用宽度（rpx）；全屏时取满屏宽度，方格类游戏据此放大格子
+    // 棋盘可用宽/高（rpx）；全屏时取满屏尺寸，方格类游戏据此放大格子（高度用于竖屏铺满）
     boardWidth: 705,
+    boardHeight: 0,
   },
   onLoad(query) {
     useTheme(this)
@@ -147,8 +148,28 @@ Page({
   },
   toggleFullscreen() {
     const fs = !this.data.fullscreen
-    // rpx 以 750 为屏幕宽度基准；全屏时棋盘占满整屏宽度，方格类游戏据此放大格子
-    this.setData({ fullscreen: fs, boardWidth: fs ? 750 : 705 })
+    // rpx 以 750 为屏幕宽度基准；全屏时棋盘占满整屏，同时把屏幕“可用高度”（rpx，
+    // 已扣除刘海/安全区与内边距）下发，方格类游戏据此在竖屏下把格子拉高，放大更明显、更易点击
+    let boardWidth = 705
+    let boardHeight = 0
+    if (fs) {
+      const info = (wx.getWindowInfo && wx.getWindowInfo()) || wx.getSystemInfoSync()
+      const wpx = info.windowWidth || 375
+      const hpx = info.windowHeight || 667
+      const factor = 750 / wpx
+      boardWidth = 750
+      let topInset = 0
+      let bottomInset = 0
+      if (info.safeArea) {
+        topInset = info.safeArea.top
+        bottomInset = (info.screenHeight || hpx) - info.safeArea.bottom
+      } else {
+        topInset = info.statusBarHeight || 20
+      }
+      const innerHpx = hpx - topInset - bottomInset
+      boardHeight = Math.round(innerHpx * factor) - 48 // 再减去 board 上下 24rpx 内边距
+    }
+    this.setData({ fullscreen: fs, boardWidth, boardHeight })
   },
   goBack() {
     wx.navigateBack({

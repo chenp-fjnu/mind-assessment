@@ -4,6 +4,7 @@ Component({
   properties: {
     level: { type: Number, value: 3, observer() { this.reset() } },
     boardWidth: { type: Number, value: 705, observer() { this.applySizing() } },
+    boardHeight: { type: Number, value: 0, observer() { this.applySizing() } },
   },
   data: {
     blocks: 9,
@@ -14,6 +15,7 @@ Component({
     inputIdx: 0,
     correct: 0,
     cellSize: 0,
+    cellH: 0,
   },
   lifetimes: {
     attached() { this.reset() },
@@ -28,8 +30,8 @@ Component({
       this.timers = []
       const seed = mod.generate(this.data.level)
       const cols = 3
-      const { cellSize } = this.computeCellSize(cols)
-      this.setData({ blocks: seed.blocks, cols, seq: seed.seq, phase: 'idle', flash: -1, inputIdx: 0, correct: 0, cellSize })
+      const { cellSize, cellH } = this.computeCellSize(cols)
+      this.setData({ blocks: seed.blocks, cols, seq: seed.seq, phase: 'idle', flash: -1, inputIdx: 0, correct: 0, cellSize, cellH })
     },
     computeCellSize(cols) {
       const gap = 18 // rpx
@@ -39,15 +41,18 @@ Component({
       const cellSize = Math.floor(availableWidth / cols)
       const minCellSize = 60
       const finalSize = Math.max(minCellSize, cellSize) // 移除上限，让格子自动变大填满框
-      return { cellSize: finalSize }
+      // 全屏时利用屏幕高度把格子拉高，放大更明显；非全屏则保持正方形
+      const bh = this.data.boardHeight
+      const cellH = bh > 0 ? Math.max(minCellSize, Math.floor((bh - padding * 2 - gap * (cols - 1)) / cols)) : finalSize
+      return { cellSize: finalSize, cellH }
     },
     start() {
       if (this.data.phase !== 'idle' && this.data.phase !== 'done') return
       this.playSeq()
     },
     applySizing() {
-      const { cellSize } = this.computeCellSize(this.data.cols)
-      this.setData({ cellSize })
+      const { cellSize, cellH } = this.computeCellSize(this.data.cols)
+      this.setData({ cellSize, cellH })
     },
     playSeq() {
       this.setData({ phase: 'show', flash: -1, inputIdx: 0 })

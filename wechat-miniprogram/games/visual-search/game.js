@@ -4,6 +4,7 @@ Component({
   properties: {
     level: { type: Number, value: 1, observer() { this.reset() } },
     boardWidth: { type: Number, value: 705, observer() { this.applySizing() } },
+    boardHeight: { type: Number, value: 0, observer() { this.applySizing() } },
   },
   data: {
     level: 1,
@@ -15,6 +16,7 @@ Component({
     errors: 0,
     running: false,
     cellSize: 0,
+    cellH: 0,
     hueDiff: 180,
   },
   lifetimes: {
@@ -44,7 +46,10 @@ Component({
       const cellSize = Math.floor(availableWidth / size)
       const minCellSize = 36
       const finalSize = Math.max(minCellSize, cellSize) // 移除上限，让格子自动变大填满框
-      this.setData({ cellSize: finalSize })
+      // 全屏时利用屏幕高度把格子拉高，放大更明显；非全屏则保持正方形
+      const bh = this.data.boardHeight
+      const cellH = bh > 0 ? Math.max(minCellSize, Math.floor((bh - padding * 2 - gap * (size - 1)) / size)) : finalSize
+      this.setData({ cellSize: finalSize, cellH })
     },
     start() {
       this.setData({ running: true, startTime: Date.now() })
