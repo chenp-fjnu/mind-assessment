@@ -30,7 +30,7 @@
     }
   },
   "compileType": "miniprogram",
-  "libVersion": "3.0.0",
+  "libVersion": "3.17.1",
   "appid": "wx215011be68b87714",
   "projectname": "mind-assessment",
   "condition": {},

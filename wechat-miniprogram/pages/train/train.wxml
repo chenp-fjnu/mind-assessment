@@ -14,7 +14,7 @@
       <text class="search-icon">🔍</text>
       <input
         class="search-input"
-        placeholder="搜索训练游戏"
+        placeholder="搜索训练游戏 / 关键字"
         placeholder-class="search-ph"
         value="{{keyword}}"
         bindinput="onSearch"

@@ -40,7 +40,7 @@
     <view class="card meta">
       <text class="meta-line">用户 ID：{{userId}}</text>
       <text class="meta-line" wx:if="{{createdText}}">创建于：{{createdText}}</text>
-      <text class="meta-tip">资料仅保存在本机，接入账号后可同步到云端。</text>
+      <text class="meta-tip">资料仅保存在本机</text>
     </view>
 
     <view class="actions">
