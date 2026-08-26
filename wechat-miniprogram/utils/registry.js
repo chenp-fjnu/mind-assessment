@@ -25,6 +25,7 @@ const LOADERS = {
   cdrise: () => require('../modules/cdrise/index'),
   enneagram: () => require('../modules/enneagram/index'),
   temperament: () => require('../modules/temperament/index'),
+  hbdi: () => require('../modules/hbdi/index'),
 }
 
 const MODULES_META = require('./modules-meta')

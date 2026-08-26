@@ -11,12 +11,12 @@ const HOT_CONFIG = [
   { kind: 'assess', id: 'mbti' },       // 社交破冰全民热点
   { kind: 'assess', id: 'holland' },    // 高考志愿/职业规划权威首选
   { kind: 'assess', id: 'big5' },       // 学术界黄金标准
+  { kind: 'assess', id: 'hbdi' },       // 全脑优势 思维风格/职场自我探索
   // 方法类
   { kind: 'method', id: 'smart' },      // 目标管理国民工具
   { kind: 'method', id: 'pomodoro' },   // 番茄工作法 国民级时间管理
   // 训练类
   { kind: 'train', id: 'schulte' },     // 注意力训练 国民级/飞行员背书
-  { kind: 'train', id: 'n-back' },      // 唯一有RCT证据提升流体智力
 ]
 
 // 渐变映射：匹配各页面的 Hero 渐变

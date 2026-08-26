@@ -433,5 +433,25 @@ module.exports = [
     "reference": "气质四维度问卷（简化版；基于希波克拉底-盖伦气质学说与现代四维模型）",
     "scoring": "60 题 Likert 计分，四气质类型累加成主导气质",
     "hot": false
+  },
+  {
+    "id": "hbdi",
+    "type": "personality",
+    "name": "HBDI 全脑优势测评",
+    "shortName": "HBDI",
+    "icon": "🧠",
+    "color": "#2563eb",
+    "desc": "基于赫曼全脑模型，评估你分析、组织、共情、创新四大思维象限的优势剖面。",
+    "questionCount": 40,
+    "duration": 10,
+    "tag": [
+      "全脑",
+      "思维风格",
+      "职场",
+      "自我探索"
+    ],
+    "reference": "Herrmann, N. — Whole Brain Model / HBDI® 全脑优势模型（本实现为公共领域全脑模型的教育简化版，非授权常模）",
+    "scoring": "四象限倾向计分，输出象限剖面与左/右脑、上/下脑偏好",
+    "hot": false
   }
 ]

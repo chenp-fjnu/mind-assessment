@@ -235,3 +235,73 @@
   background: var(--color-brand);
   color: var(--text-inverse);
 }
+
+/* 测评·方法·训练 关联 */
+.link-intro {
+  display: block;
+  font-size: var(--font-size-sm);
+  color: var(--text-tertiary);
+  line-height: var(--line-height-normal);
+  margin: 16rpx 0 8rpx;
+}
+.link-group {
+  margin-top: 24rpx;
+}
+.link-label {
+  display: block;
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-secondary);
+  margin-bottom: 4rpx;
+}
+.rec {
+  display: flex;
+  align-items: center;
+  padding: 20rpx 0;
+  border-top: 2rpx solid var(--border-light);
+}
+.rec:first-of-type {
+  border-top: none;
+  padding-top: 0;
+}
+.rec-icon {
+  font-size: var(--font-size-4xl);
+  margin-right: 18rpx;
+  flex-shrink: 0;
+}
+.rec-body {
+  flex: 1;
+  overflow: hidden;
+}
+.rec-name {
+  display: block;
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+}
+.rec-sum {
+  display: block;
+  font-size: var(--font-size-sm);
+  color: var(--text-tertiary);
+  margin-top: 6rpx;
+  line-height: var(--line-height-normal);
+}
+.rec-badge {
+  margin-left: 12rpx;
+  font-size: var(--font-size-xs);
+  color: var(--text-success);
+  background: var(--badge-success-bg);
+  padding: 2rpx 12rpx;
+  border-radius: var(--radius-full);
+  flex-shrink: 0;
+}
+.rec-badge.dim-badge {
+  color: var(--text-info, #0891b2);
+  background: rgba(8, 145, 178, 0.12);
+}
+.arrow {
+  margin-left: 8rpx;
+  color: var(--text-muted);
+  font-size: var(--font-size-xl);
+  flex-shrink: 0;
+}

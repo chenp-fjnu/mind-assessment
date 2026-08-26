@@ -363,3 +363,26 @@
   font-size: var(--font-size-xl);
   border-radius: var(--radius-full);
 }
+
+/* 测评·方法·训练 关联 */
+.link-intro {
+  display: block;
+  font-size: var(--font-size-sm);
+  color: var(--text-tertiary);
+  line-height: var(--line-height-normal);
+  margin: 16rpx 0 8rpx;
+}
+.link-group {
+  margin-top: 24rpx;
+}
+.link-label {
+  display: block;
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-secondary);
+  margin-bottom: 4rpx;
+}
+.rec-badge.dim-badge {
+  color: var(--text-info, #0891b2);
+  background: rgba(8, 145, 178, 0.12);
+}

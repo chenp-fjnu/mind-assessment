@@ -97,8 +97,8 @@ describe('trend', () => {
 
 describe('registry 完整性', () => {
   const meta = getMetaList()
-  test('22 个量表均有 reference 与 scoring', () => {
-    expect(meta.length).toBe(22)
+  test('23 个量表均有 reference 与 scoring', () => {
+    expect(meta.length).toBe(23)
     meta.forEach((m) => {
       expect(m.reference && String(m.reference).trim()).toBeTruthy()
       expect(m.scoring && String(m.scoring).trim()).toBeTruthy()
@@ -171,6 +171,35 @@ describe('methods-data recommendFor', () => {
     const r = methodsData.recommendFor('intelligence')
     expect(Array.isArray(r)).toBe(true)
     expect(r.length).toBeGreaterThan(0)
+  })
+})
+
+describe('relations 跨域关联（测评↔方法↔训练）', () => {
+  const relations = require('../utils/relations')
+  test('情绪类量表关联放松训练', () => {
+    const games = relations.relatedGames('sds')
+    expect(games.length).toBeGreaterThan(0)
+    expect(games.every((g) => g.kind === 'train' && g.nav.indexOf('/pages/train/game') === 0)).toBe(true)
+  })
+  test('智力类量表关联注意力/记忆/反应训练', () => {
+    const games = relations.relatedGames('spm')
+    const dims = games.map((g) => g.dimLabel)
+    expect(dims).toEqual(expect.arrayContaining(['注意力', '工作记忆']))
+  })
+  test('HBDI 关联执行功能+注意力训练', () => {
+    const games = relations.relatedGames('hbdi')
+    const dims = games.map((g) => g.dimLabel)
+    expect(dims).toEqual(expect.arrayContaining(['执行功能', '注意力']))
+  })
+  test('测评关联方法论非空且可跳转', () => {
+    const methods = relations.relatedMethods('mbti')
+    expect(methods.length).toBeGreaterThan(0)
+    expect(methods.every((m) => m.kind === 'method' && m.nav.indexOf('/pages/methods/detail') === 0)).toBe(true)
+  })
+  test('buildLinks 同时返回方法与训练', () => {
+    const links = relations.buildLinks('gad7')
+    expect(Array.isArray(links.methods)).toBe(true)
+    expect(Array.isArray(links.games)).toBe(true)
   })
 })
 

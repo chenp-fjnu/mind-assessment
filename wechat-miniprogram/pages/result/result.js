@@ -5,6 +5,7 @@ const { readableTextColor } = require('../../utils/color')
 const { renderTrend, renderCard, renderFullPageCard, makeMeasureCtx } = require('../../utils/canvas')
 const { withPrivacy } = require('../../utils/privacy')
 const methodsData = require('../../utils/methods-data')
+const relations = require('../../utils/relations')
 const { useTheme } = require('../../utils/theme-store')
 const { pad2 } = require('../../utils/format')
 const { getDpr } = require('../../utils/device')
@@ -219,7 +220,8 @@ Page({
       retakeHint,
       timeText,
       noteText,
-      recommend: methodsData.recommendFor(mod.type),
+      recommend: relations.relatedMethods(mod.id),
+      recommendGames: relations.relatedGames(mod.id),
     }, () => {
       if (this.data.showTrend) this.drawTrend()
       this.drawCardToTemp((path) => {
@@ -334,6 +336,7 @@ Page({
           lastSummary: this.data.lastSummary,
           catList: this.data.catList,
           recommend: this.data.recommend,
+          recommendGames: this.data.recommendGames,
           noteText: this.data.noteText,
           retakeHint: this.data.retakeHint,
         }
@@ -388,6 +391,10 @@ Page({
   goMethod(e) {
     const id = e.currentTarget.dataset.id
     wx.navigateTo({ url: `/pages/methods/detail?id=${id}` })
+  },
+  goGame(e) {
+    const id = e.currentTarget.dataset.id
+    wx.navigateTo({ url: `/pages/train/game?gameId=${id}` })
   },
   retest() {
     wx.redirectTo({ url: `/pages/test/test?id=${this.data.meta.id}` })

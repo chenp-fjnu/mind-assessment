@@ -59,7 +59,7 @@ describe('我的页 mine', () => {
 describe('关于页 about', () => {
   test('onLoad 统计模块/类型/方法数', () => {
     const ctx = loadPage('pages/about/about.js')
-    expect(ctx.data.moduleCount).toBe(22)
+    expect(ctx.data.moduleCount).toBe(23)
     expect(ctx.data.typeCount).toBeGreaterThan(0)
     expect(ctx.data.methodCount).toBeGreaterThan(0)
     expect(Array.isArray(ctx.data.sources)).toBe(true)
@@ -69,14 +69,14 @@ describe('关于页 about', () => {
 describe('测评 tab 页 assess', () => {
   test('onLoad 列出全部量表并分类', () => {
     const ctx = loadPage('pages/assess/assess.js')
-    expect(ctx.data.moduleCount).toBe(22)
+    expect(ctx.data.moduleCount).toBe(23)
     expect(ctx.data.groups.length).toBeGreaterThan(0)
   })
   test('关键词查询参数过滤', () => {
     const ctx = loadPage('pages/assess/assess.js', { keyword: 'mbti' })
     const filtered = ctx.data.groups.reduce((n, g) => n + g.list.length, 0)
     expect(filtered).toBeGreaterThanOrEqual(1)
-    expect(filtered).toBeLessThanOrEqual(22)
+    expect(filtered).toBeLessThanOrEqual(23)
   })
 })
 

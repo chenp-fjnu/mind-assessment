@@ -2,6 +2,7 @@ const { getModule, TYPE_LABELS, getMetaList } = require('../../utils/registry')
 const { readableTextColor } = require('../../utils/color')
 const { genCard, saveToAlbum } = require('../../utils/share')
 const { useTheme } = require('../../utils/theme-store')
+const relations = require('../../utils/relations')
 
 // 渐变映射
 const GRADIENT_MAP = {
@@ -16,6 +17,8 @@ Page({
     meta: {},
     invalid: false,
     history: { count: 0 },
+    relatedMethods: [],
+    relatedGames: [],
   },
   onLoad(query) {
     useTheme(this)
@@ -48,6 +51,8 @@ Page({
     })
     wx.setNavigationBarTitle({ title: mod.name })
     this.loadHistory(mod)
+    const links = relations.buildLinks(mod.id)
+    this.setData({ relatedMethods: links.methods, relatedGames: links.games })
   },
   loadHistory(mod) {
     const all = wx.getStorageSync('ma_history') || []
@@ -60,6 +65,12 @@ Page({
   },
   start() {
     wx.navigateTo({ url: `/pages/test/test?id=${this.data.id}` })
+  },
+  goMethod(e) {
+    wx.navigateTo({ url: `/pages/methods/detail?id=${e.currentTarget.dataset.id}` })
+  },
+  goGame(e) {
+    wx.navigateTo({ url: `/pages/train/game?gameId=${e.currentTarget.dataset.id}` })
   },
   goHome() {
     wx.reLaunch({ url: '/pages/index/index' })

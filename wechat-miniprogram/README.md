@@ -1,6 +1,6 @@
 # 心智探索局（Mind Quest）· 微信小程序
 
-纯前端**原生**微信小程序，集成 **22 套心理学量表**（人格、情绪、智力、职业、自我认知、压力、睡眠、社交、积极心理等 9 大类），并在「训练」Tab 内置 **31 个脑力训练游戏**（注意力 / 工作记忆 / 反应速度 / 放松正念 / 执行功能 5 大认知维度）；支持离线测评、本地保存、结果可视化与同量表历史趋势对比。无后端、无网络请求，所有数据仅存于本地 `Storage`。
+纯前端**原生**微信小程序，集成 **23 套心理学量表**（人格、情绪、智力、职业、自我认知、压力、睡眠、社交、积极心理等 9 大类），并在「训练」Tab 内置 **31 个脑力训练游戏**（注意力 / 工作记忆 / 反应速度 / 放松正念 / 执行功能 5 大认知维度）；支持离线测评、本地保存、结果可视化与同量表历史趋势对比。无后端、无网络请求，所有数据仅存于本地 `Storage`。
 
 > ⚠️ 免责声明：所有量表均为**简化 / 教育版**自陈问卷，计分与常模为公开资料整理的近似值，仅供自我探索与娱乐参考，不构成任何医学诊断或专业建议。
 
@@ -22,7 +22,7 @@ wechat-miniprogram/
 ├── app.js / app.json / app.wxss      # 全局逻辑、页面注册、全局样式（含深色模式 CSS 变量）
 ├── project.config.json / sitemap.json
 ├── package.json                      # 测试脚本与开发依赖
-├── modules/                          # 22 个量表模块（每个 index.js 自包含）
+├── modules/                          # 23 个量表模块（每个 index.js 自包含）
 │   ├── mbti/ big5/ epq/ disc/ pf16/  # 人格 / 性格
 │   ├── sds/ sas/ gad7/ dass21/       # 情绪筛查
 │   ├── ses/ las/                     # 自我认知
@@ -58,7 +58,7 @@ wechat-miniprogram/
 
 ---
 
-## 22 套量表一览
+## 23 套量表一览
 
 | 模块 id | 名称 | 类别 | 题数 | 题型 | 主结果字段 |
 | --- | --- | --- | --- | --- | --- |
@@ -84,6 +84,7 @@ wechat-miniprogram/
 | `cdrise` | 心理韧性量表 | 积极心理 | 10 | 量表 | 韧性评分 |
 | `enneagram` | 九型人格测试 | 人格性格 | 36 | 量表 | 主导类型 |
 | `temperament` | 气质类型问卷 | 人格性格 | 60 | 量表 | 气质类型 |
+| `hbdi` | HBDI 全脑优势测评 | 人格性格 | 40 | 选择 | 全脑优势 |
 
 ---
 
@@ -205,9 +206,9 @@ module.exports = {
 
 | 测试 | 命令 | 依赖 | 说明 |
 | --- | --- | --- | --- |
-| 冒烟（评分链路） | `npm test`（`node test/smoke.js`） | 无 | 22 模块评分 + 韦氏候选完整性 + `getResultView` 视图构造流程，**152 项** |
+| 冒烟（评分链路） | `npm test`（`node test/smoke.js`） | 无 | 23 模块评分 + 韦氏候选完整性 + `getResultView` 视图构造流程，**158 项** |
 | 模块单测 | `npm run test:simulate` → Jest `modules.test.js` | jest | 模块评分 / 候选 / 选项数断言 |
-| 工具单测 | `npm run test:simulate` → Jest `utils.test.js` | jest | `color`/`scoring`/`trend`/`result-view`/`registry`/`figure`/`methods-data` 纯函数、模块契约（`getResultView` 标准化结构、22 量表 `reference`/`scoring` 非空）、图形色盲纹理 |
+| 工具单测 | `npm run test:simulate` → Jest `utils.test.js` | jest | `color`/`scoring`/`trend`/`result-view`/`registry`/`figure`/`methods-data` 纯函数、模块契约（`getResultView` 标准化结构、23 量表 `reference`/`scoring` 非空）、图形色盲纹理 |
 | 页面单测 | `npm run test:simulate` → Jest `index.page.test.js` | jest | `detail`/`result`/`index`/`test` 页面 `onLoad` 渲染数据（基于 mock 运行时 `wx`/`Page`，**无需** `@miniprogram/simulate`） |
 | 全量 | `npm run test:all` | jest | 先跑冒烟再跑 Jest；`npm run test:coverage` 附覆盖率报告 |
 

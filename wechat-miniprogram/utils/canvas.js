@@ -278,6 +278,7 @@ function renderFullPageCard(canvas, ctx, W, H, opts, done, measure) {
     lastSummary,
     catList,
     recommend,
+    recommendGames,
     noteText,
     retakeHint,
   } = opts
@@ -669,6 +670,33 @@ function renderFullPageCard(canvas, ctx, W, H, opts, done, measure) {
         ctx.fillStyle = pal.textSoft
         ctx.font = '20px sans-serif'
         const lines = wrapText(ctx, m.summary, contentW)
+        lines.forEach((line) => {
+          ctx.fillText(line, centerX, y)
+          y += 28
+        })
+      }
+      y += 16
+    })
+    drawDivider()
+  }
+
+  // 相关训练
+  if (recommendGames && recommendGames.length) {
+    ctx.fillStyle = pal.text
+    ctx.font = '26px sans-serif'
+    ctx.textAlign = 'left'
+    ctx.fillText('🎮 相关训练', leftX, y)
+    y += 40
+    ctx.textAlign = 'center'
+    recommendGames.slice(0, 5).forEach((g) => {
+      ctx.fillStyle = pal.text
+      ctx.font = '24px sans-serif'
+      ctx.fillText((g.icon || '') + ' ' + (g.name || '') + (g.dimLabel ? '（' + g.dimLabel + '）' : ''), centerX, y)
+      y += 34
+      if (g.summary) {
+        ctx.fillStyle = pal.textSoft
+        ctx.font = '20px sans-serif'
+        const lines = wrapText(ctx, g.summary, contentW)
         lines.forEach((line) => {
           ctx.fillText(line, centerX, y)
           y += 28
