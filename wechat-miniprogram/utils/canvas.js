@@ -93,10 +93,14 @@ function renderTrend(ctx, W, H, opts) {
 }
 
 // 结果分享卡片（canvas 未缩放，函数内部按 dpr 处理）
-function renderCard(canvas, ctx, W, H, opts, done) {
+function renderCard(canvas, ctx, W, _H, opts, done) {
   const { meta, primaryValue, primaryLabel, levelText, levelColor, levelColorText, dims } = opts
   const pal = canvasPalette()
   const dpr = getDPR()
+  const dimsArr = dims || []
+  const maxRows = Math.min(dimsArr.length, 8)
+  // 根据维度行数动态计算高度，避免固定高度导致底部文字被截断/页脚与正文重叠
+  const H = Math.max(_H, 430 + maxRows * 40 + 60)
   canvas.width = W * dpr
   canvas.height = H * dpr
   ctx.scale(dpr, dpr)
@@ -173,10 +177,15 @@ function renderCard(canvas, ctx, W, H, opts, done) {
 }
 
 // 通用内容卡片（测评/方法/结果均可复用）：标题 + 副标题 + 多行 + 页脚
-function renderContentCard(canvas, ctx, W, H, opts, done) {
+function renderContentCard(canvas, ctx, W, _H, opts, done) {
   const { color, icon, title, subtitle, lines, footer } = opts
   const pal = canvasPalette()
   const dpr = getDPR()
+  const CAP = 8
+  const linesArr = lines || []
+  // 根据行数动态计算高度，避免固定高度导致文字被截断/页脚与正文重叠
+  const bottom = 330 + Math.min(linesArr.length, CAP) * 44
+  const H = Math.max(_H, bottom + 80)
   canvas.width = W * dpr
   canvas.height = H * dpr
   ctx.scale(dpr, dpr)
@@ -206,7 +215,7 @@ function renderContentCard(canvas, ctx, W, H, opts, done) {
   const ls = lines || []
   let y = 330
   ctx.textAlign = 'left'
-  ls.slice(0, 6).forEach((ln) => {
+  ls.slice(0, CAP).forEach((ln) => {
     ctx.fillStyle = pal.textSoft
     ctx.font = '22px sans-serif'
     ctx.fillText(ln.label || '', 50, y)
