@@ -111,14 +111,11 @@ function renderCard(canvas, ctx, W, _H, opts, done) {
   ctx.font = '28px sans-serif'
   ctx.fillText('心智探索局', W / 2, 70)
   ctx.fillStyle = meta.color
-  ctx.font = '34px sans-serif'
-  ctx.fillText(meta.name, W / 2, 130)
+  fitText(ctx, meta.name, W / 2, 130, W - 40, 34, 'center')
   ctx.fillStyle = pal.text
-  ctx.font = '72px sans-serif'
-  ctx.fillText(primaryValue, W / 2, 250)
+  fitText(ctx, String(primaryValue), W / 2, 250, W - 40, 72, 'center')
   ctx.fillStyle = pal.textSoft
-  ctx.font = '26px sans-serif'
-  ctx.fillText(primaryLabel, W / 2, 300)
+  fitText(ctx, primaryLabel, W / 2, 300, W - 40, 26, 'center')
   ctx.fillStyle = levelColor
   ctx.fillRect(W / 2 - 90, 330, 180, 46)
   ctx.fillStyle = levelColorText
@@ -204,12 +201,10 @@ function renderContentCard(canvas, ctx, W, _H, opts, done) {
     ctx.fillText(icon, W / 2, 160)
   }
   ctx.fillStyle = pal.text
-  ctx.font = '40px sans-serif'
-  ctx.fillText(title || '', W / 2, 230)
+  fitText(ctx, title || '', W / 2, 230, W - 40, 40, 'center')
   if (subtitle) {
     ctx.fillStyle = pal.textSoft
-    ctx.font = '24px sans-serif'
-    ctx.fillText(subtitle, W / 2, 272)
+    fitText(ctx, subtitle, W / 2, 272, W - 40, 24, 'center')
   }
   // 多行
   const ls = lines || []
@@ -317,18 +312,15 @@ function renderFullPageCard(canvas, ctx, W, H, opts, done, measure) {
   y += 50
 
   ctx.fillStyle = meta.color || '#7c3aed'
-  ctx.font = '32px sans-serif'
-  ctx.fillText(meta.name || '', centerX, y)
+  fitText(ctx, meta.name || '', centerX, y, contentW, 32, 'center')
   y += 48
 
   ctx.fillStyle = pal.text
-  ctx.font = '64px sans-serif'
-  ctx.fillText(String(primaryValue), centerX, y)
+  fitText(ctx, String(primaryValue), centerX, y, contentW, 64, 'center')
   y += 80
 
   ctx.fillStyle = pal.textSoft
-  ctx.font = '24px sans-serif'
-  ctx.fillText(primaryLabel || '', centerX, y)
+  fitText(ctx, primaryLabel || '', centerX, y, contentW, 24, 'center')
   y += 40
 
   // 等级徽章
@@ -672,6 +664,27 @@ function wrapText(ctx, text, maxWidth) {
   })
   if (currentLine) lines.push(currentLine)
   return lines
+}
+
+// 单行自适应字号：超出最大宽度时逐级缩小，仍放不下则截断加省略号，避免文字溢出画布
+function fitText(ctx, text, x, y, maxWidth, baseSize, align) {
+  text = String(text == null ? '' : text)
+  const a = align || 'center'
+  ctx.textAlign = a
+  let size = baseSize
+  while (size > 12) {
+    ctx.font = size + 'px sans-serif'
+    if (ctx.measureText(text).width <= maxWidth) break
+    size -= 2
+  }
+  if (size <= 12 && ctx.measureText(text).width > maxWidth) {
+    let t = text
+    while (t.length > 1 && ctx.measureText(t + '…').width > maxWidth) t = t.slice(0, -1)
+    text = t + '…'
+    ctx.font = '12px sans-serif'
+  }
+  ctx.fillText(text, x, y)
+  return size
 }
 
 module.exports = { canvasPalette, renderTrend, renderCard, renderContentCard, renderFullPageCard, makeMeasureCtx }
