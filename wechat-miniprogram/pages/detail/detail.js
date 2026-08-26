@@ -3,6 +3,7 @@ const { readableTextColor } = require('../../utils/color')
 const { genCard, saveToAlbum } = require('../../utils/share')
 const { useTheme } = require('../../utils/theme-store')
 const relations = require('../../utils/relations')
+const assessIntro = require('../../utils/assess-intro')
 
 // 渐变映射
 const GRADIENT_MAP = {
@@ -17,6 +18,7 @@ Page({
     meta: {},
     invalid: false,
     history: { count: 0 },
+    about: [],
     relatedMethods: [],
     relatedGames: [],
   },
@@ -52,7 +54,11 @@ Page({
     wx.setNavigationBarTitle({ title: mod.name })
     this.loadHistory(mod)
     const links = relations.buildLinks(mod.id)
-    this.setData({ relatedMethods: links.methods, relatedGames: links.games })
+    this.setData({
+      about: assessIntro[mod.id] || [],
+      relatedMethods: links.methods,
+      relatedGames: links.games,
+    })
   },
   loadHistory(mod) {
     const all = wx.getStorageSync('ma_history') || []

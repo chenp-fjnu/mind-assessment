@@ -244,6 +244,27 @@
   line-height: var(--line-height-normal);
   margin: 16rpx 0 8rpx;
 }
+
+/* 测评详解 */
+.about-item {
+  margin-top: 20rpx;
+}
+.about-item:first-of-type {
+  margin-top: 4rpx;
+}
+.about-h {
+  display: block;
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-secondary);
+  margin-bottom: 6rpx;
+}
+.about-t {
+  display: block;
+  font-size: var(--font-size-md);
+  color: var(--text-tertiary);
+  line-height: var(--line-height-normal);
+}
 .link-group {
   margin-top: 24rpx;
 }

@@ -22,6 +22,14 @@
       </view>
     </view>
 
+    <view wx:if="{{about.length}}" class="card section">
+      <text class="sec-title">测评详解</text>
+      <view class="about-item" wx:for="{{about}}" wx:key="h" wx:for-item="a">
+        <text class="about-h">{{a.h}}</text>
+        <text class="about-t">{{a.t}}</text>
+      </view>
+    </view>
+
     <view wx:if="{{meta.reference}}" class="card section">
       <text class="sec-title">参考来源与版本</text>
       <text class="sec-text">{{meta.reference}}</text>
