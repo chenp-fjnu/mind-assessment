@@ -28,6 +28,49 @@
       <text wx:if="{{meta.scoring}}" class="sec-text scoring">{{meta.scoring}}</text>
     </view>
 
+
+    <view wx:if="{{history.count}}" class="card section">
+      <text class="sec-title">历史成绩</text>
+      <view class="hist-row">
+        <view class="hist-col">
+          <text class="hist-col-num">{{history.last.summary}}</text>
+          <text class="hist-col-label">上次结果</text>
+        </view>
+        <view wx:if="{{history.best}}" class="hist-col">
+          <text class="hist-col-num">{{history.best.summary}}</text>
+          <text class="hist-col-label">历史最佳</text>
+        </view>
+        <view class="hist-col">
+          <text class="hist-col-num">{{history.count}}</text>
+          <text class="hist-col-label">测评次数</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="card section row">
+      <view class="stat">
+        <text class="stat-num">{{meta.questionCount}}</text>
+        <text class="stat-label">题目数</text>
+      </view>
+      <view class="stat">
+        <text class="stat-num">{{meta.duration}}</text>
+        <text class="stat-label">分钟</text>
+      </view>
+      <view class="stat">
+        <text class="stat-num">离线</text>
+        <text class="stat-label">无需联网</text>
+      </view>
+    </view>
+
+    <view class="card section tip">
+      <text class="tip-title">温馨提示</text>
+      <text class="tip-text">本测评结果基于自陈量表，仅供自我探索与娱乐参考，不构成任何医学诊断或专业建议。请凭第一直觉作答。</text>
+    </view>
+
+    <view class="bottom-bar">
+      <button class="btn start-btn" style="background:{{meta.color}};color:{{meta.colorText}};" bindtap="start" aria-label="开始测评：{{meta.name}}">开始测评</button>
+    </view>
+
     <view wx:if="{{relatedMethods.length || relatedGames.length}}" class="card section">
       <text class="sec-title">🔗 测评 · 方法 · 训练 关联</text>
       <text class="sec-text link-intro">测评帮你「认识自己」，方法论给出「怎么用」，训练提供「练起来」——三者构成「认知 → 方法 → 练习」的闭环。以下基于本量表主题推荐：</text>
@@ -75,48 +118,6 @@
           <text class="arrow">›</text>
         </view>
       </view>
-    </view>
-
-    <view wx:if="{{history.count}}" class="card section">
-      <text class="sec-title">历史成绩</text>
-      <view class="hist-row">
-        <view class="hist-col">
-          <text class="hist-col-num">{{history.last.summary}}</text>
-          <text class="hist-col-label">上次结果</text>
-        </view>
-        <view wx:if="{{history.best}}" class="hist-col">
-          <text class="hist-col-num">{{history.best.summary}}</text>
-          <text class="hist-col-label">历史最佳</text>
-        </view>
-        <view class="hist-col">
-          <text class="hist-col-num">{{history.count}}</text>
-          <text class="hist-col-label">测评次数</text>
-        </view>
-      </view>
-    </view>
-
-    <view class="card section row">
-      <view class="stat">
-        <text class="stat-num">{{meta.questionCount}}</text>
-        <text class="stat-label">题目数</text>
-      </view>
-      <view class="stat">
-        <text class="stat-num">{{meta.duration}}</text>
-        <text class="stat-label">分钟</text>
-      </view>
-      <view class="stat">
-        <text class="stat-num">离线</text>
-        <text class="stat-label">无需联网</text>
-      </view>
-    </view>
-
-    <view class="card section tip">
-      <text class="tip-title">温馨提示</text>
-      <text class="tip-text">本测评结果基于自陈量表，仅供自我探索与娱乐参考，不构成任何医学诊断或专业建议。请凭第一直觉作答。</text>
-    </view>
-
-    <view class="bottom-bar">
-      <button class="btn start-btn" style="background:{{meta.color}};color:{{meta.colorText}};" bindtap="start" aria-label="开始测评：{{meta.name}}">开始测评</button>
     </view>
 
     <view class="brand-foot">心智探索局 · 测评 · 方法 · 训练</view>
