@@ -245,6 +245,23 @@
   margin: 16rpx 0 8rpx;
 }
 
+/* 历史成绩可点击查看 */
+.linkable {
+  cursor: pointer;
+}
+.linkable:active {
+  opacity: 0.7;
+}
+.sec-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.sec-more {
+  font-size: var(--font-size-sm);
+  color: var(--text-muted);
+}
+
 /* 测评详解 */
 .about-item {
   margin-top: 20rpx;

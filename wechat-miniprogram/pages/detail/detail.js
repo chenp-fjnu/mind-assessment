@@ -78,6 +78,16 @@ Page({
   goGame(e) {
     wx.navigateTo({ url: `/pages/train/game?gameId=${e.currentTarget.dataset.id}` })
   },
+  goHistory() {
+    const hist = wx.getStorageSync('ma_history') || []
+    const mine = hist
+      .filter((h) => h.id === this.data.id && h.answers)
+      .sort((a, b) => b.time - a.time)
+    if (!mine.length) return
+    const rec = mine[0]
+    getApp().globalData.lastResult = { id: rec.id, answers: rec.answers, time: rec.time }
+    wx.navigateTo({ url: `/pages/result/result?id=${rec.id}` })
+  },
   goHome() {
     wx.reLaunch({ url: '/pages/index/index' })
   },

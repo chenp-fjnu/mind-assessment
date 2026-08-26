@@ -37,8 +37,11 @@
     </view>
 
 
-    <view wx:if="{{history.count}}" class="card section">
-      <text class="sec-title">历史成绩</text>
+    <view wx:if="{{history.count}}" class="card section linkable" bindtap="goHistory" role="button" aria-label="查看历史测评结果">
+      <view class="sec-head">
+        <text class="sec-title">历史成绩</text>
+        <text class="sec-more">查看 ›</text>
+      </view>
       <view class="hist-row">
         <view class="hist-col">
           <text class="hist-col-num">{{history.last.summary}}</text>
