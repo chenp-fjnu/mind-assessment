@@ -14,7 +14,7 @@
     </view>
 
     <view class="card section">
-      <text class="sec-title">测评简�?/text>
+      <text class="sec-title">测评简介</text>
       <text class="sec-text">{{meta.desc}}</text>
       <view class="tags">
         <text class="tag" wx:for="{{meta.tags}}" wx:key="*this">{{item}}</text>
@@ -30,10 +30,10 @@
 
     <view wx:if="{{relatedMethods.length || relatedGames.length}}" class="card section">
       <text class="sec-title">🔗 测评 · 方法 · 训练 关联</text>
-      <text class="sec-text link-intro">测评帮你「认识自己」，方法论给出「怎么用」，训练提供「练起来」——三者构成「认�?�?方法 �?练习」的闭环。以下基于本量表主题推荐�?/text>
+      <text class="sec-text link-intro">测评帮你「认识自己」，方法论给出「怎么用」，训练提供「练起来」——三者构成「认知 → 方法 → 练习」的闭环。以下基于本量表主题推荐：</text>
 
       <view wx:if="{{relatedMethods.length}}" class="link-group">
-        <text class="link-label">🧰 相关方法�?/text>
+        <text class="link-label">🧰 相关方法论</text>
         <view
           class="rec"
           wx:for="{{relatedMethods}}"
@@ -50,7 +50,7 @@
             <text class="rec-sum">{{m.summary}}</text>
           </view>
           <text wx:if="{{m.interactive}}" class="rec-badge">可练</text>
-          <text class="arrow">�?/text>
+          <text class="arrow">›</text>
         </view>
       </view>
 
@@ -72,7 +72,7 @@
             <text class="rec-sum">{{g.summary}}</text>
           </view>
           <text class="rec-badge dim-badge">{{g.dimLabel}}</text>
-          <text class="arrow">�?/text>
+          <text class="arrow">›</text>
         </view>
       </view>
     </view>
@@ -86,7 +86,7 @@
         </view>
         <view wx:if="{{history.best}}" class="hist-col">
           <text class="hist-col-num">{{history.best.summary}}</text>
-          <text class="hist-col-label">历史最�?/text>
+          <text class="hist-col-label">历史最佳</text>
         </view>
         <view class="hist-col">
           <text class="hist-col-num">{{history.count}}</text>
@@ -98,7 +98,7 @@
     <view class="card section row">
       <view class="stat">
         <text class="stat-num">{{meta.questionCount}}</text>
-        <text class="stat-label">题目�?/text>
+        <text class="stat-label">题目数</text>
       </view>
       <view class="stat">
         <text class="stat-num">{{meta.duration}}</text>
@@ -112,18 +112,18 @@
 
     <view class="card section tip">
       <text class="tip-title">温馨提示</text>
-      <text class="tip-text">本测评结果基于自陈量表，仅供自我探索与娱乐参考，不构成任何医学诊断或专业建议。请凭第一直觉作答�?/text>
+      <text class="tip-text">本测评结果基于自陈量表，仅供自我探索与娱乐参考，不构成任何医学诊断或专业建议。请凭第一直觉作答。</text>
     </view>
 
     <view class="bottom-bar">
-      <button class="btn start-btn" style="background:{{meta.color}};color:{{meta.colorText}};" bindtap="start" aria-label="开始测评：{{meta.name}}">开始测�?/button>
+      <button class="btn start-btn" style="background:{{meta.color}};color:{{meta.colorText}};" bindtap="start" aria-label="开始测评：{{meta.name}}">开始测评</button>
     </view>
 
     <view class="brand-foot">心智探索局 · 测评 · 方法 · 训练</view>
 
     <view class="share-bar">
-      <button class="btn ghost" bindtap="saveCard" aria-label="保存为图�?>保存为图�?/button>
-      <button class="btn ghost" open-type="share" aria-label="分享给好�?>分享给好�?/button>
+      <button class="btn ghost" bindtap="saveCard" aria-label="保存为图片">保存为图片</button>
+      <button class="btn ghost" open-type="share" aria-label="分享给好友">分享给好友</button>
     </view>
 
     <canvas type="2d" id="shareCanvas" class="share-canvas"></canvas>

@@ -7,12 +7,12 @@
   </view>
 
   <view class="scroll-page" wx:elif="{{meta.name}}">
-    <view wx:if="{{viewError}}" class="warn">结果解析出现异常，请重新测评或返回首页重�?/view>
+    <view wx:if="{{viewError}}" class="warn">结果解析出现异常，请重新测评或返回首页重试</view>
     <view class="head" style="background:{{meta.color}};color:{{meta.colorText}};">
       <text class="head-icon">{{meta.icon}}</text>
       <text class="head-name">{{meta.name}}</text>
       <view class="primary-box">
-        <text class="primary-value {{primarySize}}" aria-label="{{primaryLabel}}：{{primaryValue}}{{levelText ? '�? + levelText : ''}}">{{primaryValue}}</text>
+        <text class="primary-value {{primarySize}}" aria-label="{{primaryLabel}}：{{primaryValue}}{{levelText ? '，' + levelText : ''}}">{{primaryValue}}</text>
         <text class="primary-label">{{primaryLabel}}</text>
       </view>
       <text wx:if="{{levelText}}" class="level-badge" style="background:{{levelColor}};color:{{levelColorText}};">{{levelText}}</text>
@@ -21,8 +21,8 @@
     </view>
 
     <view wx:if="{{testedTime}}" class="test-meta">
-      <text class="test-time">测评�?{{testedTime}}</text>
-      <text wx:if="{{retestGap}}" class="test-gap">距上次重�?{{retestGap}}</text>
+      <text class="test-time">测评于 {{testedTime}}</text>
+      <text wx:if="{{retestGap}}" class="test-gap">距上次重测 {{retestGap}}</text>
       <text wx:if="{{timeText}}" class="test-gap">用时 {{timeText}}</text>
     </view>
 
@@ -40,7 +40,7 @@
       </view>
     </view>
 
-    <!-- 双极维度（MBTI�?-->
+    <!-- 双极维度（MBTI） -->
     <view wx:if="{{showBipolar}}" class="card sec">
       <text class="sec-title">类型维度</text>
       <view class="bipolar" wx:for="{{dims}}" wx:key="key" wx:for-item="d">
@@ -53,7 +53,7 @@
       </view>
     </view>
 
-    <!-- 测评表维度（大五 / 16PF�?-->
+    <!-- 测评表维度（大五 / 16PF） -->
     <view wx:if="{{showDims}}" class="card sec">
       <text class="sec-title">维度剖析</text>
       <view class="dim" wx:for="{{dims}}" wx:key="key" wx:for-item="d">
@@ -68,9 +68,9 @@
       </view>
     </view>
 
-    <!-- 分测验（韦氏�?-->
+    <!-- 分测验（韦氏） -->
     <view wx:if="{{showSubtests}}" class="card sec">
-      <text class="sec-title">分测验表�?/text>
+      <text class="sec-title">分测验表现</text>
       <view class="sub" wx:for="{{subtests}}" wx:key="name" wx:for-item="s">
         <view class="sub-head">
           <text>{{s.name}}</text>
@@ -94,16 +94,16 @@
     <!-- 历史趋势 -->
     <view wx:if="{{showTrend}}" class="card sec">
       <text class="sec-title">历史趋势（近 {{trendValues.length}} 次）</text>
-      <canvas type="2d" id="trendCanvas" class="trend-canvas" role="img" aria-label="历史测评趋势折线�?></canvas>
+      <canvas type="2d" id="trendCanvas" class="trend-canvas" role="img" aria-label="历史测评趋势折线图"></canvas>
       <text class="trend-delta {{trendDelta>0?'up':(trendDelta<0?'down':'flat')}}">
-        较上�?{{trendDelta>0?'�?:(trendDelta<0?'�?:'�?)}} {{trendDelta>0?'+':''}}{{trendDelta}}
+        较上次 {{trendDelta>0?'↑':(trendDelta<0?'↓':'→')}} {{trendDelta>0?'+':''}}{{trendDelta}}
       </text>
-      <text class="trend-range">首次 {{firstValue}} �?最�?{{lastValue}}（{{rangeDelta>0?'+':''}}{{rangeDelta}}�?/text>
+      <text class="trend-range">首次 {{firstValue}} → 最近 {{lastValue}}（{{rangeDelta>0?'+':''}}{{rangeDelta}}）</text>
     </view>
     <view wx:elif="{{catList.length}}" class="card sec">
       <text class="sec-title">历史记录（共 {{catList.length}} 次）</text>
       <view wx:if="{{firstSummary && lastSummary && firstSummary !== lastSummary}}" class="trend-range">
-        首次 {{firstSummary}} �?最�?{{lastSummary}}
+        首次 {{firstSummary}} → 最近 {{lastSummary}}
       </view>
       <view class="cat-list">
         <view class="cat-item" wx:for="{{catList}}" wx:key="timeText" wx:for-item="c">
@@ -115,10 +115,10 @@
 
     <view wx:if="{{recommend.length || recommendGames.length}}" class="card sec">
       <text class="sec-title">🔗 测评 · 方法 · 训练 关联</text>
-      <text class="sec-text link-intro">测评帮你「认识自己」，方法论给出「怎么用」，训练提供「练起来」——三者构成「认�?�?方法 �?练习」的闭环。基于本次测评主题推荐：</text>
+      <text class="sec-text link-intro">测评帮你「认识自己」，方法论给出「怎么用」，训练提供「练起来」——三者构成「认知 → 方法 → 练习」的闭环。基于本次测评主题推荐：</text>
 
       <view wx:if="{{recommend.length}}" class="link-group">
-        <text class="link-label">🧰 相关方法�?/text>
+        <text class="link-label">🧰 相关方法论</text>
         <view
           class="rec"
           wx:for="{{recommend}}"
@@ -135,7 +135,7 @@
             <text class="rec-sum">{{m.summary}}</text>
           </view>
           <text wx:if="{{m.interactive}}" class="rec-badge">可练</text>
-          <text class="arrow">�?/text>
+          <text class="arrow">›</text>
         </view>
       </view>
 
@@ -157,19 +157,19 @@
             <text class="rec-sum">{{g.summary}}</text>
           </view>
           <text class="rec-badge dim-badge">{{g.dimLabel}}</text>
-          <text class="arrow">�?/text>
+          <text class="arrow">›</text>
         </view>
       </view>
     </view>
 
-    <view class="disclaimer">本结果基于自陈量表，题目部分参考公开心理测评表题库整理，仅供自我探索与学习参考，非标准化临床诊断工具，不构成医学或专业建议�?/view>
+    <view class="disclaimer">本结果基于自陈量表，题目部分参考公开心理测评表题库整理，仅供自我探索与学习参考，非标准化临床诊断工具，不构成医学或专业建议。</view>
 
     <view wx:if="{{noteText}}" class="note-box">{{noteText}}</view>
 
     <view class="brand-foot">心智探索局 · 测评 · 方法 · 训练</view>
 
     <view class="bottom-bar">
-      <button class="btn save" bindtap="saveCard" aria-label="保存结果卡片到相�?>保存结果卡片</button>
+      <button class="btn save" bindtap="saveCard" aria-label="保存结果卡片到相册">保存结果卡片</button>
       <view class="btn-row">
         <button class="btn ghost" bindtap="retest" aria-label="重新测评">重新测评</button>
         <button class="btn home" style="background:{{meta.color}};color:{{meta.colorText}};" bindtap="goHome" aria-label="返回首页">返回首页</button>
