@@ -18,7 +18,7 @@ module.exports = {
   name: '数字广度',
   dim: 'memory',
   dimLabel: '工作记忆',
-  icon: '🔢',
+  icon: '🧮',
   color: '#10b981',
   desc: '记住短暂显示的数字序列并依次点出，训练言语工作记忆广度。',
   reference: 'shuertefangge.com「数字广度」',

@@ -77,7 +77,7 @@ module.exports = {
   name: 'N-Back',
   dim: 'memory',
   dimLabel: '工作记忆',
-  icon: '🧠',
+  icon: '🎴',
   color: '#8b5cf6',
   desc: '经典双重 N-Back 训练：同时判断视觉位置与听觉字母是否与 N 步前匹配，有效提升工作记忆容量。',
   reference: 'Jaeggi et al. (2008) PNAS - Dual N-Back 改善流体智力',

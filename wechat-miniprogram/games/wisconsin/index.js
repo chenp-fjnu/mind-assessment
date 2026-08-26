@@ -58,7 +58,7 @@ module.exports = {
   name: '威斯康星',
   dim: 'exec',
   dimLabel: '执行功能',
-  icon: '🃏',
+  icon: '🧪',
   color: '#6366f1',
   desc: '按给定维度（颜色/形状/数量）把卡片归到匹配的那一组，训练抽象分类。',
   reference: 'shuertefangge.com「威斯康星卡片分类」',

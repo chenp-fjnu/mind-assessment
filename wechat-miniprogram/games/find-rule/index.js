@@ -37,7 +37,7 @@ module.exports = {
   name: '按要求找方格',
   dim: 'attention',
   dimLabel: '注意力',
-  icon: '🎯',
+  icon: '🔎',
   color: '#db2777',
   desc: '按规则点选符合条件的方格，训练规则遵循与选择性注意。',
   reference: 'shuertefangge.com「按要求找方格」',

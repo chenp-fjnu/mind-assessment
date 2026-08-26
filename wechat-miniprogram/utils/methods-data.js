@@ -2,7 +2,7 @@ const METHODS = [
   {
     id: 'smart',
     name: 'SMART 目标法',
-    icon: '🎯',
+    icon: '💎',
     color: '#0891b2',
     category: '目标与行动',
     summary: '把模糊的愿望变成可落地的目标：具体、可衡量、可达、相关、有时限。',
@@ -44,7 +44,7 @@ const METHODS = [
   {
     id: 'grow',
     name: 'GROW 教练模型',
-    icon: '🌱',
+    icon: '🌳',
     color: '#059669',
     category: '目标与行动',
     summary: 'Goal 目标–Reality 现状–Options 方案–Will 行动，结构化推进从想法到执行。',
@@ -195,7 +195,7 @@ const METHODS = [
   {
     id: 'abc',
     name: 'ABC 认知重构',
-    icon: '🧩',
+    icon: '🔤',
     color: '#7c3aed',
     category: '情绪与认知',
     summary: '基于 REBT：情绪不是事件直接造成，而是我们对事件的信念造成。',
@@ -237,7 +237,7 @@ const METHODS = [
   {
     id: 'threegood',
     name: '三件好事',
-    icon: '🌟',
+    icon: '🙏',
     color: '#16a34a',
     category: '情绪与认知',
     summary: '每天记录三件好事并写出原因，训练大脑留意积极面（Seligman 积极心理学练习）。',
@@ -446,7 +446,7 @@ const METHODS = [
   {
     id: 'eisenhower',
     name: '四象限法则',
-    icon: '📊',
+    icon: '⏱️',
     color: '#ea580c',
     category: '习惯与行为',
     summary: '按“重要/紧急”把事务分四格，优先做重要不紧急的事。',
@@ -480,7 +480,7 @@ const METHODS = [
   {
     id: 'pareto',
     name: '二八定律',
-    icon: '⚡',
+    icon: '📈',
     color: '#b45309',
     category: '习惯与行为',
     summary: '约 80% 的结果来自 20% 的关键投入，聚焦高杠杆事项。',

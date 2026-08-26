@@ -24,7 +24,7 @@ module.exports = {
   name: '更大数字挑战',
   dim: 'reaction',
   dimLabel: '反应速度',
-  icon: '⚖️',
+  icon: '➕',
   color: '#06b6d4',
   desc: '在两个数字中尽快点出更大的那个，训练数量比较与反应。',
   reference: 'shuertefangge.com「更大数字挑战」',

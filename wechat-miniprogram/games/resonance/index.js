@@ -19,7 +19,7 @@ module.exports = {
   name: '共振呼吸',
   dim: 'relax',
   dimLabel: '放松正念',
-  icon: '🌊',
+  icon: '🔔',
   color: '#38bdf8',
   desc: '吸气 4 秒、呼气 6 秒（约 6 次/分），调节心率变异性、缓解焦虑。',
   reference: 'shuertefangge.com「共振呼吸」',

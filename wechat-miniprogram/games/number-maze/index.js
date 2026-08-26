@@ -48,7 +48,7 @@ module.exports = {
   name: '数字迷宫',
   dim: 'attention',
   dimLabel: '注意力',
-  icon: '🌀',
+  icon: '❓',
   color: '#4f46e5',
   desc: '从起点走到终点，训练视觉追踪与路径规划。',
   reference: 'shuertefangge.com「数字迷宫」',

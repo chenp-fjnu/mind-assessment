@@ -154,7 +154,7 @@ module.exports = {
   desc: '基于 DASS-21 抑郁焦虑压力复合量表，同时评估抑郁、焦虑、压力三个维度，输出各维度严重度分级。',
   reference: "Lovibond, S.H. & Lovibond, P.F. (1995) — 抑郁-焦虑-压力量表（DASS-21）",
   scoring: "21 题 0–3 Likert 累加法，三维度分量表计分，常模分级",
-  icon: '🎯',
+  icon: '🩺',
   color: '#7c3aed',
   duration: 10,
   questionCount: 21,

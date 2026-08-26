@@ -41,7 +41,7 @@ module.exports = {
   name: '斯特鲁普',
   dim: 'reaction',
   dimLabel: '反应速度',
-  icon: '🌈',
+  icon: '🔴',
   color: '#f59e0b',
   desc: '说出墨水的颜色而非词义，训练抑制控制与冲突处理。',
   reference: 'Stroop (1935) 经典色词任务',

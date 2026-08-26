@@ -18,7 +18,7 @@ module.exports = {
   name: '反应时间',
   dim: 'reaction',
   dimLabel: '反应速度',
-  icon: '⚡',
+  icon: '🚀',
   color: '#ef4444',
   desc: '屏幕变绿后尽快点击，测你的视觉反应速度。',
   reference: 'reactiontester.com 简单反应时范式',

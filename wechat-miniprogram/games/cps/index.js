@@ -13,7 +13,7 @@ module.exports = {
   name: '连点 CPS',
   dim: 'reaction',
   dimLabel: '反应速度',
-  icon: '⚡',
+  icon: '💥',
   color: '#eab308',
   desc: '限定时间内尽快点击，测量每秒点击数（CPS）。',
   reference: 'shuertefangge.com「CPS 连点」',
