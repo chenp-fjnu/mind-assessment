@@ -1,7 +1,15 @@
 {
   "description": "心智探索局",
   "packOptions": {
-    "ignore": [],
+    "ignore": [
+      { "type": "folder", "value": "node_modules" },
+      { "type": "folder", "value": "coverage" },
+      { "type": "folder", "value": "test" },
+      { "type": "folder", "value": "tools" },
+      { "type": "folder", "value": "docs" },
+      { "type": "folder", "value": "scripts" },
+      { "type": "folder", "value": ".github" }
+    ],
     "include": []
   },
   "setting": {
