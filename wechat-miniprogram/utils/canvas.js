@@ -266,7 +266,6 @@ function renderFullPageCard(canvas, ctx, W, H, opts, done, measure) {
     showSubtests,
     dims,
     subtests,
-    interpretations,
     showTrend,
     trendValues,
     trendDelta,
@@ -277,9 +276,6 @@ function renderFullPageCard(canvas, ctx, W, H, opts, done, measure) {
     firstSummary,
     lastSummary,
     catList,
-    recommend,
-    recommendGames,
-    noteText,
     retakeHint,
   } = opts
 
@@ -520,37 +516,6 @@ function renderFullPageCard(canvas, ctx, W, H, opts, done, measure) {
     drawDivider()
   }
 
-  // 结果解读
-  if (interpretations && interpretations.length) {
-    ctx.fillStyle = pal.text
-    ctx.font = '26px sans-serif'
-    ctx.textAlign = 'left'
-    ctx.fillText('结果解读', leftX, y)
-    y += 40
-    ctx.textAlign = 'center'
-    interpretations.slice(0, 6).forEach((it) => {
-      if (it.title) {
-        ctx.fillStyle = pal.text
-        ctx.font = '24px sans-serif'
-        ctx.textAlign = 'left'
-        ctx.fillText(it.title, leftX, y)
-        y += 36
-      }
-      if (it.text) {
-        ctx.fillStyle = pal.textSoft
-        ctx.font = '22px sans-serif'
-        const lines = wrapText(ctx, it.text, contentW)
-        lines.forEach((line) => {
-          ctx.textAlign = 'left'
-          ctx.fillText(line, leftX, y)
-          y += 30
-        })
-      }
-      y += 16
-    })
-    drawDivider()
-  }
-
   // 历史趋势（简化绘制）
   if (showTrend && trendValues && trendValues.length) {
     ctx.fillStyle = pal.text
@@ -651,73 +616,6 @@ function renderFullPageCard(canvas, ctx, W, H, opts, done, measure) {
       y += 36
     })
     drawDivider()
-  }
-
-  // 相关方法论
-  if (recommend && recommend.length) {
-    ctx.fillStyle = pal.text
-    ctx.font = '26px sans-serif'
-    ctx.textAlign = 'left'
-    ctx.fillText('🧰 相关方法论', leftX, y)
-    y += 40
-    ctx.textAlign = 'center'
-    recommend.slice(0, 5).forEach((m) => {
-      ctx.fillStyle = pal.text
-      ctx.font = '24px sans-serif'
-      ctx.fillText((m.icon || '') + ' ' + (m.name || ''), centerX, y)
-      y += 34
-      if (m.summary) {
-        ctx.fillStyle = pal.textSoft
-        ctx.font = '20px sans-serif'
-        const lines = wrapText(ctx, m.summary, contentW)
-        lines.forEach((line) => {
-          ctx.fillText(line, centerX, y)
-          y += 28
-        })
-      }
-      y += 16
-    })
-    drawDivider()
-  }
-
-  // 相关训练
-  if (recommendGames && recommendGames.length) {
-    ctx.fillStyle = pal.text
-    ctx.font = '26px sans-serif'
-    ctx.textAlign = 'left'
-    ctx.fillText('🎮 相关训练', leftX, y)
-    y += 40
-    ctx.textAlign = 'center'
-    recommendGames.slice(0, 5).forEach((g) => {
-      ctx.fillStyle = pal.text
-      ctx.font = '24px sans-serif'
-      ctx.fillText((g.icon || '') + ' ' + (g.name || '') + (g.dimLabel ? '（' + g.dimLabel + '）' : ''), centerX, y)
-      y += 34
-      if (g.summary) {
-        ctx.fillStyle = pal.textSoft
-        ctx.font = '20px sans-serif'
-        const lines = wrapText(ctx, g.summary, contentW)
-        lines.forEach((line) => {
-          ctx.fillText(line, centerX, y)
-          y += 28
-        })
-      }
-      y += 16
-    })
-    drawDivider()
-  }
-
-  // 特别说明
-  if (noteText) {
-    ctx.fillStyle = pal.textFaint
-    ctx.font = '20px sans-serif'
-    ctx.textAlign = 'center'
-    const lines = wrapText(ctx, noteText, contentW)
-    lines.forEach((line) => {
-      ctx.fillText(line, centerX, y)
-      y += 28
-    })
-    y += 20
   }
 
   // 免责声明
