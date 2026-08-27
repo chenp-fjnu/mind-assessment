@@ -1,4 +1,4 @@
-const { getUser, saveUser, GENDERS, GENDER_LABELS } = require('../../utils/user')
+const { getUser, saveUser, syncNow, getSyncStatus } = require('../../utils/user')
 const { useTheme } = require('../../utils/theme-store')
 
 function calcAge(birthday) {
@@ -22,34 +22,20 @@ function fmtDateTime(ts) {
   )
 }
 
-// 将头像临时文件持久化到本地用户目录，避免临时路径失效后头像丢失
-function persistAvatar(tempPath, cb) {
-  if (!tempPath) return cb && cb('')
-  let fs
-  try {
-    fs = wx.getFileSystemManager()
-  } catch (e) {
-    fs = null
-  }
-  if (!fs || !fs.saveFile) return cb && cb(tempPath)
-  fs.saveFile({
-    tempFilePath: tempPath,
-    success: (res) => cb && cb(res.savedFilePath || tempPath),
-    fail: () => cb && cb(tempPath),
-  })
-}
-
 Page({
   data: {
     themeClass: 'theme-light',
     nickname: '',
     avatarUrl: '',
     genderIndex: 0,
-    genderOptions: GENDERS.map((g) => GENDER_LABELS[g]),
+    genderOptions: ['暂不填写', '男', '女'],
     birthday: '',
     ageText: '',
     userId: '',
     createdText: '',
+    // 云同步相关
+    syncStatus: 'pending',
+    lastSync: 0,
   },
   onLoad() {
     useTheme(this)
@@ -64,7 +50,7 @@ Page({
   },
   refresh() {
     const u = getUser()
-    const genderIndex = Math.max(0, GENDERS.indexOf(u.gender))
+    const genderIndex = Math.max(0, ['unknown', 'male', 'female'].indexOf(u.gender))
     this.setData({
       nickname: u.nickname,
       avatarUrl: u.avatarUrl,
@@ -73,12 +59,33 @@ Page({
       ageText: calcAge(u.birthday),
       userId: u.id,
       createdText: fmtDateTime(u.createdAt),
+      // 同步状态
+      syncStatus: u.syncStatus || 'pending',
+      lastSync: u.lastSync || 0,
     })
+    
+    // 后台同步用户信息（不阻塞页面显示）
+    // 同步由 saveUser 后的手动同步或后台任务处理，此处不阻塞页面显示
   },
   // 点击头像即触发 chooseAvatar：系统选择器内置「微信头像 / 拍照 / 从相册选」三种来源
   onChooseAvatar(e) {
     const temp = e.detail && e.detail.avatarUrl
     if (!temp) return
+    // 持久化头像到本地
+    function persistAvatar(tempPath, cb) {
+      let fs
+      try {
+        fs = wx.getFileSystemManager()
+      } catch (e) {
+        fs = null
+      }
+      if (!fs || !fs.saveFile) return cb && cb(tempPath)
+      fs.saveFile({
+        tempFilePath: tempPath,
+        success: (res) => cb && cb(res.savedFilePath || tempPath),
+        fail: () => cb && cb(tempPath),
+      })
+    }
     persistAvatar(temp, (p) => this.setData({ avatarUrl: p }))
   },
   onNicknameInput(e) {
@@ -92,16 +99,42 @@ Page({
     this.setData({ birthday, ageText: calcAge(birthday) })
   },
   save() {
-    const gender = GENDERS[this.data.genderIndex] || 'unknown'
     saveUser({
       nickname: (this.data.nickname || '').trim(),
       avatarUrl: this.data.avatarUrl,
-      gender,
+      gender: GENDERS[this.data.genderIndex] || 'unknown',
       birthday: this.data.birthday,
     })
-    wx.showToast({ title: '已保存', icon: 'success' })
+    // 保存后同步
+    const u = getUser()
+    syncUserToCloud(u).then(() => {
+      wx.showToast({ title: '保存并同步成功', icon: 'success' })
+    }).catch(() => {
+      wx.showToast({ title: '已保存（本地）', icon: 'success' })
+    })
   },
   goBack() {
     wx.navigateBack({ delta: 1 })
+  },
+  
+  // 手动同步按钮相关事件
+  onSyncNow() {
+    syncNow().then(success => {
+      if (success) {
+        wx.showToast({ title: '同步成功', icon: 'success' })
+      } else {
+        wx.showToast({ title: '请先完善个人信息', icon: 'none' })
+      }
+    })
+  },
+
+  onSyncRecord() {
+    const status = getSyncStatus()
+    wx.showModal({
+      title: '同步状态',
+      content: `用户同步: ${status.userSync}\n最后同步: ${status.lastSync ? new Date(status.lastSync).toLocaleString() : '从未同步'}\n记录数: ${status.recordCount}`,
+      showCancel: false,
+      confirmText: '好的',
+    })
   },
 })
