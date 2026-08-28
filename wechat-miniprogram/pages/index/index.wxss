@@ -38,6 +38,23 @@
   border-radius: 50%;
   filter: blur(80rpx);
 }
+.home-search {
+  margin: 24rpx 32rpx 8rpx;
+}
+.home-search-input {
+  width: 100%;
+  box-sizing: border-box;
+  height: 76rpx;
+  padding: 0 28rpx;
+  border-radius: 999rpx;
+  background: var(--surface);
+  color: var(--text-primary);
+  font-size: var(--font-size-body);
+  border: 1rpx solid var(--border);
+}
+.home-search-input::placeholder {
+  color: var(--text-muted);
+}
 .hero-title {
   position: relative;
   display: block;

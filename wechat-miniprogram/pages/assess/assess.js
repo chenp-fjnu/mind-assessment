@@ -62,6 +62,12 @@ Page({
   },
   onShow() {
     this.refreshRecords()
+    const app = getApp()
+    const kw = app.globalData.searchKeyword
+    if (kw) {
+      app.globalData.searchKeyword = ''
+      this.setData({ keyword: kw }, () => this.applyFilter())
+    }
   },
   refreshRecords() {
     const assessRecordCount = (wx.getStorageSync(SK.HISTORY) || []).length

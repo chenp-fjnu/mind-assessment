@@ -24,7 +24,7 @@
     </view>
 
     <scroll-view class="type-bar" scroll-x="true">
-      <view class="type-chip {{activeCategory === '' ? 'on' : ''}}" bindtap="onCategory" data-category="">全部</view>
+      <view class="type-chip {{activeCategory === '' ? 'on' : ''}}" bindtap="onCategory" data-category="" aria-label="全部分类">全部</view>
       <view
         class="type-chip {{activeCategory === item.category ? 'on' : ''}}"
         wx:for="{{categories}}"
@@ -32,6 +32,7 @@
         wx:for-item="item"
         bindtap="onCategory"
         data-category="{{item.category}}"
+        aria-label="{{item.label}}"
       >{{item.label}}</view>
     </scroll-view>
 

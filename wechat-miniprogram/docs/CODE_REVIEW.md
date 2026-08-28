@@ -83,19 +83,19 @@
 
 ### P0 · 数据真实性与合规
 1. **处理云同步占位**（对应 I1）：在上线前二选一——(a) 隐藏 `mine`/`profile` 的同步状态/立即同步 UI，并在 `about` 明确「数据仅存本机」；(b) 接入微信云开发（`app.js` 调 `wx.cloud.init`、补 `user`/`records` 云函数，`user.js` 字段已就绪）。
-2. **统一记录存储**：评估是否让 `user.saveRecord` 真正承接测评/方法/训练记录（以 `userId` 关联），或彻底移除 `ma_records` 以免误导。当前三类记录散落三处，若未来要做「跨设备/导出」需先归一。
+2. **统一记录存储**（✅ 已完成）：已彻底移除 `ma_records` 死代码——`RECORDS` 常量、本地读写、`saveRecord`/`getRecords`/`getRecordsByType`/`syncRecordToCloud` 及对应导出；`user.js` 仅保留用户态。记录归一留待接入云后端时再议。
 
 ### P1 · 架构与可维护性
 3. **精简 `theme.js`**（I2）：删除死代码，或把 `PALETTE` 真正编译进 `app.wxss` CSS 变量（呼应 `generateCSSVariables` 的原始意图），让「单一事实来源」名副其实。
 4. **合并主题入口**（I3）：`applyTheme` 并入 `useTheme`/`updateNativeUI`，减少概念数量。
-5. **首页导航收敛**（I5）：首页 pillar 与底部 Tab 功能重叠，建议首页仅保留「最近测评 + 搜索入口 + 继续未完成」，把方法/训练导流交给对应 Tab。
+5. **首页导航收敛**（✅ 已完成，I5）：已移除首页三大板块入口，改为「最近探索」（复用 `goHot`）；并新增首页搜索框，经 `globalData.searchKeyword` 跳转测评页并应用筛选。
 6. **常量集中化**：`ma_history`/`ma_practices`/`ma_train_`/`ma_user`/`ma_records` 等存储键散落在多文件，建议在 `utils/storage-keys.js` 统一定义，避免拼写漂移。
 
 ### P2 · 体验与科学
 7. **结果页增强**：数值趋势补 x 轴日期标签、类型趋势展示「首次→最近」变化（路线图第 3 项，部分已完成，可再打磨）。
 8. **方法练习可视化**：`ma_practices` 目前仅列表展示，可加简单趋势（如情绪类量表的分数折线），与测评趋势体验对齐。
 9. **常模溯源**：`modules-meta.js` 的 `reference`/`scoring` 已补，但部分公式仍为「近似值」，建议在详情页或 `about` 给出「本结果非医学诊断」的更强提示与文献链接。
-10. **国际化/无障碍**：在 I2 之外，补充 `aria-role` 覆盖率检查（目前交互元素已较规范，可加自动化断言）。
+10. **国际化/无障碍**（✅ 已完成）：新增 `test/a11y.test.js`，静态断言所有可交互元素（`bindtap`/`catchtap`/`role="button"`）均带 `aria-label`；已补齐测评类型筛选、方法分类筛选、方法详情/练习返回按钮的 `aria-label`。
 
 ### P3 · 工程化
 11. 清理 I4 残留 warning；CI 增加「lint 非零即失败」门槛（当前仅跑冒烟+覆盖率）。

@@ -7,6 +7,7 @@ const SK = require('./utils/storage-keys')
 App({
   globalData: {
     TYPE_LABELS,
+    searchKeyword: '',
   },
   onLaunch() {
     // 注册隐私授权弹窗，满足相册/剪贴板等隐私接口的合规要求

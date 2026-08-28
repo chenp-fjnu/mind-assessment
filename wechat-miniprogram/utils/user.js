@@ -22,8 +22,6 @@
 const SK = require('./storage-keys')
 
 const KEY = SK.USER
-// 记录集合键名（本地存储键）
-const RECORDS_KEY = SK.RECORDS
 
 // 云同步开关：当前为占位实现（未接入微信云开发）。置为 false 时所有同步调用静默跳过，
 // 避免向用户展示「同步成功」等不实状态。接入后端后取消 wx.cloud 调用注释并改为 true。
@@ -73,20 +71,6 @@ function readLocal() {
 function writeLocal(user) {
   wx.setStorageSync(KEY, user)
   return user
-}
-
-// 读取本地记录
-function readRecordsLocal() {
-  const stored = wx.getStorageSync(RECORDS_KEY)
-  const obj =
-    stored && typeof stored === 'object' && !Array.isArray(stored) ? stored : {}
-  return obj
-}
-
-// 写入本地记录
-function writeRecordsLocal(records) {
-  wx.setStorageSync(RECORDS_KEY, records)
-  return records
 }
 
 // 初始化云开发环境（在小程序启动时调用）
@@ -144,46 +128,6 @@ function ensureUser() {
   return writeLocal(Object.assign(u, { id: genId(), createdAt: now, updatedAt: now }))
 }
 
-// ========== 记录相关操作 ==========
-
-// 保存评估/训练记录
-function saveRecord(record) {
-  const records = readRecordsLocal()
-  const userId = getUserId()
-  
-  // 添加元数据
-  const next = {
-    ...record,
-    userId,
-    _id: record._id || (record.type + '_' + Date.now() + '_' + Math.random().toString(36).slice(2)),
-    syncStatus: 'pending', // pending/synced/failed
-    createdAt: record.createdAt || Date.now(),
-    updatedAt: Date.now(),
-  }
-  
-  // 写入本地
-  records[next._id] = next
-  writeRecordsLocal(records)
-  
-  // 异步同步云端（未启用时静默跳过）
-  if (CLOUD_ENABLED) syncRecordToCloud(next).catch(console.error)
-  
-  return next
-}
-
-// 获取用户所有记录
-function getRecords() {
-  const records = readRecordsLocal()
-  const userId = getUserId()
-  return Object.values(records).filter(r => r.userId === userId)
-}
-
-// 获取特定类型的记录
-function getRecordsByType(type) {
-  const records = getRecords()
-  return records.filter(r => r.type === type)
-}
-
 // 手动触发立即同步
 async function syncNow() {
   if (!CLOUD_ENABLED) return false
@@ -195,18 +139,7 @@ async function syncNow() {
   
   // 同步用户信息
   await syncUserToCloud(local)
-  
-  // 同步所有记录
-  const records = readRecordsLocal()
-  const userRecords = Object.values(records).filter(r => r.userId === local.id)
-  
-  for (const record of userRecords) {
-    if (record.syncStatus !== 'synced') {
-      await syncRecordToCloud(record)
-    }
-  }
-  
-  // 重新读取并刷新
+
   wx.showToast({ title: '同步完成', icon: 'success' })
   return true
 }
@@ -217,7 +150,7 @@ function getSyncStatus() {
   return {
     userSync: u.syncStatus,
     lastSync: u.lastSync,
-    recordCount: Object.keys(readRecordsLocal()).length,
+    cloudEnabled: CLOUD_ENABLED,
   }
 }
 
@@ -234,20 +167,6 @@ function syncUserToCloud(user) {
   return Promise.resolve()
 }
 
-// 内部：同步单条记录到云端
-function syncRecordToCloud(record) {
-  // wx.cloud.callFunction({
-  //   name: 'records',
-  //   data: { action: 'upsert', record },
-  //   success: res => {
-  //     const records = readRecordsLocal()
-  //     records[record._id].syncStatus = 'synced'
-  //     writeRecordsLocal(records)
-  //   },
-  // })
-  return Promise.resolve()
-}
-
 // 导出工具方法
 module.exports = {
   KEY,
@@ -257,15 +176,10 @@ module.exports = {
   defaults,
   readLocal,
   writeLocal,
-  readRecordsLocal,
-  writeRecordsLocal,
   getUser,
   getUserId,
   ensureUser,
   saveUser,
-  saveRecord,
-  getRecords,
-  getRecordsByType,
   syncNow,
   getSyncStatus,
   isCloudEnabled,

@@ -136,12 +136,13 @@ Page({
     practiceCount: 0,
     gameCount: 0,
     dimCount: 0,
-      featuredAssess: [],
-      featuredMethods: [],
-      featuredGames: [],
-      hotPicks: [],
-      recentItems: [],
-    },
+    featuredAssess: [],
+    featuredMethods: [],
+    featuredGames: [],
+    hotPicks: [],
+    recentItems: [],
+    homeKeyword: '',
+  },
   onLoad() {
     useTheme(this)
     this.loadFeatured()
@@ -178,6 +179,15 @@ Page({
   goGame(e) { wx.navigateTo({ url: `/pages/train/game?gameId=${e.currentTarget.dataset.id}` }) },
   goHistory() { wx.navigateTo({ url: '/pages/history/history' }) },
   goAbout() { wx.navigateTo({ url: '/pages/about/about' }) },
+  onHomeSearchInput(e) {
+    this.setData({ homeKeyword: e.detail.value })
+  },
+  onHomeSearch(e) {
+    const kw = (e.detail.value || this.data.homeKeyword || '').trim()
+    if (!kw) return
+    getApp().globalData.searchKeyword = kw
+    wx.switchTab({ url: '/pages/assess/assess' })
+  },
   goHot(e) {
     const item = e.currentTarget.dataset.item
     if (!item) return

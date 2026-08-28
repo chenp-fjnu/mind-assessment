@@ -9,9 +9,8 @@ module.exports = {
   // 训练
   TRAIN_PREFIX: 'ma_train_', // 训练成绩前缀：ma_train_<id>__<level>
   TRAIN_LAST: 'ma_train_last', // 最近一次训练（游戏 + 难度）
-  // 用户与同步（云同步当前为占位实现，见 utils/user.js）
+  // 用户（云同步当前为占位实现，见 utils/user.js）
   USER: 'ma_user',
-  RECORDS: 'ma_records',
   // 主题
   THEME_PREF: 'user-theme-preference',
   EFFECTIVE_THEME: 'current-effective-theme',

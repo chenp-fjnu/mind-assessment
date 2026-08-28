@@ -76,6 +76,6 @@
   <view wx:else class="invalid">
     <text class="invalid-icon">🧩</text>
     <text class="invalid-title">未找到该方法</text>
-    <button class="btn home" bindtap="goBack">返回</button>
+    <button class="btn home" bindtap="goBack" aria-label="返回方法列表">返回</button>
   </view>
 </view>

@@ -20,6 +20,19 @@
       </view>
     </view>
 
+    <!-- 全局搜索：跳转测评页（测评页为 tab，关键词经 globalData 传递） -->
+    <view class="home-search">
+      <input
+        class="home-search-input"
+        placeholder="搜索测评 / 方法 / 训练"
+        value="{{homeKeyword}}"
+        bindinput="onHomeSearchInput"
+        bindconfirm="onHomeSearch"
+        confirm-type="search"
+        aria-label="搜索测评、方法或训练"
+      />
+    </view>
+
     <!-- 热门推荐：网格布局 2列，精简卡片 -->
     <view wx:if="{{hotPicks.length}}" class="section hot-section">
       <view class="section-head">
