@@ -6,7 +6,7 @@
  * 运行：node tools/map-questions.js
  */
 
-const { getMetaList, getModule, modulesByType } = require('../utils/registry')
+const { getMetaList, getModule } = require('../utils/registry')
 const { getResultView } = require('../utils/result-view')
 
 function pickAnswer(q) {
@@ -17,22 +17,9 @@ function pickAnswer(q) {
   return 0
 }
 
-function getPoleInfo(q) {
-  // 从问题中提取极性信息（用于MBTI、大五等）
-  if (q.dimension && q.pole) return { dimension: q.dimension, pole: q.pole }
-  if (q.subtest) return { subtest: q.subtest }
-  return {}
-}
-
 function getGroupInfo(q) {
   // 从问题中提取组别信息（用于SPM）
   if (q.set) return { set: q.set }
-  return {}
-}
-
-function getDomainInfo(q) {
-  // 从问题中提取领域信息（用于韦氏等）
-  if (q.domain) return { domain: q.domain }
   return {}
 }
 

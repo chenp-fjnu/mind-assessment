@@ -102,15 +102,6 @@ function setStoredTheme(theme) {
   }
 }
 
-function applyTheme(theme) {
-  const page = getCurrentPages()[getCurrentPages().length - 1];
-  if (!page) return;
-
-  const effectiveTheme = theme === THEME_MODES.AUTO ? getSystemTheme() : theme;
-
-  wx.setStorageSync(SK.EFFECTIVE_THEME, effectiveTheme);
-}
-
 function getEffectiveTheme() {
   const stored = getStoredTheme();
   if (stored === THEME_MODES.AUTO) {
@@ -201,7 +192,6 @@ module.exports = {
   getStoredTheme,
   setStoredTheme,
   getEffectiveTheme,
-  applyTheme,
   initThemeListener,
   useTheme,
   updateNativeUI,

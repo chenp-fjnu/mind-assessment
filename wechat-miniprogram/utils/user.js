@@ -25,6 +25,15 @@ const KEY = SK.USER
 // 记录集合键名（本地存储键）
 const RECORDS_KEY = SK.RECORDS
 
+// 云同步开关：当前为占位实现（未接入微信云开发）。置为 false 时所有同步调用静默跳过，
+// 避免向用户展示「同步成功」等不实状态。接入后端后取消 wx.cloud 调用注释并改为 true。
+const CLOUD_ENABLED = false
+
+// 当前是否已接入云端（供 UI 判断同步能力）
+function isCloudEnabled() {
+  return CLOUD_ENABLED
+}
+
 // 性别用字符串枚举，语义清晰且便于后端直接落库
 const GENDERS = ['unknown', 'male', 'female']
 const GENDER_LABELS = { unknown: '暂不填写', male: '男', female: '女' }
@@ -108,8 +117,8 @@ function saveUser(partial) {
   // 写入本地
   writeLocal(next)
   
-  // 异步同步云端（不阻塞）
-  syncUserToCloud(next).catch(console.error)
+  // 异步同步云端（未启用时静默跳过）
+  if (CLOUD_ENABLED) syncUserToCloud(next).catch(console.error)
   
   return next
 }
@@ -156,8 +165,8 @@ function saveRecord(record) {
   records[next._id] = next
   writeRecordsLocal(records)
   
-  // 异步同步云端
-  syncRecordToCloud(next).catch(console.error)
+  // 异步同步云端（未启用时静默跳过）
+  if (CLOUD_ENABLED) syncRecordToCloud(next).catch(console.error)
   
   return next
 }
@@ -177,6 +186,7 @@ function getRecordsByType(type) {
 
 // 手动触发立即同步
 async function syncNow() {
+  if (!CLOUD_ENABLED) return false
   const local = readLocal()
   if (!local.id) {
     wx.showToast({ title: '请先保存用户信息', icon: 'none' })
@@ -258,6 +268,7 @@ module.exports = {
   getRecordsByType,
   syncNow,
   getSyncStatus,
+  isCloudEnabled,
 }
 
 // 兼容旧版导入（保持向后兼容）

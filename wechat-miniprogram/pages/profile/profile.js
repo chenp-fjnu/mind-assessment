@@ -1,4 +1,4 @@
-const { getUser, saveUser, syncNow, getSyncStatus, GENDERS } = require('../../utils/user')
+const { getUser, saveUser, GENDERS } = require('../../utils/user')
 const { useTheme } = require('../../utils/theme-store')
 
 function calcAge(birthday) {
@@ -33,9 +33,6 @@ Page({
     ageText: '',
     userId: '',
     createdText: '',
-    // 云同步相关
-    syncStatus: 'pending',
-    lastSync: 0,
   },
   onLoad() {
     useTheme(this)
@@ -59,9 +56,6 @@ Page({
       ageText: calcAge(u.birthday),
       userId: u.id,
       createdText: fmtDateTime(u.createdAt),
-      // 同步状态
-      syncStatus: u.syncStatus || 'pending',
-      lastSync: u.lastSync || 0,
     })
     
     // 后台同步用户信息（不阻塞页面显示）
@@ -105,31 +99,10 @@ Page({
       gender: GENDERS[this.data.genderIndex] || 'unknown',
       birthday: this.data.birthday,
     })
-    // saveUser 内部已触发后台同步（云同步当前为占位实现，详见 utils/user.js）
+    // 资料仅保存在本机（云同步为占位实现，详见 utils/user.js）
     wx.showToast({ title: '已保存', icon: 'success' })
   },
   goBack() {
     wx.navigateBack({ delta: 1 })
-  },
-  
-  // 手动同步按钮相关事件
-  onSyncNow() {
-    syncNow().then(success => {
-      if (success) {
-        wx.showToast({ title: '同步成功', icon: 'success' })
-      } else {
-        wx.showToast({ title: '请先完善个人信息', icon: 'none' })
-      }
-    })
-  },
-
-  onSyncRecord() {
-    const status = getSyncStatus()
-    wx.showModal({
-      title: '同步状态',
-      content: `用户同步: ${status.userSync}\n最后同步: ${status.lastSync ? new Date(status.lastSync).toLocaleString() : '从未同步'}\n记录数: ${status.recordCount}`,
-      showCancel: false,
-      confirmText: '好的',
-    })
   },
 })
