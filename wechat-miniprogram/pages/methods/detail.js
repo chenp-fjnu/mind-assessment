@@ -1,6 +1,32 @@
 const methodsData = require('../../utils/methods-data')
 const { genCard, saveToAlbum } = require('../../utils/share')
 const { useTheme } = require('../../utils/theme-store')
+const SK = require('../../utils/storage-keys')
+
+// 互动练习趋势：取首个数值（scale）字段的「首次 → 最近」对比（练习记录按时间倒序存储）
+function buildPracticeTrend(method) {
+  if (!method || !method.interactive) return null
+  const schema = method.schema || []
+  const scaleField = schema.find((f) => f.type === 'scale')
+  if (!scaleField) return null
+  const stored = wx.getStorageSync(SK.PRACTICES) || {}
+  const vals = (stored[method.id] || [])
+    .map((e) => e.data && e.data[scaleField.key])
+    .filter((v) => v !== undefined && v !== null && v !== '' && !isNaN(Number(v)))
+    .map(Number)
+  if (vals.length < 2) return null
+  const first = vals[vals.length - 1] // 最早一条
+  const last = vals[0] // 最新一条（倒序存储）
+  const delta = last - first
+  return {
+    fieldLabel: scaleField.label,
+    first,
+    last,
+    delta: delta > 0 ? '+' + delta : '' + delta,
+    direction: delta > 0 ? '↑' : delta < 0 ? '↓' : '→',
+    count: vals.length,
+  }
+}
 
 Page({
   data: {
@@ -8,6 +34,7 @@ Page({
     isInteractive: false,
     content: [],
     steps: [],
+    practiceTrend: null,
   },
   onLoad(query) {
     useTheme(this)
@@ -28,7 +55,14 @@ Page({
       isInteractive: !!method.interactive,
       content: method.content || [],
       steps,
+      practiceTrend: buildPracticeTrend(method),
     })
+  },
+  onShow() {
+    if (this._id) {
+      const m = methodsData.getMethod(this._id)
+      this.setData({ practiceTrend: buildPracticeTrend(m) })
+    }
   },
   goPractice() {
     wx.navigateTo({ url: '/pages/methods/practice?id=' + this._id })

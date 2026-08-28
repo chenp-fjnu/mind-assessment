@@ -47,6 +47,14 @@
       <view class="example"><text class="example-text">{{method.example}}</text></view>
     </view>
 
+    <view class="card sec" wx:if="{{practiceTrend}}">
+      <text class="sec-title">练习趋势（{{practiceTrend.count}} 次）</text>
+      <view class="trend-line">
+        <text class="trend-text">{{practiceTrend.fieldLabel}}：首次 {{practiceTrend.first}} → 最近 {{practiceTrend.last}}</text>
+        <text class="trend-delta {{practiceTrend.delta>0?'up':(practiceTrend.delta<0?'down':'flat')}}">{{practiceTrend.direction}} {{practiceTrend.delta}}</text>
+      </view>
+    </view>
+
     <view class="card sec" wx:if="{{method.tips && method.tips.length}}">
       <text class="sec-title">小贴士</text>
       <view class="tip-item" wx:for="{{method.tips}}" wx:key="*this" wx:for-item="t">

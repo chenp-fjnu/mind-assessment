@@ -324,3 +324,26 @@
   color: var(--text-tertiary);
   line-height: var(--line-height-relaxed);
 }
+
+/* 练习趋势（首次 → 最近） */
+.trend-line {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 12rpx;
+}
+.trend-text {
+  flex: 1;
+  font-size: var(--font-size-md);
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+.trend-delta {
+  flex: none;
+  margin-left: 16rpx;
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+}
+.trend-delta.up { color: var(--color-success); }
+.trend-delta.down { color: var(--color-error); }
+.trend-delta.flat { color: var(--text-tertiary); }
