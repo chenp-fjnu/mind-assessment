@@ -3,6 +3,7 @@ const { drawCell } = require('../../utils/figure')
 const { readableTextColor } = require('../../utils/color')
 const { useTheme } = require('../../utils/theme-store')
 const { getUserId } = require('../../utils/user')
+const SK = require('../../utils/storage-keys')
 
 // 历史记录硬上限：超出后仅保留最近 N 条，并对用户可见提示
 const HISTORY_LIMIT = 30
@@ -60,7 +61,7 @@ Page({
         answeredCount: 0,
       },
       () => {
-        const key = 'ma_progress_' + mod.id
+        const key = SK.PROGRESS_PREFIX + mod.id
         const saved = wx.getStorageSync(key)
         const qn = questions.length
         const hasProgress = saved && saved.answers && saved.answers.length === qn && saved.answers.some((a) => a !== null)
@@ -414,7 +415,7 @@ Page({
     // 节流：最多每 2 秒写一次，降低低端机 Storage IO 压力
     if (this._lastSave && now - this._lastSave < 2000) return
     this._lastSave = now
-    wx.setStorageSync('ma_progress_' + this.data.meta.id, {
+    wx.setStorageSync(SK.PROGRESS_PREFIX + this.data.meta.id, {
       answers: this.data.answers,
       current: this.data.current,
     })
@@ -456,11 +457,11 @@ Page({
     if (this._timer) clearTimeout(this._timer)
     this.stopCountdown()
     this.markTime()
-    wx.removeStorageSync('ma_progress_' + this.data.meta.id)
+    wx.removeStorageSync(SK.PROGRESS_PREFIX + this.data.meta.id)
     const layout = this.mod.resultLayout || {}
     const r = this.mod.computeResult(this.data.answers, this.data.questions, { timings: this._timings })
     const pv = r[layout.primaryField || 'score']
-    const hist = wx.getStorageSync('ma_history') || []
+    const hist = wx.getStorageSync(SK.HISTORY) || []
     const record = {
       rid: Date.now() + '_' + Math.random().toString(36).slice(2, 8),
       id: this.data.meta.id,
@@ -485,7 +486,7 @@ Page({
     // 配额兜底：写入失败时 progressively 丢弃最旧记录直至成功
     for (let guard = 0; guard < trimmed.length; guard++) {
       try {
-        wx.setStorageSync('ma_history', trimmed)
+        wx.setStorageSync(SK.HISTORY, trimmed)
         break
       } catch (e) {
         trimmed = trimmed.slice(0, trimmed.length - 1)

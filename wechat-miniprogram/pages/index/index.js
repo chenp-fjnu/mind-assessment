@@ -4,6 +4,7 @@ const methodsData = require('../../utils/methods-data')
 const gameReg = require('../../utils/game-registry')
 const trainStore = require('../../utils/train-store')
 const { useTheme } = require('../../utils/theme-store')
+const SK = require('../../utils/storage-keys')
 
 // 热门推荐配置：跨板块精选，按当前热度排序
 const HOT_CONFIG = [
@@ -52,9 +53,9 @@ function buildHotPicks() {
 
 function lastTimes() {
   const map = { assess: {}, method: {}, train: {} }
-  const hist = wx.getStorageSync('ma_history') || []
+  const hist = wx.getStorageSync(SK.HISTORY) || []
   hist.forEach((h) => { map.assess[h.id] = Math.max(map.assess[h.id] || 0, h.time) })
-  const practices = wx.getStorageSync('ma_practices') || {}
+  const practices = wx.getStorageSync(SK.PRACTICES) || {}
   Object.keys(practices).forEach((mid) => {
     ;(practices[mid] || []).forEach((e) => { map.method[mid] = Math.max(map.method[mid] || 0, e.time) })
   })
@@ -96,6 +97,38 @@ function buildGames(lastMap) {
   return { all, featuredGames: orderByRecent(all, lastMap.train).slice(0, 5) }
 }
 
+// 跨板块「最近探索」：取最近有过记录的项（去重后按时间倒序），避免与底部 Tab 功能重叠
+function buildRecent(lastMap) {
+  const modules = getMetaList()
+  const methods = methodsData.METHODS
+  const games = gameReg.getMetaList()
+  const picks = []
+  const seen = {}
+  const push = (kind, src, id, time) => {
+    if (!time || seen[id]) return
+    const item = src.find((x) => x.id === id)
+    if (!item) return
+    seen[id] = true
+    picks.push({
+      kind,
+      kindLabel: { assess: '测评', method: '方法', train: '训练' }[kind],
+      id: item.id,
+      name: item.name,
+      icon: item.icon,
+      color: item.color,
+      tint: hexToRgba(item.color, 0.12),
+      desc: item.desc,
+      gradient: GRADIENT_MAP[kind],
+      time,
+    })
+  }
+  Object.keys(lastMap.assess).forEach((id) => push('assess', modules, id, lastMap.assess[id]))
+  Object.keys(lastMap.method).forEach((id) => push('method', methods, id, lastMap.method[id]))
+  Object.keys(lastMap.train).forEach((id) => push('train', games, id, lastMap.train[id]))
+  picks.sort((a, b) => b.time - a.time)
+  return picks.slice(0, 6)
+}
+
 Page({
   data: {
     moduleCount: 0,
@@ -103,11 +136,12 @@ Page({
     practiceCount: 0,
     gameCount: 0,
     dimCount: 0,
-    featuredAssess: [],
-    featuredMethods: [],
-    featuredGames: [],
-    hotPicks: [],
-  },
+      featuredAssess: [],
+      featuredMethods: [],
+      featuredGames: [],
+      hotPicks: [],
+      recentItems: [],
+    },
   onLoad() {
     useTheme(this)
     this.loadFeatured()
@@ -132,6 +166,7 @@ Page({
       featuredMethods: met.featuredMethods,
       featuredGames: gam.featuredGames,
       hotPicks,
+      recentItems: buildRecent(lastMap),
       hotAssessCount,
     })
   },

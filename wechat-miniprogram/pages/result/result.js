@@ -4,9 +4,9 @@ const { getResultView } = require('../../utils/result-view')
 const { readableTextColor } = require('../../utils/color')
 const { renderTrend, renderCard, renderFullPageCard, makeMeasureCtx } = require('../../utils/canvas')
 const { withPrivacy } = require('../../utils/privacy')
-const methodsData = require('../../utils/methods-data')
 const relations = require('../../utils/relations')
 const { useTheme } = require('../../utils/theme-store')
+const SK = require('../../utils/storage-keys')
 const { pad2 } = require('../../utils/format')
 const { getDpr } = require('../../utils/device')
 
@@ -51,7 +51,7 @@ Page({
       return
     }
     // 全量历史只读一次，后续复用（避免多次同步 IO）
-    const allHist = wx.getStorageSync('ma_history') || []
+    const allHist = wx.getStorageSync(SK.HISTORY) || []
     // 冷启动 / 直接进入兜底：从最近历史恢复答案
     // 优先取「题量一致」的最近一条，避免模块改题数后旧记录答案长度不匹配导致恢复失败
     let schemaNotice = false

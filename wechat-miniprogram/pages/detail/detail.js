@@ -4,6 +4,7 @@ const { genCard, saveToAlbum } = require('../../utils/share')
 const { useTheme } = require('../../utils/theme-store')
 const relations = require('../../utils/relations')
 const assessIntro = require('../../utils/assess-intro')
+const SK = require('../../utils/storage-keys')
 
 // 渐变映射
 const GRADIENT_MAP = {
@@ -61,7 +62,7 @@ Page({
     })
   },
   loadHistory(mod) {
-    const all = wx.getStorageSync('ma_history') || []
+    const all = wx.getStorageSync(SK.HISTORY) || []
     const mine = all.filter((h) => h.id === mod.id)
     if (!mine.length) return
     const info = { count: mine.length, last: { summary: mine[0].summary, level: mine[0].level } }
@@ -79,7 +80,7 @@ Page({
     wx.navigateTo({ url: `/pages/train/game?gameId=${e.currentTarget.dataset.id}` })
   },
   goHistory() {
-    const hist = wx.getStorageSync('ma_history') || []
+    const hist = wx.getStorageSync(SK.HISTORY) || []
     const mine = hist
       .filter((h) => h.id === this.data.id && h.answers)
       .sort((a, b) => b.time - a.time)

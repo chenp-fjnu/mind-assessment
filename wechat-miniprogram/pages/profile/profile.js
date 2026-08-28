@@ -1,4 +1,4 @@
-const { getUser, saveUser, syncNow, getSyncStatus } = require('../../utils/user')
+const { getUser, saveUser, syncNow, getSyncStatus, GENDERS } = require('../../utils/user')
 const { useTheme } = require('../../utils/theme-store')
 
 function calcAge(birthday) {
@@ -105,13 +105,8 @@ Page({
       gender: GENDERS[this.data.genderIndex] || 'unknown',
       birthday: this.data.birthday,
     })
-    // 保存后同步
-    const u = getUser()
-    syncUserToCloud(u).then(() => {
-      wx.showToast({ title: '保存并同步成功', icon: 'success' })
-    }).catch(() => {
-      wx.showToast({ title: '已保存（本地）', icon: 'success' })
-    })
+    // saveUser 内部已触发后台同步（云同步当前为占位实现，详见 utils/user.js）
+    wx.showToast({ title: '已保存', icon: 'success' })
   },
   goBack() {
     wx.navigateBack({ delta: 1 })

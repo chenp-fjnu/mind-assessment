@@ -53,29 +53,33 @@
     <!-- 分隔线 -->
     <view class="divider"></view>
 
-    <!-- 三大板块入口 -->
-    <view class="sections">
-      <view class="section-block assess-block" bindtap="goAssess" role="button" aria-label="进入心理测评">
-        <view class="section-icon assess-icon">🧠</view>
-        <view class="section-info">
-          <text class="section-title">心理测评</text>
-          <text class="section-count">{{moduleCount}} 套量表</text>
-        </view>
+    <!-- 最近探索：跨板块最近记录，去重展示，避免与底部 Tab 入口重复 -->
+    <view wx:if="{{recentItems.length}}" class="section recent-section">
+      <view class="section-head">
+        <text class="section-title">🕘 最近探索</text>
+        <text class="section-more" bindtap="goHistory" role="button" aria-label="查看全部记录">全部记录 ›</text>
       </view>
-
-      <view class="section-block method-block" bindtap="goMethods" role="button" aria-label="进入精选方法">
-        <view class="section-icon method-icon">🧰</view>
-        <view class="section-info">
-          <text class="section-title">精选方法</text>
-          <text class="section-count">{{methodCount}} 个方法</text>
-        </view>
-      </view>
-
-      <view class="section-block train-block" bindtap="goTrain" role="button" aria-label="进入脑力训练">
-        <view class="section-icon train-icon">🎮</view>
-        <view class="section-info">
-          <text class="section-title">脑力训练</text>
-          <text class="section-count">{{gameCount}} 个游戏</text>
+      <view class="hot-grid">
+        <view
+          class="hot-card"
+          data-kind="{{h.kind}}"
+          wx:for="{{recentItems}}"
+          wx:key="index"
+          wx:for-item="h"
+          bindtap="goHot"
+          data-item="{{h}}"
+          role="button"
+          aria-label="{{h.name}}，{{h.kindLabel}}"
+        >
+          <view class="hot-card-content">
+            <view class="hot-icon-row">
+              <view class="hot-icon-wrap">
+                <text class="hot-icon">{{h.icon}}</text>
+              </view>
+              <text class="hot-kind">{{h.kindLabel}}</text>
+            </view>
+            <text class="hot-name">{{h.name}}</text>
+          </view>
         </view>
       </view>
     </view>

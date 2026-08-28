@@ -4,10 +4,11 @@ const trainStore = require('../../utils/train-store')
 const { getModule } = require('../../utils/registry')
 const { withPrivacy } = require('../../utils/privacy')
 const { useTheme } = require('../../utils/theme-store')
+const SK = require('../../utils/storage-keys')
 const { fmt } = require('../../utils/format')
 
 function buildMethodRecords() {
-  const stored = wx.getStorageSync('ma_practices') || {}
+  const stored = wx.getStorageSync(SK.PRACTICES) || {}
   const out = []
   Object.keys(stored).forEach((mid) => {
     const m = methodsData.getMethod(mid)
@@ -58,10 +59,10 @@ function buildTrainRecords() {
 function buildInProgressAssess() {
   try {
     const info = (wx.getStorageInfoSync && wx.getStorageInfoSync()) || { keys: [] }
-    const progKeys = (info.keys || []).filter((k) => k.indexOf('ma_progress_') === 0)
+    const progKeys = (info.keys || []).filter((k) => k.indexOf(SK.PROGRESS_PREFIX) === 0)
     const out = []
     progKeys.forEach((k) => {
-      const id = k.replace('ma_progress_', '')
+      const id = k.replace(SK.PROGRESS_PREFIX, '')
       const mod = getModule(id)
       if (!mod) return
       const prog = wx.getStorageSync(k)
@@ -112,7 +113,7 @@ Page({
     this.load()
   },
   load() {
-    const hist = wx.getStorageSync('ma_history') || []
+    const hist = wx.getStorageSync(SK.HISTORY) || []
     const all = hist.map((h) => ({
       id: h.id,
       rid: h.rid,
@@ -190,12 +191,12 @@ Page({
       content: '确定删除「' + item.name + '」的该条记录吗？',
       success: (r) => {
         if (!r.confirm) return
-        const hist = wx.getStorageSync('ma_history') || []
+        const hist = wx.getStorageSync(SK.HISTORY) || []
         const next = hist.filter((h) => {
           if (item.rid) return h.rid !== item.rid
           return h.time !== item.time // 兼容无 rid 的旧数据
         })
-        wx.setStorageSync('ma_history', next)
+        wx.setStorageSync(SK.HISTORY, next)
         this.setData({ active: '' })
         this.load()
       },
@@ -210,11 +211,11 @@ Page({
       content: '确定删除「' + item.name + '」的这条练习吗？',
       success: (r) => {
         if (!r.confirm) return
-        const stored = wx.getStorageSync('ma_practices') || {}
+        const stored = wx.getStorageSync(SK.PRACTICES) || {}
         const list = (stored[item.mid] || []).filter((x) => x.id !== item.rid)
         if (list.length) stored[item.mid] = list
         else delete stored[item.mid]
-        wx.setStorageSync('ma_practices', stored)
+        wx.setStorageSync(SK.PRACTICES, stored)
         this.load()
       },
     })
@@ -247,14 +248,14 @@ clearAll() {
           : '确定清空所有测评记录吗？此操作不可恢复。',
       success: (r) => {
         if (r.confirm) {
-          if (tab === 'method') wx.removeStorageSync('ma_practices')
+          if (tab === 'method') wx.removeStorageSync(SK.PRACTICES)
           else if (tab === 'train') {
             const info = (wx.getStorageInfoSync && wx.getStorageInfoSync()) || { keys: [] }
             ;(info.keys || [])
-              .filter((k) => k.indexOf('ma_train_') === 0 && k !== 'ma_train_last')
+              .filter((k) => k.indexOf(SK.TRAIN_PREFIX) === 0 && k !== SK.TRAIN_LAST)
               .forEach((k) => wx.removeStorageSync(k))
-            wx.removeStorageSync('ma_train_last')
-          } else wx.removeStorageSync('ma_history')
+            wx.removeStorageSync(SK.TRAIN_LAST)
+          } else wx.removeStorageSync(SK.HISTORY)
             this.load()
         }
       },
@@ -268,16 +269,16 @@ clearAll() {
   exportAll() {
     const tab = this.data.tab
     let data
-    if (tab === 'method') data = wx.getStorageSync('ma_practices') || {}
+    if (tab === 'method') data = wx.getStorageSync(SK.PRACTICES) || {}
     else if (tab === 'train') {
       const info = (wx.getStorageInfoSync && wx.getStorageInfoSync()) || { keys: [] }
       data = {}
       ;(info.keys || [])
-        .filter((k) => k.indexOf('ma_train_') === 0 && k !== 'ma_train_last')
+        .filter((k) => k.indexOf(SK.TRAIN_PREFIX) === 0 && k !== SK.TRAIN_LAST)
         .forEach((k) => {
           data[k] = wx.getStorageSync(k) || []
         })
-    } else data = wx.getStorageSync('ma_history') || []
+    } else data = wx.getStorageSync(SK.HISTORY) || []
     const empty = tab === 'assess' ? !data.length : !Object.keys(data).length && !data.length
     if (tab === 'train' && !Object.keys(data).length) {
       wx.showToast({ title: '暂无记录', icon: 'none' })

@@ -19,9 +19,11 @@
 //   env: 'prod-XXXX', // 建议使用当前环境或显式指定
 // })
 
-const KEY = 'ma_user'
+const SK = require('./storage-keys')
+
+const KEY = SK.USER
 // 记录集合键名（本地存储键）
-const RECORDS_KEY = 'ma_records'
+const RECORDS_KEY = SK.RECORDS
 
 // 性别用字符串枚举，语义清晰且便于后端直接落库
 const GENDERS = ['unknown', 'male', 'female']

@@ -2,7 +2,9 @@
  * 主题状态管理 - 支持跟随系统/浅色/深色 三种模式切换
  */
 
-const THEME_KEY = 'user-theme-preference';
+const SK = require('./storage-keys')
+
+const THEME_KEY = SK.THEME_PREF;
 const THEME_MODES = {
   AUTO: 'auto',
   LIGHT: 'light',
@@ -105,9 +107,8 @@ function applyTheme(theme) {
   if (!page) return;
 
   const effectiveTheme = theme === THEME_MODES.AUTO ? getSystemTheme() : theme;
-  const root = page.getOpenerEventChannel ? page : null;
 
-  wx.setStorageSync('current-effective-theme', effectiveTheme);
+  wx.setStorageSync(SK.EFFECTIVE_THEME, effectiveTheme);
 }
 
 function getEffectiveTheme() {
@@ -128,7 +129,7 @@ function initThemeListener() {
       const stored = getStoredTheme();
       if (stored === THEME_MODES.AUTO) {
         const newTheme = result.theme === 'dark' ? THEME_MODES.DARK : THEME_MODES.LIGHT;
-        wx.setStorageSync('current-effective-theme', newTheme);
+        wx.setStorageSync(SK.EFFECTIVE_THEME, newTheme);
         const pages = getCurrentPages();
         pages.forEach(page => {
           if (page.onThemeChange) {

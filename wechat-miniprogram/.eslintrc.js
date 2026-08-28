@@ -22,6 +22,8 @@ module.exports = {
     App: 'readonly',
     getApp: 'readonly',
     wx: 'readonly',
+    getCurrentPages: 'readonly',
+    requirePlugin: 'readonly',
     module: 'writable',
     require: 'readonly',
     console: 'readonly',

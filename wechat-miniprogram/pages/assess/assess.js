@@ -1,4 +1,5 @@
 const { getMetaList, TYPE_LABELS } = require('../../utils/registry')
+const SK = require('../../utils/storage-keys')
 const { hexToRgba } = require('../../utils/color')
 const { useTheme } = require('../../utils/theme-store')
 
@@ -63,7 +64,7 @@ Page({
     this.refreshRecords()
   },
   refreshRecords() {
-    const assessRecordCount = (wx.getStorageSync('ma_history') || []).length
+    const assessRecordCount = (wx.getStorageSync(SK.HISTORY) || []).length
     this.setData({ assessRecordCount })
   },
   applyFilter() {

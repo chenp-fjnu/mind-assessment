@@ -1,8 +1,9 @@
 const methodsData = require('../../utils/methods-data')
 const { useTheme } = require('../../utils/theme-store')
 const { getUserId } = require('../../utils/user')
+const SK = require('../../utils/storage-keys')
 
-const STORE_KEY = 'ma_practices'
+const STORE_KEY = SK.PRACTICES
 
 Page({
   data: {

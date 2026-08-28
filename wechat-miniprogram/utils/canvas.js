@@ -83,10 +83,12 @@ function renderTrend(ctx, W, H, opts) {
     ctx.fillStyle = pal.label
     ctx.fillText(String(v), x, y - 12)
   })
-  if (dates && dates.length === vals.length && vals.length <= 8) {
+  if (dates && dates.length === vals.length) {
     ctx.fillStyle = pal.date
     ctx.font = '15px sans-serif'
-    vals.forEach((v, i) => {
+    // ≤8 条全量显示日期；更多时仅显示首/尾以避免重叠
+    const showIdx = vals.length <= 8 ? vals.map((_, i) => i) : [0, vals.length - 1]
+    showIdx.forEach((i) => {
       ctx.fillText(dates[i], xAt(i), H - 6)
     })
   }

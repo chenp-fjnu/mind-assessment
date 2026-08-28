@@ -2,9 +2,10 @@
 // 复用 utils/trend.js 的趋势计算。
 const { computeTrend } = require('./trend')
 const { getUserId } = require('./user')
+const SK = require('./storage-keys')
 
-const PREFIX = 'ma_train_'
-const LAST_KEY = 'ma_train_last'
+const PREFIX = SK.TRAIN_PREFIX
+const LAST_KEY = SK.TRAIN_LAST
 
 // 每个 (游戏, 难度) 对应一个独立存储键，保证历史与最佳按等级分开统计
 function key(id, level) {

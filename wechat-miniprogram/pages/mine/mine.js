@@ -1,12 +1,13 @@
 const trainStore = require('../../utils/train-store')
 const { useTheme, THEME_MODES } = require('../../utils/theme-store')
-const { getUser, saveUser, syncNow, getSyncStatus, ensureUser } = require('../../utils/user')
+const { getUser, syncNow, getSyncStatus, ensureUser } = require('../../utils/user')
+const SK = require('../../utils/storage-keys')
 
 // 页面加载时确保用户存在（兼容本地和云端）
 ensureUser()
 
 function countPractices() {
-  const stored = wx.getStorageSync('ma_practices') || {}
+  const stored = wx.getStorageSync(SK.PRACTICES) || {}
   return Object.keys(stored).reduce((n, k) => n + (stored[k] || []).length, 0)
 }
 
@@ -46,7 +47,7 @@ Page({
   },
   // 从存储获取数据并更新页面
   updateDataFromStores() {
-    const hist = wx.getStorageSync('ma_history') || []
+    const hist = wx.getStorageSync(SK.HISTORY) || []
     const assessCount = hist.length
     const practiceCount = countPractices()
     const trainCount = trainStore.allRecords().length

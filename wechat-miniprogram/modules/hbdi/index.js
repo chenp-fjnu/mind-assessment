@@ -113,8 +113,6 @@ function computeResult(answers, qs) {
     answered++;
   });
 
-  const total = answered || qs.length;
-
   // 按被选次数排序
   const sorted = Object.keys(counts).sort((a, b) => counts[b] - counts[a]);
   const top = sorted[0];
