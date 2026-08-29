@@ -2,6 +2,10 @@
   <view class="scroll-page">
     <view class="hero" style="background: linear-gradient(135deg, {{meta.color}}, #1e293b);">
       <view class="back" bindtap="goBack" role="button" aria-label="返回">‹ 返回</view>
+      <view class="hero-actions">
+        <view wx:if="{{!finished}}" class="fs-toggle" bindtap="toggleFullscreen" role="button" aria-label="{{fullscreen ? '退出全屏' : '全屏放大'}}">{{fullscreen ? '✕ 退出全屏' : '⛶ 全屏放大'}}</view>
+        <view wx:if="{{!finished && showStartBtn}}" class="start-btn-unified" bindtap="onStartGame" role="button" aria-label="{{startBtnText}}">{{startBtnText}}</view>
+      </view>
       <view class="h-icon" style="background:{{tint}};">{{meta.icon}}</view>
       <text class="hero-title">{{meta.name}}</text>
       <text class="hero-sub">{{meta.desc}}</text>
@@ -31,10 +35,6 @@
     <view wx:if="{{!finished}}" class="board card {{fullscreen ? 'fullscreen' : ''}}" catchtouchmove="preventScroll">
       <include src="games-block.wxml" />
     </view>
-
-    <view wx:if="{{!finished && showStartBtn}}" class="start-btn-unified" bindtap="onStartGame" role="button" aria-label="{{startBtnText}}">{{startBtnText}}</view>
-
-    <view wx:if="{{!finished}}" class="fs-toggle" bindtap="toggleFullscreen" role="button" aria-label="{{fullscreen ? '退出全屏' : '全屏放大'}}">{{fullscreen ? '✕ 退出全屏' : '⛶ 全屏放大'}}</view>
 
     <view wx:if="{{finished && result}}" class="result card">
       <text class="res-title">本局结果</text>
