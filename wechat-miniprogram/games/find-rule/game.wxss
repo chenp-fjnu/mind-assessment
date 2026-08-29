@@ -1,0 +1,56 @@
+.fr {
+  padding: 24rpx 16rpx;
+  box-sizing: border-box;
+}
+
+.tip {
+  text-align: center;
+  font-size: 28rpx;
+  color: #374151;
+  margin-bottom: 20rpx;
+  line-height: 1.5;
+}
+
+.sw {
+  display: inline-block;
+  width: 24rpx;
+  height: 24rpx;
+  border-radius: 6rpx;
+  margin: 0 8rpx;
+  vertical-align: middle;
+}
+
+.grid {
+  display: grid;
+  gap: 6rpx;
+  max-width: 680rpx;
+  margin: 0 auto;
+}
+
+.cell {
+  aspect-ratio: 1;
+  border-radius: 8rpx;
+  transition: transform 0.1s, opacity 0.1s;
+  border: 2rpx solid transparent;
+}
+
+.cell:active {
+  transform: scale(0.96);
+}
+
+.cell.hit {
+  opacity: 0.6;
+  border-color: #10b981;
+  box-shadow: 0 0 0 4rpx rgba(16, 185, 129, 0.3);
+}
+
+.cell.wrong {
+  animation: shake 0.3s ease;
+  border-color: #ef4444;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-6rpx); }
+  75% { transform: translateX(6rpx); }
+}

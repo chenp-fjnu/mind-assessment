@@ -16,7 +16,7 @@ const outBase = process.env.GEN_OUT
   : base
 const { LOADERS } = require(path.join(base, 'utils', 'game-registry'))
 
-const BREATH = { tag: 'breath-game', compPath: '../../components/breath/breath' }
+const BREATH_GAMES = ['box-breathing', 'breath-478', 'mindfulness', 'resonance']
 
 function familyOf(id) {
   try {
@@ -28,13 +28,10 @@ function familyOf(id) {
 }
 
 const entries = []
-let breathEmitted = false
 Object.keys(LOADERS).forEach((id) => {
   const fam = familyOf(id)
-  if (fam === 'breath') {
-    if (breathEmitted) return // 呼吸族 4 个游戏共用一个 breath-game 组件，仅挂载一次
-    breathEmitted = true
-    entries.push({ id, tag: BREATH.tag, compPath: BREATH.compPath, breath: true })
+  if (fam === 'breath' && BREATH_GAMES.includes(id)) {
+    entries.push({ id, tag: id + '-game', compPath: `../../games/${id}/game`, breath: false })
     return
   }
   entries.push({ id, tag: id + '-game', compPath: `../../games/${id}/game`, breath: false })
@@ -53,13 +50,6 @@ fs.writeFileSync(gameJsonWrite, JSON.stringify(gameJson, null, 2) + '\n')
 
 // 2) games-block.wxml 的 wx:if 挂载块
 const lines = entries.map((e) => {
-  if (e.breath) {
-    return (
-      `    <breath-game wx:if="{{family === 'breath'}}" id="trainGame" ` +
-      `gameId="{{gameId}}" level="{{level}}" color="{{meta.color}}" tint="{{tint}}" ` +
-      `board-width="{{boardWidth}}" board-height="{{boardHeight}}" fullscreen="{{fullscreen}}" bind:finish="onFinish" />`
-    )
-  }
   // whack 等需要统一开始按钮的游戏，额外绑定显示/隐藏事件
   const extraBinds = e.id === 'whack'
     ? ' bind:showStartButton="onShowStartButton" bind:hideStartButton="onHideStartButton"'

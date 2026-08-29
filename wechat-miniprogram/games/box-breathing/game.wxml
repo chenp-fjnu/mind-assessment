@@ -1,0 +1,38 @@
+<view class="breath-container">
+  <view class="header">
+    <text class="title">{{name}}</text>
+    <text class="round">{{curRound}}/{{rounds}} 轮</text>
+  </view>
+  
+  <view class="breath-circle-wrapper">
+    <view class="breath-circle" 
+          style="transform: scale({{circleScale}}); transition: transform {{phaseSec}}s ease-in-out;"
+          wx:if="{{phase !== 'idle' && phase !== 'done'}}">
+      <view class="phase-label">{{phaseLabel}}</view>
+      <view class="phase-timer">{{Math.ceil(phaseSec * (1 - progress))}}s</view>
+      <view class="progress-ring" style="stroke-dashoffset: {{283 - 283 * progress}}"></view>
+    </view>
+    <view class="idle-text" wx:elif="{{phase === 'idle'}}">
+      <text>点击开始箱式呼吸</text>
+      <text class="hint">4-4-4-4 节律 × {{rounds}} 轮</text>
+    </view>
+    <view class="done-text" wx:elif="{{phase === 'done'}}">
+      <text class="complete">完成</text>
+      <text>共用时 {{Math.round((Date.now() - startTime)/1000)}} 秒</text>
+    </view>
+  </view>
+  
+  <view class="phase-indicators">
+    <view class="phase-dot {{phase === 'inhale' ? 'active' : ''}}">吸</view>
+    <view class="phase-dot {{phase === 'hold' ? 'active' : ''}}">止</view>
+    <view class="phase-dot {{phase === 'exhale' ? 'active' : ''}}">呼</view>
+    <view class="phase-dot {{phase === 'hold2' ? 'active' : ''}}">止</view>
+  </view>
+  
+  <view class="controls">
+    <button class="btn-primary" bindtap="start" disabled="{{running || phase === 'done'}}">
+      {{phase === 'idle' ? '开始' : (running ? '进行中...' : '继续')}}
+    </button>
+    <button class="btn-secondary" bindtap="reset" disabled="{{phase === 'idle'}}">重置</button>
+  </view>
+</view>
