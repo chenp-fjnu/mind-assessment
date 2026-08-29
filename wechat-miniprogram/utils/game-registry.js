@@ -14,7 +14,6 @@ const LOADERS = {
   'find-rule': () => require('../games/find-rule/index'),
   'number-maze': () => require('../games/number-maze/index'),
   mirror: () => require('../games/mirror/index'),
-  'number-code': () => require('../games/number-code/index'),
   'pattern-memory': () => require('../games/pattern-memory/index'),
   simon: () => require('../games/simon/index'),
   'digit-span': () => require('../games/digit-span/index'),

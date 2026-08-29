@@ -15,7 +15,6 @@
     "find-rule-game": "../../games/find-rule/game",
     "number-maze-game": "../../games/number-maze/game",
     "mirror-game": "../../games/mirror/game",
-    "number-code-game": "../../games/number-code/game",
     "pattern-memory-game": "../../games/pattern-memory/game",
     "simon-game": "../../games/simon/game",
     "digit-span-game": "../../games/digit-span/game",

@@ -11,7 +11,6 @@
     <find-rule-game wx:if="{{gameId === 'find-rule'}}" id="trainGame" level="{{level}}" board-width="{{boardWidth}}" board-height="{{boardHeight}}" fullscreen="{{fullscreen}}" bind:finish="onFinish" />
     <number-maze-game wx:if="{{gameId === 'number-maze'}}" id="trainGame" level="{{level}}" board-width="{{boardWidth}}" board-height="{{boardHeight}}" fullscreen="{{fullscreen}}" bind:finish="onFinish" />
     <mirror-game wx:if="{{gameId === 'mirror'}}" id="trainGame" level="{{level}}" board-width="{{boardWidth}}" board-height="{{boardHeight}}" fullscreen="{{fullscreen}}" bind:finish="onFinish" />
-    <number-code-game wx:if="{{gameId === 'number-code'}}" id="trainGame" level="{{level}}" board-width="{{boardWidth}}" board-height="{{boardHeight}}" fullscreen="{{fullscreen}}" bind:finish="onFinish" />
     <pattern-memory-game wx:if="{{gameId === 'pattern-memory'}}" id="trainGame" level="{{level}}" board-width="{{boardWidth}}" board-height="{{boardHeight}}" fullscreen="{{fullscreen}}" bind:finish="onFinish" />
     <simon-game wx:if="{{gameId === 'simon'}}" id="trainGame" level="{{level}}" board-width="{{boardWidth}}" board-height="{{boardHeight}}" fullscreen="{{fullscreen}}" bind:finish="onFinish" />
     <digit-span-game wx:if="{{gameId === 'digit-span'}}" id="trainGame" level="{{level}}" board-width="{{boardWidth}}" board-height="{{boardHeight}}" fullscreen="{{fullscreen}}" bind:finish="onFinish" />
