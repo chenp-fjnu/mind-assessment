@@ -119,7 +119,7 @@
   z-index: 1000;
   border-radius: 0;
   /* 去掉左右内边距，让游戏占满全屏宽度（boardWidth=750 即整屏宽），避免全屏反而比普通模式更窄 */
-  padding: calc(env(safe-area-inset-top) + 24rpx) 0 calc(env(safe-area-inset-bottom) + 160rpx);
+  padding: calc(env(safe-area-inset-top) + 24rpx) 0 calc(env(safe-area-inset-bottom) + 100rpx);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -130,7 +130,7 @@
 .fs-toggle {
   position: fixed;
   right: calc(env(safe-area-inset-right) + 32rpx);
-  bottom: calc(env(safe-area-inset-bottom) + 80rpx);
+  bottom: calc(env(safe-area-inset-bottom) + 28rpx);
   z-index: 1001;
   padding: 14rpx 28rpx;
   font-size: 26rpx;
@@ -145,7 +145,7 @@
 .start-btn-unified {
   position: fixed;
   left: calc(env(safe-area-inset-left) + 32rpx);
-  bottom: calc(env(safe-area-inset-bottom) + 80rpx);
+  bottom: calc(env(safe-area-inset-bottom) + 28rpx);
   z-index: 1001;
   padding: 14rpx 28rpx;
   font-size: 26rpx;
