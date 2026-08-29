@@ -1,4 +1,5 @@
 const mod = require('./index')
+const sound = require('../../utils/sound')
 
 Component({
   properties: {
@@ -56,10 +57,12 @@ Component({
         this.clearTimer()
         const early = this.data.early + 1
         this.setData({ phase: 'early', hint: '太早了！', early })
+        sound.fail()
         this.timer = setTimeout(() => this.beginTrial(), 900)
         return
       }
       if (phase === 'go') {
+        sound.hit()
         const rt = Date.now() - this.data.goTs
         const times = this.data.times.concat(rt)
         const idx = this.data.idx + 1
@@ -74,6 +77,7 @@ Component({
     finish(times) {
       this.clearTimer()
       const result = mod.score({ times, total: this.data.trials, early: this.data.early })
+      sound.success()
       this.setData({ phase: 'done', hint: '完成！' })
       this.triggerEvent('finish', result)
     },

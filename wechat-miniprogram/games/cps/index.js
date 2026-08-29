@@ -5,7 +5,9 @@ function generate(level) {
 
 function score(state) {
   const clicks = state.clicks || 0
-  return { clicks, score: clicks }
+  const duration = state.duration || 0
+  const cps = duration > 0 ? Math.round((clicks / duration) * 100) / 100 : 0
+  return { clicks, score: clicks, duration, cps }
 }
 
 module.exports = {

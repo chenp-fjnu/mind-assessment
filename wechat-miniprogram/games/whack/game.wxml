@@ -20,5 +20,4 @@
   </view>
   <view wx:if="{{phase === 'idle'}}" class="tip">敲地鼠得分，连击越高分越多；小心💣别点！</view>
   <view wx:if="{{phase === 'done'}}" class="tip">完成！命中 {{hits}} / {{moles}}（炸弹 {{bombCount}} 个）　最高连击 {{bestCombo}}</view>
-  <view wx:if="{{phase === 'idle' || phase === 'done'}}" class="start-btn" bindtap="start" role="button" aria-label="开始游戏">开始</view>
 </view>

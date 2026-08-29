@@ -1,4 +1,5 @@
 const mod = require('./index')
+const sound = require('../../utils/sound')
 
 Component({
   properties: {
@@ -36,6 +37,7 @@ Component({
     showTrial() {
       if (this.data.idx >= this.data.trials) {
         const result = mod.score({ correct: this.data.correct, total: this.data.total })
+        sound.success()
         this.setData({ phase: 'done' })
         this.triggerEvent('finish', result)
         return
@@ -52,6 +54,8 @@ Component({
     },
     score(tapped) {
       const ok = tapped ? this.data.cur.go : !this.data.cur.go
+      if (ok) sound.hit()
+      else sound.miss()
       const correct = this.data.correct + (ok ? 1 : 0)
       const total = this.data.total + 1
       const idx = this.data.idx + 1

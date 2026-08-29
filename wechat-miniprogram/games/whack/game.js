@@ -1,4 +1,5 @@
 const mod = require('./index')
+const sound = require('../../utils/sound')
 
 Component({
   properties: {
@@ -76,9 +77,11 @@ Component({
         gapMs: seed.gapMs, active: -1, activeType: '', hits: 0, misses: 0, escaped: 0,
         bombs: 0, score: 0, combo: 0, bestCombo: 0, popIdx: -1, popType: '', phase: 'idle',
       })
+      this.triggerEvent('showStartButton', { text: '开始游戏' })
     },
     start() {
       if (this.data.phase !== 'idle' && this.data.phase !== 'done') return
+      this.triggerEvent('hideStartButton')
       const seed = mod.generate(this.data.level)
       const bombCount = this.buildQueue(seed)
       this.setData({ phase: 'play', bombs: 0, bombCount, hits: 0, misses: 0, escaped: 0, score: 0, combo: 0, bestCombo: 0, active: -1, activeType: '' })
@@ -92,6 +95,7 @@ Component({
         })
         this.setData({ phase: 'done' })
         this.triggerEvent('finish', result)
+        this.triggerEvent('showStartButton', { text: '再玩一次' })
         return
       }
       const type = this._queue[this._qi++]
@@ -145,6 +149,7 @@ Component({
         this.flash(idx, 'bomb')
         this.haptic('bomb')
         this.triggerShake()
+        sound.miss()
       } else {
         const combo = this.data.combo + 1
         const mult = Math.min(combo, 5)
@@ -152,6 +157,7 @@ Component({
         const bestCombo = Math.max(this.data.bestCombo, combo)
         this.setData({ hits: this.data.hits + 1, combo, bestCombo, score: this.data.score + gained })
         this.flash(idx, 'hit')
+        sound.hit()
       }
       this.setData({ active: -1, activeType: '' })
       this.nextMole()

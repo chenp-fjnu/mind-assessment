@@ -1,10 +1,23 @@
 <view class="cps">
-  <view class="info" wx:if="{{phase === 'play'}}">剩余 {{left}} 秒</view>
-  <view class="info" wx:else>连点测试</view>
-  <view class="big {{phase === 'play' ? 'on' : ''}}" bindtap="onTap" role="button" aria-label="点击">
-    <text class="n">{{clicks}}</text>
-    <text class="t">次</text>
+  <view class="info" wx:if="{{phase === 'play'}}">剩余 {{leftText}}s ｜ {{cpsText}} CPS</view>
+  <view class="info" wx:else>限时 {{duration}} 秒挑战</view>
+
+  <view
+    class="big {{phase === 'play' ? 'on' : ''}} {{flash ? 'flash' : ''}}"
+    bindtap="onTap"
+    role="button"
+    aria-label="{{phase === 'play' ? '点击计数' : '开始连点'}}"
+  >
+    <block wx:if="{{phase === 'idle'}}">
+      <text class="start-label">点击开始</text>
+      <text class="start-sub">开始后尽快连点</text>
+    </block>
+    <block wx:else>
+      <text class="n">{{clicks}}</text>
+      <text class="t">次</text>
+    </block>
   </view>
-  <view wx:if="{{phase === 'idle'}}" class="tip">开始后在限时内尽快连点</view>
-  <view wx:if="{{phase === 'done'}}" class="tip">完成！</view>
+
+  <view wx:if="{{phase === 'idle'}}" class="tip">在 {{duration}} 秒内尽可能快地连点，测你的 CPS（每秒点击数）</view>
+  <view wx:if="{{phase === 'play'}}" class="tip">快点！越快越好</view>
 </view>

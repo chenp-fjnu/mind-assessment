@@ -25,6 +25,8 @@ Page({
     resultChips: [],
     trendText: '',
     fullscreen: false,
+    showStartBtn: false,
+    startBtnText: '开始游戏',
     // 棋盘可用宽/高（rpx）；全屏时取满屏尺寸，方格类游戏据此放大格子（高度用于竖屏铺满）
     boardWidth: 705,
     boardHeight: 0,
@@ -72,6 +74,21 @@ Page({
       family: g.family || (g.dim === 'relax' ? 'breath' : ''),
     })
     this.refreshTrend(id, g, level)
+  },
+  onShowStartButton(e) {
+    const { text = '开始游戏' } = e.detail || {}
+    this.setData({ showStartBtn: true, startBtnText: text })
+  },
+  onHideStartButton() {
+    this.setData({ showStartBtn: false })
+  },
+  onStartGame() {
+    // 触发子组件的开始方法
+    const game = this.selectComponent('#trainGame')
+    if (game && game.start) {
+      game.start()
+    }
+    this.setData({ showStartBtn: false })
   },
   refreshTrend(id, g, level) {
     const t = trainStore.trend(id, level)
@@ -176,7 +193,8 @@ Page({
         topInset = info.statusBarHeight || 20
       }
       const innerHpx = hpx - topInset - bottomInset
-      boardHeight = Math.round(innerHpx * factor) - 48 // 再减去 board 上下 24rpx 内边距
+      // 整屏内容高度需扣掉全屏 CSS 的上下内边距（顶部 24rpx + 底部 120rpx），避免游戏越过底部按钮被裁切
+      boardHeight = Math.round(innerHpx * factor) - 144
     }
     this.setData({ fullscreen: fs, boardWidth, boardHeight })
   },

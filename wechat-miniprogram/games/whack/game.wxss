@@ -77,11 +77,3 @@
   color: var(--sub);
   font-size: 24rpx;
 }
-.start-btn {
-  margin-top: 28rpx;
-  padding: 18rpx 64rpx;
-  background: #f97316;
-  color: #fff;
-  font-size: 30rpx;
-  border-radius: 999rpx;
-}

@@ -1,4 +1,5 @@
 const mod = require('./index')
+const sound = require('../../utils/sound')
 
 Component({
   properties: {
@@ -33,6 +34,7 @@ Component({
         const time = (Date.now() - this.data.startT) / 1000
         const result = mod.score({ correct: this.data.correct, total: this.data.total })
         result.time = time
+        sound.success()
         this.setData({ phase: 'done' })
         this.triggerEvent('finish', result)
         return
@@ -43,6 +45,8 @@ Component({
       if (this.data.phase !== 'play') return
       const side = e.currentTarget.dataset.side
       const ok = side === 'l' ? this.data.cur.a > this.data.cur.b : this.data.cur.b > this.data.cur.a
+      if (ok) sound.hit()
+      else sound.miss()
       const correct = this.data.correct + (ok ? 1 : 0)
       const total = this.data.total + 1
       const idx = this.data.idx + 1

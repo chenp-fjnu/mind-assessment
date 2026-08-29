@@ -18,18 +18,33 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  transition: transform 0.05s;
+  transition: transform 0.06s ease;
 }
 .big.on {
   background: #fde68a;
 }
+.big.flash {
+  transform: scale(0.95);
+  background: #f59e0b;
+}
 .big:active {
   transform: scale(0.96);
 }
-.n {
-  font-size: 120rpx;
+.start-label {
+  font-size: 56rpx;
   font-weight: 800;
   color: var(--text);
+}
+.start-sub {
+  margin-top: 16rpx;
+  font-size: 24rpx;
+  color: var(--sub);
+}
+.n {
+  font-size: 140rpx;
+  font-weight: 800;
+  color: var(--text);
+  line-height: 1.1;
 }
 .t {
   font-size: 28rpx;
@@ -39,4 +54,6 @@
   margin-top: 30rpx;
   color: var(--sub);
   font-size: 24rpx;
+  text-align: center;
+  padding: 0 20rpx;
 }
