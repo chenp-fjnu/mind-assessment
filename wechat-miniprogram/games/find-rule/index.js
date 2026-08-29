@@ -14,8 +14,15 @@ function generate(level) {
   let targetCount = 0
   for (let i = 0; i < total; i++) {
     const isTarget = Math.random() < 0.4
-    const c = isTarget ? rule : COLORS[Math.floor(Math.random() * COLORS.length)]
-    if (isTarget) targetCount++
+    let c
+    if (isTarget) {
+      c = rule
+      targetCount++
+    } else {
+      // 非目标格子：从除规则色外的颜色中随机选，避免视觉相同但逻辑不同
+      const otherColors = COLORS.filter((col) => col.key !== rule.key)
+      c = otherColors[Math.floor(Math.random() * otherColors.length)]
+    }
     cells.push({ hex: c.hex, key: c.key, target: isTarget })
   }
   return { size, cells, total, targetCount, ruleKey: rule.key, ruleHex: rule.hex }
