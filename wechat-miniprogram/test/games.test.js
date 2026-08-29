@@ -298,7 +298,7 @@ describe('工作记忆游戏', () => {
 
 describe('反应速度游戏', () => {
   test('whack 返回地鼠数', () => {
-    expect(getGame('whack').generate(4).trials).toBe(20)
+    expect(getGame('whack').generate(4).moles).toBe(20)
   })
   test('go-no-go 返回试次', () => {
     const s = getGame('go-no-go').generate(3)

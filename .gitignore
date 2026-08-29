@@ -75,3 +75,6 @@ project-analysis/
 *.bak
 *.cache
 wechat-miniprogram/project.private.config.json
+
+# 校验脚本临时产物（现已输出到系统临时目录，此处仅为保险）
+.gencheck/

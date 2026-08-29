@@ -11,7 +11,9 @@ const fs = require('fs')
 const path = require('path')
 
 const base = process.cwd()
-const outBase = process.env.GEN_OUT ? path.join(base, process.env.GEN_OUT) : base
+const outBase = process.env.GEN_OUT
+  ? (path.isAbsolute(process.env.GEN_OUT) ? process.env.GEN_OUT : path.join(base, process.env.GEN_OUT))
+  : base
 const { LOADERS } = require(path.join(base, 'utils', 'game-registry'))
 
 const BREATH = { tag: 'breath-game', compPath: '../../components/breath/breath' }

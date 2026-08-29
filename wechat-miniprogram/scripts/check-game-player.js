@@ -4,34 +4,36 @@
 // 运行：node scripts/check-game-player.js（已并入 npm run validate 与 test:all）
 const cp = require('child_process')
 const fs = require('fs')
+const os = require('os')
 const path = require('path')
 const base = process.cwd()
-const tmp = '.gencheck'
+// 临时产物放在项目目录之外（系统临时目录），避免微信开发者工具把 .gencheck 当作
+// 工程文件去编译/打开，从而报 “ENOENT: no such file ... .gencheck/...” 的错误。
+const tmp = path.join(os.tmpdir(), 'mind-gencheck-' + process.pid)
 
+let errors = 0
 try {
   cp.execSync('node tools/gen-game-player.js', {
     cwd: base,
     env: Object.assign({}, process.env, { GEN_OUT: tmp }),
     stdio: 'ignore',
   })
-} catch (e) {
-  console.error('✗ 生成脚本执行失败：', e.message)
-  process.exit(1)
-}
-
-const targets = ['pages/train/games-block.wxml', 'pages/train/game.json']
-let errors = 0
-for (const rel of targets) {
-  const current = fs.readFileSync(path.join(base, rel), 'utf8')
-  const generated = fs.readFileSync(path.join(base, tmp, rel), 'utf8')
-  if (current !== generated) {
-    console.error('✗ 不一致：', rel, '（请运行 node tools/gen-game-player.js 重新生成）')
-    errors++
+  const targets = ['pages/train/games-block.wxml', 'pages/train/game.json']
+  for (const rel of targets) {
+    const current = fs.readFileSync(path.join(base, rel), 'utf8')
+    const generated = fs.readFileSync(path.join(tmp, rel), 'utf8')
+    if (current !== generated) {
+      console.error('✗ 不一致：', rel, '（请运行 node tools/gen-game-player.js 重新生成）')
+      errors++
+    }
   }
+} catch (e) {
+  console.error('✗ 校验失败：', e.message)
+  errors++
+} finally {
+  // 无论校验是否通过都清理临时产物，绝不在工程内残留 .gencheck
+  fs.rmSync(tmp, { recursive: true, force: true })
 }
-
-// 清理临时产物
-fs.rmSync(path.join(base, tmp), { recursive: true, force: true })
 
 if (errors) {
   console.error(`\n校验失败：${errors} 处玩家页挂载与生成结果不一致`)

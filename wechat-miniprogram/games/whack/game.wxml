@@ -1,16 +1,24 @@
-<view class="wh">
-  <view class="info">命中 {{hits}} / {{trials}}</view>
-  <view class="grid" style="grid-template-columns:repeat({{grid}},1fr);">
+<view class="wh {{shake ? 'shake' : ''}}">
+  <view class="info">
+    <text class="info-item">命中 {{hits}}/{{moles}}</text>
+    <text class="info-item">得分 {{score}}</text>
+    <text class="info-item combo {{combo >= 3 ? 'hot' : ''}}">连击 {{combo}}</text>
+  </view>
+  <view class="grid" style="grid-template-columns:repeat({{grid}}, {{cell}}rpx);">
     <view
       wx:for="{{total}}"
       wx:key="*this"
-      class="hole {{active === index ? 'up' : ''}}"
+      class="hole {{active === index ? (activeType === 'bomb' ? 'up bomb' : 'up') : ''}}"
+      style="width:{{cell}}rpx;height:{{cell}}rpx;"
       data-idx="{{index}}"
       bindtap="onTap"
       role="button"
       aria-label="地洞"
-    ><view class="mole" wx:if="{{active === index}}">🐹</view></view>
+    ><view class="mole" wx:if="{{active === index}}" style="font-size:{{cell * 0.42}}rpx;">{{activeType === 'bomb' ? '💣' : '🐹'}}</view>
+      <view class="pop" wx:if="{{popIdx === index}}" style="font-size:{{cell * 0.42}}rpx;">{{popType === 'bomb' ? '💥' : '✨'}}</view>
+    </view>
   </view>
-  <view wx:if="{{phase === 'idle'}}" class="tip">地鼠冒头时尽快点击</view>
-  <view wx:if="{{phase === 'done'}}" class="tip">完成！</view>
+  <view wx:if="{{phase === 'idle'}}" class="tip">敲地鼠得分，连击越高分越多；小心💣别点！</view>
+  <view wx:if="{{phase === 'done'}}" class="tip">完成！命中 {{hits}} / {{moles}}（炸弹 {{bombCount}} 个）　最高连击 {{bestCombo}}</view>
+  <view wx:if="{{phase === 'idle' || phase === 'done'}}" class="start-btn" bindtap="start" role="button" aria-label="开始游戏">开始</view>
 </view>
