@@ -60,7 +60,11 @@ const lines = entries.map((e) => {
       `board-width="{{boardWidth}}" board-height="{{boardHeight}}" fullscreen="{{fullscreen}}" bind:finish="onFinish" />`
     )
   }
-  return `    <${e.tag} wx:if="{{gameId === '${e.id}'}}" id="trainGame" level="{{level}}" board-width="{{boardWidth}}" board-height="{{boardHeight}}" fullscreen="{{fullscreen}}" bind:finish="onFinish" />`
+  // whack 等需要统一开始按钮的游戏，额外绑定显示/隐藏事件
+  const extraBinds = e.id === 'whack'
+    ? ' bind:showStartButton="onShowStartButton" bind:hideStartButton="onHideStartButton"'
+    : ''
+  return `    <${e.tag} wx:if="{{gameId === '${e.id}'}}" id="trainGame" level="{{level}}" board-width="{{boardWidth}}" board-height="{{boardHeight}}" fullscreen="{{fullscreen}}" bind:finish="onFinish"${extraBinds} />`
 })
 const block =
   '<!-- 本文件由 tools/gen-game-player.js 自动生成，请勿手动修改 -->\n' + lines.join('\n') + '\n'
