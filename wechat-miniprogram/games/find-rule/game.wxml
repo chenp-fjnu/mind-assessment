@@ -1,15 +1,46 @@
 <view class="fr">
-  <view class="tip">点所有 <view class="sw" style="background:{{ruleHex}};"></view> 色方格（{{found}}/{{targetCount}}，误点 {{errors}}）</view>
-  <view class="grid" style="grid-template-columns:repeat({{size}},1fr);">
-    <view
-      wx:for="{{cells}}"
-      wx:key="idx"
-      class="cell {{item.hit ? 'hit' : ''}} {{item.wrong ? 'wrong' : ''}}"
-      style="background:{{item.hex}};"
-      data-idx="{{index}}"
-      bindtap="onTap"
-      role="button"
-      aria-label="方格"
-    ></view>
+  <!-- 开始界面 -->
+  <view class="start-screen" wx:if="{{phase === 'idle'}}">
+    <view class="start-card">
+      <text class="title">按要求找方格</text>
+      <view class="rule-box">
+        <text class="rule-label">请找出所有</text>
+        <view class="sw" style="background:{{ruleHex}};"></view>
+        <text class="rule-color">{{ruleName}}</text>
+        <text class="rule-label">色方格</text>
+      </view>
+      <text class="hint">共 {{targetCount}} 个目标 · {{size}}×{{size}} 网格</text>
+      <button class="btn-start" bindtap="start">开始游戏</button>
+    </view>
+  </view>
+
+  <!-- 游戏界面 -->
+  <view class="game-screen" wx:elif="{{phase === 'playing'}}">
+    <view class="tip">
+      <text>找出 <view class="sw" style="background:{{ruleHex}};"></view> {{ruleName}} 色方格</text>
+      <text class="progress">{{found}}/{{targetCount}}  ·  误点 {{errors}}</text>
+    </view>
+    <view class="grid" style="grid-template-columns:repeat({{size}},1fr);">
+      <view
+        wx:for="{{cells}}"
+        wx:key="idx"
+        class="cell {{item.hit ? 'hit' : ''}} {{item.wrong ? 'wrong' : ''}}"
+        style="background:{{item.hex}};height:{{cellSize}}rpx;"
+        data-idx="{{index}}"
+        bindtap="onTap"
+        role="button"
+        aria-label="方格"
+      ></view>
+    </view>
+  </view>
+
+  <!-- 完成界面 -->
+  <view class="done-screen" wx:elif="{{phase === 'done'}}">
+    <view class="done-card">
+      <text class="complete">完成！</text>
+      <text class="stats">用时 {{Math.round((Date.now() - startTime)/1000)}} 秒</text>
+      <text class="stats">误点 {{errors}} 次</text>
+      <button class="btn-restart" bindtap="reset">再玩一次</button>
+    </view>
   </view>
 </view>
