@@ -13,7 +13,6 @@
     "cancellation-game": "../../games/cancellation/game",
     "visual-search-game": "../../games/visual-search/game",
     "find-rule-game": "../../games/find-rule/game",
-    "figure-tracking-game": "../../games/figure-tracking/game",
     "number-maze-game": "../../games/number-maze/game",
     "mirror-game": "../../games/mirror/game",
     "number-code-game": "../../games/number-code/game",
