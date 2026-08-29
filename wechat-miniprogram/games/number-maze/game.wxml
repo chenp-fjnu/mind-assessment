@@ -1,18 +1,58 @@
 <view class="nm">
-  <view class="tip">从 <text class="s">起</text> 走到 <text class="e">终</text>（步数 {{steps}}）</view>
-  <view class="grid" style="grid-template-columns:repeat({{size}},1fr);">
-    <view
-      wx:for="{{cells}}"
-      wx:key="idx"
-      class="cell {{item.idx === cur ? 'cur' : ''}} {{item.idx === exit ? 'exit' : ''}}"
-      style="{{item.style}}"
-      data-idx="{{index}}"
-      bindtap="onTap"
-      role="button"
-      aria-label="格子"
-    >
-      <text wx:if="{{item.idx === exit}}">🚩</text>
-      <text wx:elif="{{item.idx === cur}}">🙂</text>
+  <!-- 开始界面 -->
+  <view class="start-screen" wx:if="{{phase === 'idle'}}">
+    <view class="start-card">
+      <text class="title">数字迷宫</text>
+      <text class="desc">从 🟢 起点走到 🚩 终点</text>
+      <view class="info-row">
+        <text>网格：{{size}}×{{size}}</text>
+        <text>最优步数：{{optimal}}</text>
+      </view>
+      <button class="btn-start" bindtap="start">开始游戏</button>
+    </view>
+  </view>
+
+  <!-- 游戏界面 -->
+  <view class="game-screen" wx:elif="{{phase === 'playing'}}">
+    <view class="tip">
+      <text>步数：{{steps}} / 最优：{{optimal}}</text>
+    </view>
+    <view class="grid" style="grid-template-columns:repeat({{size}},1fr);gap:4rpx;">
+      <view
+        wx:for="{{cells}}"
+        wx:key="idx"
+        class="cell 
+          {{item.idx === cur ? 'cur' : ''}} 
+          {{item.idx === exit ? 'exit' : ''}} 
+          {{item.visited ? 'visited' : ''}} 
+          {{item.wallFlash ? 'wall-flash' : ''}}"
+        style="width:{{cellSize}}rpx;height:{{cellH}}rpx;
+          border-top:{{item.walls[0] ? '3rpx solid #334155' : '1rpx solid transparent'}};
+          border-right:{{item.walls[1] ? '3rpx solid #334155' : '1rpx solid transparent'}};
+          border-bottom:{{item.walls[2] ? '3rpx solid #334155' : '1rpx solid transparent'}};
+          border-left:{{item.walls[3] ? '3rpx solid #334155' : '1rpx solid transparent'}};"
+        data-idx="{{index}}"
+        bindtap="onTap"
+        role="button"
+        aria-label="格子"
+      >
+        <text wx:if="{{item.idx === exit}}">🚩</text>
+        <text wx:elif="{{item.idx === cur}}">🟢</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 完成界面 -->
+  <view class="done-screen" wx:elif="{{phase === 'done'}}">
+    <view class="done-card">
+      <text class="complete">到达终点！</text>
+      <view class="stats">
+        <text>用时 {{Math.round((Date.now() - startTime)/1000)}} 秒</text>
+        <text>步数 {{steps}} / 最优 {{optimal}}</text>
+        <text wx:if="{{steps > optimal}}">超最优 {{steps - optimal}} 步</text>
+        <text wx:else>完美！</text>
+      </view>
+      <button class="btn-restart" bindtap="reset">再玩一次</button>
     </view>
   </view>
 </view>
