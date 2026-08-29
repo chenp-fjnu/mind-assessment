@@ -176,6 +176,9 @@ Page({
       fail: () => wx.switchTab({ url: '/pages/train/train' })
     })
   },
+  // 棋盘区域内拦截 touchmove，避免手指轻微滑动被页面当成滚动、导致 bindtap 被取消
+  // （网格类游戏在可滚动页上最常见的“吞点”根因；所有训练游戏均为点击式，无拖拽需求，故安全拦截）
+  preventScroll() {},
   onShareAppMessage() {
     const { meta } = this.data
     if (!meta) return {}

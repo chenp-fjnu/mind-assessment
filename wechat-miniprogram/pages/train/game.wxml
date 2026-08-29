@@ -28,7 +28,7 @@
       </scroll-view>
     </view>
 
-    <view wx:if="{{!finished}}" class="board card {{fullscreen ? 'fullscreen' : ''}}">
+    <view wx:if="{{!finished}}" class="board card {{fullscreen ? 'fullscreen' : ''}}" catchtouchmove="preventScroll">
       <include src="games-block.wxml" />
     </view>
 
