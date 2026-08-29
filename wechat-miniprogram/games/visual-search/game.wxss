@@ -6,9 +6,16 @@
 }
 .tip {
   font-size: 26rpx;
-  color: var(--text-tertiary);
+  color: var(--text-tertiary, #9ca3af);
   text-align: center;
   margin-bottom: 20rpx;
+  line-height: 1.6;
+}
+.tip .sub {
+  display: block;
+  font-size: 22rpx;
+  color: var(--text-quaternary, #d1d5db);
+  margin-top: 4rpx;
 }
 .grid {
   display: grid;
@@ -18,8 +25,27 @@
 .cell {
   aspect-ratio: 1 / 1;
   border-radius: 16rpx;
-  transition: transform 0.05s;
+  transition: transform 0.05s, box-shadow 0.1s;
+  border: 2rpx solid transparent;
 }
 .cell:active {
-  transform: scale(0.98);
+  transform: scale(0.96);
+}
+.cell.correct {
+  animation: pulse 0.3s ease;
+  box-shadow: 0 0 0 4rpx rgba(16, 185, 129, 0.4);
+}
+.cell.wrong {
+  animation: shake 0.3s ease;
+  box-shadow: 0 0 0 4rpx rgba(239, 68, 68, 0.4);
+}
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-4rpx); }
+  75% { transform: translateX(4rpx); }
 }

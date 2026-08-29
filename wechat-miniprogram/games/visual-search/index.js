@@ -3,21 +3,22 @@ function hsl(h, s, l) {
   return 'hsl(' + h + ',' + s + '%,' + l + '%)'
 }
 
-// level 1~5：网格边长 3~7，相似度递增（差异越小越难）
+// level 1~5 对应网格：3, 4, 5, 6, 7
+const LEVEL_SIZES = [3, 4, 5, 6, 7]
+const LEVEL_HUE_DIFFS = [180, 120, 80, 50, 30]
+
 function generate(opts) {
   const level = opts.level || 1
   const trials = opts.trials || 8
   const trialsData = []
+  const size = LEVEL_SIZES[Math.min(level - 1, LEVEL_SIZES.length - 1)]
+  const hueDiff = LEVEL_HUE_DIFFS[Math.min(level - 1, LEVEL_HUE_DIFFS.length - 1)]
 
   for (let t = 0; t < trials; t++) {
-    // 网格大小随等级增加：3, 4, 5, 6, 7
-    const size = Math.min(3 + Math.floor((level - 1) / 2) + (level % 2), 7)
     const total = size * size
     const baseH = Math.floor(Math.random() * 360)
     const oddIdx = Math.floor(Math.random() * total)
 
-    // 色差随等级减小：level 1=180°, 2=120°, 3=80°, 4=50°, 5=30°
-    const hueDiff = [180, 120, 80, 50, 30][Math.min(level - 1, 4)]
     const base = hsl(baseH, 60, 55)
     const odd = hsl((baseH + hueDiff) % 360, 60, 55)
 
