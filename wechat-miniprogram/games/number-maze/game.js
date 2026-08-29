@@ -73,7 +73,7 @@ Component({
         this.start()
         return
       }
-      if (idx === this.data.cur || idx === this.data.exit) return
+      if (idx === this.data.cur) return
       const size = this.data.size
       const r = Math.floor(this.data.cur / size)
       const c = this.data.cur % size
