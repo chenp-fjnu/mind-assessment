@@ -21,16 +21,8 @@
       <view
         wx:for="{{cells}}"
         wx:key="idx"
-        class="cell 
-          {{item.idx === cur ? 'cur' : ''}} 
-          {{item.idx === exit ? 'exit' : ''}} 
-          {{item.visited ? 'visited' : ''}} 
-          {{item.wallFlash ? 'wall-flash' : ''}}"
-        style="width:{{cellSize}}rpx;height:{{cellH}}rpx;
-          border-top:{{item.walls[0] ? '3rpx solid #334155' : '1rpx solid transparent'}};
-          border-right:{{item.walls[1] ? '3rpx solid #334155' : '1rpx solid transparent'}};
-          border-bottom:{{item.walls[2] ? '3rpx solid #334155' : '1rpx solid transparent'}};
-          border-left:{{item.walls[3] ? '3rpx solid #334155' : '1rpx solid transparent'}};"
+        class="cell {{item.idx === cur ? 'cur' : ''}} {{item.idx === exit ? 'exit' : ''}} {{item.visited ? 'visited' : ''}} {{item.wallFlash ? 'wall-flash' : ''}}"
+        style="width:{{cellSize}}rpx;height:{{cellH}}rpx;border-top:{{item.walls[0] ? '3rpx solid #334155' : '1rpx solid transparent'}};border-right:{{item.walls[1] ? '3rpx solid #334155' : '1rpx solid transparent'}};border-bottom:{{item.walls[2] ? '3rpx solid #334155' : '1rpx solid transparent'}};border-left:{{item.walls[3] ? '3rpx solid #334155' : '1rpx solid transparent'}};"
         data-idx="{{index}}"
         bindtap="onTap"
         role="button"
