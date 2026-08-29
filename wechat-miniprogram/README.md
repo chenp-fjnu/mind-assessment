@@ -334,6 +334,7 @@ CI（`.github/workflows/ci.yml`）：push/PR 触及 `wechat-miniprogram/**` 时�
 - **首页搜索 + 记录存储清理 + 无障碍断言（P1/P2）**：首页新增搜索框（经 `globalData.searchKeyword` 跳转测评页并应用筛选，避免重复「三大板块入口」）；彻底移除 `ma_records` 死代码——`storage-keys.js` 的 `RECORDS` 键与 `user.js` 的 `RECORDS_KEY`/`readRecordsLocal`/`writeRecordsLocal`/`saveRecord`/`getRecords`/`getRecordsByType`/`syncRecordToCloud` 及对应导出，`user.js` 仅保留用户态；补齐测评类型筛选、方法分类筛选、方法详情/练习返回按钮的 `aria-label`，并新增 `test/a11y.test.js` 静态断言所有可交互元素均带 `aria-label`（`npm run lint` 0 error、smoke 158、jest 212 全绿）。
 - **舒尔特方格点击偶发不识别（修复）**：`games/schulte/game.wxml` 棋盘加 `catchtouchmove`，避免手指轻微滑动被页面当成滚动、导致 `bindtap` 被取消（网格类游戏在可滚动页上最常见的「吞点」根因，最大 9×9 棋盘整体可显示、无需在盘内滚动，故安全）；`onTap` 中将 `dataset.n/idx` 显式转 `Number`，规避数据集偶发字符串类型导致 `n === next` 比较失败。已进一步在播放器 `pages/train/game.wxml` 棋盘容器统一加 `catchtouchmove`，一次性覆盖全部 31 个训练游戏（已确认均为点击式、无拖拽，安全）。
 - **舒尔特成绩对比年龄组常模（新增）**：`games/schulte/index.js` 内置公开评分常模（3×3/4×4/5×5/7×7 为公开标准，6/8/9 由相邻尺寸按格数线性插值估算），按用户生日（来自 `utils/user` 档案）推算年龄组，结果页展示「优秀/良好/及格」上限及本局所处区间与距优秀线差值（`pages/train/game.wxml` 新增 `.ref-cmp` 区块、`game.js` 在 `onFinish` 计算 `result.refComparison` 并单测覆盖）。
+- **修复：改生日后立即生效（否则年龄组对比不更新）**：原 `pages/profile/profile.js` 的 `onBirthdayChange` 只改内存 `data`、需再点「保存」才落盘，导致舒尔特按年龄组的对比读不到新生日。现改生日即调用 `saveUser({ birthday })` 即时持久化，对比随档案年龄组实时更新。
 
 > 路线图高/中优先项基本落地；CI 已接入 Jest + 覆盖率。**已知问题**：`utils/user.js` 云同步为占位实现（未接后端），相关同步 UI 仅作演示；`utils/theme.js` 色板目前仅 `isDark` 被使用，页面样式以 `app.wxss` CSS 变量为准；详见 [`docs/CODE_REVIEW.md`](docs/CODE_REVIEW.md)。
 

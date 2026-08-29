@@ -91,6 +91,9 @@ Page({
   onBirthdayChange(e) {
     const birthday = e.detail.value
     this.setData({ birthday, ageText: calcAge(birthday) })
+    // 立即持久化生日：舒尔特等依赖年龄组的对比在结算时直接读取档案，
+    // 若仅改 picker 不点「保存」会导致年龄组不更新，故此处即时落盘。
+    saveUser({ birthday })
   },
   save() {
     saveUser({
