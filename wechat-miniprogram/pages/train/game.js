@@ -2,6 +2,8 @@ const { getGame } = require('../../utils/game-registry')
 const { hexToRgba } = require('../../utils/color')
 const trainStore = require('../../utils/train-store')
 const { useTheme } = require('../../utils/theme-store')
+const { getUser } = require('../../utils/user')
+const schulte = require('../../games/schulte/index')
 
 function fmtBest(value, unit) {
   if (value == null) return '暂无记录'
@@ -128,6 +130,13 @@ Page({
       bestText: fmtBest(best, g.metric.unit),
       resultChips: this.buildChips(r, g),
     })
+    // 舒尔特方格：将成绩与年龄组常模对比，供结果页展示
+    if (this.data.gameId === 'schulte' && r.time != null) {
+      const u = getUser()
+      const ag = schulte.ageGroupFromBirthday(u && u.birthday) || '18+'
+      const cmp = schulte.compare(this.data.level, r.time, ag)
+      if (cmp) this.setData({ ['result.refComparison']: cmp })
+    }
     this.refreshTrend(this.data.gameId, g, level)
   },
   buildChips(r, g) {

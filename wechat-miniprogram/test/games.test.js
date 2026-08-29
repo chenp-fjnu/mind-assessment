@@ -40,6 +40,33 @@ describe('舒尔特方格', () => {
     const slow = g.score({ size: 5, time: 60, errors: 5 })
     expect(fast.score).toBeGreaterThan(slow.score)
   })
+  test('ageGroupFromBirthday 按生日推算年龄组', () => {
+    const thisYear = new Date().getFullYear()
+    expect(g.ageGroupFromBirthday(thisYear + '-01-01')).toBe('3-5')
+    expect(g.ageGroupFromBirthday(thisYear - 8 + '-01-01')).toBe('6-10')
+    expect(g.ageGroupFromBirthday(thisYear - 15 + '-01-01')).toBe('11-17')
+    expect(g.ageGroupFromBirthday(thisYear - 30 + '-01-01')).toBe('18+')
+    expect(g.ageGroupFromBirthday('')).toBeNull()
+    expect(g.ageGroupFromBirthday('not-a-date')).toBeNull()
+  })
+  test('compare 按年龄组常模给出区间', () => {
+    // 成人 5×5：优秀≤20s / 良好≤25s / 及格≤30s
+    expect(g.compare(5, 18, '18+').band).toBe('excellent')
+    expect(g.compare(5, 22, '18+').band).toBe('good')
+    expect(g.compare(5, 28, '18+').band).toBe('pass')
+    expect(g.compare(5, 40, '18+').band).toBe('below')
+    // 无生日默认成人；区间解读应携带优秀/良好/及格上限
+    const c = g.compare(5, 18, '18+')
+    expect(c.excellent).toBe(20)
+    expect(c.good).toBe(25)
+    expect(c.pass).toBe(30)
+    expect(c.bandLabel).toBe('优秀')
+    expect(c.detail).toContain('优秀')
+  })
+  test('compare 对缺失常模尺寸返回 null', () => {
+    expect(g.compare(2, 5, '18+')).toBeNull()
+    expect(g.compare(5, null, '18+')).toBeNull()
+  })
 })
 
 describe('记忆配对', () => {

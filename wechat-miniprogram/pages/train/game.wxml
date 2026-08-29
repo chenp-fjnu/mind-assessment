@@ -43,6 +43,11 @@
         </view>
       </view>
       <view wx:if="{{trendText}}" class="trend">{{trendText}}</view>
+      <view wx:if="{{result.refComparison}}" class="ref-cmp" role="note" aria-label="参考成绩对比：{{result.refComparison.bandLabel}}">
+        <text class="ref-cmp-title">参考成绩对比（{{result.refComparison.ageGroup}}岁组{{result.refComparison.estimated ? ' · 估算' : ''}}）</text>
+        <text class="ref-cmp-bands">优秀 ≤{{result.refComparison.excellent}}s ｜ 良好 ≤{{result.refComparison.good}}s ｜ 及格 ≤{{result.refComparison.pass}}s</text>
+        <text class="ref-cmp-verdict">本局：{{result.refComparison.bandLabel}}（{{result.refComparison.detail}}）</text>
+      </view>
       <view class="res-actions">
         <view class="btn-primary" style="background:{{meta.color}};" bindtap="replay" role="button" aria-label="再玩一次">再玩一次</view>
         <view class="btn-ghost" bindtap="goBack" role="button" aria-label="返回列表">返回列表</view>
