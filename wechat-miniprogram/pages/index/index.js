@@ -18,6 +18,8 @@ const HOT_CONFIG = [
   { kind: 'method', id: 'pomodoro' },   // 番茄工作法 国民级时间管理
   // 训练类
   { kind: 'train', id: 'schulte' },     // 注意力训练 国民级/飞行员背书
+  { kind: 'train', id: 'whack' },       // 打地鼠 反应速度/手眼协调
+  { kind: 'train', id: 'cps' },         // 连点测试 点击速度/手指灵活度
 ]
 
 // 渐变映射：匹配各页面的 Hero 渐变
