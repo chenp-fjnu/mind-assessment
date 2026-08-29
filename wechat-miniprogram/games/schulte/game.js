@@ -64,9 +64,10 @@ Component({
       const { cellSize, cellH, fontSize } = this.computeCellSize(this.data.size)
       this.setData({ cellSize, cellH, fontSize })
     },
+    preventScroll() {},
     onTap(e) {
-      const n = e.currentTarget.dataset.n
-      const idx = e.currentTarget.dataset.idx
+      const n = Number(e.currentTarget.dataset.n)
+      const idx = Number(e.currentTarget.dataset.idx)
       if (!this.data.running) this.start()
       if (n === this.data.next) {
         const key = 'cells[' + idx + '].found'
