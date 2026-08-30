@@ -21,8 +21,9 @@
   height: 160rpx;
   border-radius: var(--radius-full);
   background: var(--bg-tertiary);
-  border: 2rpx solid var(--border-light);
+  border: 3px solid var(--color-primary-lighter);
   display: block;
+  object-fit: cover;
 }
 
 .avatar-fallback {
@@ -31,6 +32,7 @@
   justify-content: center;
   font-size: 72rpx;
   background: var(--bg-brand);
+  border-radius: var(--radius-full);
 }
 
 .nickname-input {

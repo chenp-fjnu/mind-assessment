@@ -55,8 +55,18 @@ Page({
     })
   },
   onChooseAvatar(e) {
-    const avatarUrl = (e.detail && e.detail.avatarUrl) || ''
-    this.setData({ avatarUrl })
+    const tempUrl = (e.detail && e.detail.avatarUrl) || ''
+    if (!tempUrl) return
+    // 微信返回的是临时文件，重启后失效；保存到本地用户目录以长期保留
+    try {
+      const fs = wx.getFileSystemManager()
+      const savedPath = `${wx.env.USER_DATA_PATH}/avatar_${Date.now()}.png`
+      fs.saveFileSync(tempUrl, savedPath)
+      this.setData({ avatarUrl: savedPath })
+    } catch (err) {
+      console.warn('[Profile] 头像本地保存失败，使用临时路径:', err)
+      this.setData({ avatarUrl: tempUrl })
+    }
   },
   onNicknameInput(e) {
     this.setData({ nickname: e.detail.value })
@@ -67,6 +77,9 @@ Page({
   onBirthdayChange(e) {
     const birthday = e.detail.value
     this.setData({ birthday, ageText: calcAge(birthday) })
+    // 立即持久化生日：舒尔特等依赖年龄组的对比在结算时直接读取档案，
+    // 若仅改 picker 不点「保存」会导致年龄组不更新，故此处即时落盘。
+    saveUser({ birthday })
   },
   save() {
     const gender = GENDERS[this.data.genderIndex] || 'unknown'
