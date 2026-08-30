@@ -32,30 +32,53 @@
       <include src="games-block.wxml" />
     </view>
 
+    <view wx:if="{{finished && result}}" class="board card {{fullscreen ? 'fullscreen' : ''}}" catchtouchmove="preventScroll">
+      <!-- 难度选择在游戏区域顶部，全屏时也可切换 -->
+      <view class="levels-in-board">
+        <text class="lv-title">难度</text>
+        <scroll-view class="lv-bar" scroll-x="true">
+          <view
+            wx:for="{{levels}}"
+            wx:key="value"
+            class="lv-chip {{level === item.value ? 'on' : ''}}"
+            style="{{level === item.value ? 'background:' + meta.color + ';border-color:' + meta.color + ';' : ''}}"
+            data-value="{{item.value}}"
+            data-label="{{item.label}}"
+            bindtap="onSelectLevel"
+            role="button"
+            aria-label="{{item.label}}，最佳 {{item.bestText}}"
+          >
+            <text class="lv-label">{{item.label}}</text>
+            <text class="lv-best">{{item.bestText}}</text>
+          </view>
+        </scroll-view>
+      </view>
+      <!-- 结果卡片在游戏区域内，全屏时也可见 -->
+      <view class="result-in-board">
+        <text class="res-title">本局结果</text>
+        <view class="res-chips">
+          <view wx:for="{{resultChips}}" wx:key="label" class="res-chip">
+            <text class="res-val">{{item.value}}</text>
+            <text class="res-lab">{{item.label}}</text>
+          </view>
+        </view>
+        <view wx:if="{{trendText}}" class="trend">{{trendText}}</view>
+        <view wx:if="{{result.refComparison}}" class="ref-cmp" role="note" aria-label="参考成绩对比：{{result.refComparison.bandLabel}}">
+          <text class="ref-cmp-title">参考成绩对比（{{result.refComparison.ageGroup}}岁组{{result.refComparison.estimated ? ' · 估算' : ''}}）</text>
+          <text class="ref-cmp-bands">优秀 ≤{{result.refComparison.excellent}}s ｜ 良好 ≤{{result.refComparison.good}}s ｜ 及格 ≤{{result.refComparison.pass}}s</text>
+          <text class="ref-cmp-verdict">本局：{{result.refComparison.bandLabel}}（{{result.refComparison.detail}}）</text>
+        </view>
+        <view class="res-actions">
+          <view class="btn-primary" style="background:{{meta.color}};" bindtap="replay" role="button" aria-label="再玩一次">再玩一次</view>
+          <view class="btn-ghost" bindtap="goBack" role="button" aria-label="返回列表">返回列表</view>
+        </view>
+      </view>
+    </view>
+
     <!-- 顶部固定按钮：全屏/普通模式都可见，z-index 最高 -->
     <view class="fixed-actions" wx:if="{{!finished}}">
       <view class="fs-toggle" bindtap="toggleFullscreen" role="button" aria-label="{{fullscreen ? '退出全屏' : '全屏放大'}}">{{fullscreen ? '✕ 退出全屏' : '⛶ 全屏放大'}}</view>
       <view wx:if="{{showStartBtn}}" class="start-btn-unified" bindtap="onStartGame" role="button" aria-label="{{startBtnText}}">{{startBtnText}}</view>
-    </view>
-
-    <view wx:if="{{finished && result}}" class="result card">
-      <text class="res-title">本局结果</text>
-      <view class="res-chips">
-        <view wx:for="{{resultChips}}" wx:key="label" class="res-chip">
-          <text class="res-val">{{item.value}}</text>
-          <text class="res-lab">{{item.label}}</text>
-        </view>
-      </view>
-      <view wx:if="{{trendText}}" class="trend">{{trendText}}</view>
-      <view wx:if="{{result.refComparison}}" class="ref-cmp" role="note" aria-label="参考成绩对比：{{result.refComparison.bandLabel}}">
-        <text class="ref-cmp-title">参考成绩对比（{{result.refComparison.ageGroup}}岁组{{result.refComparison.estimated ? ' · 估算' : ''}}）</text>
-        <text class="ref-cmp-bands">优秀 ≤{{result.refComparison.excellent}}s ｜ 良好 ≤{{result.refComparison.good}}s ｜ 及格 ≤{{result.refComparison.pass}}s</text>
-        <text class="ref-cmp-verdict">本局：{{result.refComparison.bandLabel}}（{{result.refComparison.detail}}）</text>
-      </view>
-      <view class="res-actions">
-        <view class="btn-primary" style="background:{{meta.color}};" bindtap="replay" role="button" aria-label="再玩一次">再玩一次</view>
-        <view class="btn-ghost" bindtap="goBack" role="button" aria-label="返回列表">返回列表</view>
-      </view>
     </view>
 
     <view class="footer">{{meta.reference}}</view>

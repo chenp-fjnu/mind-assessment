@@ -192,60 +192,94 @@
   border-radius: var(--radius-xl);
   box-shadow: var(--card-shadow);
 }
-.res-title {
+
+/* 结果卡片在 board 内，全屏时也可见 */
+.result-in-board {
+  padding: 24rpx 24rpx 32rpx;
+  background: var(--card-bg);
+}
+.result-in-board .res-title {
   font-size: var(--font-size-2xl);
   font-weight: var(--font-weight-bold);
   color: var(--text-primary);
+  margin-bottom: 20rpx;
 }
-.res-chips {
+.result-in-board .res-chips {
   display: flex;
   flex-wrap: wrap;
   gap: 16rpx;
-  margin-top: 24rpx;
+  margin-bottom: 20rpx;
 }
-.res-chip {
+.result-in-board .res-chip {
   flex: 1 1 30%;
-  min-width: 150rpx;
+  min-width: 140rpx;
   background: var(--bg-tertiary);
   border-radius: var(--radius-xxl);
-  padding: 20rpx;
+  padding: 18rpx;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-.res-val {
-  font-size: var(--font-size-4xl);
+.result-in-board .res-val {
+  font-size: var(--font-size-3xl);
   font-weight: var(--font-weight-extrabold);
   color: var(--text-primary);
 }
-.res-lab {
+.result-in-board .res-lab {
   font-size: var(--font-size-sm);
   color: var(--text-tertiary);
   margin-top: 6rpx;
 }
-.trend {
-  margin-top: 24rpx;
+.result-in-board .trend {
+  margin-top: 16rpx;
   font-size: var(--font-size-md);
   color: var(--text-tertiary);
   text-align: center;
 }
-.ref-cmp {
+.result-in-board .ref-cmp {
   display: flex;
   flex-direction: column;
   gap: 8rpx;
-  margin-top: 24rpx;
-  padding: 20rpx 24rpx;
+  margin-top: 20rpx;
+  padding: 16rpx 20rpx;
   border-radius: var(--radius-lg);
   background: var(--bg-secondary);
   border: 1rpx solid var(--border-color);
 }
-.ref-cmp-title {
+.result-in-board .ref-cmp-title {
   font-size: var(--font-size-md);
   font-weight: var(--font-weight-bold);
   color: var(--text-primary);
 }
-.ref-cmp-bands {
+.result-in-board .ref-cmp-bands {
   font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+}
+.result-in-board .ref-cmp-verdict {
+  font-size: var(--font-size-md);
+  color: var(--text-primary);
+  font-weight: var(--font-weight-semibold);
+}
+.result-in-board .res-actions {
+  display: flex;
+  gap: 16rpx;
+  margin-top: 24rpx;
+}
+.result-in-board .btn-primary,
+.result-in-board .btn-ghost {
+  flex: 1;
+  text-align: center;
+  padding: 18rpx 0;
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-extrabold);
+  color: var(--text-inverse);
+}
+.result-in-board .btn-primary {
+  background: var(--color-train);
+}
+.result-in-board .btn-ghost {
+  background: var(--bg-tertiary);
   color: var(--text-secondary);
 }
 .ref-cmp-verdict {
