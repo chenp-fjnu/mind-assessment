@@ -3,7 +3,7 @@
    ============================================ */
 
 .hero {
-  padding: calc(24rpx + env(safe-area-inset-top)) 40rpx 20rpx;
+  padding: calc(24rpx + env(safe-area-inset-top)) 40rpx 8rpx;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -147,11 +147,11 @@
 /* 固定在顶部的操作按钮：全屏/普通模式都可见，z-index 最高 */
 .fixed-actions {
   position: fixed;
-  top: calc(100rpx + env(safe-area-inset-top));
+  top: calc(40rpx + env(safe-area-inset-top));
   right: 28rpx;
   display: flex;
   flex-direction: column;
-  gap: 10rpx;
+  gap: 8rpx;
   z-index: 2000;
 }
 
@@ -177,7 +177,7 @@
 
 /* 普通模式下 board 顶部微调，避免与 fixed-actions 重叠 */
 .board:not(.fullscreen) {
-  margin-top: calc(4rpx + env(safe-area-inset-top));
+  margin-top: 0;
 }
 .board .lv-chip.on {
   color: var(--text-inverse);
