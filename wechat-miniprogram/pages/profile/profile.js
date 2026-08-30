@@ -85,13 +85,6 @@ Page({
   onNicknameInput(e) {
     this.setData({ nickname: e.detail.value })
   },
-  onAvatarTap(e) {
-    console.log('Avatar button tapped', e)
-    // 开发工具调试用：如果 chooseAvatar 不触发，提示用户
-    if (wx.getSystemInfoSync().platform === 'devtools') {
-      wx.showToast({ title: '请在真机/微信中测试 chooseAvatar', icon: 'none' })
-    }
-  },
   onGenderChange(e) {
     this.setData({ genderIndex: Number(e.detail.value) })
   },

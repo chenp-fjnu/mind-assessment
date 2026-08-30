@@ -126,7 +126,7 @@
 .meta-tip {
   margin-top: 8rpx;
   font-size: var(--font-size-xs);
-  color: var(--text-muted);
+  color: var(--text-muted).
 }
 
 .actions {
