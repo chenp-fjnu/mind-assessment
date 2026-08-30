@@ -55,8 +55,12 @@ Page({
     })
   },
   onChooseAvatar(e) {
+    console.log('[Profile] onChooseAvatar triggered', e)
     const tempUrl = (e.detail && e.detail.avatarUrl) || ''
-    if (!tempUrl) return
+    if (!tempUrl) {
+      console.warn('[Profile] chooseAvatar returned empty avatarUrl')
+      return
+    }
     // 微信返回的是临时文件，重启后失效；保存到本地用户目录以长期保留
     try {
       const fs = wx.getFileSystemManager()
@@ -66,6 +70,15 @@ Page({
     } catch (err) {
       console.warn('[Profile] 头像本地保存失败，使用临时路径:', err)
       this.setData({ avatarUrl: tempUrl })
+    }
+  },
+  onAvatarTap(e) {
+    console.log('[Profile] Avatar button tapped', e)
+    // 检查基础库版本
+    const sysInfo = wx.getSystemInfoSync()
+    console.log('[Profile] Base library version:', sysInfo.SDKVersion)
+    if (parseFloat(sysInfo.SDKVersion) < 2.21) {
+      wx.showToast({ title: '基础库版本过低，请升级微信', icon: 'none' })
     }
   },
   onNicknameInput(e) {

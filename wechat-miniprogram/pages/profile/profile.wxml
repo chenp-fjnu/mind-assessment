@@ -1,7 +1,7 @@
 <view class="theme-wrapper {{themeClass}}">
   <view class="scroll-page">
     <view class="profile-hero">
-      <button class="avatar-btn" open-type="chooseAvatar" bindchooseavatar="onChooseAvatar" aria-label="选择头像">
+      <button class="avatar-btn" open-type="chooseAvatar" bindchooseavatar="onChooseAvatar" bindtap="onAvatarTap" aria-label="选择头像">
         <image wx:if="{{avatarUrl}}" class="avatar" src="{{avatarUrl}}" mode="aspectFill"></image>
         <view wx:else class="avatar avatar-fallback">🧠</view>
       </button>
