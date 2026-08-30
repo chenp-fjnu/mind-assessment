@@ -1,4 +1,4 @@
-const { getUser, saveUser, GENDERS } = require('../../utils/user')
+const { getUser, saveUser, GENDERS, GENDER_LABELS } = require('../../utils/user')
 const { useTheme } = require('../../utils/theme-store')
 
 function calcAge(birthday) {
@@ -28,7 +28,7 @@ Page({
     nickname: '',
     avatarUrl: '',
     genderIndex: 0,
-    genderOptions: ['暂不填写', '男', '女'],
+    genderOptions: GENDERS.map((g) => GENDER_LABELS[g]),
     birthday: '',
     ageText: '',
     userId: '',
@@ -36,18 +36,14 @@ Page({
   },
   onLoad() {
     useTheme(this)
-    try {
-      this.refresh()
-    } catch (e) {
-      wx.showToast({ title: '页面初始化失败', icon: 'none' })
-    }
+    this.refresh()
   },
   onShow() {
     this.refresh()
   },
   refresh() {
     const u = getUser()
-    const genderIndex = Math.max(0, ['unknown', 'male', 'female'].indexOf(u.gender))
+    const genderIndex = Math.max(0, GENDERS.indexOf(u.gender))
     this.setData({
       nickname: u.nickname,
       avatarUrl: u.avatarUrl,
@@ -57,30 +53,10 @@ Page({
       userId: u.id,
       createdText: fmtDateTime(u.createdAt),
     })
-    
-    // 后台同步用户信息（不阻塞页面显示）
-    // 同步由 saveUser 后的手动同步或后台任务处理，此处不阻塞页面显示
   },
-  // 点击头像即触发 chooseAvatar：系统选择器内置「微信头像 / 拍照 / 从相册选」三种来源
   onChooseAvatar(e) {
-    const temp = e.detail && e.detail.avatarUrl
-    if (!temp) return
-    // 持久化头像到本地
-    function persistAvatar(tempPath, cb) {
-      let fs
-      try {
-        fs = wx.getFileSystemManager()
-      } catch (e) {
-        fs = null
-      }
-      if (!fs || !fs.saveFile) return cb && cb(tempPath)
-      fs.saveFile({
-        tempFilePath: tempPath,
-        success: (res) => cb && cb(res.savedFilePath || tempPath),
-        fail: () => cb && cb(tempPath),
-      })
-    }
-    persistAvatar(temp, (p) => this.setData({ avatarUrl: p }))
+    const avatarUrl = (e.detail && e.detail.avatarUrl) || ''
+    this.setData({ avatarUrl })
   },
   onNicknameInput(e) {
     this.setData({ nickname: e.detail.value })
@@ -91,18 +67,15 @@ Page({
   onBirthdayChange(e) {
     const birthday = e.detail.value
     this.setData({ birthday, ageText: calcAge(birthday) })
-    // 立即持久化生日：舒尔特等依赖年龄组的对比在结算时直接读取档案，
-    // 若仅改 picker 不点「保存」会导致年龄组不更新，故此处即时落盘。
-    saveUser({ birthday })
   },
   save() {
+    const gender = GENDERS[this.data.genderIndex] || 'unknown'
     saveUser({
       nickname: (this.data.nickname || '').trim(),
       avatarUrl: this.data.avatarUrl,
-      gender: GENDERS[this.data.genderIndex] || 'unknown',
+      gender,
       birthday: this.data.birthday,
     })
-    // 资料仅保存在本机（云同步为占位实现，详见 utils/user.js）
     wx.showToast({ title: '已保存', icon: 'success' })
   },
   goBack() {

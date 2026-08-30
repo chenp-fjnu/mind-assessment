@@ -1,11 +1,10 @@
 <view class="theme-wrapper {{themeClass}}">
   <view class="scroll-page">
     <view class="profile-hero">
-      <button class="avatar-btn" open-type="chooseAvatar" bindchooseavatar="onChooseAvatar" hover-class="avatar-hover" aria-label="点击头像更换">
-        <image wx:if="{{avatarUrl}}" class="avatar-img" src="{{avatarUrl}}" mode="aspectFill"></image>
-        <view wx:else class="avatar-img avatar-fallback">🧠</view>
+      <button class="avatar-btn" open-type="chooseAvatar" bind:chooseavatar="onChooseAvatar" aria-label="选择头像">
+        <image wx:if="{{avatarUrl}}" class="avatar" src="{{avatarUrl}}" mode="aspectFill"></image>
+        <view wx:else class="avatar avatar-fallback">🧠</view>
       </button>
-      <text class="avatar-hint">点击头像修改</text>
       <input
         class="nickname-input"
         type="nickname"
@@ -13,6 +12,7 @@
         placeholder-class="nickname-ph"
         value="{{nickname}}"
         bindinput="onNicknameInput"
+        bindblur="onNicknameInput"
         aria-label="昵称"
       />
     </view>
@@ -39,7 +39,7 @@
     <view class="card meta">
       <text class="meta-line">用户 ID：{{userId}}</text>
       <text class="meta-line" wx:if="{{createdText}}">创建于：{{createdText}}</text>
-      <text class="meta-tip">资料仅保存在本机</text>
+      <text class="meta-tip">资料仅保存在本机，接入账号后可同步到云端。</text>
     </view>
 
     <view class="actions">
