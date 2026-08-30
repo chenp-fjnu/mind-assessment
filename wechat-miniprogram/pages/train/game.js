@@ -72,6 +72,8 @@ Page({
       tint: hexToRgba(g.color, 0.12),
       bestText: fmtBest(trainStore.best(this.data.gameId, level, g.metric.better), g.metric.unit),
       family: g.family || (g.dim === 'relax' ? 'breath' : ''),
+      showStartBtn: false,
+      startBtnText: '开始游戏',
     })
     this.refreshTrend(id, g, level)
   },
