@@ -146,11 +146,13 @@
   border-radius: var(--radius-full);
   box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.2);
   white-space: nowrap;
+  text-align: center;
 }
 
 .start-btn-unified {
   background: var(--color-train);
   border-color: transparent;
+  min-width: 120rpx;
 }
 
 /* 普通模式下 board 顶部留空给 fixed-actions */
