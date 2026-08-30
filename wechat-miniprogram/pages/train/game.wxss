@@ -133,10 +133,6 @@
   flex-direction: column;
   gap: 10rpx;
   z-index: 2000;
-  pointer-events: none;
-}
-.fixed-actions > * {
-  pointer-events: auto;
 }
 
 .fs-toggle,
