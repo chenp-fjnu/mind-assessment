@@ -155,9 +155,9 @@
   min-width: 120rpx;
 }
 
-/* 普通模式下 board 顶部留空给 fixed-actions（仅 fs-toggle 时约 100rpx 足够） */
+/* 普通模式下 board 顶部微调，避免与 fixed-actions 重叠 */
 .board:not(.fullscreen) {
-  margin-top: calc(100rpx + env(safe-area-inset-top));
+  margin-top: calc(24rpx + env(safe-area-inset-top));
 }
 .result {
   margin: 28rpx 32rpx 0;
