@@ -1,18 +1,50 @@
 <view class="mr">
   <view class="info">第 {{idx + 1}} / {{trials}} 题</view>
-  <view wx:if="{{phase === 'show' && cur}}" class="pair">
-    <view class="pat">
-      <view wx:for="{{cur.p}}" wx:key="index" class="pc {{item ? 'on' : ''}}"></view>
+  
+  <!-- 开始界面 -->
+  <view wx:if="{{phase === 'idle'}}" class="start-screen">
+    <text class="title">镜像沙漏</text>
+    <text class="desc">判断两个图形是否互为左右镜像</text>
+    <view class="pair demo">
+      <view class="pat">
+        <view wx:for="{{[1,0,1,1,1,0,1,0,0]}}" wx:key="index" class="pc {{item ? 'on' : ''}}"></view>
+      </view>
+      <text class="vs">=</text>
+      <view class="pat">
+        <view wx:for="{{[1,0,1,0,1,1,1,0,1]}}" wx:key="index" class="pc {{item ? 'on' : ''}}"></view>
+      </view>
     </view>
-    <text class="vs">?</text>
-    <view class="pat">
-      <view wx:for="{{cur.q}}" wx:key="index" class="pc {{item ? 'on' : ''}}"></view>
+    <button class="btn-start" bindtap="start">开始游戏</button>
+  </view>
+
+  <!-- 游戏界面 -->
+  <view wx:elif="{{phase === 'show' || phase === 'answer' || phase === 'feedback'}}" class="game-screen">
+    <view class="pair">
+      <view class="pat">
+        <view wx:for="{{cur.p}}" wx:key="index" class="pc {{item ? 'on' : ''}}"></view>
+      </view>
+      <text class="vs">{{phase === 'show' ? '?' : (lastCorrect ? '✓' : '✗')}}</text>
+      <view class="pat">
+        <view wx:for="{{cur.q}}" wx:key="index" class="pc {{item ? 'on' : ''}}"></view>
+      </view>
+    </view>
+    <view wx:if="{{phase === 'answer'}}" class="answers">
+      <view class="abtn yes" bindtap="onAnswer" data-ans="1" role="button" aria-label="是">是 镜像</view>
+      <view class="abtn no" bindtap="onAnswer" data-ans="0" role="button" aria-label="否">否</view>
+    </view>
+    <view wx:if="{{phase === 'feedback'}}" class="feedback">
+      <text class="{{lastCorrect ? 'correct' : 'wrong'}}">{{lastCorrect ? '正确' : '错误'}}</text>
+      <text>正确答案：{{cur.answer ? '是镜像' : '非镜像'}}</text>
     </view>
   </view>
-  <view wx:if="{{phase === 'idle'}}" class="tip">两个图形是否互为镜像？</view>
-  <view wx:if="{{phase === 'show'}}" class="answers">
-    <view class="abtn yes" bindtap="onAnswer" data-ans="1" role="button" aria-label="是">是 镜像</view>
-    <view class="abtn no" bindtap="onAnswer" data-ans="0" role="button" aria-label="否">否</view>
+
+  <!-- 完成界面 -->
+  <view wx:elif="{{phase === 'done'}}" class="done-screen">
+    <text class="title">完成！</text>
+    <view class="stats">
+      <text>正确 {{correct}} / {{total}} 题</text>
+      <text>准确率 {{Math.round(correct/total*100)}}%</text>
+    </view>
+    <button class="btn-restart" bindtap="reset">再玩一次</button>
   </view>
-  <view wx:if="{{phase === 'done'}}" class="tip">完成！</view>
 </view>
