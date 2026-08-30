@@ -49,7 +49,7 @@ Component({
       }, this.data.showTime)
     },
     onAnswer(e) {
-      if (this.data.phase !== 'answer') return
+      if (this.data.phase !== 'show' && this.data.phase !== 'answer') return
       const said = e.currentTarget.dataset.ans === '1'
       const ok = said === this.data.cur.answer
       const correct = this.data.correct + (ok ? 1 : 0)
