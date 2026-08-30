@@ -3,11 +3,12 @@
    ============================================ */
 
 .hero {
-  padding: calc(120rpx + env(safe-area-inset-top)) 40rpx 40rpx;
+  padding: calc(80rpx + env(safe-area-inset-top)) 40rpx 40rpx;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   background: var(--grad-train-page);
+  position: relative;
 }
 .back {
   position: absolute;
@@ -94,13 +95,11 @@
   position: relative;
   width: 94vw;
   max-width: 760rpx;
-  /* 不强制正方形：让棋盘随内容增高，避免内容过高溢出后被固定在底部的全屏按钮遮挡 */
   min-height: 680rpx;
   max-height: 88vh;
   overflow-y: auto;
   margin: 24rpx auto 0;
-  /* 底部预留空间，避免游戏内「开始」等按钮与固定在屏幕底部的全屏按钮重叠 */
-  padding: 32rpx 24rpx calc(env(safe-area-inset-bottom) + 120rpx);
+  padding: 32rpx 24rpx calc(env(safe-area-inset-bottom) + 40rpx);
   box-sizing: border-box;
 }
 /* 全屏模式：棋盘占满整屏，方格类游戏随 boardWidth 自动放大，便于点击 */
@@ -118,7 +117,6 @@
   margin: 0;
   z-index: 1000;
   border-radius: 0;
-  /* 去掉左右内边距，让游戏占满全屏宽度（boardWidth=750 即整屏宽），避免全屏反而比普通模式更窄 */
   padding: calc(env(safe-area-inset-top) + 24rpx) 0 calc(env(safe-area-inset-bottom) + 40rpx);
   display: flex;
   flex-direction: column;
@@ -126,20 +124,17 @@
   justify-content: center;
   background: var(--card-bg);
 }
-/* 顶部操作区：全屏切换 + 开始按钮，放在 hero 右侧 */
+/* 顶部操作区：仅全屏切换，放在 hero 右上角，避开胶囊 */
 .hero-actions {
   position: absolute;
   top: calc(24rpx + env(safe-area-inset-top));
   right: 28rpx;
-  display: flex;
-  gap: 12rpx;
   z-index: 10;
 }
 
-.fs-toggle,
-.start-btn-unified {
-  padding: 10rpx 20rpx;
-  font-size: 24rpx;
+.fs-toggle {
+  padding: 8rpx 16rpx;
+  font-size: 22rpx;
   font-weight: 600;
   color: var(--text-inverse);
   background: rgba(15, 23, 42, 0.72);
@@ -149,9 +144,20 @@
   white-space: nowrap;
 }
 
+/* 开始按钮：放在难度栏和棋盘之间，非固定定位 */
 .start-btn-unified {
+  display: block;
+  width: 94vw;
+  max-width: 760rpx;
+  margin: 16rpx auto 0;
+  padding: 14rpx 28rpx;
+  font-size: 26rpx;
+  font-weight: 600;
+  color: #fff;
   background: var(--color-train);
-  border-color: transparent;
+  border-radius: var(--radius-full);
+  box-shadow: 0 6rpx 20rpx rgba(0, 0, 0, 0.25);
+  text-align: center;
 }
 .result {
   margin: 28rpx 32rpx 0;
