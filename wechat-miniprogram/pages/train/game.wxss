@@ -3,7 +3,7 @@
    ============================================ */
 
 .hero {
-  padding: calc(80rpx + env(safe-area-inset-top)) 40rpx 40rpx;
+  padding: calc(160rpx + env(safe-area-inset-top)) 40rpx 40rpx;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -124,15 +124,19 @@
   justify-content: center;
   background: var(--card-bg);
 }
-/* 顶部操作区：仅全屏切换，放在 hero 右上角，避开胶囊 */
+/* 顶部操作区：全屏切换 + 开始按钮，放在 hero 右侧，下移避开胶囊 */
 .hero-actions {
   position: absolute;
-  top: calc(24rpx + env(safe-area-inset-top));
+  top: calc(100rpx + env(safe-area-inset-top));
   right: 28rpx;
+  display: flex;
+  flex-direction: column;
+  gap: 10rpx;
   z-index: 10;
 }
 
-.fs-toggle {
+.fs-toggle,
+.start-btn-unified {
   padding: 8rpx 16rpx;
   font-size: 22rpx;
   font-weight: 600;
@@ -144,20 +148,9 @@
   white-space: nowrap;
 }
 
-/* 开始按钮：放在难度栏和棋盘之间，非固定定位 */
 .start-btn-unified {
-  display: block;
-  width: 94vw;
-  max-width: 760rpx;
-  margin: 16rpx auto 0;
-  padding: 14rpx 28rpx;
-  font-size: 26rpx;
-  font-weight: 600;
-  color: #fff;
   background: var(--color-train);
-  border-radius: var(--radius-full);
-  box-shadow: 0 6rpx 20rpx rgba(0, 0, 0, 0.25);
-  text-align: center;
+  border-color: transparent;
 }
 .result {
   margin: 28rpx 32rpx 0;
