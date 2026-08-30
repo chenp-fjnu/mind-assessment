@@ -4,11 +4,11 @@
       <button 
         class="avatar-btn" 
         open-type="chooseAvatar" 
-        bindchooseavatar="onChooseAvatar" 
-        bindtap="onAvatarTap"
+        bindchooseavatar="onChooseAvatar"
+        catchtap="onAvatarTap"
         aria-label="选择头像">
-        <image wx:if="{{avatarUrl}}" class="avatar" src="{{avatarUrl}}" mode="aspectFill"></image>
-        <view wx:else class="avatar avatar-fallback">
+        <image wx:if="{{avatarUrl}}" class="avatar" src="{{avatarUrl}}" mode="aspectFill" catchtap="stopTap"></image>
+        <view wx:else class="avatar avatar-fallback" catchtap="stopTap">
           <text class="avatar-icon">🧠</text>
         </view>
       </button>

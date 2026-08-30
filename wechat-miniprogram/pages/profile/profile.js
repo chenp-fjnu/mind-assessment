@@ -45,9 +45,13 @@ Page({
   },
   checkSDKVersion() {
     const info = wx.getSystemInfoSync()
-    const version = parseFloat(info.SDKVersion)
-    this.setData({ canUseChooseAvatar: version >= 2.212 })
-    if (!this.data.canUseChooseAvatar) {
+    const versionStr = info.SDKVersion
+    // 正确解析版本号：将 "2.21.2" 转为 22102 进行比较
+    const versionParts = versionStr.split('.').map(Number)
+    const versionNum = versionParts[0] * 10000 + versionParts[1] * 100 + versionParts[2]
+    const canUse = versionNum >= 22102 // 2.21.2
+    this.setData({ canUseChooseAvatar: canUse })
+    if (!canUse) {
       console.warn('[Profile] 基础库版本过低，不支持 chooseAvatar，当前版本:', info.SDKVersion)
     }
   },
@@ -66,6 +70,10 @@ Page({
   },
   onChooseAvatar(e) {
     console.log('[Profile] chooseAvatar triggered', e)
+    if (!this.data.canUseChooseAvatar) {
+      wx.showToast({ title: '微信版本过低，请升级后重试', icon: 'none', duration: 3000 })
+      return
+    }
     const tempUrl = e.detail?.avatarUrl
     if (!tempUrl) {
       console.warn('[Profile] chooseAvatar returned empty avatarUrl')
@@ -86,6 +94,18 @@ Page({
   },
   onNicknameInput(e) {
     this.setData({ nickname: e.detail.value })
+  },
+  onAvatarTap(e) {
+    console.log('[Profile] Avatar button tapped', e)
+    // 检查基础库版本
+    const sysInfo = wx.getSystemInfoSync()
+    console.log('[Profile] Base library version:', sysInfo.SDKVersion)
+    if (parseFloat(sysInfo.SDKVersion) < 2.21) {
+      wx.showToast({ title: '请升级微信到最新版本', icon: 'none', duration: 3000 })
+    }
+  },
+  stopTap() {
+    // 阻止事件冒泡，确保按钮的 open-type 能正常工作
   },
   onGenderChange(e) {
     this.setData({ genderIndex: Number(e.detail.value) })
