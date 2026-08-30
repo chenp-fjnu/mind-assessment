@@ -1,12 +1,13 @@
 <view class="mm">
   <view
     class="grid"
-    style="grid-template-columns:repeat({{cols}},1fr);"
+    style="grid-template-columns:repeat({{cols}},{{cardSize}}rpx);gap:12rpx;justify-content:center;"
   >
     <view
       wx:for="{{cards}}"
       wx:key="id"
       class="card {{item.faceUp || item.matched ? 'up' : ''}} {{item.matched ? 'matched' : ''}}"
+      style="width:{{cardSize}}rpx;height:{{cardSize}}rpx;"
       data-idx="{{index}}"
       bindtap="onTap"
       role="button"

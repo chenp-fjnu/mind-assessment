@@ -3,6 +3,8 @@ const mod = require('./index')
 Component({
   properties: {
     level: { type: Number, value: 6, observer() { this.reset() } },
+    boardWidth: { type: Number, value: 705, observer() { this.computeCardSize() } },
+    boardHeight: { type: Number, value: 0, observer() { this.computeCardSize() } },
   },
   data: {
     cards: [],
@@ -12,6 +14,7 @@ Component({
     cols: 4,
     running: false,
     lock: false,
+    cardSize: 0,
   },
   lifetimes: {
     attached() { this.reset() },
@@ -28,6 +31,25 @@ Component({
       }))
       const cols = pairs <= 6 ? 3 : 4
       this.setData({ cards, cols, flipped: [], matched: 0, moves: 0, running: false, lock: false })
+      this.computeCardSize()
+    },
+    computeCardSize() {
+      const cols = this.data.cols
+      const gap = 12 // rpx
+      const padding = 32 // rpx
+      const viewportWidth = this.data.boardWidth || 705
+      const cardW = Math.floor((viewportWidth - padding * 2 - gap * (cols - 1)) / cols)
+      let final = cardW
+      const bh = this.data.boardHeight
+      if (bh > 0) {
+        const rows = Math.ceil(this.data.cards.length / cols)
+        const cardH = Math.floor((bh - padding * 2 - gap * (rows - 1)) / rows)
+        final = Math.min(cardW, cardH)
+      }
+      // 限制最大卡片尺寸，避免过大
+      final = Math.min(final, 160)
+      final = Math.max(final, 72)
+      this.setData({ cardSize: final })
     },
     start() {
       this.setData({ running: true, startTime: Date.now() })
