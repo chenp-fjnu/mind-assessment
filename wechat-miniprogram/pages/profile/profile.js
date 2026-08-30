@@ -1,5 +1,6 @@
 const { getUser, saveUser, GENDERS, GENDER_LABELS } = require('../../utils/user')
 const { useTheme } = require('../../utils/theme-store')
+const { registerPrivacyModal } = require('../../utils/privacy')
 
 function calcAge(birthday) {
   if (!birthday) return ''
@@ -34,11 +35,17 @@ Page({
     userId: '',
     createdText: '',
     canUseChooseAvatar: false,
+    showPrivacy: false,
   },
   onLoad() {
     useTheme(this)
     this.checkSDKVersion()
     this.refresh()
+    this.initPrivacy()
+  },
+  onUnload() {
+    // 离开页面时把全局隐私监听恢复为 App 级兜底，避免本页监听残留影响其他页面
+    registerPrivacyModal()
   },
   onShow() {
     this.refresh()
@@ -46,7 +53,6 @@ Page({
   checkSDKVersion() {
     const info = wx.getSystemInfoSync()
     const versionStr = info.SDKVersion
-    // 正确解析版本号：将 "2.21.2" 转为 22102 进行比较
     const versionParts = versionStr.split('.').map(Number)
     const versionNum = versionParts[0] * 10000 + versionParts[1] * 100 + versionParts[2]
     const canUse = versionNum >= 22102 // 2.21.2
@@ -68,6 +74,34 @@ Page({
       createdText: fmtDateTime(u.createdAt),
     })
   },
+  initPrivacy() {
+    if (typeof wx.onNeedPrivacyAuthorization !== 'function') return
+    // 注册本页自定义隐私弹窗（覆盖式监听，本页生效）
+    wx.onNeedPrivacyAuthorization((resolve) => {
+      this._privacyResolve = resolve
+      this.setData({ showPrivacy: true })
+    })
+  },
+  onOpenPrivacy() {
+    if (typeof wx.openPrivacyContract === 'function') {
+      wx.openPrivacyContract({
+        fail: () => wx.showToast({ title: '暂未配置隐私协议', icon: 'none' }),
+      })
+    }
+  },
+  onPrivacyAgree() {
+    // 由 open-type="agreePrivacyAuthorization" 按钮触发，此时才可 resolve
+    const resolve = this._privacyResolve
+    this._privacyResolve = null
+    this.setData({ showPrivacy: false })
+    if (resolve) resolve({ buttonId: 'agree-btn', event: 'agree' })
+  },
+  onPrivacyDisagree() {
+    const resolve = this._privacyResolve
+    this._privacyResolve = null
+    this.setData({ showPrivacy: false })
+    if (resolve) resolve({ event: 'disagree' })
+  },
   onChooseAvatar(e) {
     console.log('[Profile] chooseAvatar triggered', e)
     if (!this.data.canUseChooseAvatar) {
@@ -83,10 +117,10 @@ Page({
     // 微信返回的是临时文件，重启后失效；保存到本地用户目录以长期保留
     try {
       const fs = wx.getFileSystemManager()
-      const savedPath = `${wx.env.USER_DATA_PATH}/avatar_${Date.now()}.png`
-      fs.saveFileSync(tempUrl, savedPath)
-      this.setData({ avatarUrl: savedPath })
-      console.log('[Profile] 头像保存成功:', savedPath)
+      const path = `${wx.env.USER_DATA_PATH}/avatar_${Date.now()}.png`
+      fs.saveFileSync(tempUrl, path)
+      this.setData({ avatarUrl: path })
+      console.log('[Profile] 头像保存成功:', path)
     } catch (err) {
       console.warn('[Profile] 头像本地保存失败，使用临时路径:', err)
       this.setData({ avatarUrl: tempUrl })
@@ -94,18 +128,6 @@ Page({
   },
   onNicknameInput(e) {
     this.setData({ nickname: e.detail.value })
-  },
-  onAvatarTap(e) {
-    console.log('[Profile] Avatar button tapped', e)
-    // 检查基础库版本
-    const sysInfo = wx.getSystemInfoSync()
-    console.log('[Profile] Base library version:', sysInfo.SDKVersion)
-    if (parseFloat(sysInfo.SDKVersion) < 2.21) {
-      wx.showToast({ title: '请升级微信到最新版本', icon: 'none', duration: 3000 })
-    }
-  },
-  stopTap() {
-    // 阻止事件冒泡，确保按钮的 open-type 能正常工作
   },
   onGenderChange(e) {
     this.setData({ genderIndex: Number(e.detail.value) })

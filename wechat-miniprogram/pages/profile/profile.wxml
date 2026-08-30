@@ -5,19 +5,17 @@
         class="avatar-btn" 
         open-type="chooseAvatar" 
         bindchooseavatar="onChooseAvatar"
-        catchtap="onAvatarTap"
-        aria-label="选择头像">
-        <image wx:if="{{avatarUrl}}" class="avatar" src="{{avatarUrl}}" mode="aspectFill" catchtap="stopTap"></image>
-        <view wx:else class="avatar avatar-fallback" catchtap="stopTap">
+        aria-label="选择微信头像">
+        <image wx:if="{{avatarUrl}}" class="avatar" src="{{avatarUrl}}" mode="aspectFit"></image>
+        <view wx:else class="avatar avatar-fallback">
           <text class="avatar-icon">🧠</text>
         </view>
       </button>
-      <view class="avatar-hint">点击更换头像</view>
-      
+
       <input
         class="nickname-input"
         type="nickname"
-        placeholder="点击设置昵称"
+        placeholder="请输入昵称"
         placeholder-class="nickname-ph"
         value="{{nickname}}"
         bindinput="onNicknameInput"
@@ -53,6 +51,20 @@
 
     <view class="actions">
       <button class="btn save-btn" bindtap="save" type="primary" aria-label="保存">保存</button>
+    </view>
+  </view>
+
+  <view class="privacy-mask" wx:if="{{showPrivacy}}">
+    <view class="privacy-pop">
+      <view class="privacy-title">隐私授权提示</view>
+      <view class="privacy-content">
+        设置头像、昵称需要使用你的微信头像与昵称信息。本程序所有题目、计分与结果均在你的设备本地完成，不会上传任何数据。
+        <text class="privacy-link" bindtap="onOpenPrivacy">《用户隐私保护指引》</text>
+      </view>
+      <view class="privacy-btns">
+        <button class="privacy-btn refuse" bindtap="onPrivacyDisagree">暂不允许</button>
+        <button class="privacy-btn agree" id="agree-btn" open-type="agreePrivacyAuthorization" bindagreeprivacyauthorization="onPrivacyAgree">同意并继续</button>
+      </view>
     </view>
   </view>
 </view>

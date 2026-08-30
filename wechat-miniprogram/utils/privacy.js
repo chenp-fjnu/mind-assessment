@@ -9,24 +9,26 @@
  * 兼容低版本基础库：不支持时直接执行动作，不影响既有功能。
  */
 
-// 在 App.onLaunch 中调用一次，接管隐私授权弹窗
+// 在 App.onLaunch 中调用一次，接管隐私授权弹窗（兜底方案）
+// 注：需同意 buttonId 校验的接口（如 chooseAvatar/nickname 组件）应由页面内
+//     open-type="agreePrivacyAuthorization" 的自定义弹窗处理，此兜底仅作简易降级。
 function registerPrivacyModal() {
-  if (typeof wx.onNeedPrivacyAuthorize !== 'function') return
-  wx.onNeedPrivacyAuthorize((resolve, refuse) => {
+  if (typeof wx.onNeedPrivacyAuthorization !== 'function') return
+  wx.onNeedPrivacyAuthorization((resolve) => {
     wx.showModal({
       title: '隐私授权提示',
       content: '设置头像、昵称，保存图片、复制内容等功能会用到你的微信头像/昵称、相册与剪贴板。本程序所有题目、计分与结果均在你的设备本地完成，不会上传任何数据。详见《隐私保护指引》。',
       confirmText: '同意并继续',
       cancelText: '暂不允许',
       success: (res) => {
-        if (res.confirm) {
-          if (resolve) resolve({ event: 'agree' })
-        } else if (refuse) {
-          refuse()
+        if (res.confirm && resolve) {
+          resolve({ event: 'agree' })
+        } else if (resolve) {
+          resolve({ event: 'disagree' })
         }
       },
       fail: () => {
-        if (refuse) refuse()
+        if (resolve) resolve({ event: 'disagree' })
       },
     })
   })
