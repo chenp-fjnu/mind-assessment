@@ -55,7 +55,7 @@
   border-radius: var(--radius-full);
 }
 .levels {
-  margin: 28rpx 32rpx 0;
+  margin: 16rpx 32rpx 0;
 }
 .lv-title {
   font-size: var(--font-size-lg);
@@ -64,7 +64,7 @@
 }
 .lv-bar {
   white-space: nowrap;
-  margin-top: 14rpx;
+  margin-top: 8rpx;
 }
 .lv-chip {
   display: inline-flex;
@@ -157,7 +157,7 @@
 
 /* 普通模式下 board 顶部微调，避免与 fixed-actions 重叠 */
 .board:not(.fullscreen) {
-  margin-top: calc(24rpx + env(safe-area-inset-top));
+  margin-top: calc(12rpx + env(safe-area-inset-top));
 }
 .result {
   margin: 28rpx 32rpx 0;
