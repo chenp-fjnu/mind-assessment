@@ -54,30 +54,30 @@
   background: rgba(255, 255, 255, 0.18);
   border-radius: var(--radius-full);
 }
-.levels {
-  margin: 8rpx 32rpx 0;
+/* 游戏区域内的难度选择 */
+.levels-in-board {
+  padding: 16rpx 24rpx 12rpx;
+  background: var(--card-bg);
+  border-bottom: 1rpx solid var(--card-border);
 }
-.lv-title {
-  font-size: var(--font-size-lg);
+.levels-in-board .lv-title {
+  font-size: var(--font-size-md);
   font-weight: var(--font-weight-semibold);
   color: var(--text-secondary);
+  margin-bottom: 8rpx;
+  display: block;
 }
-.lv-bar {
+.levels-in-board .lv-bar {
   white-space: nowrap;
-  margin-top: 4rpx;
+  margin-top: 0;
 }
-.lv-chip {
-  display: inline-flex;
-  flex-direction: column;
-  align-items: center;
-  font-size: var(--font-size-md);
-  color: var(--text-tertiary);
-  background: var(--chip-bg);
-  border: 2rpx solid var(--border-light);
-  padding: 12rpx 26rpx;
-  border-radius: var(--radius-full);
-  margin-right: 16rpx;
+.levels-in-board .lv-chip {
+  padding: 10rpx 20rpx;
+  font-size: var(--font-size-sm);
+  margin-right: 12rpx;
 }
+
+/* 移除旧的外部 levels 样式，已移入 board 内 */
 .lv-chip .lv-best {
   font-size: var(--font-size-xs);
   opacity: 0.8;
@@ -158,6 +158,11 @@
 /* 普通模式下 board 顶部微调，避免与 fixed-actions 重叠 */
 .board:not(.fullscreen) {
   margin-top: calc(4rpx + env(safe-area-inset-top));
+}
+.board .lv-chip.on {
+  color: var(--text-inverse);
+  background: var(--color-train);
+  border-color: var(--color-train);
 }
 .result {
   margin: 28rpx 32rpx 0;

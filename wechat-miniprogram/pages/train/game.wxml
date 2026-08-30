@@ -8,27 +8,27 @@
       <text class="hero-tag">{{meta.dimLabel}} · {{bestText}}</text>
     </view>
 
-    <view class="levels">
-      <text class="lv-title">难度</text>
-      <scroll-view class="lv-bar" scroll-x="true">
-        <view
-          wx:for="{{levels}}"
-          wx:key="value"
-          class="lv-chip {{level === item.value ? 'on' : ''}}"
-          style="{{level === item.value ? 'background:' + meta.color + ';border-color:' + meta.color + ';' : ''}}"
-          data-value="{{item.value}}"
-          data-label="{{item.label}}"
-          bindtap="onSelectLevel"
-          role="button"
-          aria-label="{{item.label}}，最佳 {{item.bestText}}"
-        >
-          <text class="lv-label">{{item.label}}</text>
-          <text class="lv-best">{{item.bestText}}</text>
-        </view>
-      </scroll-view>
-    </view>
-
     <view wx:if="{{!finished}}" class="board card {{fullscreen ? 'fullscreen' : ''}}" catchtouchmove="preventScroll">
+      <!-- 难度选择在游戏区域顶部，全屏时也可切换 -->
+      <view class="levels-in-board">
+        <text class="lv-title">难度</text>
+        <scroll-view class="lv-bar" scroll-x="true">
+          <view
+            wx:for="{{levels}}"
+            wx:key="value"
+            class="lv-chip {{level === item.value ? 'on' : ''}}"
+            style="{{level === item.value ? 'background:' + meta.color + ';border-color:' + meta.color + ';' : ''}}"
+            data-value="{{item.value}}"
+            data-label="{{item.label}}"
+            bindtap="onSelectLevel"
+            role="button"
+            aria-label="{{item.label}}，最佳 {{item.bestText}}"
+          >
+            <text class="lv-label">{{item.label}}</text>
+            <text class="lv-best">{{item.bestText}}</text>
+          </view>
+        </scroll-view>
+      </view>
       <include src="games-block.wxml" />
     </view>
 
