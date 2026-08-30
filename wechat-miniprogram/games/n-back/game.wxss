@@ -4,6 +4,9 @@
   flex-direction: column;
   align-items: center;
   gap: 20rpx;
+  min-height: 100%;
+  box-sizing: border-box;
+  padding: 24rpx 16rpx;
 }
 
 .header {
@@ -230,4 +233,75 @@
   .abtn { min-width: 120rpx; padding: 16rpx 28rpx; font-size: 26rpx; }
   .dual-btn { min-width: 120rpx; padding: 14rpx 16rpx; font-size: 22rpx; }
   .dual-btn .btn-icon { font-size: 24rpx; }
+}
+
+/* 开始界面 */
+.start-screen {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40rpx 24rpx;
+  background: var(--card-bg, #fff);
+  border-radius: 24rpx;
+  box-shadow: 0 4rpx 24rpx rgba(0,0,0,0.08);
+}
+.start-screen .title {
+  display: block;
+  font-size: 40rpx;
+  font-weight: 700;
+  color: var(--text1);
+  margin-bottom: 12rpx;
+}
+.start-screen .desc {
+  display: block;
+  font-size: 26rpx;
+  color: var(--text2);
+  margin-bottom: 24rpx;
+  text-align: center;
+}
+.config {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 24rpx;
+  margin: 24rpx 0;
+  padding: 20rpx;
+  background: var(--bg-tertiary);
+  border-radius: var(--radius-lg);
+}
+.config-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4rpx;
+}
+.config-label {
+  font-size: 22rpx;
+  color: var(--text-tertiary);
+}
+.config-value {
+  font-size: 28rpx;
+  font-weight: 700;
+  color: var(--text1);
+}
+.btn-start {
+  width: 80%;
+  max-width: 320rpx;
+  padding: 20rpx 48rpx;
+  border-radius: 999rpx;
+  font-size: 32rpx;
+  font-weight: 700;
+  color: #fff;
+  background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+  border: none;
+  box-shadow: 0 6rpx 24rpx rgba(139, 92, 246, 0.4);
+}
+
+/* 游戏界面 */
+.game-screen {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }

@@ -3,11 +3,15 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  min-height: 100%;
+  box-sizing: border-box;
+  padding: 24rpx 16rpx;
 }
 .grid {
   display: grid;
   gap: 12rpx;
   width: 100%;
+  justify-content: center;
 }
 .cell {
   aspect-ratio: 1 / 1;
@@ -35,4 +39,66 @@
   color: #fff;
   border-radius: 999rpx;
   font-weight: 700;
+}
+
+/* 开始界面 */
+.start-screen {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40rpx 24rpx;
+  background: var(--card-bg, #fff);
+  border-radius: 24rpx;
+  box-shadow: 0 4rpx 24rpx rgba(0,0,0,0.08);
+}
+.title {
+  display: block;
+  font-size: 40rpx;
+  font-weight: 700;
+  color: var(--text1);
+  margin-bottom: 12rpx;
+}
+.desc {
+  display: block;
+  font-size: 26rpx;
+  color: var(--text2);
+  margin-bottom: 32rpx;
+}
+.grid.demo {
+  margin: 24rpx 0;
+  gap: 12rpx;
+}
+.cell.demo {
+  width: 100%;
+  border-radius: 14rpx;
+}
+.cell.demo.lit {
+  background: #f59e0b;
+}
+.hint {
+  display: block;
+  font-size: 26rpx;
+  color: var(--text2);
+  margin-bottom: 32rpx;
+}
+.btn-start {
+  width: 80%;
+  max-width: 320rpx;
+  padding: 20rpx 48rpx;
+  border-radius: 999rpx;
+  font-size: 32rpx;
+  font-weight: 700;
+  color: #fff;
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  border: none;
+  box-shadow: 0 6rpx 24rpx rgba(245, 158, 11, 0.4);
+}
+
+/* 游戏界面 */
+.game-screen {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }

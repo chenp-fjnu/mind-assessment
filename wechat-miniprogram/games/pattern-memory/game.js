@@ -32,7 +32,7 @@ Component({
       this.setData({
         size: seed.size,
         pattern: seed.cells,
-        cells: seed.cells.map((v) => !!v),
+        cells: seed.cells.map(() => false), // 初始隐藏
         selected: [],
         phase: 'idle',
         correct: 0,
@@ -46,14 +46,13 @@ Component({
       const padding = 32 // rpx
       const viewportWidth = this.data.boardWidth || 705
       const cellW = Math.floor((viewportWidth - padding * 2 - gap * (size - 1)) / size)
-      // 全屏时同时受屏幕高度限制：取宽/高可容纳的最小值并保持正方形，保证整盘不超出屏幕
       let final = cellW
       const bh = this.data.boardHeight
       if (bh > 0) {
         const cellH = Math.floor((bh - padding * 2 - gap * (size - 1)) / size)
         final = Math.min(cellW, cellH)
       }
-      final = Math.max(52, final) // 移除上限，让格子自动变大填满框
+      final = Math.max(52, final)
       return { cellSize: final, cellH: final }
     },
     applySizing() {

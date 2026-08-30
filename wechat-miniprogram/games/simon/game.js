@@ -3,6 +3,8 @@ const mod = require('./index')
 Component({
   properties: {
     level: { type: Number, value: 3, observer() { this.reset() } },
+    boardWidth: { type: Number, value: 705, observer() { this.applySizing() } },
+    boardHeight: { type: Number, value: 0, observer() { this.applySizing() } },
   },
   data: {
     pads: 4,
@@ -11,6 +13,7 @@ Component({
     flash: -1,
     inputIdx: 0,
     correct: 0,
+    padSize: 0,
   },
   lifetimes: {
     attached() { this.reset() },
@@ -20,11 +23,29 @@ Component({
     clearTimers() {
       if (this.timers) { this.timers.forEach((t) => clearTimeout(t)); this.timers = [] }
     },
+    computePadSize() {
+      const gap = 20 // rpx
+      const padding = 32 // rpx
+      const viewportWidth = this.data.boardWidth || 705
+      const padW = Math.floor((viewportWidth - padding * 2 - gap) / 2)
+      let final = padW
+      const bh = this.data.boardHeight
+      if (bh > 0) {
+        const padH = Math.floor((bh - padding * 2 - gap) / 2)
+        final = Math.min(padW, padH)
+      }
+      final = Math.max(120, Math.min(final, 200))
+      this.setData({ padSize: final })
+    },
+    applySizing() {
+      this.computePadSize()
+    },
     reset() {
       this.clearTimers()
       this.timers = []
       const seed = mod.generate(this.data.level)
       this.setData({ pads: seed.pads, seq: seed.seq, phase: 'idle', flash: -1, inputIdx: 0, correct: 0 })
+      this.computePadSize()
     },
     start() {
       if (this.data.phase !== 'idle' && this.data.phase !== 'done') return

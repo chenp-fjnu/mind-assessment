@@ -1,74 +1,99 @@
 <view class="nb">
-  <view class="header">
-    <view class="info">N = {{n}} · {{modeLabel}} · {{gridLabel}}</view>
-    <view class="progress">第 {{roundIdx + 1}} / {{trials}} 题</view>
-  </view>
-
-  <view wx:if="{{mode !== 'auditory'}}" class="visual-area">
-    <view class="area-label">视觉位置</view>
-    <view class="grid" style="grid-template-columns: repeat({{gridCols}}, 1fr);">
-      <block wx:for="{{gridCols * gridCols}}" wx:key="*this">
-        <view class="cell {{phase === 'show' && index === shownPos ? 'on' : ''}}"
-              wx:if="{{mode !== 'auditory'}}"></view>
-      </block>
-    </view>
-  </view>
-
-  <view wx:if="{{mode !== 'visual'}}" class="auditory-area">
-    <view class="area-label">听觉字母</view>
-    <view class="letter-display {{phase === 'show' ? 'showing' : ''}}">
-      {{shownLetter || '—'}}
-    </view>
-    <view class="letter-hint">当前字母：{{shownLetter || '等待中...'}}</view>
-  </view>
-
-  <view wx:if="{{phase === 'answer'}}" class="answers">
-    <!-- Dual 模式：2x2 矩阵按钮 -->
-    <view wx:if="{{mode === 'dual'}}" class="dual-answers">
-      <view class="dual-matrix">
-        <view class="matrix-row">
-          <view class="abtn dual-btn match-both" bindtap="onDualAnswer" data-visual="1" data-auditory="1" role="button">
-            <text class="btn-icon">✓</text><text>视觉✓ 听觉✓</text>
-          </view>
-          <view class="abtn dual-btn match-visual" bindtap="onDualAnswer" data-visual="1" data-auditory="0" role="button">
-            <text class="btn-icon">✓</text><text>视觉✓ 听觉✗</text>
-          </view>
-        </view>
-        <view class="matrix-row">
-          <view class="abtn dual-btn match-auditory" bindtap="onDualAnswer" data-visual="0" data-auditory="1" role="button">
-            <text class="btn-icon">✗</text><text>视觉✗ 听觉✓</text>
-          </view>
-          <view class="abtn dual-btn match-neither" bindtap="onDualAnswer" data-visual="0" data-auditory="0" role="button">
-            <text class="btn-icon">✗</text><text>视觉✗ 听觉✗</text>
-          </view>
-        </view>
+  <!-- 开始界面 -->
+  <view wx:if="{{phase === 'idle'}}" class="start-screen">
+    <text class="title">N-Back</text>
+    <text class="desc">同时判断视觉位置与听觉字母是否与 {{n }} 步前匹配</text>
+    <view class="config">
+      <view class="config-item">
+        <text class="config-label">模式</text>
+        <text class="config-value">{{modeLabel}}</text>
       </view>
-      <view class="dual-hint">点击对应组合：当前视觉/听觉是否与 {{n }} 步前匹配</view>
+      <view class="config-item">
+        <text class="config-label">网格</text>
+        <text class="config-value">{{gridLabel}}</text>
+      </view>
+      <view class="config-item">
+        <text class="config-label">N 值</text>
+        <text class="config-value">{{n }}</text>
+      </view>
+      <view class="config-item">
+        <text class="config-label">轮数</text>
+        <text class="config-value">{{trials }}</text>
+      </view>
     </view>
-
-    <!-- Visual only 模式 -->
-    <view wx:elif="{{mode === 'visual'}}" class="single-answers">
-      <view class="abtn yes" bindtap="onVisualAnswer" data-match="1" role="button" aria-label="匹配">匹配 ✓</view>
-      <view class="abtn no" bindtap="onVisualAnswer" data-match="0" role="button" aria-label="不匹配">不匹配 ✗</view>
-    </view>
-
-    <!-- Auditory only 模式 -->
-    <view wx:elif="{{mode === 'auditory'}}" class="single-answers">
-      <view class="abtn yes" bindtap="onAuditoryAnswer" data-match="1" role="button" aria-label="匹配">匹配 ✓</view>
-      <view class="abtn no" bindtap="onAuditoryAnswer" data-match="0" role="button" aria-label="不匹配">不匹配 ✗</view>
-    </view>
+    <button class="btn-start" bindtap="start">开始游戏</button>
   </view>
 
-  <view wx:if="{{phase === 'idle'}}" class="tip">{{idleTip}}</view>
-  <view wx:if="{{phase === 'show'}}" class="tip">{{showTip}}</view>
-  <view wx:if="{{phase === 'done'}}" class="tip done">完成！得分：{{score || '计算中...'}}</view>
-
-  <view wx:if="{{lastResult && phase === 'answer'}}" class="feedback">
-    <view class="feedback-item {{lastResult.visual && lastResult.visual.ok ? 'correct' : 'wrong'}}">
-      视觉：{{lastResult.visual && lastResult.visual.said ? '匹配' : '不匹配'}} / 正确：{{lastResult.visual && lastResult.visual.expected ? '匹配' : '不匹配'}}
+  <!-- 游戏界面 -->
+  <view wx:elif="{{phase !== 'idle'}}" class="game-screen">
+    <view class="header">
+      <view class="info">N = {{n }} · {{modeLabel}} · {{gridLabel}}</view>
+      <view class="progress">第 {{roundIdx + 1}} / {{trials }} 题</view>
     </view>
-    <view class="feedback-item {{lastResult.auditory && lastResult.auditory.ok ? 'correct' : 'wrong'}}">
-      听觉：{{lastResult.auditory && lastResult.auditory.said ? '匹配' : '不匹配'}} / 正确：{{lastResult.auditory && lastResult.auditory.expected ? '匹配' : '不匹配'}}
+
+    <view wx:if="{{mode !== 'auditory'}}" class="visual-area">
+      <view class="area-label">视觉位置</view>
+      <view class="grid" style="grid-template-columns: repeat({{gridCols}}, {{cellSize}}rpx); gap: 12rpx; justify-content: center;">
+        <block wx:for="{{gridCols * gridCols}}" wx:key="*this">
+          <view class="cell {{phase === 'show' && index === shownPos ? 'on' : ''}}"
+                wx:if="{{mode !== 'auditory'}}"
+                style="width:{{cellSize}}rpx;height:{{cellSize}}rpx;"></view>
+        </block>
+      </view>
+    </view>
+
+    <view wx:if="{{mode !== 'visual'}}" class="auditory-area">
+      <view class="area-label">听觉字母</view>
+      <view class="letter-display {{phase === 'show' ? 'showing' : ''}}">
+        {{shownLetter || '—'}}
+      </view>
+      <view class="letter-hint">当前字母：{{shownLetter || '等待中...'}}</view>
+    </view>
+
+    <view wx:if="{{phase === 'answer'}}" class="answers">
+      <view wx:if="{{mode === 'dual'}}" class="dual-answers">
+        <view class="dual-matrix">
+          <view class="matrix-row">
+            <view class="abtn dual-btn match-both" bindtap="onDualAnswer" data-visual="1" data-auditory="1" role="button">
+              <text class="btn-icon">✓</text><text>视觉✓ 听觉✓</text>
+            </view>
+            <view class="abtn dual-btn match-visual" bindtap="onDualAnswer" data-visual="1" data-auditory="0" role="button">
+              <text class="btn-icon">✓</text><text>视觉✓ 听觉✗</text>
+            </view>
+          </view>
+          <view class="matrix-row">
+            <view class="abtn dual-btn match-auditory" bindtap="onDualAnswer" data-visual="0" data-auditory="1" role="button">
+              <text class="btn-icon">✗</text><text>视觉✗ 听觉✓</text>
+            </view>
+            <view class="abtn dual-btn match-neither" bindtap="onDualAnswer" data-visual="0" data-auditory="0" role="button">
+              <text class="btn-icon">✗</text><text>视觉✗ 听觉✗</text>
+            </view>
+          </view>
+        </view>
+        <view class="dual-hint">点击对应组合：当前视觉/听觉是否与 {{n }} 步前匹配</view>
+      </view>
+
+      <view wx:elif="{{mode === 'visual'}}" class="single-answers">
+        <view class="abtn yes" bindtap="onVisualAnswer" data-match="1" role="button" aria-label="匹配">匹配 ✓</view>
+        <view class="abtn no" bindtap="onVisualAnswer" data-match="0" role="button" aria-label="不匹配">不匹配 ✗</view>
+      </view>
+
+      <view wx:elif="{{mode === 'auditory'}}" class="single-answers">
+        <view class="abtn yes" bindtap="onAuditoryAnswer" data-match="1" role="button" aria-label="匹配">匹配 ✓</view>
+        <view class="abtn no" bindtap="onAuditoryAnswer" data-match="0" role="button" aria-label="不匹配">不匹配 ✗</view>
+      </view>
+    </view>
+
+    <view wx:if="{{phase === 'show'}}" class="tip">{{showTip}}</view>
+    <view wx:if="{{phase === 'done'}}" class="tip done">完成！得分：{{score || '计算中...'}}</view>
+
+    <view wx:if="{{lastResult && phase === 'answer'}}" class="feedback">
+      <view class="feedback-item {{lastResult.visual && lastResult.visual.ok ? 'correct' : 'wrong'}}">
+        视觉：{{lastResult.visual && lastResult.visual.said ? '匹配' : '不匹配'}} / 正确：{{lastResult.visual && lastResult.visual.expected ? '匹配' : '不匹配'}}
+      </view>
+      <view class="feedback-item {{lastResult.auditory && lastResult.auditory.ok ? 'correct' : 'wrong'}}">
+        听觉：{{lastResult.auditory && lastResult.auditory.said ? '匹配' : '不匹配'}} / 正确：{{lastResult.auditory && lastResult.auditory.expected ? '匹配' : '不匹配'}}
+      </view>
     </view>
   </view>
 </view>

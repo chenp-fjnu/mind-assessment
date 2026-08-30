@@ -3,6 +3,8 @@ const mod = require('./index')
 Component({
   properties: {
     level: { type: Number, value: 1, observer() { this.reset() } },
+    boardWidth: { type: Number, value: 705, observer() { this.applySizing() } },
+    boardHeight: { type: Number, value: 0, observer() { this.applySizing() } },
   },
   data: {
     n: 1,
@@ -28,6 +30,7 @@ Component({
     gridCols: 3,
     lastResult: null,
     score: 0,
+    cellSize: 0,
   },
   lifetimes: {
     attached() {
@@ -46,6 +49,24 @@ Component({
         clearTimeout(this.timer)
         this.timer = null
       }
+    },
+    applySizing() {
+      this.computeCellSize()
+    },
+    computeCellSize() {
+      const cols = this.data.gridCols
+      const gap = 12 // rpx
+      const padding = 32 // rpx
+      const viewportWidth = this.data.boardWidth || 705
+      const cellW = Math.floor((viewportWidth - padding * 2 - gap * (cols - 1)) / cols)
+      let final = cellW
+      const bh = this.data.boardHeight
+      if (bh > 0) {
+        const cellH = Math.floor((bh - padding * 2 - gap * (cols - 1)) / cols)
+        final = Math.min(cellW, cellH)
+      }
+      final = Math.max(60, Math.min(final, 120))
+      this.setData({ cellSize: final })
     },
     reset() {
       this.clearTimer()
@@ -82,6 +103,7 @@ Component({
         lastResult: null,
         score: 0,
       })
+      this.computeCellSize()
       this.updateComputed()
     },
     getLevelMeta(level) {
