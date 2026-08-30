@@ -147,7 +147,7 @@
 /* 固定在顶部的操作按钮：全屏/普通模式都可见，z-index 最高 */
 .fixed-actions {
   position: fixed;
-  top: calc(40rpx + env(safe-area-inset-top));
+  top: calc(80rpx + env(safe-area-inset-top));
   right: 28rpx;
   display: flex;
   flex-direction: column;
