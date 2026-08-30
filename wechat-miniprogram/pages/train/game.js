@@ -90,8 +90,10 @@ Page({
     if (game && game.start) {
       game.start()
     }
-    // 不隐藏按钮，改文案为「游戏中」
-    this.setData({ startBtnText: '游戏中', showStartBtn: true })
+    // 仅当按钮已可见时才改文案；不需要开始按钮的游戏保持隐藏
+    if (this.data.showStartBtn) {
+      this.setData({ startBtnText: '游戏中' })
+    }
   },
   refreshTrend(id, g, level) {
     const t = trainStore.trend(id, level)
