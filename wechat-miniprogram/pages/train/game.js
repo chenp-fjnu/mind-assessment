@@ -88,7 +88,8 @@ Page({
     if (game && game.start) {
       game.start()
     }
-    this.setData({ showStartBtn: false })
+    // 不隐藏按钮，改文案为「游戏中」
+    this.setData({ startBtnText: '游戏中', showStartBtn: true })
   },
   refreshTrend(id, g, level) {
     const t = trainStore.trend(id, level)
@@ -146,6 +147,8 @@ Page({
       levels,
       bestText: fmtBest(best, g.metric.unit),
       resultChips: this.buildChips(r, g),
+      // 游戏结束，恢复开始按钮文案
+      startBtnText: '开始游戏',
     })
     // 舒尔特方格：将成绩与年龄组常模对比，供结果页展示
     if (this.data.gameId === 'schulte' && r.time != null) {
@@ -170,7 +173,7 @@ Page({
     return chips
   },
   replay() {
-    this.setData({ result: null, finished: false })
+    this.setData({ result: null, finished: false, startBtnText: '开始游戏' })
   },
   toggleFullscreen() {
     const fs = !this.data.fullscreen
