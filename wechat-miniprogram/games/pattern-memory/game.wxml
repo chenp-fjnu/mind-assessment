@@ -3,8 +3,8 @@
   <view wx:if="{{phase === 'idle'}}" class="start-screen">
     <text class="title">方块记忆</text>
     <text class="desc">记住高亮方块位置，随后复现</text>
-    <view class="grid demo" style="grid-template-columns:repeat({{size}},1fr);gap:12rpx;justify-content:center;">
-      <view wx:for="{{[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]}}" wx:key="*this" class="cell demo {{index === 2 || index === 7 || index === 10 || index === 13 ? 'lit' : ''}}" style="width:100%;height:{{cellH}}rpx;"></view>
+    <view class="grid demo" style="grid-template-columns:repeat({{size}},{{cellSize}}rpx);gap:12rpx;justify-content:center;">
+      <view wx:for="{{[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]}}" wx:key="*this" class="cell demo {{index === 2 || index === 7 || index === 10 || index === 13 ? 'lit' : ''}}" style="width:{{cellSize}}rpx;height:{{cellSize}}rpx;"></view>
     </view>
     <text class="hint">{{patternCount || 4}} 个高亮，{{size}}×{{size}} 网格</text>
     <button class="btn-start" bindtap="start">开始游戏</button>
@@ -12,7 +12,7 @@
 
   <!-- 游戏界面 -->
   <view wx:elif="{{phase === 'show' || phase === 'input' || phase === 'done'}}" class="game-screen">
-    <view class="grid" style="grid-template-columns:repeat({{size}},1fr);gap:12rpx;justify-content:center;">
+    <view class="grid" style="grid-template-columns:repeat({{size}},{{cellSize}}rpx);gap:12rpx;justify-content:center;">
       <view
         wx:for="{{cells}}"
         wx:key="index"
@@ -21,7 +21,7 @@
         bindtap="onTap"
         role="button"
         aria-label="方块"
-        style="width:100%;height:{{cellH}}rpx;"
+        style="width:{{cellSize}}rpx;height:{{cellSize}}rpx;"
       ></view>
     </view>
     <view class="bar">

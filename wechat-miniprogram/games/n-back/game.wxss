@@ -48,10 +48,10 @@
   display: grid;
   gap: 12rpx;
   width: 100%;
+  justify-content: center;
 }
 
 .cell {
-  width: 100%;
   aspect-ratio: 1 / 1;
   border-radius: 12rpx;
   background: var(--chip-bg);

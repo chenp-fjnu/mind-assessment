@@ -3,7 +3,7 @@
   <view wx:if="{{phase === 'idle'}}" class="start-screen">
     <text class="title">序列记忆</text>
     <text class="desc">记住并复述色块闪烁顺序</text>
-    <view class="pads demo">
+    <view class="pads demo" style="grid-template-columns:{{padSize}}rpx {{padSize}}rpx;gap:20rpx;justify-content:center;">
       <view wx:for="{{4}}" wx:key="*this" class="pad p{{index}}" style="width:{{padSize}}rpx;height:{{padSize}}rpx;"></view>
     </view>
     <text class="hint">{{seq.length || 3}} 步序列</text>
@@ -12,7 +12,7 @@
 
   <!-- 游戏界面 -->
   <view wx:elif="{{phase !== 'idle'}}" class="game-screen">
-    <view class="pads" style="grid-template-columns:1fr 1fr;gap:20rpx;justify-content:center;">
+    <view class="pads" style="grid-template-columns:{{padSize}}rpx {{padSize}}rpx;gap:20rpx;justify-content:center;">
       <view
         wx:for="{{4}}"
         wx:key="*this"
