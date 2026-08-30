@@ -1,10 +1,19 @@
 <view class="theme-wrapper {{themeClass}}">
   <view class="scroll-page">
     <view class="profile-hero">
-      <button class="avatar-btn" open-type="chooseAvatar" bindchooseavatar="onChooseAvatar" bindtap="onAvatarTap" aria-label="选择头像">
+      <button 
+        class="avatar-btn" 
+        open-type="chooseAvatar" 
+        bindchooseavatar="onChooseAvatar" 
+        bindtap="onAvatarTap"
+        aria-label="选择头像">
         <image wx:if="{{avatarUrl}}" class="avatar" src="{{avatarUrl}}" mode="aspectFill"></image>
-        <view wx:else class="avatar avatar-fallback">🧠</view>
+        <view wx:else class="avatar avatar-fallback">
+          <text class="avatar-icon">🧠</text>
+        </view>
       </button>
+      <view class="avatar-hint">点击更换头像</view>
+      
       <input
         class="nickname-input"
         type="nickname"
@@ -13,6 +22,7 @@
         value="{{nickname}}"
         bindinput="onNicknameInput"
         aria-label="昵称"
+        maxlength="20"
       />
     </view>
 
@@ -42,7 +52,7 @@
     </view>
 
     <view class="actions">
-      <view class="btn save-btn" bindtap="save" role="button" aria-label="保存">保存</view>
+      <button class="btn save-btn" bindtap="save" type="primary" aria-label="保存">保存</button>
     </view>
   </view>
 </view>

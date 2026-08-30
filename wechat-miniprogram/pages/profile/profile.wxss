@@ -1,10 +1,15 @@
+/* ============================================
+   个人资料页 - 完整样式 (参考微信官方/StarBuddy最佳实践)
+   ============================================ */
+
 .profile-hero {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 48rpx 32rpx 24rpx;
+  padding: 48rpx 32rpx 32rpx;
 }
 
+/* ===== 头像按钮 - 核心样式重置 (微信官方最佳实践) ===== */
 .avatar-btn {
   width: 160rpx;
   height: 160rpx;
@@ -12,54 +17,100 @@
   margin: 0;
   background: transparent;
   border: none;
-  border-radius: var(--radius-full);
+  border-radius: 50%;
   line-height: normal;
-  /* 确保按钮可点击 */
-  position: relative;
-  z-index: 10;
-  /* 触摸反馈 */
-  -webkit-tap-highlight-color: transparent;
-}
-
-.avatar {
-  width: 160rpx;
-  height: 160rpx;
-  border-radius: var(--radius-full);
-  background: var(--bg-tertiary);
-  border: 3px solid var(--color-primary-lighter);
-  display: block;
-  object-fit: cover;
-}
-
-.avatar-fallback {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 72rpx;
-  background: var(--bg-brand);
-  border-radius: var(--radius-full);
+  overflow: hidden;
+  box-sizing: border-box;
+  /* 微信 button 默认样式完全重置 - 关键！ */
+  -webkit-appearance: none;
+  appearance: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
+/* 去除 button 伪元素边框 */
+.avatar-btn::after {
+  border: none;
+  display: none;
+}
+
+/* 点击态反馈 */
+.avatar-btn:active {
+  opacity: 0.8;
+}
+
+/* 头像图片 */
+.avatar {
+  width: 160rpx;
+  height: 160rpx;
+  border-radius: 50%;
+  border: 3px solid var(--color-primary-lighter, #e8ebf5);
+  display: block;
+  object-fit: cover;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.08);
+}
+
+/* 头像占位符 */
+.avatar-fallback {
+  width: 160rpx;
+  height: 160rpx;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-brand, #f3f4f8);
+  border: 3px solid var(--color-primary-lighter, #e8ebf5);
+}
+
+.avatar-icon {
+  font-size: 64rpx;
+  line-height: 1;
+}
+
+/* 头像提示文字 */
+.avatar-hint {
+  margin-top: 16rpx;
+  font-size: 24rpx;
+  color: var(--text-muted, #9e9e9e);
+  text-align: center;
+}
+
+/* ===== 昵称输入框 ===== */
 .nickname-input {
   margin-top: 24rpx;
-  width: 60%;
+  width: 70%;
   min-width: 320rpx;
   max-width: 520rpx;
   text-align: center;
-  font-size: var(--font-size-2xl);
-  font-weight: var(--font-weight-semibold);
-  color: var(--text-primary);
-  padding: 12rpx 0;
-  border-bottom: 2rpx solid var(--border-light);
+  font-size: 36rpx;
+  font-weight: 600;
+  color: var(--text-primary, #1f1f1f);
+  padding: 16rpx 0;
+  border: none;
+  border-bottom: 2rpx solid var(--border-light, #ededed);
+  background: transparent;
+  font-family: inherit;
+}
+
+.nickname-input:focus {
+  border-bottom-color: var(--color-primary, #5a5fc7);
+  outline: none;
 }
 
 .nickname-ph {
-  color: var(--text-muted);
+  color: var(--text-muted, #9e9e9e);
 }
 
+/* ===== 表单卡片 ===== */
 .form {
-  margin: 24rpx 32rpx 0;
-  padding: 8rpx 24rpx;
+  margin: 32rpx 32rpx 0;
+  padding: 16rpx 24rpx;
+  background: var(--bg-card, #ffffff);
+  border-radius: 16rpx;
+  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.04);
+  border: 1px solid var(--border-light, #ededed);
 }
 
 .row {
@@ -67,7 +118,7 @@
   align-items: center;
   justify-content: space-between;
   min-height: 96rpx;
-  border-bottom: 1rpx solid var(--border-light);
+  border-bottom: 1rpx solid var(--border-light, #ededed);
 }
 
 .row:last-child {
@@ -75,8 +126,9 @@
 }
 
 .label {
-  font-size: var(--font-size-lg);
-  color: var(--text-secondary);
+  font-size: 32rpx;
+  font-weight: 500;
+  color: var(--text-secondary, #4a4a4a);
 }
 
 .picker {
@@ -86,44 +138,70 @@
 }
 
 .picker-value {
-  font-size: var(--font-size-lg);
-  color: var(--text-primary);
+  font-size: 30rpx;
+  font-weight: 500;
+  color: var(--text-primary, #1f1f1f);
   display: flex;
   align-items: center;
+  gap: 8rpx;
 }
 
 .arrow {
   margin-left: 12rpx;
-  color: var(--text-muted);
-  font-size: var(--font-size-xl);
+  color: var(--text-muted, #9e9e9e);
+  font-size: 36rpx;
 }
 
+/* ===== 元信息卡片 ===== */
 .meta {
-  margin: 24rpx 32rpx 0;
+  margin: 32rpx 32rpx 0;
   padding: 24rpx;
+  background: var(--bg-card, #ffffff);
+  border-radius: 16rpx;
+  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.04);
+  border: 1px solid var(--border-light, #ededed);
   display: flex;
   flex-direction: column;
   gap: 8rpx;
 }
 
 .meta-line {
-  font-size: var(--font-size-sm);
-  color: var(--text-tertiary);
+  font-size: 26rpx;
+  color: var(--text-tertiary, #6b6b6b);
   word-break: break-all;
 }
 
 .meta-tip {
   margin-top: 8rpx;
-  font-size: var(--font-size-xs);
-  color: var(--text-muted);
+  font-size: 24rpx;
+  color: var(--text-muted, #9e9e9e);
 }
 
+/* ===== 保存按钮 ===== */
 .actions {
-  margin: 40rpx 32rpx 24rpx;
+  margin: 48rpx 32rpx 40rpx;
 }
 
 .save-btn {
   width: 100%;
-  height: 88rpx;
-  font-size: var(--font-size-lg);
+  height: 96rpx;
+  font-size: 32rpx;
+  font-weight: 600;
+  border-radius: 12rpx;
+  background: var(--color-primary, #5a5fc7);
+  color: #ffffff;
+  border: none;
+}
+
+.save-btn:active {
+  opacity: 0.9;
+  transform: scale(0.99);
+}
+
+/* ===== 响应式适配 ===== */
+@media (max-width: 360px) {
+  .avatar-btn { width: 140rpx; height: 140rpx; }
+  .avatar, .avatar-fallback { width: 140rpx; height: 140rpx; }
+  .nickname-input { font-size: 32rpx; }
+  .label { font-size: 28rpx; }
 }
