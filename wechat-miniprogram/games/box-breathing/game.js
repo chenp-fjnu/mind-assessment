@@ -40,6 +40,7 @@ Component({
         circleScale: 1,
         running: false,
         completed: 0,
+        timerText: '0s',
       })
     },
     start() {
@@ -70,7 +71,8 @@ Component({
       }
       // For hold phases, preserve current circleScale instead of resetting
       const scaleToSet = p.key === 'hold' || p.key === 'hold2' ? this.data.circleScale : initialScale
-      this.setData({ phase: p.key, phaseLabel: p.label, phaseSec: p.sec, progress: 0, circleScale: scaleToSet, color })
+      const remaining = Math.ceil(p.sec * (1 - 0))
+      this.setData({ phase: p.key, phaseLabel: p.label, phaseSec: p.sec, progress: 0, circleScale: scaleToSet, color, timerText: remaining + 's' })
       this.runPhaseTimer(p.sec)
     },
     runPhaseTimer(sec) {
@@ -78,7 +80,7 @@ Component({
       this._progress = setInterval(() => {
         elapsed += 0.1
         const prog = Math.min(1, elapsed / sec)
-        this.setData({ progress: prog })
+        const remaining = Math.ceil(sec * (1 - prog))
         // Animate circleScale based on phase and progress
         const phase = this.data.phase
         let newScale = this.data.circleScale
@@ -92,7 +94,7 @@ Component({
           // Hold phases: stay still
           newScale = this.data.circleScale
         }
-        this.setData({ circleScale: newScale })
+        this.setData({ progress: prog, circleScale: newScale, timerText: remaining + 's' })
         if (prog >= 1) {
           clearInterval(this._progress)
           this._progress = null

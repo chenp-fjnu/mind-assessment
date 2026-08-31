@@ -30,6 +30,7 @@ reset() {
       const seed = mod.generate(this.data.level)
       this.setData({
         cycles: seed.cycles,
+        _phases: seed.phases,
         curCycle: 1,
         phase: 'idle',
         phaseIdx: 0,
@@ -38,6 +39,7 @@ reset() {
         progress: 0,
         circleScale: 1,
         running: false,
+        timerText: '0s',
       })
     },
     start() {
@@ -68,13 +70,15 @@ reset() {
       }
       // For hold phase, preserve current circleScale instead of resetting
       const scaleToSet = p.label === '屏息' ? this.data.circleScale : initialScale
+      const remaining = Math.ceil(p.dur * (1 - 0))
       this.setData({ 
         phase: p.label, 
         phaseLabel: p.label, 
         phaseSec: p.dur, 
         progress: 0, 
         circleScale: scaleToSet,
-        color
+        color,
+        timerText: remaining + 's'
       })
       this.runPhaseTimer(p.dur)
     },
@@ -83,7 +87,7 @@ reset() {
       this._progress = setInterval(() => {
         elapsed += 0.1
         const prog = Math.min(1, elapsed / sec)
-        this.setData({ progress: prog })
+        const remaining = Math.ceil(sec * (1 - prog))
         // Animate circleScale based on phase and progress
         const phase = this.data.phase
         let newScale = this.data.circleScale
@@ -94,7 +98,7 @@ reset() {
           // Shrink from big to small: 1.2 -> 0.8
           newScale = 1.2 - prog * 0.4
         }
-        this.setData({ circleScale: newScale })
+        this.setData({ progress: prog, circleScale: newScale, timerText: remaining + 's' })
         if (prog >= 1) {
           clearInterval(this._progress)
           this._progress = null

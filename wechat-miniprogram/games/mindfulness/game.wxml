@@ -9,7 +9,7 @@
           style="transform: scale({{circleScale}});"
           wx:if="{{phase !== 'idle' && phase !== 'done'}}">
       <view class="phase-label">{{phaseLabel}}</view>
-      <view class="phase-timer">{{Math.ceil(phaseSec * (1 - progress))}}s</view>
+      <view class="phase-timer">{{timerText}}</view>
       <view class="prompt">{{prompt}}</view>
     </view>
     <view class="idle-text" wx:elif="{{phase === 'idle'}}">

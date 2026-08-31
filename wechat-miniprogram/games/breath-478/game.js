@@ -31,6 +31,7 @@ Component({
       const seed = mod.generate(this.data.level)
       this.setData({
         cycles: seed.cycles,
+        _phases: seed.phases,
         curCycle: 1,
         phase: 'idle',
         phaseIdx: 0,
@@ -40,6 +41,7 @@ Component({
         circleScale: 1,
         running: false,
         completed: 0,
+        timerText: '0s',
       })
     },
     start() {
@@ -48,11 +50,7 @@ Component({
       this.nextPhase()
     },
     nextPhase() {
-      const phases = this.data._phases || [
-        { label: '吸气', dur: 4 },
-        { label: '屏息', dur: 7 },
-        { label: '呼气', dur: 8 },
-      ]
+      const phases = this.data._phases
       if (this.data.phaseIdx >= phases.length) {
         this.data.phaseIdx = 0
         const curCycle = this.data.curCycle + 1
@@ -76,7 +74,8 @@ Component({
       // Don't reset initialScale, let runPhaseTimer keep it unchanged
       // For hold phase, preserve current circleScale instead of resetting
       const scaleToSet = p.label === '屏息' ? this.data.circleScale : initialScale
-      this.setData({ phase: p.label, phaseLabel: p.label, phaseSec: p.dur, progress: 0, circleScale: scaleToSet, color })
+      const remaining = Math.ceil(p.dur * (1 - 0))
+      this.setData({ phase: p.label, phaseLabel: p.label, phaseSec: p.dur, progress: 0, circleScale: scaleToSet, color, timerText: remaining + 's' })
       this.runPhaseTimer(p.dur)
     },
     runPhaseTimer(sec) {
@@ -84,7 +83,7 @@ Component({
       this._progress = setInterval(() => {
         elapsed += 0.1
         const prog = Math.min(1, elapsed / sec)
-        this.setData({ progress: prog })
+        const remaining = Math.ceil(sec * (1 - prog))
         // Animate circleScale based on phase and progress
         const phase = this.data.phase
         let newScale = this.data.circleScale
@@ -98,7 +97,7 @@ Component({
           // Shrink from big to small: 1.2 -> 0.8
           newScale = 1.2 - prog * 0.4
         }
-        this.setData({ circleScale: newScale })
+        this.setData({ progress: prog, circleScale: newScale, timerText: remaining + 's' })
         if (prog >= 1) {
           clearInterval(this._progress)
           this._progress = null
