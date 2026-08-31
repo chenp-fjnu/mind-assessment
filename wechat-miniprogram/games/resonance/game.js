@@ -25,12 +25,12 @@ Component({
       if (this._t) { clearTimeout(this._t); this._t = null }
       if (this._progress) { clearInterval(this._progress); this._progress = null }
     },
-    reset() {
+reset() {
       this.clearTimer()
       const seed = mod.generate(this.data.level)
       this.setData({
         cycles: seed.cycles,
-        curCycle: 0,
+        curCycle: 1,
         phase: 'idle',
         phaseIdx: 0,
         phaseLabel: '',
@@ -38,7 +38,6 @@ Component({
         progress: 0,
         circleScale: 1,
         running: false,
-        _phases: seed.phases,
       })
     },
     start() {

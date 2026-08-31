@@ -31,7 +31,7 @@ Component({
       const seed = mod.generate(this.data.level)
       this.setData({
         cycles: seed.cycles,
-        curCycle: 0,
+        curCycle: 1,
         phase: 'idle',
         phaseIdx: 0,
         phaseLabel: '',
