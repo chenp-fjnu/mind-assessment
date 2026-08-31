@@ -173,38 +173,43 @@ Component({
     },
     onVisualAnswer(e) {
       if (this.data.phase !== 'answer' || this.data.mode === 'auditory') return
-      const saidMatch = e.currentTarget.dataset.match === '1'
-      this.processAnswer('visual', saidMatch)
+      this.answerRound([{ modality: 'visual', said: e.currentTarget.dataset.match === '1' }])
     },
     onAuditoryAnswer(e) {
       if (this.data.phase !== 'answer' || this.data.mode === 'visual') return
-      const saidMatch = e.currentTarget.dataset.match === '1'
-      this.processAnswer('auditory', saidMatch)
+      this.answerRound([{ modality: 'auditory', said: e.currentTarget.dataset.match === '1' }])
     },
     onDualAnswer(e) {
       if (this.data.phase !== 'answer' || this.data.mode !== 'dual') return
-      const visualSaid = e.currentTarget.dataset.visual === '1'
-      const auditorySaid = e.currentTarget.dataset.auditory === '1'
-      this.processAnswer('visual', visualSaid)
-      this.processAnswer('auditory', auditorySaid)
+      // 双重模式下一次作答同时处理视觉与听觉两个维度，但共用同一个轮次索引，
+      // 每轮只推进一次 roundIdx，保证与序列位置正确对齐
+      this.answerRound([
+        { modality: 'visual', said: e.currentTarget.dataset.visual === '1' },
+        { modality: 'auditory', said: e.currentTarget.dataset.auditory === '1' },
+      ])
     },
-    processAnswer(modality, saidMatch) {
+    answerRound(answers) {
       const i = this.data.roundIdx
-      const expected = mod.isMatch(this.data[modality + 'Seq'], i, this.data.n)
-      const ok = saidMatch === expected
+      const n = this.data.n
 
+      let correct = this.data.correct
+      const lastResult = { ...this.data.lastResult }
       const updates = {
-        total: this.data.total + 1,
-        correct: this.data.correct + (ok ? 1 : 0),
-        [modality + 'Total']: this.data[modality + 'Total'] + 1,
-        [modality + 'Correct']: this.data[modality + 'Correct'] + (ok ? 1 : 0),
+        total: this.data.total + answers.length,
         roundIdx: i + 1,
         times: this.data.times.concat(Date.now() - this.data.answerTs),
-        lastResult: {
-          ...this.data.lastResult,
-          [modality]: { said: saidMatch, expected, ok },
-        },
       }
+
+      for (const a of answers) {
+        const expected = mod.isMatch(this.data[a.modality + 'Seq'], i, n)
+        const ok = a.said === expected
+        correct += ok ? 1 : 0
+        updates[a.modality + 'Total'] = this.data[a.modality + 'Total'] + 1
+        updates[a.modality + 'Correct'] = this.data[a.modality + 'Correct'] + (ok ? 1 : 0)
+        lastResult[a.modality] = { said: a.said, expected, ok }
+      }
+      updates.correct = correct
+      updates.lastResult = lastResult
 
       const next = i + 1
       if (next >= this.data.trials) {

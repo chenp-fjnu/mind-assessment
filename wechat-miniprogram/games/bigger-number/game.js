@@ -22,7 +22,7 @@ Component({
   methods: {
     reset() {
       const seed = mod.generate(this.data.level)
-      this.setData({ trials: seed.trials, list: seed.list, idx: 0, cur: null, phase: 'idle', correct: 0, total: 0, time: 0 })
+      this.setData({ trials: seed.trials, list: seed.list, idx: 0, cur: seed.list[0], phase: 'idle', correct: 0, total: 0, time: 0 })
     },
     start() {
       if (this.data.phase !== 'idle' && this.data.phase !== 'done') return
@@ -42,6 +42,10 @@ Component({
       this.setData({ cur: this.data.list[this.data.idx], phase: 'play' })
     },
     onPick(e) {
+      if (this.data.phase === 'idle' || this.data.phase === 'done') {
+        this.start()
+        return
+      }
       if (this.data.phase !== 'play') return
       const side = e.currentTarget.dataset.side
       const ok = side === 'l' ? this.data.cur.a > this.data.cur.b : this.data.cur.b > this.data.cur.a

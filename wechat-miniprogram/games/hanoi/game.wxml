@@ -5,6 +5,7 @@
       wx:for="{{pegs}}"
       wx:key="index"
       class="peg {{selected === index ? 'sel' : ''}}"
+      style="height:{{pegHeight}}rpx;"
       data-idx="{{index}}"
       bindtap="onPeg"
       role="button"
@@ -14,11 +15,11 @@
         wx:for="{{item}}"
         wx:for-item="d"
         wx:key="*this"
-        class="disk d{{d}}"
-        style="width:{{d * 64 + 60}}rpx;"
+        class="disk"
+        style="width:{{diskW0 + d * diskWStep}}rpx; height:{{diskH}}rpx; margin-top:{{diskGap}}rpx;"
       ></view>
     </view>
   </view>
-  <view wx:if="{{phase === 'idle'}}" class="tip">点柱选盘，再点目标柱移动（把全部移到最右）</view>
+  <view wx:if="{{phase === 'idle' || phase === 'play'}}" class="tip">点柱选盘，再点目标柱移动（把全部移到最右）</view>
   <view wx:if="{{phase === 'done'}}" class="tip">完成！</view>
 </view>

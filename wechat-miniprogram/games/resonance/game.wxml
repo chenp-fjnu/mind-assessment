@@ -5,8 +5,8 @@
   </view>
   
   <view class="breath-circle-wrapper">
-    <view class="breath-circle" 
-          style="transform: scale({{circleScale}}); transition: transform {{phaseSec}}s ease-in-out;"
+    <view class="breath-circle {{phase === '吸气' ? 'inhale' : phase === '屏息' ? 'hold' : 'exhale'}}"
+          style="transform: scale({{circleScale}});"
           wx:if="{{phase !== 'idle' && phase !== 'done'}}">
       <view class="phase-label">{{phaseLabel}}</view>
       <view class="phase-timer">{{Math.ceil(phaseSec * (1 - progress))}}s</view>
@@ -30,6 +30,5 @@
     <button class="btn-primary" bindtap="start" disabled="{{running || phase === 'done'}}">
       {{phase === 'idle' ? '开始' : (running ? '进行中...' : '继续')}}
     </button>
-    <button class="btn-secondary" bindtap="reset" disabled="{{phase === 'idle'}}">重置</button>
   </view>
 </view>

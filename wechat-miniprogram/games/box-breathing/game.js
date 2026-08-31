@@ -15,6 +15,7 @@ Component({
     circleScale: 1,
     running: false,
     completed: 0,
+    color: '#10b981',
   },
   lifetimes: {
     attached() { this.reset() },
@@ -58,7 +59,18 @@ Component({
         this.setData({ curRound })
       }
       const p = phases[this.data.phaseIdx]
-      this.setData({ phase: p.key, phaseLabel: p.label, phaseSec: p.sec, progress: 0, circleScale: p.key === 'inhale' ? 1.2 : (p.key === 'exhale' ? 0.8 : 1) })
+      let initialScale = 1
+      let color = '#10b981'
+      if (p.key === 'inhale') {
+        initialScale = 0.8 // start small for inhalation
+        color = '#3b82f6'
+      } else if (p.key === 'exhale') {
+        initialScale = 1.2 // start big for exhalation
+        color = '#ef4444'
+      }
+      // For hold phases, preserve current circleScale instead of resetting
+      const scaleToSet = p.key === 'hold' || p.key === 'hold2' ? this.data.circleScale : initialScale
+      this.setData({ phase: p.key, phaseLabel: p.label, phaseSec: p.sec, progress: 0, circleScale: scaleToSet, color })
       this.runPhaseTimer(p.sec)
     },
     runPhaseTimer(sec) {
@@ -67,6 +79,20 @@ Component({
         elapsed += 0.1
         const prog = Math.min(1, elapsed / sec)
         this.setData({ progress: prog })
+        // Animate circleScale based on phase and progress
+        const phase = this.data.phase
+        let newScale = this.data.circleScale
+        if (phase === 'inhale') {
+          // Grow from small to big: 0.8 -> 1.2
+          newScale = 0.8 + prog * 0.4
+        } else if (phase === 'exhale') {
+          // Shrink from big to small: 1.2 -> 0.8
+          newScale = 1.2 - prog * 0.4
+        } else {
+          // Hold phases: stay still
+          newScale = this.data.circleScale
+        }
+        this.setData({ circleScale: newScale })
         if (prog >= 1) {
           clearInterval(this._progress)
           this._progress = null

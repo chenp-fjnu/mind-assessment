@@ -43,3 +43,13 @@
   font-size: 24rpx;
   text-align: center;
 }
+
+.btn-start {
+  margin: 20rpx auto;
+  padding: 12rpx 30rpx;
+  border-radius: 20rpx;
+  background: var(--accent);
+  color: white;
+  font-size: 28rpx;
+  font-weight: 500;
+}

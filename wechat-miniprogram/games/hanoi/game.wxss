@@ -8,30 +8,36 @@
   font-size: 28rpx;
   color: var(--text2);
   margin-bottom: 20rpx;
+  flex-shrink: 0;
 }
 .pegs {
   display: flex;
   gap: 14rpx;
   width: 100%;
   justify-content: space-around;
+  flex-shrink: 1;
 }
 .peg {
   flex: 1;
-  height: 360rpx;
   background: #e2e8f0;
   border-radius: 0 0 16rpx 16rpx;
   display: flex;
   flex-direction: column-reverse;
   align-items: center;
-  padding-top: 10rpx;
+  padding-bottom: 10rpx;
+  box-sizing: border-box;
+  overflow: hidden;
   border-top: 8rpx solid #94a3b8;
 }
 .peg.sel {
   border-top-color: var(--accent);
 }
 .disk {
-  height: 44rpx;
-  margin-top: 6rpx;
   border-radius: 10rpx;
   background: linear-gradient(180deg, #fda4af, #f43f5e);
+  box-sizing: border-box;
+}
+.tip {
+  margin-top: 20rpx;
+  flex-shrink: 0;
 }

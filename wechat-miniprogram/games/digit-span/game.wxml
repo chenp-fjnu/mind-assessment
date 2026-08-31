@@ -3,6 +3,7 @@
   <view wx:if="{{phase === 'show'}}" class="show">{{showText}}</view>
   <view wx:if="{{phase === 'input'}}" class="show dim">{{input.join(' ') || '—'}}</view>
   <view wx:if="{{phase === 'idle'}}" class="tip">记住短暂显示的数字，再依次点出</view>
+    <button class="btn-start" bindtap="start">开始游戏</button>
   <view wx:if="{{phase === 'input'}}" class="pad">
     <view
       wx:for="{{10}}"

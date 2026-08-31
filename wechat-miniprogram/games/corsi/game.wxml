@@ -15,6 +15,7 @@
     <text wx:if="{{phase === 'show'}}">记住点亮顺序…</text>
     <text wx:if="{{phase === 'input'}}">依序点出（{{inputIdx}}/{{seq.length}}）</text>
     <text wx:if="{{phase === 'idle'}}">记住并复述方块顺序</text>
+    <button class="btn-start" bindtap="start">开始游戏</button>
     <text wx:if="{{phase === 'done'}}">完成！</text>
   </view>
 </view>

@@ -80,6 +80,10 @@ Component({
       const cells = this.data.cells.slice()
       cells[idx] = !cells[idx]
       this.setData({ selected, cells })
+      // Auto-submit when user has selected patternCount cells
+      if (selected.length >= this.data.patternCount) {
+        this.onSubmit()
+      }
     },
     onSubmit() {
       if (this.data.phase !== 'input') return
