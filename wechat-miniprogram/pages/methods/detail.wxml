@@ -47,7 +47,16 @@
       <view class="example"><text class="example-text">{{method.example}}</text></view>
     </view>
 
-    <view class="card sec" wx:if="{{practiceTrend}}">
+    <view class="card sec" wx:if="{{practiceTrend && practiceTrend.values && practiceTrend.values.length >= 2}}">
+      <text class="sec-title">练习趋势（{{practiceTrend.count}} 次）</text>
+      <canvas type="2d" id="practiceTrendCanvas" class="trend-canvas"></canvas>
+      <view class="trend-summary">
+        <text>{{practiceTrend.fieldLabel}}：首次 {{practiceTrend.first}} → 最近 {{practiceTrend.last}}</text>
+        <text class="trend-delta {{practiceTrend.delta>0?'up':(practiceTrend.delta<0?'down':'flat')}}">{{practiceTrend.direction}} {{practiceTrend.delta}}</text>
+      </view>
+    </view>
+
+    <view class="card sec" wx:elif="{{practiceTrend}}">
       <text class="sec-title">练习趋势（{{practiceTrend.count}} 次）</text>
       <view class="trend-line">
         <text class="trend-text">{{practiceTrend.fieldLabel}}：首次 {{practiceTrend.first}} → 最近 {{practiceTrend.last}}</text>

@@ -89,7 +89,7 @@ Component({
       // 最小盘宽度为pegW的30%，最大盘宽度为pegW的70%，中间等距分布
       // 但不再随disks数量自动扩缩，改为最多5级有限的分布
       const maxDisks = 5
-      const diskProportion = 0.4 // 盘宽比例系数
+      // 盘宽比例系数
       const minDiskW = Math.floor(pegW * 0.3)
       const maxDiskW = Math.floor(pegW * 0.7)
       let diskWStep = 0

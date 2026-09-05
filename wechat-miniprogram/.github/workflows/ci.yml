@@ -22,7 +22,7 @@ jobs:
           cache: npm
           cache-dependency-path: wechat-miniprogram/package-lock.json
       - run: npm install
-      - name: Lint（非零即失败）
-        run: npm run lint
+      - name: Lint（严格模式：warning 也视为失败）
+        run: npm run lint:strict
       - name: 冒烟 + Jest 单元/页面测试 + 覆盖率
         run: npm run test:all

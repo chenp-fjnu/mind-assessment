@@ -109,7 +109,6 @@ reset() {
     },
     finish() {
       this.clearTimer()
-      const time = (Date.now() - this.data.startTime) / 1000
       const result = mod.score({ cycles: this.data.curCycle })
       this.setData({ phase: 'done', running: false })
       this.triggerEvent('finish', result)

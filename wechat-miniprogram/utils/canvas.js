@@ -86,8 +86,22 @@ function renderTrend(ctx, W, H, opts) {
   if (dates && dates.length === vals.length) {
     ctx.fillStyle = pal.date
     ctx.font = '15px sans-serif'
-    // ≤8 条全量显示日期；更多时仅显示首/尾以避免重叠
-    const showIdx = vals.length <= 8 ? vals.map((_, i) => i) : [0, vals.length - 1]
+    // 智能显示日期：≤8条全显示；>8条按间隔显示（每隔N个显示一个），避免重叠
+    const maxDateLabels = 10
+    let showIdx
+    if (vals.length <= maxDateLabels) {
+      showIdx = vals.map((_, i) => i)
+    } else {
+      const step = Math.ceil(vals.length / maxDateLabels)
+      showIdx = []
+      for (let i = 0; i < vals.length; i += step) {
+        showIdx.push(i)
+      }
+      // 确保最后一个点总是显示
+      if (showIdx[showIdx.length - 1] !== vals.length - 1) {
+        showIdx.push(vals.length - 1)
+      }
+    }
     showIdx.forEach((i) => {
       ctx.fillText(dates[i], xAt(i), H - 6)
     })
@@ -568,11 +582,26 @@ function renderFullPageCard(canvas, ctx, W, H, opts, done, measure) {
       ctx.fill()
     })
 
-    if (trendDates && trendDates.length === vals.length && vals.length <= 8) {
+    if (trendDates && trendDates.length === vals.length) {
       ctx.fillStyle = pal.date
       ctx.font = '14px sans-serif'
       ctx.textAlign = 'center'
-      vals.forEach((v, i) => {
+      // 智能显示日期：≤10条全显示；>10条按间隔显示
+      const maxDateLabels = 10
+      let showIdx
+      if (vals.length <= maxDateLabels) {
+        showIdx = vals.map((_, i) => i)
+      } else {
+        const step = Math.ceil(vals.length / maxDateLabels)
+        showIdx = []
+        for (let i = 0; i < vals.length; i += step) {
+          showIdx.push(i)
+        }
+        if (showIdx[showIdx.length - 1] !== vals.length - 1) {
+          showIdx.push(vals.length - 1)
+        }
+      }
+      showIdx.forEach((i) => {
         ctx.fillText(trendDates[i], xAt(i), chartY + chartH - 4)
       })
     }

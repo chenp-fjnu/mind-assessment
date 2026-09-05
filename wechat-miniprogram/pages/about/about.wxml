@@ -13,6 +13,7 @@
     <view class="card section">
       <text class="sec-title">隐私与离线</text>
       <text class="sec-text">你在本程序进行的所有测评与练习，题目、计分与结果都在你的设备本地完成，全程无需联网，我们也不会上传或收集任何个人数据。你可以放心地把它当作一个私人的自我探索笔记本，数据只在你主动清空时才会删除。</text>
+      <text class="sec-note local-only">⚠️ 当前版本为纯本地存储，未接入云同步功能；所有记录（测评、方法练习、训练成绩）仅存在于你的微信小程序本地缓存中，更换设备/清理缓存/卸载小程序将导致数据丢失，请知悉。</text>
     </view>
 
     <view class="card section">

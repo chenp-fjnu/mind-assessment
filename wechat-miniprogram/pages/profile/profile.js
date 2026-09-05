@@ -138,7 +138,6 @@ Page({
     saveUser({ birthday })
   },
   save() {
-    const gender = GENDERS[this.data.genderIndex] || 'unknown'
     const nickname = (this.data.nickname || '').trim()
     if (!nickname) {
       wx.showToast({ title: '请输入昵称', icon: 'none' })

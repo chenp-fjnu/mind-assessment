@@ -73,6 +73,11 @@
 
   <view class="card sec" wx:if="{{practices.length}}">
     <text class="sec-title">我的练习记录（{{practices.length}}）</text>
+    <canvas type="2d" id="practiceTrendCanvas" class="trend-canvas" wx:if="{{practiceTrend && practiceTrend.values && practiceTrend.values.length >= 2}}"></canvas>
+    <view class="trend-summary" wx:if="{{practiceTrend && practiceTrend.values && practiceTrend.values.length >= 2}}">
+      <text>{{practiceTrend.fieldLabel}}：首次 {{practiceTrend.first}} → 最近 {{practiceTrend.last}}</text>
+      <text class="trend-delta {{practiceTrend.delta>0?'up':(practiceTrend.delta<0?'down':'flat')}}">{{practiceTrend.direction}} {{practiceTrend.delta}}</text>
+    </view>
     <view class="practice" wx:for="{{practices}}" wx:key="time" wx:for-item="p">
       <text class="practice-time">{{p.timeText}}</text>
       <view class="practice-body" wx:for="{{p.fields}}" wx:key="key" wx:for-item="pf">

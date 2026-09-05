@@ -8,8 +8,8 @@
       <text class="mine-name">{{profileName}}</text>
     </view>
 
-    <view class="menu">
-      <view class="card menu-item" bindtap="goProfile" role="button" aria-label="个人信息">
+<view class="menu">
+      <view class="card menu-item" bindtap="goProfile" role="button" aria-label="编辑个人信息">
         <view class="menu-icon">👤</view>
         <view class="menu-body">
           <text class="menu-name">个人信息</text>
@@ -62,6 +62,6 @@
       </view>
     </view>
 
-    <view class="footer">结果与练习仅供自我探索，不构成专业建议；数据仅保存在本机，未启用云同步</view>
+    <view class="footer">结果与练习仅供自我探索，不构成专业建议；所有数据仅保存在本机，未接入云同步</view>
   </view>
 </view>

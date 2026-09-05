@@ -10,6 +10,7 @@
     "validate": "node scripts/check-meta.js && node scripts/check-game-player.js",
     "test:all": "node scripts/check-meta.js && node scripts/check-game-player.js && node test/smoke.js && jest --coverage --forceExit",
     "lint": "eslint \"**/*.js\" --ignore-pattern node_modules --ignore-pattern utils/questions.js",
+    "lint:strict": "eslint \"**/*.js\" --ignore-pattern node_modules --ignore-pattern utils/questions.js --max-warnings 0",
     "format": "prettier --write \"**/*.{js,json,wxml,wxss}\"",
     "format:check": "prettier --check \"**/*.{js,json,wxml,wxss}\""
   },

@@ -2,6 +2,8 @@ const methodsData = require('../../utils/methods-data')
 const { genCard, saveToAlbum } = require('../../utils/share')
 const { useTheme } = require('../../utils/theme-store')
 const SK = require('../../utils/storage-keys')
+const { renderTrend } = require('../../utils/canvas')
+const { getDpr } = require('../../utils/device')
 
 // 互动练习趋势：取首个数值（scale）字段的「首次 → 最近」对比（练习记录按时间倒序存储）
 function buildPracticeTrend(method) {
@@ -10,14 +12,22 @@ function buildPracticeTrend(method) {
   const scaleField = schema.find((f) => f.type === 'scale')
   if (!scaleField) return null
   const stored = wx.getStorageSync(SK.PRACTICES) || {}
-  const vals = (stored[method.id] || [])
+  const entries = (stored[method.id] || []).slice().reverse() // 正序：最早在前
+  const vals = entries
     .map((e) => e.data && e.data[scaleField.key])
     .filter((v) => v !== undefined && v !== null && v !== '' && !isNaN(Number(v)))
     .map(Number)
   if (vals.length < 2) return null
-  const first = vals[vals.length - 1] // 最早一条
-  const last = vals[0] // 最新一条（倒序存储）
+  const first = vals[0]
+  const last = vals[vals.length - 1]
   const delta = last - first
+  // 生成日期标签
+  const dates = entries
+    .filter((e) => e.data && e.data[scaleField.key] !== undefined && e.data[scaleField.key] !== null && e.data[scaleField.key] !== '' && !isNaN(Number(e.data[scaleField.key])))
+    .map((e) => {
+      const d = new Date(e.time)
+      return (d.getMonth() + 1) + '-' + d.getDate()
+    })
   return {
     fieldLabel: scaleField.label,
     first,
@@ -25,6 +35,8 @@ function buildPracticeTrend(method) {
     delta: delta > 0 ? '+' + delta : '' + delta,
     direction: delta > 0 ? '↑' : delta < 0 ? '↓' : '→',
     count: vals.length,
+    values: vals,
+    dates,
   }
 }
 
@@ -56,13 +68,41 @@ Page({
       content: method.content || [],
       steps,
       practiceTrend: buildPracticeTrend(method),
+    }, () => {
+      this.drawPracticeTrend()
     })
   },
   onShow() {
     if (this._id) {
       const m = methodsData.getMethod(this._id)
-      this.setData({ practiceTrend: buildPracticeTrend(m) })
+      this.setData({ practiceTrend: buildPracticeTrend(m) }, () => {
+        this.drawPracticeTrend()
+      })
     }
+  },
+  drawPracticeTrend() {
+    const trend = this.data.practiceTrend
+    if (!trend || !trend.values || trend.values.length < 2) return
+    const dpr = getDpr()
+    wx.createSelectorQuery()
+      .in(this)
+      .select('#practiceTrendCanvas')
+      .fields({ node: true, size: true })
+      .exec((res) => {
+        if (!res[0]) return
+        const canvas = res[0].node
+        const ctx = canvas.getContext('2d')
+        const W = res[0].width
+        const H = res[0].height
+        canvas.width = W * dpr
+        canvas.height = H * dpr
+        ctx.scale(dpr, dpr)
+        renderTrend(ctx, W, H, {
+          values: trend.values,
+          color: this.data.method?.color || '#0891b2',
+          dates: trend.dates,
+        })
+      })
   },
   goPractice() {
     wx.navigateTo({ url: '/pages/methods/practice?id=' + this._id })

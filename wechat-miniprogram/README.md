@@ -335,8 +335,13 @@ CI（`.github/workflows/ci.yml`）：push/PR 触及 `wechat-miniprogram/**` 时�
 - **舒尔特方格点击偶发不识别（修复）**：`games/schulte/game.wxml` 棋盘加 `catchtouchmove`，避免手指轻微滑动被页面当成滚动、导致 `bindtap` 被取消（网格类游戏在可滚动页上最常见的「吞点」根因，最大 9×9 棋盘整体可显示、无需在盘内滚动，故安全）；`onTap` 中将 `dataset.n/idx` 显式转 `Number`，规避数据集偶发字符串类型导致 `n === next` 比较失败。已进一步在播放器 `pages/train/game.wxml` 棋盘容器统一加 `catchtouchmove`，一次性覆盖全部 31 个训练游戏（已确认均为点击式、无拖拽，安全）。
 - **舒尔特成绩对比年龄组常模（新增）**：`games/schulte/index.js` 内置公开评分常模（3×3/4×4/5×5/7×7 为公开标准，6/8/9 由相邻尺寸按格数线性插值估算），按用户生日（来自 `utils/user` 档案）推算年龄组，结果页展示「优秀/良好/及格」上限及本局所处区间与距优秀线差值（`pages/train/game.wxml` 新增 `.ref-cmp` 区块、`game.js` 在 `onFinish` 计算 `result.refComparison` 并单测覆盖）。
 - **修复：改生日后立即生效（否则年龄组对比不更新）**：原 `pages/profile/profile.js` 的 `onBirthdayChange` 只改内存 `data`、需再点「保存」才落盘，导致舒尔特按年龄组的对比读不到新生日。现改生日即调用 `saveUser({ birthday })` 即时持久化，对比随档案年龄组实时更新。
+- **云同步 UI 彻底清理与本地优先明确化（P0）**：`pages/mine/mine.wxml`、`pages/profile/profile.wxml`、`pages/about/about.wxml` 移除所有同步状态/立即同步 UI；about 页新增显著提示「当前版本为纯本地存储，未接入云同步，数据仅存在本机，更换设备/清理缓存/卸载将丢失」；`utils/user.js` `CLOUD_ENABLED=false` 占位静默跳过，不再产生误导性「同步成功」提示。
+- **theme.js 极简化与 applyTheme 删除（P1）**：`utils/theme.js` 仅保留 `isDark()`，删除 `PALETTE`/`SEMANTIC`/`GRADIENTS`/`FUNCTIONAL`/`resolve`/`generateCSSVariables` 等死代码；`utils/theme-store.js` 删除从未被调用的 `applyTheme`，相关逻辑合并入 `useTheme`/`updateNativeUI`，概念数量减少。
+- **Lint 全面清零 + 严格模式（P1/P3）**：清理 `modules/hbdi/index.js`、`games/breath-478/game.js`、`games/hanoi/game.js`、`games/mindfulness/game.js`、`games/resonance/game.js`、`pages/profile/profile.js` 等 6 处未用变量警告；新增 `npm run lint:strict`（`--max-warnings 0`），CI 强制通过，`npm run lint` 与 `npm run lint:strict` 均达成 **0 error / 0 warning**。
+- **趋势图日期智能显示（P2）**：`utils/canvas.js` `renderTrend` 优化：≤10 条全显示日期，>10 条按间隔采样（保留首尾），避免重叠；`renderFullPageCard` 同步更新。
+- **方法练习趋势可视化（P2）**：`pages/methods/detail.js`、`pages/methods/practice.js` 新增 `computePracticeTrend` + canvas 折线图（复用 `renderTrend`），`detail.wxml`/`practice.wxml` 新增 `#practiceTrendCanvas`，支持首次→最近变化、变化量/方向、日期标签，与测评趋势体验对齐。
 
-> 路线图高/中优先项基本落地；CI 已接入 Jest + 覆盖率。**已知问题**：`utils/user.js` 云同步为占位实现（未接后端），相关同步 UI 仅作演示；`utils/theme.js` 色板目前仅 `isDark` 被使用，页面样式以 `app.wxss` CSS 变量为准；详见 [`docs/CODE_REVIEW.md`](docs/CODE_REVIEW.md)。
+> 路线图高/中优先项基本落地；CI 已接入 Jest + 覆盖率 + 严格 Lint。**已知问题**：`utils/user.js` 云同步为占位实现（未接后端），当前方案为「隐藏 UI + 明确标注本地优先」；如需真正云同步需补全 `wx.cloud.init` 与云函数；详见 [`docs/CODE_REVIEW.md`](docs/CODE_REVIEW.md)。
 
 ## 许可
 
