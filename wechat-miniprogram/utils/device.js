@@ -23,4 +23,30 @@ function getDpr() {
   return 2
 }
 
-module.exports = { getDpr }
+/**
+ * 检查微信基础库版本是否支持指定特性
+ * @param {string} minVersion - 最低版本，格式 '2.21.2'
+ * @returns {boolean}
+ */
+function checkMinVersion(minVersion) {
+  try {
+    const info = wx.getSystemInfoSync()
+    const versionStr = info.SDKVersion
+    const versionParts = versionStr.split('.').map(Number)
+    const versionNum = versionParts[0] * 10000 + versionParts[1] * 100 + versionParts[2]
+    const [minMajor, minMinor, minPatch] = minVersion.split('.').map(Number)
+    const minVersionNum = minMajor * 10000 + minMinor * 100 + minPatch
+    return versionNum >= minVersionNum
+  } catch {
+    return false
+  }
+}
+
+/**
+ * 是否支持 chooseAvatar 组件（需基础库 2.21.2+）
+ */
+function canUseChooseAvatar() {
+  return checkMinVersion('2.21.2')
+}
+
+module.exports = { getDpr, checkMinVersion, canUseChooseAvatar }

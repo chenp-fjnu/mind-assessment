@@ -1,6 +1,7 @@
 const { getUser, saveUser, GENDERS, GENDER_LABELS } = require('../../utils/user')
 const { useTheme } = require('../../utils/theme-store')
 const { registerPrivacyModal } = require('../../utils/privacy')
+const { canUseChooseAvatar } = require('../../utils/device')
 
 function calcAge(birthday) {
   if (!birthday) return ''
@@ -51,14 +52,10 @@ Page({
     this.refresh()
   },
   checkSDKVersion() {
-    const info = wx.getSystemInfoSync()
-    const versionStr = info.SDKVersion
-    const versionParts = versionStr.split('.').map(Number)
-    const versionNum = versionParts[0] * 10000 + versionParts[1] * 100 + versionParts[2]
-    const canUse = versionNum >= 22102 // 2.21.2
+    const canUse = canUseChooseAvatar()
     this.setData({ canUseChooseAvatar: canUse })
     if (!canUse) {
-      console.warn('[Profile] 基础库版本过低，不支持 chooseAvatar，当前版本:', info.SDKVersion)
+      console.warn('[Profile] 基础库版本过低，不支持 chooseAvatar')
     }
   },
   refresh() {

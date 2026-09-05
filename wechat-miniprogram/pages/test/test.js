@@ -3,6 +3,7 @@ const { drawCell } = require('../../utils/figure')
 const { readableTextColor } = require('../../utils/color')
 const { useTheme } = require('../../utils/theme-store')
 const { getUserId } = require('../../utils/user')
+const { getDpr } = require('../../utils/device')
 const SK = require('../../utils/storage-keys')
 
 // 历史记录硬上限：超出后仅保留最近 N 条，并对用户可见提示
@@ -35,7 +36,7 @@ Page({
       return
     }
     const questions = mod.getQuestions()
-    this.dpr = (() => { try { if (wx.getWindowInfo) { const w = wx.getWindowInfo(); if (w.pixelRatio) return w.pixelRatio } } catch {} try { if (wx.getDeviceInfo) { const d = wx.getDeviceInfo(); if (d.pixelRatio) return d.pixelRatio } } catch {} return 2 })()
+    this.dpr = getDpr()
     this.mod = mod
     this._timer = null
     const setMeta = {}

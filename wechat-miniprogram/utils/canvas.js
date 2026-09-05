@@ -6,14 +6,16 @@
 
 const { isDark } = require('./theme')
 
-// 兼容新旧版本获取 DPR
+/**
+ * 获取设备像素比（DPR），兼容新旧 API
+ * @returns {number} 设备像素比，默认 2
+ */
 function getDPR() {
   try {
     if (wx.getWindowInfo) {
       const winInfo = wx.getWindowInfo()
       if (winInfo.pixelRatio) return winInfo.pixelRatio
     }
-    // 基础库 2.30.0+ 使用 wx.getDeviceInfo
     if (wx.getDeviceInfo) {
       const deviceInfo = wx.getDeviceInfo()
       if (deviceInfo.pixelRatio) return deviceInfo.pixelRatio
@@ -22,7 +24,10 @@ function getDPR() {
   return 2
 }
 
-// 画布取色：暗色模式下用浅色，亮色模式下用深色
+/**
+ * 获取画布调色板，根据深色/浅色模式返回对应颜色
+ * @returns {{bg:string,text:string,textSoft:string,textFaint:string,grid:string,label:string,date:string}}
+ */
 function canvasPalette() {
   const dark = isDark()
   return {
@@ -36,7 +41,16 @@ function canvasPalette() {
   }
 }
 
-// 趋势折线图（ctx 已按 dpr 缩放，W/H 为 CSS 像素）
+/**
+ * 绘制趋势折线图
+ * @param {CanvasRenderingContext2D} ctx - Canvas 2D 上下文（已按 DPR 缩放）
+ * @param {number} W - 画布宽度（CSS 像素）
+ * @param {number} H - 画布高度（CSS 像素）
+ * @param {Object} opts - 配置选项
+ * @param {number[]} opts.values - 数值数组
+ * @param {string} opts.color - 线条颜色
+ * @param {string[]} [opts.dates] - 日期标签数组（可选）
+ */
 function renderTrend(ctx, W, H, opts) {
   const { values, color, dates } = opts
   const pal = canvasPalette()
@@ -109,6 +123,22 @@ function renderTrend(ctx, W, H, opts) {
 }
 
 // 结果分享卡片（canvas 未缩放，函数内部按 dpr 处理）
+/**
+ * 绘制结果分享卡片
+ * @param {Object} canvas - Canvas 对象
+ * @param {CanvasRenderingContext2D} ctx - Canvas 2D 上下文
+ * @param {number} W - 画布宽度（CSS 像素）
+ * @param {number} _H - 画布高度（CSS 像素，会根据内容动态调整）
+ * @param {Object} opts - 配置选项
+ * @param {Object} opts.meta - 模块元数据 {id,name,icon,color}
+ * @param {string|number} opts.primaryValue - 主结果值
+ * @param {string} opts.primaryLabel - 主结果标签
+ * @param {string} opts.levelText - 等级文本
+ * @param {string} opts.levelColor - 等级颜色
+ * @param {string} opts.levelColorText - 等级文字颜色
+ * @param {Array} [opts.dims] - 维度数组
+ * @param {Function} done - 回调，参数为临时文件路径
+ */
 function renderCard(canvas, ctx, W, _H, opts, done) {
   const { meta, primaryValue, primaryLabel, levelText, levelColor, levelColorText, dims } = opts
   const pal = canvasPalette()
@@ -190,6 +220,21 @@ function renderCard(canvas, ctx, W, _H, opts, done) {
 }
 
 // 通用内容卡片（测评/方法/结果均可复用）：标题 + 副标题 + 多行 + 页脚
+/**
+ * 绘制通用内容卡片
+ * @param {Object} canvas - Canvas 对象
+ * @param {CanvasRenderingContext2D} ctx - Canvas 2D 上下文
+ * @param {number} W - 画布宽度（CSS 像素）
+ * @param {number} _H - 画布高度（CSS 像素，会根据内容动态调整）
+ * @param {Object} opts - 配置选项
+ * @param {string} opts.color - 主题色
+ * @param {string} [opts.icon] - 图标 emoji
+ * @param {string} opts.title - 标题
+ * @param {string} [opts.subtitle] - 副标题
+ * @param {Array} [opts.lines] - 多行内容 [{label, value}]
+ * @param {string} [opts.footer] - 页脚文本
+ * @param {Function} done - 回调，参数为临时文件路径
+ */
 function renderContentCard(canvas, ctx, W, _H, opts, done) {
   const { color, icon, title, subtitle, lines, footer } = opts
   const pal = canvasPalette()
@@ -249,6 +294,13 @@ function renderContentCard(canvas, ctx, W, _H, opts, done) {
 // 测量用 ctx 代理：所有绘制方法均为空操作，仅保留 measureText 真实测量。
 // 用于在「不分配大画布、不实际绘制」的前提下，复用 renderFullPageCard 的同一套
 // 布局逻辑精确算出内容所需高度，避免魔法常量估算导致的截断/留白。
+/**
+ * 创建测量用的 Canvas 上下文代理
+ * 所有绘制方法为空操作，仅保留 measureText 真实测量
+ * 用于在不分配大画布、不实际绘制的前提下精确计算内容高度
+ * @param {CanvasRenderingContext2D} realCtx - 真实的 Canvas 上下文
+ * @returns {Proxy} 代理对象
+ */
 function makeMeasureCtx(realCtx) {
   const noop = () => {}
   return new Proxy(realCtx, {
@@ -267,6 +319,17 @@ function makeMeasureCtx(realCtx) {
 
 // 全页面内容渲染（结果页完整保存）：标题 + 所有区块
 // measure=true 时只计算并返回内容高度（不缩放画布、不导出图片）
+/**
+ * 绘制完整结果页长图
+ * @param {Object} canvas - Canvas 对象
+ * @param {CanvasRenderingContext2D} ctx - Canvas 2D 上下文
+ * @param {number} W - 画布宽度（CSS 像素）
+ * @param {number} H - 画布高度（CSS 像素，measure 模式下会被忽略）
+ * @param {Object} opts - 配置选项（包含所有结果页数据）
+ * @param {Function} done - 回调，参数为临时文件路径
+ * @param {boolean} [measure=false] - 是否仅测量高度（不绘制、不导出）
+ * @returns {number|void} measure 模式下返回内容高度
+ */
 function renderFullPageCard(canvas, ctx, W, H, opts, done, measure) {
   const {
     meta,
@@ -680,6 +743,13 @@ function renderFullPageCard(canvas, ctx, W, H, opts, done, measure) {
 }
 
 function wrapText(ctx, text, maxWidth) {
+  /**
+   * 将文本按最大宽度自动换行（按字符）
+   * @param {CanvasRenderingContext2D} ctx - Canvas 2D 上下文
+   * @param {string} text - 文本内容
+   * @param {number} maxWidth - 最大宽度
+   * @returns {string[]} 换行后的行数组
+   */
   const words = String(text).split('')
   const lines = []
   let currentLine = ''
@@ -698,6 +768,18 @@ function wrapText(ctx, text, maxWidth) {
 }
 
 // 单行自适应字号：超出最大宽度时逐级缩小，仍放不下则截断加省略号，避免文字溢出画布
+/**
+ * 单行文本自适应字号绘制
+ * 超出最大宽度时逐级缩小字号，仍放不下则截断加省略号
+ * @param {CanvasRenderingContext2D} ctx - Canvas 2D 上下文
+ * @param {string} text - 文本内容
+ * @param {number} x - X 坐标
+ * @param {number} y - Y 坐标
+ * @param {number} maxWidth - 最大宽度
+ * @param {number} baseSize - 基础字号
+ * @param {string} [align='center'] - 对齐方式
+ * @returns {number} 最终使用的字号
+ */
 function fitText(ctx, text, x, y, maxWidth, baseSize, align) {
   text = String(text == null ? '' : text)
   const a = align || 'center'
