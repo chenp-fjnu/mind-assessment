@@ -169,7 +169,7 @@ module.exports = {
   shortName: 'EPQ',
   desc: '基于艾森克人格问卷的简化版测评，评估外向性、神经质、精神质与掩饰性四个维度。',
   reference: "Eysenck, H.J. & Eysenck, S.B.G. — EPQ-RSC 艾森克人格问卷（简式中文版，E/N/P/L 四量表）",
-  scoring: "是/否计分（含 L 掩饰量表），标准 T 分常模（E/N/P/L 四量表）",
+  scoring: "是/否计分（含 L 掩饰量表），百分位描述（E/N/P/L 四量表）",
   icon: '🔬',
   color: '#4338ca',
   duration: 10,

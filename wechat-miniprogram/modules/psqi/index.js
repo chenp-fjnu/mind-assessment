@@ -106,7 +106,7 @@ module.exports = {
   shortName: 'PSQI',
   desc: '基于 PSQI 的睡眠质量测评，从 7 个维度评估你近一个月的睡眠质量。',
   reference: "Buysse, D.J. et al. (1989) — 匹兹堡睡眠质量指数（PSQI，7 个成分）",
-  scoring: "19 自评+5 他评，7 成分累加成总分（0–21），常模分级",
+  scoring: "简化自评版 16 题，7 成分累加成总分（0–21），常模分级",
   icon: '🌙',
   color: '#4f46e5',
   duration: 8,
@@ -160,7 +160,7 @@ module.exports = {
     primaryField: 'totalScore',
     primaryLabel: '睡眠指数',
     primarySuffix: '/21',
-    groupLabels: { c1: '主观质量', c2: '入睡时间', c3: '睡眠时间', c4: '睡眠效率', c5: '睡眠障碍', c6: '催眠药物', c7: '日间功能' },
+    groupLabels: { c1: '主观睡眠质量', c2: '入睡时间', c3: '睡眠时间', c4: '睡眠效率', c5: '睡眠障碍', c6: '催眠药物', c7: '日间功能障碍' },
     interpretation: true,
   },
 };

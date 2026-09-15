@@ -27,7 +27,7 @@ module.exports = [
     "shortName": "Big Five",
     "icon": "🌟",
     "color": "#0891b2",
-    "desc": "基于 OCEAN 五因素模型的人格测评，评估开放性、尽责性、外向性、宜人性、神经质五个维度。",
+    "desc": "基于 OCEAN 五因素模型的人格测评，评估开放性、尽责性、外向性、宜人性、情绪稳定性五个维度。",
     "questionCount": 50,
     "duration": 10,
     "tag": [
@@ -55,7 +55,7 @@ module.exports = [
       "EPQ"
     ],
     "reference": "Eysenck, H.J. & Eysenck, S.B.G. — EPQ-RSC 艾森克人格问卷（简式中文版，E/N/P/L 四量表）",
-    "scoring": "是/否计分（含 L 掩饰量表），标准 T 分常模（E/N/P/L 四量表）",
+    "scoring": "是/否计分（含 L 掩饰量表），百分位描述（E/N/P/L 四量表）",
     "hot": false
   },
   {
@@ -331,7 +331,7 @@ module.exports = [
       "筛查"
     ],
     "reference": "Buysse, D.J. et al. (1989) — 匹兹堡睡眠质量指数（PSQI，7 个成分）",
-    "scoring": "19 自评+5 他评，7 成分累加成总分（0–21），常模分级",
+    "scoring": "简化自评版 16 题，7 成分累加成总分（0–21），常模分级",
     "hot": false
   },
   {
