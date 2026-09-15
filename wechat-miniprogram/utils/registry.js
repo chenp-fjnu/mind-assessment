@@ -26,6 +26,7 @@ const LOADERS = {
   enneagram: () => require('../modules/enneagram/index'),
   temperament: () => require('../modules/temperament/index'),
   hbdi: () => require('../modules/hbdi/index'),
+  hogwarts: () => require('../modules/hogwarts/index'),
 }
 
 const MODULES_META = require('./modules-meta')

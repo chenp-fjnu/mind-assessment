@@ -453,5 +453,24 @@ module.exports = [
     "reference": "Herrmann, N. — Whole Brain Model / HBDI® 全脑优势模型（本实现为公共领域全脑模型的教育简化版，非授权常模）",
     "scoring": "四象限倾向计分，输出象限剖面与左/右脑、上/下脑偏好",
     "hot": false
+  },
+  {
+    "id": "hogwarts",
+    "type": "personality",
+    "name": "霍格沃茨分院测试",
+    "shortName": "霍格沃茨",
+    "icon": "⚡",
+    "color": "#7c3aed",
+    "desc": "通过 28 道选择题，看看你最适合进入霍格沃茨的哪个学院！",
+    "questionCount": 28,
+    "duration": 10,
+    "tag": [
+      "人格",
+      "趣味",
+      "哈利波特"
+    ],
+    "reference": "J.K. Rowling — Harry Potter 系列",
+    "scoring": "四学院计分，按选择倾向判定归属",
+    "hot": true
   }
 ]
