@@ -194,6 +194,7 @@ const HOUSE_INFO = {
     commonRoom: '格兰芬多公共休息室位于塔楼入口处，通过胖修士的肖像进入。',
     famousMembers: ['哈利·波特', '赫敏·格兰杰', '罗恩·韦斯莱', '阿不思·邓布利多'],
     image: '/assets/images/hogwarts/lion.jpg',
+    imageAnimated: '/assets/images/hogwarts/lion-animated.gif',
   },
   S: {
     name: '斯莱特林',
@@ -208,6 +209,7 @@ const HOUSE_INFO = {
     commonRoom: '斯莱特林公共休息室位于地下室，通过一堵石墙上的暗门进入。',
     famousMembers: ['西弗勒斯·斯内普', '德拉科·马尔福', '梅林', '霍拉斯·斯拉格霍恩'],
     image: '/assets/images/hogwarts/snake.jpg',
+    imageAnimated: '/assets/images/hogwarts/snake-animated.gif',
   },
   H: {
     name: '赫奇帕奇',
@@ -222,6 +224,7 @@ const HOUSE_INFO = {
     commonRoom: '赫奇帕奇公共休息室位于地下室，通过厨房附近的壁画进入。',
     famousMembers: ['纽特·斯卡曼德', '塞德里克·迪戈里', '汉娜·艾博', '波莫娜·斯普劳特'],
     image: '/assets/images/hogwarts/badger.jpg',
+    imageAnimated: null, // 暂无动画版本
   },
   R: {
     name: '拉文克劳',
@@ -236,6 +239,7 @@ const HOUSE_INFO = {
     commonRoom: '拉文克劳公共休息室位于塔楼，通过回答门环的谜语进入。',
     famousMembers: ['卢娜·洛夫古德', '秋·张', '奥利弗·伍德', '吉德罗·洛哈特'],
     image: '/assets/images/hogwarts/eagle.jpg',
+    imageAnimated: null, // 暂无动画版本
   },
 };
 
@@ -343,6 +347,7 @@ module.exports = {
       dominant: h,
       dominantDesc: HOUSE_INFO[h].trait,
       image: HOUSE_INFO[h].image,
+      imageAnimated: HOUSE_INFO[h].imageAnimated,
     }));
 
     const interpretations = [
@@ -366,6 +371,8 @@ module.exports = {
       interpretations,
       showBipolar: false,
       image: HOUSE_INFO[r.house].image,
+      imageAnimated: HOUSE_INFO[r.house].imageAnimated,
+      castleImage: '/assets/images/hogwarts/castle-animated.gif',
     };
   },
 
