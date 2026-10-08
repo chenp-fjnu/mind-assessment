@@ -19,11 +19,15 @@ function fmtClock(sec) {
   return (m < 10 ? '0' : '') + m + ':' + (r < 10 ? '0' : '') + r
 }
 
-// 多选图形行的选项徽标（A/B/C…），置于每个网格槽位左上角
+// 多选图形行的选项徽标（A/B/C…）：置于每格顶部预留条内，图案区下移，编号不覆盖图案
+function multiBadgeR(w, h) {
+  return Math.max(7, Math.min(9, Math.min(w, h) * 0.13))
+}
+
 function drawMultiBadge(ctx, x, y, w, h, idx) {
-  const r = Math.max(8, Math.min(11, Math.min(w, h) * 0.16))
-  const cx = x + r + 3
-  const cy = y + r + 3
+  const r = multiBadgeR(w, h)
+  const cx = x + r + 6
+  const cy = y + r + 6
   ctx.save()
   ctx.fillStyle = 'rgba(15,23,42,0.85)'
   ctx.beginPath()
@@ -285,47 +289,6 @@ Page({
       return true
     }
 
-    // 选项序号徽标：除颜色外用编号区分选项，兼顾色盲用户与快速定位
-    const drawBadge = (ctx, W, H, idx) => {
-      const r = 11
-      const cx = r + 4
-      const cy = r + 4
-      ctx.fillStyle = 'rgba(15,23,42,0.85)'
-      ctx.beginPath()
-      ctx.arc(cx, cy, r, 0, Math.PI * 2)
-      ctx.fill()
-      ctx.fillStyle = '#ffffff'
-      ctx.font = 'bold 13px sans-serif'
-      ctx.textAlign = 'center'
-      ctx.textBaseline = 'middle'
-      ctx.fillText(String(idx + 1), cx, cy)
-      ctx.textAlign = 'left'
-      ctx.textBaseline = 'alphabetic'
-    }
-
-    // 矩阵选项字母徽标（A–F 对应 idx）：白字 + 深色描边，置于画布右下角，
-    // 使矩阵选项像图形选择题的 figopt-key 一样有可见字母（色盲不依赖颜色即可区分）。
-    const drawLetterBadge = (ctx, W, H, idx) => {
-      const letter = String.fromCharCode(65 + idx)
-      const r = 11
-      const cx = W - r - 4
-      const cy = H - r - 4
-      ctx.save()
-      ctx.fillStyle = 'rgba(15,23,42,0.85)'
-      ctx.beginPath()
-      ctx.arc(cx, cy, r, 0, Math.PI * 2)
-      ctx.fill()
-      ctx.font = 'bold 13px sans-serif'
-      ctx.textAlign = 'center'
-      ctx.textBaseline = 'middle'
-      ctx.lineWidth = Math.max(1.5, r * 0.18)
-      ctx.strokeStyle = 'rgba(15,23,42,0.85)'
-      ctx.strokeText(letter, cx, cy)
-      ctx.fillStyle = '#ffffff'
-      ctx.fillText(letter, cx, cy)
-      ctx.restore()
-    }
-
     if (q.type === 'matrix') {
       if (shouldDraw('matrixCanvas', 'm:' + this.data.current)) {
       this.ensureCanvas('matrixCanvas', (ctx, W, H) => {
@@ -358,8 +321,7 @@ Page({
           ctx.clearRect(0, 0, W, H)
           const s = Math.min(W, H)
           drawCell(ctx, opt, (W - s) / 2, (H - s) / 2, s)
-          // drawBadge removed - letter badge (A/B/C/D) is sufficient
-          drawLetterBadge(ctx, W, H, idx)
+          // 字母徽标移出画布（WXML .opt-key-label 显示在图案下方），不遮挡图案
           if (sel === idx) {
             ctx.strokeStyle = '#2563eb'
             ctx.lineWidth = 4
@@ -398,7 +360,7 @@ Page({
           m.forEach((row, r) => {
             row.forEach((c, col) => drawCell(ctx, c, col * cw, r * ch, Math.min(cw, ch)))
           })
-          drawBadge(ctx, W, H, idx)
+          // 序号徽标移出画布（WXML .figopt-key 显示在图案下方），不遮挡图案
           if (sel === idx) {
             ctx.strokeStyle = '#2563eb'
             ctx.lineWidth = 4
@@ -420,12 +382,25 @@ Page({
           const cw = W / cols
           const rows = Math.ceil(list.length / cols)
           const ch = H / rows
-          const s = Math.min(cw, ch)
           list.forEach((cellData, idx) => {
             const c = idx % cols
             const r = Math.floor(idx / cols)
-            drawCell(ctx, cellData, c * cw + (cw - s) / 2, r * ch + (ch - s) / 2, s)
-            drawMultiBadge(ctx, c * cw, r * ch, cw, ch, idx)
+            const x = c * cw
+            const y = r * ch
+            // 每格固定边框：未选中也容易区分，选中态由覆盖层叠加品牌色描边
+            ctx.save()
+            ctx.strokeStyle = '#94a3b8'
+            ctx.lineWidth = 1.5
+            ctx.strokeRect(x + 2, y + 2, cw - 4, ch - 4)
+            ctx.restore()
+            // 顶部预留编号条，图案画在条下方，编号不覆盖图案
+            const br = multiBadgeR(cw, ch)
+            const hh = br * 2 + 10
+            const fw = cw - 16
+            const fh = ch - hh - 12
+            const s = Math.max(8, Math.min(fw, fh))
+            drawCell(ctx, cellData, x + 8 + (fw - s) / 2, y + 2 + hh + (fh - s) / 2, s)
+            drawMultiBadge(ctx, x, y, cw, ch, idx)
           })
         })
       }

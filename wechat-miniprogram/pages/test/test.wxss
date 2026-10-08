@@ -234,6 +234,15 @@
   margin-top: 8rpx;
   font-weight: var(--font-weight-bold);
 }
+/* 矩阵选项字母：画布下方可见，不在画布内遮挡图案 */
+.opt-key-label {
+  display: block;
+  text-align: center;
+  font-size: var(--font-size-md);
+  color: var(--text-tertiary);
+  margin-top: 6rpx;
+  font-weight: var(--font-weight-bold);
+}
 .answered-tip {
   text-align: center;
   color: var(--text-tertiary);

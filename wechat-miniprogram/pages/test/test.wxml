@@ -157,6 +157,7 @@
             aria-label="选项 {{['A','B','C','D','E','F'][idx]}}{{answers[current]===idx?'，已选':''}}"
           >
             <canvas type="2d" id="opt{{idx}}" class="opt-canvas" role="img" aria-label="选项 {{['A','B','C','D','E','F'][idx]}} 图案"></canvas>
+            <text class="opt-key-label">{{['A','B','C','D','E','F'][idx]}}</text>
           </view>
         </view>
       </view>
