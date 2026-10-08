@@ -334,6 +334,7 @@ Page({
 
     const tm = this.data.targetMatrix
     if (this.data.showFigureOptions && tm) {
+      const isTri808 = tm.length && Array.isArray(tm[0]) && tm[0][0] && tm[0][0].edges
       if (shouldDraw('targetCanvas', 't:' + this.data.current)) {
       this.ensureCanvas('targetCanvas', (ctx, W, H) => {
         ctx.clearRect(0, 0, W, H)
@@ -341,9 +342,49 @@ Page({
         const cols = tm[0].length
         const cw = W / cols
         const ch = H / rows
-        tm.forEach((row, r) => {
-          row.forEach((c, col) => drawCell(ctx, c, col * cw, r * ch, Math.min(cw, ch)))
-        })
+        if (isTri808) {
+          // tri808 图形：使用 layout 几何绘制边、符号与中心圆
+          tm.forEach((row, r) => {
+            row.forEach((c, col) => {
+              const cellSize = Math.min(cw, ch)
+              const l = require('../../utils/tri808').layout(c, cellSize)
+              // 边
+              l.edges.forEach(e => {
+                ctx.beginPath()
+                ctx.moveTo(col * cw + e.x1, r * ch + e.y1)
+                ctx.lineTo(col * cw + e.x2, r * ch + e.y2)
+                ctx.strokeStyle = e.color
+                ctx.lineWidth = e.th
+                ctx.stroke()
+              })
+              // 符号
+              l.syms.forEach(s => {
+                if (s.hidden) return
+                ctx.save()
+                ctx.fillStyle = s.color
+                ctx.font = 'bold ' + Math.round(s.size * 0.95) + 'px sans-serif'
+                ctx.textAlign = 'center'
+                ctx.textBaseline = 'middle'
+                ctx.translate(col * cw + s.left + s.size / 2, r * ch + s.top + s.size / 2)
+                ctx.rotate((s.rotate * Math.PI) / 180)
+                ctx.fillText(s.glyph, 0, 0)
+                ctx.restore()
+              })
+              // 中心圆
+              const cir = l.circle
+              if (!cir.hidden) {
+                ctx.beginPath()
+                ctx.arc(col * cw + cir.left + cir.d / 2, r * ch + cir.top + cir.d / 2, cir.d / 2, 0, Math.PI * 2)
+                ctx.fillStyle = cir.color
+                ctx.fill()
+              }
+            })
+          })
+        } else {
+          tm.forEach((row, r) => {
+            row.forEach((c, col) => drawCell(ctx, c, col * cw, r * ch, Math.min(cw, ch)))
+          })
+        }
       })
       }
     }
@@ -399,7 +440,46 @@ Page({
             const fw = cw - 16
             const fh = ch - hh - 12
             const s = Math.max(8, Math.min(fw, fh))
-            drawCell(ctx, cellData, x + 8 + (fw - s) / 2, y + 2 + hh + (fh - s) / 2, s)
+            // 若为 tri808 图形则用 layout 绘制，否则回退 drawCell
+            if (cellData && cellData.edges) {
+              const cellSize = Math.min(cw, ch)
+              const l = require('../../utils/tri808').layout(cellData, cellSize)
+              // 边
+              l.edges.forEach(e => {
+                ctx.beginPath()
+                ctx.moveTo(x + 8 + (fw - s) / 2 + e.x1, y + 2 + hh + (fh - s) / 2 + e.y1)
+                ctx.lineTo(x + 8 + (fw - s) / 2 + e.x2, y + 2 + hh + (fh - s) / 2 + e.y2)
+                ctx.strokeStyle = e.color
+                ctx.lineWidth = e.th
+                ctx.stroke()
+              })
+              // 符号
+              l.syms.forEach(s => {
+                if (s.hidden) return
+                ctx.save()
+                ctx.fillStyle = s.color
+                ctx.font = 'bold ' + Math.round(s.size * 0.95) + 'px sans-serif'
+                ctx.textAlign = 'center'
+                ctx.textBaseline = 'middle'
+                ctx.translate(x + 8 + (fw - s) / 2 + s.left + s.size / 2, y + 2 + hh + (fh - s) / 2 + s.top + s.size / 2)
+                ctx.rotate((s.rotate * Math.PI) / 180)
+                ctx.fillText(s.glyph, 0, 0)
+                ctx.restore()
+              })
+              // 中心圆
+              const cir = l.circle
+              if (!cir.hidden) {
+                const cx = x + 8 + (fw - s) / 2 + cir.left + cir.d / 2
+                const cy = y + 2 + hh + (fh - s) / 2 + cir.top + cir.d / 2
+                ctx.beginPath()
+                ctx.arc(cx, cy, cir.d / 2, 0, Math.PI * 2)
+                ctx.fillStyle = cir.color
+                ctx.fill()
+              }
+            } else {
+              const c = cellData || {}
+              drawCell(ctx, c, x + 8 + (fw - s) / 2, y + 2 + hh + (fh - s) / 2, s)
+            }
             drawMultiBadge(ctx, x, y, cw, ch, idx)
           })
         })
