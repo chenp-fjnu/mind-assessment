@@ -472,5 +472,25 @@ module.exports = [
     "reference": "J.K. Rowling — Harry Potter 系列",
     "scoring": "四学院计分，按选择倾向判定归属",
     "hot": true
+  },
+  {
+    "id": "n808",
+    "type": "intelligence",
+    "name": "808神经元测试",
+    "shortName": "808神测",
+    "icon": "🧠",
+    "color": "#0d9488",
+    "desc": "仿八中「八少八素」808 神测题型的限时图形练习：找相同、图形类比、找不同，多选错选漏选均失分。",
+    "questionCount": 24,
+    "duration": 15,
+    "tag": [
+      "智力",
+      "图形",
+      "观察力",
+      "限时"
+    ],
+    "reference": "题型参考北京八中「八少八素」甄别机测（神经元系统测试 808）公开描述；本题为原创图形练习，非官方真题，无标准化常模",
+    "scoring": "24 题多选严格计分：全对得 1 分，错选/漏选按比例扣分，正确率换算等级",
+    "hot": true
   }
 ]

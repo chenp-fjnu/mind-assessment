@@ -47,7 +47,7 @@ describe('首页 index', () => {
     const ctx = loadPage('pages/index/index.js')
     expect(ctx.data.moduleCount).toBe(IDS.length)
     expect(ctx.data.featuredAssess.length).toBe(5)
-    expect(ctx.data.hotPicks.length).toBe(7)
+    expect(ctx.data.hotPicks.length).toBe(10)
   })
 
   test('goAssess 跳转到测评 tab', () => {

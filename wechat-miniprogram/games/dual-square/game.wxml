@@ -1,0 +1,14 @@
+<view class="ds">
+  <view class="info">第 {{idx + 1}} / {{rounds}} 轮　正确 {{correct}}</view>
+  <view class="stage">
+    <view wx:if="{{phase === 'play'}}" class="grid" role="grid" aria-label="乘号网格">
+      <view wx:for="{{[0,1,2,3,4,5,6,7,8]}}" wx:key="*this" class="cell {{cells.indexOf(item) >= 0 ? 'on' : ''}}">{{cells.indexOf(item) >= 0 ? '×' : ''}}</view>
+    </view>
+    <view wx:if="{{phase === 'fb'}}" class="fb">{{mark}}</view>
+    <view wx:if="{{phase === 'idle' || phase === 'done'}}" class="glyph">🔲</view>
+  </view>
+  <view wx:if="{{phase === 'play'}}" class="space" bindtap="onSpace" role="button" aria-label="空格按压">空格</view>
+  <view wx:if="{{phase === 'idle'}}" class="tip"><text class="hl">4 个 × 组成正方形</text> 或 <text class="hl">两个音同高</text>，任一命中按空格</view>
+  <view wx:if="{{phase === 'idle'}}" class="btn-start" bindtap="start" role="button" aria-label="开始游戏">开始游戏</view>
+  <view wx:if="{{phase === 'done'}}" class="tip">完成！正确 {{correct}} / {{total}}</view>
+</view>

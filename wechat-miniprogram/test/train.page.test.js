@@ -10,7 +10,7 @@ describe('训练列表页 train', () => {
     const ctx = loadPage('pages/train/train.js')
     expect(ctx.data.groups.length).toBe(5)
     const total = ctx.data.groups.reduce((n, g) => n + g.games.length, 0)
-    expect(total).toBe(31)
+    expect(total).toBe(34)
     expect(ctx.data.typeChips[0].key).toBe('')
     expect(ctx.data.typeChips.length).toBe(6)
     expect(ctx.data.filteredGroups.length).toBe(5)

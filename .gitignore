@@ -75,6 +75,9 @@ project-analysis/
 *.bak
 *.cache
 wechat-miniprogram/project.private.config.json
+wechat-miniprogram/tools/tmp-audio/
 
-# 校验脚本临时产物（现已输出到系统临时目录，此处仅为保险）
+# 校锟斤拷疟锟斤拷锟绞憋拷锟斤拷铮拷锟斤拷锟斤拷锟斤拷锟斤拷系统锟斤拷时目录锟斤拷锟剿达拷锟斤拷为锟斤拷锟秸ｏ拷
 .gencheck/
+wechat-miniprogram/package-lock.json
+wechat-miniprogram/package-lock.json

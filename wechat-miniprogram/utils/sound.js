@@ -77,4 +77,5 @@ module.exports = {
   success,
   fail,
   tick,
+  tone,
 }

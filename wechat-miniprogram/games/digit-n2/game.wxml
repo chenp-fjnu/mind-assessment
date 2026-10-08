@@ -1,0 +1,12 @@
+<view class="dn2">
+  <view class="info">第 {{idx + 1}} / {{n}} 个　正确 {{correct}}</view>
+  <view class="stage">
+    <view wx:if="{{phase === 'play'}}" class="ear" aria-label="正在播放数字">🔊 听数字…</view>
+    <view wx:if="{{phase === 'fb'}}" class="fb">{{shown}} <text class="mark {{mark === '✓' ? 'ok' : 'bad'}}">{{mark}}</text></view>
+    <view wx:if="{{phase === 'idle' || phase === 'done'}}" class="ear dim">🎧</view>
+  </view>
+  <view wx:if="{{phase === 'play'}}" class="space" bindtap="onSpace" role="button" aria-label="空格按压">空格</view>
+  <view wx:if="{{phase === 'idle'}}" class="tip">听数字流：与 <text class="hl">2 步前</text>相同 → 按空格，否则别按</view>
+  <view wx:if="{{phase === 'idle'}}" class="btn-start" bindtap="start" role="button" aria-label="开始游戏">开始游戏</view>
+  <view wx:if="{{phase === 'done'}}" class="tip">完成！正确 {{correct}} / {{total}}</view>
+</view>

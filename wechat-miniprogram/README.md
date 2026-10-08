@@ -1,6 +1,6 @@
 ﻿# 心智探索局（Mind Quest）· 微信小程序
 
-纯前端**原生**微信小程序，集成 **23 套心理学量表**（人格、情绪、智力、职业、自我认知、压力、睡眠、社交、积极心理等 9 大类），并在「训练」Tab 内置 **31 个脑力训练游戏**（注意力 / 工作记忆 / 反应速度 / 放松正念 / 执行功能 5 大认知维度）；支持离线测评、本地保存、结果可视化与同量表历史趋势对比。无后端、无网络请求，所有数据仅存于本地 `Storage`。
+纯前端**原生**微信小程序，集成 **25 套心理学量表**（人格、情绪、智力、职业、自我认知、压力、睡眠、社交、积极心理等 9 大类），并在「训练」Tab 内置 **34 个脑力训练游戏**（注意力 / 工作记忆 / 反应速度 / 放松正念 / 执行功能 5 大认知维度）；支持离线测评、本地保存、结果可视化与同量表历史趋势对比。无后端、无网络请求，所有数据仅存于本地 `Storage`。
 
 > ⚠️ 免责声明：所有量表均为**简化 / 教育版**自陈问卷，计分与常模为公开资料整理的近似值，仅供自我探索与娱乐参考，不构成任何医学诊断或专业建议。
 
@@ -22,24 +22,25 @@ wechat-miniprogram/
 ├── app.js / app.json / app.wxss      # 全局逻辑、页面注册、全局样式（含深色模式 CSS 变量）
 ├── project.config.json / sitemap.json
 ├── package.json                      # 测试脚本与开发依赖
-├── modules/                          # 23 个量表模块（每个 index.js 自包含）
+├── modules/                          # 25 个量表模块（每个 index.js 自包含）
 │   ├── mbti/ big5/ epq/ disc/ pf16/  # 人格 / 性格
 │   ├── sds/ sas/ gad7/ dass21/       # 情绪筛查
 │   ├── ses/ las/                     # 自我认知
 │   ├── holland/                      # 职业兴趣
 │   ├── spm/                          # 瑞文图形推理（questions.js 懒加载）
-│   └── wechsler/                     # 韦氏智力（积木题含真实候选图形数据）
-├── games/                            # 训练游戏（每个 <id>/ 含 index.js 逻辑 + game.js 组件，共 31 个）
-│   ├── schulte/ cancellation/ visual-search/ find-rule/ figure-tracking/ number-maze/ mirror/ number-code/   # 注意力（8）
-│   ├── memory-match/ pattern-memory/ simon/ digit-span/ corsi/ n-back/                                    # 工作记忆（6）
+│   ├── wechsler/                     # 韦氏智力（积木题含真实候选图形数据）
+│   └── n808/                         # 808 神测（限时图形多选，随机种子确定性生成）
+├── games/                            # 训练游戏（每个 <id>/ 含 index.js 逻辑 + game.js 组件，共 34 个）
+│   ├── schulte/ cancellation/ visual-search/ find-rule/ number-maze/ mirror/ edge-focus/ aud-cpt/          # 注意力（8）
+│   ├── memory-match/ pattern-memory/ simon/ digit-span/ corsi/ n-back/ digit-n2/ color-probe/               # 工作记忆（8）
 │   ├── stroop/ reaction-time/ flanker/ whack/ go-no-go/ bigger-number/ cps/ color-match/ double-decision/  # 反应速度（9）
 │   ├── box-breathing/ breath-478/ resonance/ mindfulness/                                                  # 放松正念（4）
-│   └── hanoi/ task-switch/ wisconsin/ tower-london/                                                        # 执行功能（4）
+│   └── hanoi/ task-switch/ wisconsin/ tower-london/ dual-square/                                            # 执行功能（5）
 ├── pages/
 │   ├── index/                        # 首页：分类量表 + 最近测评 + 方法/训练精选入口
-│   ├── assess/                       # 「测评」Tab：按类别（9 大类）浏览全部 23 套量表 + 搜索
+│   ├── assess/                       # 「测评」Tab：按类别（9 大类）浏览全部 25 套量表 + 搜索
 │   ├── detail/                       # 量表说明页（含详解、参考来源/计分方式、关联方法/训练）
-│   ├── test/                         # 答题页（量表题 / 选择题 / 矩阵题 / 图形四选一）
+│   ├── test/                         # 答题页（量表题 / 选择题 / 矩阵题 / 图形四选一 / 多选 + 整卷倒计时）
 │   ├── result/                       # 结果页（维度 / 双极 / 分测验 / 解读 / 趋势 / 存图）
 │   ├── history/                      # 全部记录（测评 + 方法练习，按 tab 筛选 / 删除 / 清空）
 │   ├── methods/                      # 「方法」Tab：22 个心智方法知识库 + 搜索/分类
@@ -79,7 +80,7 @@ wechat-miniprogram/
 
 ---
 
-## 23 套量表一览
+## 25 套量表一览
 
 | 模块 id | 名称 | 类别 | 题数 | 题型 | 主结果字段 |
 | --- | --- | --- | --- | --- | --- |
@@ -106,14 +107,16 @@ wechat-miniprogram/
 | `enneagram` | 九型人格测试 | 人格性格 | 36 | 量表 | 主导类型 |
 | `temperament` | 气质类型问卷 | 人格性格 | 60 | 量表 | 气质类型 |
 | `hbdi` | HBDI 全脑优势测评 | 人格性格 | 40 | 选择 | 全脑优势 |
+| `hogwarts` | 霍格沃茨分院测试 | 人格性格 | 28 | 选择 | 归属学院 |
+| `n808` | 808 神经元测试 | 智力推理 | 24 | 多选(图形) | 正确率 |
 
 ---
 
 ## 训练游戏模块（脑力训练）
 
-除 23 套自评量表外，小程序新增独立 **「训练」Tab**，提供类舒尔特方格的互动脑力训练游戏，覆盖全部认知维度。所有游戏均为**离线、本地记录、无后端**，仅供自我探索与训练热身，不构成医学诊断。
+除 25 套自评量表外，小程序新增独立 **「训练」Tab**，提供类舒尔特方格的互动脑力训练游戏，覆盖全部认知维度。所有游戏均为**离线、本地记录、无后端**，仅供自我探索与训练热身，不构成医学诊断。
 
-### 已落地游戏（31 个，每维度多个）
+### 已落地游戏（34 个，每维度多个）
 
 | 游戏 id | 名称 | 维度 | 玩法 | 主指标 |
 | --- | --- | --- | --- | --- |
@@ -121,16 +124,18 @@ wechat-miniprogram/
 | `cancellation` | 数字划消 | 注意力 | 矩阵中划掉目标数字（8×8/10×10） | 用时↓ |
 | `visual-search` | 视觉搜索 | 注意力 | 相似色块中找不同（3×3~5×5） | 用时↓ |
 | `find-rule` | 按要求找方格 | 注意力 | 按颜色规则点选方格（5×5~7×7） | 用时↓ |
-| `figure-tracking` | 图形追踪 | 注意力 | 沿 1→N 数字轨道顺序点击 | 用时↓ |
+| `edge-focus` | 边缘聚焦 | 注意力 | 中央刺激命中按空格、边缘同形抑制（4~8 轮） | 得分↑ |
+| `aud-cpt` | 听觉 CPT | 注意力 | 听字母流，命中目标字母（K）按键（10~24 个） | 得分↑ |
 | `number-maze` | 数字迷宫 | 注意力 | 从起点走到终点的迷宫（4×4~7×7） | 步数↓ |
 | `mirror` | 镜像沙漏 | 注意力 | 判断两图是否互为镜像（10~20 题） | 得分↑ |
-| `number-code` | 数字密码 | 注意力 | 记并复现数字序列（4~8 位） | 得分↑ |
 | `memory-match` | 记忆配对 | 工作记忆 | 翻牌找成对图案（6~16 对） | 用时↓ |
 | `pattern-memory` | 方块记忆 | 工作记忆 | 记住并复现高亮方块（4~10 格） | 得分↑ |
 | `simon` | 序列记忆 | 工作记忆 | 复述闪烁色块顺序（3~9 步） | 得分↑ |
 | `digit-span` | 数字广度 | 工作记忆 | 复现数字序列（4~10 位） | 得分↑ |
 | `corsi` | 科西方块 | 工作记忆 | 依序点出点亮方块（3~6 步） | 得分↑ |
 | `n-back` | N-Back | 工作记忆 | 判断当前方块是否同 N 步前（N=1~3） | 得分↑ |
+| `digit-n2` | 数字 N-Back 变式 | 工作记忆 | 听数字流，与 2 步前相同按键（10~30 个） | 得分↑ |
+| `color-probe` | 颜色记忆探针 | 工作记忆 | 记色块后判断出现颜色（4~8 组） | 得分↑ |
 | `stroop` | 斯特鲁普 | 反应速度 | 选墨水颜色而非词义（10~30 题） | 得分↑ |
 | `reaction-time` | 反应时间 | 反应速度 | 屏幕变绿尽快点击（5~20 次） | 平均反应↓ |
 | `flanker` | Flanker 侧抑制 | 反应速度 | 按中间箭头方向忽略干扰（10~30 题） | 得分↑ |
@@ -148,6 +153,7 @@ wechat-miniprogram/
 | `task-switch` | 任务切换 | 执行功能 | 看颜色/看奇偶间切换作答（6~18 题） | 得分↑ |
 | `wisconsin` | 威斯康星 | 执行功能 | 按维度归类卡片（4~12 题） | 得分↑ |
 | `tower-london` | 伦敦塔 | 执行功能 | 最少步数达成目标排列（3 球） | 步数↓ |
+| `dual-square` | 双任务方块 | 执行功能 | 按空格×组方块 + 判高低音双任务（3~6 轮） | 得分↑ |
 
 ### 架构与契约
 
@@ -174,9 +180,9 @@ wechat-miniprogram/
 
 | 板块 | 入口页 | 核心能力 | 本地存储键 |
 | --- | --- | --- | --- |
-| **测评** | `pages/assess`、`pages/index` | 23 套量表按 9 大类浏览/搜索 → 详情 → 答题 → 结果 → 趋势 | `ma_history`（≤30）、`ma_progress_<id>` |
+| **测评** | `pages/assess`、`pages/index` | 25 套量表按 9 大类浏览/搜索 → 详情 → 答题 → 结果 → 趋势 | `ma_history`（≤30）、`ma_progress_<id>` |
 | **方法** | `pages/methods` | 22 个心智方法知识库（含步骤/贴士/示例），部分支持「互动练习」按 `schema` 填表打卡 | `ma_practices`（≤50/方法） |
-| **训练** | `pages/train` | 31 个脑力游戏，5 大认知维度，难度分级、计时、成绩与趋势 | `ma_train_<id>`（≤50） |
+| **训练** | `pages/train` | 34 个脑力游戏，5 大认知维度，难度分级、计时、成绩与趋势 | `ma_train_<id>`（≤50） |
 | **我的** | `pages/mine` | 三类记录汇总、主题切换（跟随系统/浅/深）、云同步占位入口 | `user-theme-preference`、`ma_user` |
 | **档案** | `pages/profile` | 微信头像/昵称/性别/生日本地档案 | `ma_user` |
 | **关于** | `pages/about` | 数据来源、隐私协议入口、各板块数量统计 | — |
@@ -258,13 +264,13 @@ module.exports = {
 
 | 测试 | 命令 | 依赖 | 说明 |
 | --- | --- | --- | --- |
-| 冒烟（评分链路） | `npm test`（`node test/smoke.js`） | 无 | 23 模块评分 + 韦氏候选完整性 + `getResultView` 视图构造流程，**158 项** |
-| 模块单测 | `npm run test:simulate` → Jest `modules.test.js` | jest | 模块评分 / 候选 / 选项数断言 |
-| 工具单测 | `npm run test:simulate` → Jest `utils.test.js` | jest | `color`/`scoring`/`trend`/`result-view`/`registry`/`figure`/`methods-data` 纯函数、模块契约（`getResultView` 标准化结构、23 量表 `reference`/`scoring` 非空）、图形色盲纹理 |
+| 冒烟（评分链路） | `npm test`（`node test/smoke.js`） | 无 | 25 模块评分 + 韦氏候选完整性 + `getResultView` 视图构造流程，**170 项** |
+| 模块单测 | `npm run test:simulate` → Jest `modules.test.js` | jest | 模块评分 / 候选 / 选项数断言 / n808 多选计分与题面确定性 |
+| 工具单测 | `npm run test:simulate` → Jest `utils.test.js` | jest | `color`/`scoring`/`trend`/`result-view`/`registry`/`figure`/`methods-data` 纯函数、模块契约（`getResultView` 标准化结构、25 量表 `reference`/`scoring` 非空）、图形色盲纹理 |
 | 页面单测 | `npm run test:simulate` → Jest `index.page.test.js` | jest | `detail`/`result`/`index`/`test` 页面 `onLoad` 渲染数据（基于 mock 运行时 `wx`/`Page`，**无需** `@miniprogram/simulate`） |
 | 全量 | `npm run test:all` | jest | 先跑冒烟再跑 Jest；`npm run test:coverage` 附覆盖率报告 |
 
-覆盖率门槛（jest.config.js）：语句/行 35%、分支/函数 25%；当前全仓约 **59% 语句 / 61% 行**（工具与模块层多数 >80%，页面层随页面单测逐步提升）。
+覆盖率门槛（jest.config.js）：语句 60%、分支 45%、函数/行 65%；当前全仓约 **70% 语句 / 46% 分支 / 74% 函数 / 72% 行**（工具与模块层多数 >80%，页面层随页面单测逐步提升）。
 
 CI（`.github/workflows/ci.yml`）：push/PR 触及 `wechat-miniprogram/**` 时于 Node 18 依次跑 `npm test`（冒烟）与 `npm run test:coverage`（Jest + 覆盖率）。
 

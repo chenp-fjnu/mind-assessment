@@ -250,7 +250,7 @@ function computeResult(answers, qs) {
     const a = answers[i];
     if (a !== null && a !== undefined && a >= 0) {
       const house = q.houses[a];
-      if (house && counts.hasOwnProperty(house)) {
+      if (house && Object.prototype.hasOwnProperty.call(counts, house)) {
         counts[house]++;
       }
     }

@@ -6,9 +6,9 @@ const { getMetaList, getGame } = require('../utils/game-registry')
 const trainStore = require('../utils/train-store')
 
 describe('训练游戏注册表', () => {
-  test('包含 31 个游戏且维度齐全', () => {
+  test('包含 34 个游戏且维度齐全', () => {
     const list = getMetaList()
-    expect(list.length).toBe(31)
+    expect(list.length).toBe(34)
     const dims = list.map((g) => g.dim)
     expect(dims).toEqual(expect.arrayContaining(['attention', 'memory', 'reaction', 'relax', 'exec']))
   })
@@ -232,17 +232,6 @@ describe('按要求找方格', () => {
   })
 })
 
-describe('图形追踪', () => {
-  const g = getGame('figure-tracking')
-  test('generate 返回 1..N 排列', () => {
-    const s = g.generate(4)
-    expect(s.cells.length).toBe(16)
-    expect([...s.cells].sort((a, b) => a - b)).toEqual(
-      Array.from({ length: 16 }, (_, i) => i + 1)
-    )
-  })
-})
-
 describe('数字迷宫', () => {
   const g = getGame('number-maze')
   test('generate 返回迷宫与出口', () => {
@@ -264,18 +253,6 @@ describe('镜像沙漏', () => {
     const s = g.generate(2)
     expect(s.list.length).toBe(10)
     s.list.forEach((t) => expect(typeof t.answer).toBe('boolean'))
-  })
-})
-
-describe('数字密码', () => {
-  const g = getGame('number-code')
-  test('generate 返回序列长度 = level', () => {
-    expect(g.generate(6).seq.length).toBe(6)
-  })
-  test('score 正确率越高得分越高', () => {
-    const good = g.score({ correct: 6, total: 6 })
-    const bad = g.score({ correct: 3, total: 6 })
-    expect(good.score).toBeGreaterThan(bad.score)
   })
 })
 
@@ -354,27 +331,100 @@ describe('执行功能游戏', () => {
   })
 })
 
-describe('训练游戏计分单调性（覆盖全部 31 个游戏）', () => {
+describe('808 专题游戏', () => {
+  test('edge-focus 每轮 8 边缘格且诱饵规则一致', () => {
+    const g = getGame('edge-focus')
+    const s = g.generate(3)
+    expect(s.rounds).toBe(16)
+    expect(s.list.length).toBe(16)
+    s.list.forEach((r) => {
+      expect(r.edges.length).toBe(8)
+      expect(r.central).toBe(r.center === s.target)
+      expect(r.edgeSame).toBe(!r.central && r.edges.some((c) => c === s.target))
+      if (!r.edgeSame) expect(r.edges.some((c) => c === s.target)).toBe(false)
+    })
+  })
+  test('digit-n2 目标位与 2 步前相同且前两题非目标', () => {
+    const g = getGame('digit-n2')
+    const s = g.generate(3)
+    expect(s.list.length).toBe(30)
+    s.list.forEach((d, i) => {
+      expect(d).toMatch(/^[0-9]$/)
+      expect(s.targets[i]).toBe(i >= 2 && d === s.list[i - 2])
+      expect(g.isTarget(s.list, i)).toBe(s.targets[i])
+    })
+    expect(s.targets[0]).toBe(false)
+    expect(s.targets[1]).toBe(false)
+  })
+  test('aud-cpt 目标为 K 紧跟 0 且数量下限达标', () => {
+    const g = getGame('aud-cpt')
+    const s = g.generate(3)
+    expect(s.list.length).toBe(24)
+    let targets = 0
+    s.list.forEach((it, i) => {
+      expect(g.isTarget(s.list, i)).toBe(s.targets[i])
+      if (s.targets[i]) {
+        targets++
+        expect(s.list[i - 1].value).toBe('k')
+        expect(it.value).toBe('0')
+      }
+      expect(g.cueKey(it)).toMatch(/^[ld][a-z0-9]$/)
+    })
+    expect(targets).toBeGreaterThanOrEqual(2)
+  })
+  test('color-probe 三类作答齐备且特殊数字判空格', () => {
+    const g = getGame('color-probe')
+    const s = g.generate(3)
+    const answers = { J: 0, F: 0, space: 0 }
+    s.trials.forEach((t) => {
+      answers[t.answer]++
+      const inSet = t.set.some((c) => c.key === t.color.key)
+      expect(t.answer).toBe(g.answerOf(t.set.map((c) => c.key), t.color.key, t.digits))
+      if (['05', '15'].includes(t.digits)) expect(t.answer).toBe('space')
+      else expect(t.answer).toBe(inSet ? 'J' : 'F')
+    })
+    expect(answers.J).toBeGreaterThan(0)
+    expect(answers.F).toBeGreaterThan(0)
+    expect(answers.space).toBeGreaterThan(0)
+  })
+  test('dual-square 方块/双音目标判定一致', () => {
+    const g = getGame('dual-square')
+    const s = g.generate(3)
+    expect(s.list.length).toBe(6)
+    s.list.forEach((r, i) => {
+      expect(g.isSquareBlock(r.cells)).toBe(r.square)
+      expect(r.tones[0] === r.tones[1]).toBe(r.doubleTone)
+      expect(s.targets[i]).toBe(r.square || r.doubleTone)
+    })
+    expect(s.targets.filter(Boolean).length).toBeGreaterThanOrEqual(2)
+  })
+})
+
+describe('训练游戏计分单调性（覆盖全部 34 个游戏）', () => {
   const cases = {
     'bigger-number': [{ total: 10, correct: 10 }, { total: 10, correct: 4 }],
     'color-match': [{ total: 20, correct: 20 }, { total: 20, correct: 10 }],
-    'corsi': [{ total: 9, correct: 9 }, { total: 9, correct: 3 }],
+    corsi: [{ total: 9, correct: 9 }, { total: 9, correct: 3 }],
     'digit-span': [{ total: 9, correct: 9 }, { total: 9, correct: 2 }],
     'double-decision': [{ total: 12, correct: 12 }, { total: 12, correct: 6 }],
     'go-no-go': [{ total: 24, correct: 24 }, { total: 24, correct: 12 }],
-    'mirror': [{ total: 10, correct: 10 }, { total: 10, correct: 5 }],
-    'simon': [{ total: 8, correct: 8 }, { total: 8, correct: 3 }],
+    mirror: [{ total: 10, correct: 10 }, { total: 10, correct: 5 }],
+    simon: [{ total: 8, correct: 8 }, { total: 8, correct: 3 }],
     'task-switch': [{ total: 12, correct: 12 }, { total: 12, correct: 5 }],
-    'wisconsin': [{ total: 10, correct: 10 }, { total: 10, correct: 4 }],
+    wisconsin: [{ total: 10, correct: 10 }, { total: 10, correct: 4 }],
     'pattern-memory': [{ total: 9, correct: 9 }, { total: 9, correct: 3 }],
     'breath-478': [{ cycles: 6 }, { cycles: 2 }],
-    'resonance': [{ cycles: 8 }, { cycles: 2 }],
-    'mindfulness': [{ cycles: 5 }, { cycles: 1 }],
-    'cps': [{ clicks: 60 }, { clicks: 20 }],
-    'whack': [{ hits: 18, misses: 2 }, { hits: 5, misses: 10 }],
-    'hanoi': [{ moves: 7, optimal: 7 }, { moves: 27, optimal: 7 }],
+    resonance: [{ cycles: 8 }, { cycles: 2 }],
+    mindfulness: [{ cycles: 5 }, { cycles: 1 }],
+    cps: [{ clicks: 60 }, { clicks: 20 }],
+    whack: [{ hits: 18, misses: 2 }, { hits: 5, misses: 10 }],
+    hanoi: [{ moves: 7, optimal: 7 }, { moves: 27, optimal: 7 }],
     'tower-london': [{ moves: 3 }, { moves: 30 }],
-    'figure-tracking': [{ size: 5, time: 25, errors: 0 }, { size: 5, time: 120, errors: 10 }],
+    'edge-focus': [{ total: 8, correct: 8 }, { total: 8, correct: 3 }],
+    'digit-n2': [{ total: 10, correct: 10 }, { total: 10, correct: 4 }],
+    'aud-cpt': [{ total: 12, correct: 12 }, { total: 12, correct: 5 }],
+    'color-probe': [{ total: 4, correct: 4 }, { total: 4, correct: 2 }],
+    'dual-square': [{ total: 3, correct: 3 }, { total: 3, correct: 1 }],
     'find-rule': [
       { targetCount: 8, found: 8, errors: 0, time: 8 },
       { targetCount: 8, found: 4, errors: 5, time: 40 },

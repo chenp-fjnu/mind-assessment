@@ -24,6 +24,13 @@ const ASSESS_ID_TO_GAME_DIM = {
   hbdi: ['exec', 'attention'],          // 全脑优势 → 决策执行 + 专注
   holland: ['exec'],
   disc: ['exec'],
+  n808: ['attention', 'memory', 'exec'], // 808 神测 → 专注/记忆/多任务执行
+}
+
+// 特定测评显式指定推荐游戏 id（优先于按维度推荐，保证专题关联准确：
+// 维度推荐按注册顺序取前 2 个，新专题游戏排在注册表末尾时会被旧游戏挤掉）
+const ASSESS_ID_TO_GAME_IDS = {
+  n808: ['edge-focus', 'digit-n2', 'aud-cpt', 'color-probe', 'dual-square'],
 }
 
 function relatedMethods(assessId, n) {
@@ -45,14 +52,23 @@ function relatedMethods(assessId, n) {
 function relatedGames(assessId, n) {
   const mod = getModule(assessId)
   if (!mod) return []
-  const dims = ASSESS_ID_TO_GAME_DIM[assessId] || ASSESS_TYPE_TO_GAME_DIM[mod.type] || ['exec']
-  // 每个维度各取若干，保证推荐覆盖不同认知维度而非单一堆砌
-  const perDim = 2
+  const all = gameReg.getMetaList()
+  const limit = n || 8
   const picked = []
-  dims.forEach((d) => {
-    gameReg.getMetaList().filter((g) => g.dim === d).slice(0, perDim).forEach((g) => picked.push(g))
-  })
-  return picked.slice(0, n || 8).map((g) => ({
+  const seen = {}
+  const add = (g) => {
+    if (g && !seen[g.id] && picked.length < limit) {
+      seen[g.id] = 1
+      picked.push(g)
+    }
+  }
+  // 1) 显式专题游戏优先，2) 再按维度各取前若干个补齐
+  ;(ASSESS_ID_TO_GAME_IDS[assessId] || []).forEach((id) => add(all.find((x) => x.id === id)))
+  if (picked.length < limit) {
+    const dims = ASSESS_ID_TO_GAME_DIM[assessId] || ASSESS_TYPE_TO_GAME_DIM[mod.type] || ['exec']
+    dims.forEach((d) => all.filter((g) => g.dim === d).slice(0, 2).forEach(add))
+  }
+  return picked.map((g) => ({
     id: g.id,
     name: g.name,
     icon: g.icon,
@@ -78,4 +94,5 @@ module.exports = {
   relatedGames,
   ASSESS_TYPE_TO_GAME_DIM,
   ASSESS_ID_TO_GAME_DIM,
+  ASSESS_ID_TO_GAME_IDS,
 }

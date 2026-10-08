@@ -11,6 +11,62 @@ const HISTORY_LIMIT = 30
 // 数据结构版本：模块题量/计分方式变更时递增，用于识别旧记录
 const SCHEMA_VERSION = 1
 
+// 整卷倒计时 mm:ss 展示
+function fmtClock(sec) {
+  const s = Math.max(0, Math.floor(sec))
+  const m = Math.floor(s / 60)
+  const r = s % 60
+  return (m < 10 ? '0' : '') + m + ':' + (r < 10 ? '0' : '') + r
+}
+
+// 多选图形行的选项徽标（A/B/C…），置于每个网格槽位左上角
+function drawMultiBadge(ctx, x, y, w, h, idx) {
+  const r = Math.max(8, Math.min(11, Math.min(w, h) * 0.16))
+  const cx = x + r + 3
+  const cy = y + r + 3
+  ctx.save()
+  ctx.fillStyle = 'rgba(15,23,42,0.85)'
+  ctx.beginPath()
+  ctx.arc(cx, cy, r, 0, Math.PI * 2)
+  ctx.fill()
+  ctx.fillStyle = '#ffffff'
+  ctx.font = 'bold ' + Math.round(r * 1.1) + 'px sans-serif'
+  ctx.textAlign = 'center'
+  ctx.textBaseline = 'middle'
+  ctx.fillText(String.fromCharCode(65 + idx), cx, cy)
+  ctx.restore()
+}
+
+// 类比题目标图：上行 A→B，下行 C→？（箭头与问号自绘，规则不直接写进题面）
+function drawAnalogy(ctx, W, H, a) {
+  const s = Math.min(W * 0.34, H * 0.4)
+  const gap = W * 0.16
+  const leftX = (W - (s * 2 + gap)) / 2
+  const rightX = leftX + s + gap
+  const row1Y = Math.max(4, H * 0.04)
+  const row2Y = row1Y + s + Math.max(10, H * 0.06)
+  drawCell(ctx, a.a, leftX, row1Y, s)
+  drawCell(ctx, a.b, rightX, row1Y, s)
+  drawCell(ctx, a.c, leftX, row2Y, s)
+  ctx.save()
+  ctx.fillStyle = '#64748b'
+  ctx.font = 'bold ' + Math.round(s * 0.4) + 'px sans-serif'
+  ctx.textAlign = 'center'
+  ctx.textBaseline = 'middle'
+  ctx.fillText('→', leftX + s + gap / 2, row1Y + s / 2)
+  ctx.fillText('→', leftX + s + gap / 2, row2Y + s / 2)
+  // 答案槽：虚线框 + 问号
+  ctx.strokeStyle = '#94a3b8'
+  ctx.lineWidth = 2
+  if (typeof ctx.setLineDash === 'function') ctx.setLineDash([6, 5])
+  ctx.strokeRect(rightX, row2Y, s, s)
+  if (typeof ctx.setLineDash === 'function') ctx.setLineDash([])
+  ctx.fillStyle = '#94a3b8'
+  ctx.font = 'bold ' + Math.round(s * 0.42) + 'px sans-serif'
+  ctx.fillText('?', rightX + s / 2, row2Y + s / 2)
+  ctx.restore()
+}
+
 Page({
   data: {
     meta: {},
@@ -26,6 +82,14 @@ Page({
     groupLabel: '',
     hasTimeLimit: false,
     timeLeft: 0,
+    // multi 题型：图形多选网格与选中态（WXML 无法调用数组方法，这里预计算布尔数组）
+    multiFigures: false,
+    multiCols: 4,
+    multiFigHeight: 0,
+    multiSel: [],
+    // 整卷倒计时（模块定义 totalTimeLimit 时启用）
+    hasTotalTime: false,
+    totalTimeText: '',
   },
 
   onLoad(query) {
@@ -39,6 +103,9 @@ Page({
     this.dpr = getDpr()
     this.mod = mod
     this._timer = null
+    // 整卷倒计时：模块定义 totalTimeLimit（秒）时启用，超时直接交卷
+    this._totalLimit = mod.totalTimeLimit || 0
+    this._timer3 = null
     const setMeta = {}
     questions.forEach((qq, i) => {
       if (!qq.set) return
@@ -66,6 +133,12 @@ Page({
         const saved = wx.getStorageSync(key)
         const qn = questions.length
         const hasProgress = saved && saved.answers && saved.answers.length === qn && saved.answers.some((a) => a !== null)
+        // 整卷计时起点：续答沿用上次起点（剩余时间随流逝扣减），否则重新计时
+        this._startedAt = (hasProgress && saved.startedAt) || Date.now()
+        const done = () => {
+          this.renderCurrent()
+          this.beginTotalTimer()
+        }
         if (hasProgress) {
           wx.showModal({
             title: '继续测评',
@@ -80,18 +153,19 @@ Page({
                     current: saved.current || 0,
                     answeredCount: saved.answers.filter((a) => a !== null).length,
                   },
-                  () => this.renderCurrent()
+                  () => done()
                 )
               } else {
                 wx.removeStorageSync(key)
-                this.renderCurrent()
+                this._startedAt = Date.now()
+                done()
               }
             },
-            fail: () => this.renderCurrent(),
+            fail: () => done(),
           })
         } else {
           wx.removeStorageSync(key)
-          this.renderCurrent()
+          done()
         }
       }
     )
@@ -130,6 +204,25 @@ Page({
       showFigureOptions = true
       figureOptions = cand
     }
+    // multi 多选题：图形网格布局 + 选中态预计算（WXML 无法调用数组方法）
+    let multiFigures = false
+    let multiCols = 4
+    let multiFigHeight = 0
+    let multiSel = []
+    if (q.type === 'multi') {
+      const list = cand || []
+      multiFigures = list.length > 0
+      const optCount = multiFigures ? list.length : (q.options || []).length
+      const selArr = Array.isArray(this.data.answers[i]) ? this.data.answers[i] : []
+      multiSel = new Array(optCount)
+      for (let k = 0; k < optCount; k++) multiSel[k] = selArr.indexOf(k) >= 0
+      if (multiFigures) {
+        multiCols = q.cols || (list.length <= 6 ? 3 : list.length <= 12 ? 4 : 6)
+        multiFigHeight = Math.ceil(list.length / multiCols) * 160
+      }
+      // 目标图（找相同/类比题）：交由 drawFigures 绘制到 targetCanvas
+      if (q.matrix || q.analogy) targetMatrix = q.matrix
+    }
     this.setData(
       {
         q,
@@ -140,6 +233,10 @@ Page({
         showFigureOptions,
         figureOptions,
         targetMatrix,
+        multiFigures,
+        multiCols,
+        multiFigHeight,
+        multiSel,
       },
       () => {
         if (needCanvas) this.drawFigures()
@@ -311,6 +408,49 @@ Page({
         }
       })
     }
+
+    // multi 图形多选：整块网格画在单个 canvas 上，选中态由透明覆盖层（WXML）负责，
+    // 因此签名不含选中状态——每题只画一次，切换选中不触发重绘
+    if (q.type === 'multi' && this.data.multiFigures) {
+      if (shouldDraw('multiCanvas', 'mc:' + this.data.current)) {
+        this.ensureCanvas('multiCanvas', (ctx, W, H) => {
+          ctx.clearRect(0, 0, W, H)
+          const list = q.candidates || []
+          const cols = this.data.multiCols || 4
+          const cw = W / cols
+          const rows = Math.ceil(list.length / cols)
+          const ch = H / rows
+          const s = Math.min(cw, ch)
+          list.forEach((cellData, idx) => {
+            const c = idx % cols
+            const r = Math.floor(idx / cols)
+            drawCell(ctx, cellData, c * cw + (cw - s) / 2, r * ch + (ch - s) / 2, s)
+            drawMultiBadge(ctx, c * cw, r * ch, cw, ch, idx)
+          })
+        })
+      }
+    }
+
+    // multi 目标图：类比题自绘 A→B / C→?，找相同题绘制 1×1 目标矩阵
+    if (q.type === 'multi' && (q.analogy || (this.data.targetMatrix && !this.data.showFigureOptions))) {
+      if (shouldDraw('targetCanvas', 't:' + this.data.current)) {
+        this.ensureCanvas('targetCanvas', (ctx, W, H) => {
+          ctx.clearRect(0, 0, W, H)
+          if (q.analogy) {
+            drawAnalogy(ctx, W, H, q.analogy)
+            return
+          }
+          const tm2 = this.data.targetMatrix
+          const rows = tm2.length
+          const cols = tm2[0].length
+          const cw = W / cols
+          const ch = H / rows
+          tm2.forEach((row, r) => {
+            row.forEach((c, col) => drawCell(ctx, c, col * cw, r * ch, Math.min(cw, ch)))
+          })
+        })
+      }
+    }
   },
 
   selectAnswer(e) {
@@ -326,6 +466,27 @@ Page({
       const delay = this.data.showFigureOptions || this.data.qType === 'matrix' ? 900 : 350
       this.scheduleNext(delay)
     })
+  },
+
+  // multi 多选：点击切换选中，不自动跳题（由底部「下一题/提交」确认）；
+  // 全部取消时回落为 null，保持与其它题型一致的「未作答」语义
+  toggleMulti(e) {
+    const idx = e.currentTarget.dataset.idx
+    const answers = this.data.answers.slice()
+    const cur = answers[this.data.current]
+    const arr = Array.isArray(cur) ? cur.slice() : []
+    const p = arr.indexOf(idx)
+    if (p >= 0) arr.splice(p, 1)
+    else arr.push(idx)
+    arr.sort((a, b) => a - b)
+    answers[this.data.current] = arr.length ? arr : null
+    const answeredCount = answers.filter((a) => a !== null).length
+    const q = this.data.q
+    const optCount = this.data.multiFigures ? (q.candidates || []).length : (q.options || []).length
+    const selArr = answers[this.data.current] || []
+    const multiSel = new Array(optCount)
+    for (let k = 0; k < optCount; k++) multiSel[k] = selArr.indexOf(k) >= 0
+    this.setData({ answers, answeredCount, multiSel }, () => this.saveProgress())
   },
 
   scheduleNext(delay) {
@@ -369,6 +530,48 @@ Page({
     }, 250)
   },
 
+  stopTotalTimer() {
+    if (this._timer3) {
+      clearInterval(this._timer3)
+      this._timer3 = null
+    }
+  },
+
+  // 整卷倒计时：模块定义 totalTimeLimit（秒）时启用。计时起点存入进度（startedAt），
+  // 断点续答按已流逝时间扣减；到点弹窗提示后直接交卷（跳过逐题确认）
+  beginTotalTimer() {
+    this.stopTotalTimer()
+    if (!this._totalLimit) return
+    const elapsed = Math.floor((Date.now() - (this._startedAt || Date.now())) / 1000)
+    const left = this._totalLimit - elapsed
+    if (left <= 0) {
+      this.finishByTimeout()
+      return
+    }
+    this.setData({ hasTotalTime: true, totalTimeText: fmtClock(left) })
+    this._timer3 = setInterval(() => {
+      const l = this._totalLimit - Math.floor((Date.now() - (this._startedAt || Date.now())) / 1000)
+      if (l <= 0) {
+        this.stopTotalTimer()
+        this.finishByTimeout()
+        return
+      }
+      this.setData({ totalTimeText: fmtClock(l) })
+    }, 500)
+  },
+
+  finishByTimeout() {
+    if (this._submitting) return
+    wx.showModal({
+      title: '答题时间到',
+      content: '整卷时间已用完，将按当前作答自动交卷。',
+      showCancel: false,
+      confirmText: '查看结果',
+      success: () => this.doSubmit(),
+      fail: () => this.doSubmit(),
+    })
+  },
+
   prev() {
     if (this._timer) clearTimeout(this._timer)
     if (this.data.current === 0) return
@@ -401,7 +604,11 @@ Page({
     }
     let correct = 0
     for (let i = m.start; i < m.start + m.total; i++) {
-      if (this.data.answers[i] != null && this.data.answers[i] === this.data.questions[i].answer) correct++
+      const a = this.data.answers[i]
+      const b = this.data.questions[i].answer
+      // 多选题答案为数组，需按结构比较；单选保持严格相等
+      const same = Array.isArray(a) || Array.isArray(b) ? JSON.stringify(a) === JSON.stringify(b) : a === b
+      if (a != null && same) correct++
     }
     wx.showModal({
       title: set + ' 组完成',
@@ -419,13 +626,17 @@ Page({
     wx.setStorageSync(SK.PROGRESS_PREFIX + this.data.meta.id, {
       answers: this.data.answers,
       current: this.data.current,
+      startedAt: this._startedAt || Date.now(),
     })
   },
 
   submit() {
     if (this._timer) clearTimeout(this._timer)
     this.stopCountdown()
+    // 确认弹窗期间暂停整卷计时，避免超时弹窗与确认弹窗叠加；取消则恢复
+    this.stopTotalTimer()
     this.markTime()
+    const resume = () => this.beginTotalTimer()
     const isLast = this.data.current === this.data.total - 1
     const curSet = this.data.questions[this.data.current] && this.data.questions[this.data.current].set
     const unanswered = this.data.answers.filter((a) => a === null).length
@@ -439,7 +650,9 @@ Page({
         content: `剩余 ${unanswered} 题未作答，未答题目将按测评表默认分值计入，确定提交？`,
         success: (r) => {
           if (r.confirm) proceed()
+          else resume()
         },
+        fail: resume,
       })
       return
     }
@@ -448,7 +661,9 @@ Page({
       content: `已完成全部 ${this.data.total} 题，确认提交并查看结果？`,
       success: (r) => {
         if (r.confirm) proceed()
+        else resume()
       },
+      fail: resume,
     })
   },
 
@@ -457,6 +672,7 @@ Page({
     this._submitting = true
     if (this._timer) clearTimeout(this._timer)
     this.stopCountdown()
+    this.stopTotalTimer()
     this.markTime()
     wx.removeStorageSync(SK.PROGRESS_PREFIX + this.data.meta.id)
     const layout = this.mod.resultLayout || {}
@@ -502,6 +718,7 @@ Page({
   onUnload() {
     this._submitting = false
     this.stopCountdown()
+    this.stopTotalTimer()
   },
 
   onShareAppMessage() {

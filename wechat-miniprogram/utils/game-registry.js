@@ -14,10 +14,14 @@ const LOADERS = {
   'find-rule': () => require('../games/find-rule/index'),
   'number-maze': () => require('../games/number-maze/index'),
   mirror: () => require('../games/mirror/index'),
+  'edge-focus': () => require('../games/edge-focus/index'),
+  'aud-cpt': () => require('../games/aud-cpt/index'),
   'pattern-memory': () => require('../games/pattern-memory/index'),
   simon: () => require('../games/simon/index'),
   'digit-span': () => require('../games/digit-span/index'),
   corsi: () => require('../games/corsi/index'),
+  'digit-n2': () => require('../games/digit-n2/index'),
+  'color-probe': () => require('../games/color-probe/index'),
   whack: () => require('../games/whack/index'),
   'go-no-go': () => require('../games/go-no-go/index'),
   'bigger-number': () => require('../games/bigger-number/index'),
@@ -31,6 +35,7 @@ const LOADERS = {
   'task-switch': () => require('../games/task-switch/index'),
   wisconsin: () => require('../games/wisconsin/index'),
   'tower-london': () => require('../games/tower-london/index'),
+  'dual-square': () => require('../games/dual-square/index'),
 }
 
 const DIM_LABELS = {

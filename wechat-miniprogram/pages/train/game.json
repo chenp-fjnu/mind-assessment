@@ -15,10 +15,14 @@
     "find-rule-game": "../../games/find-rule/game",
     "number-maze-game": "../../games/number-maze/game",
     "mirror-game": "../../games/mirror/game",
+    "edge-focus-game": "../../games/edge-focus/game",
+    "aud-cpt-game": "../../games/aud-cpt/game",
     "pattern-memory-game": "../../games/pattern-memory/game",
     "simon-game": "../../games/simon/game",
     "digit-span-game": "../../games/digit-span/game",
     "corsi-game": "../../games/corsi/game",
+    "digit-n2-game": "../../games/digit-n2/game",
+    "color-probe-game": "../../games/color-probe/game",
     "whack-game": "../../games/whack/game",
     "go-no-go-game": "../../games/go-no-go/game",
     "bigger-number-game": "../../games/bigger-number/game",
@@ -31,6 +35,7 @@
     "hanoi-game": "../../games/hanoi/game",
     "task-switch-game": "../../games/task-switch/game",
     "wisconsin-game": "../../games/wisconsin/game",
-    "tower-london-game": "../../games/tower-london/game"
+    "tower-london-game": "../../games/tower-london/game",
+    "dual-square-game": "../../games/dual-square/game"
   }
 }

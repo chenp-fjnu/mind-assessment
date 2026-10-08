@@ -1,0 +1,12 @@
+<view class="ef">
+  <view class="info">第 {{idx + 1}} / {{rounds}} 轮　正确 {{correct}}　目标 {{target}}</view>
+  <view class="stage">
+    <view wx:if="{{phase === 'play'}}" class="grid {{flash}}" role="grid" aria-label="图形网格">
+      <view wx:for="{{grid}}" wx:key="index" class="cell">{{item.ch}}</view>
+    </view>
+  </view>
+  <view wx:if="{{phase === 'play'}}" class="space" bindtap="onSpace" role="button" aria-label="空格按压">空格</view>
+  <view wx:if="{{phase === 'idle'}}" class="tip">中央出现 {{target}} → 按空格；只在边缘出现 → 忍住别按</view>
+  <view wx:if="{{phase === 'idle'}}" class="btn-start" bindtap="start" role="button" aria-label="开始游戏">开始游戏</view>
+  <view wx:if="{{phase === 'done'}}" class="tip">完成！正确 {{correct}} / {{total}}</view>
+</view>

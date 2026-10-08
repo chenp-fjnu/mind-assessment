@@ -7,6 +7,7 @@
       <text class="progress-text">{{current+1}} / {{total}}</text>
       <text wx:if="{{groupLabel}}" class="group-label">{{groupLabel}}</text>
       <text wx:if="{{hasTimeLimit}}" class="group-label time-left">⏱ {{timeLeft}}s</text>
+      <text wx:if="{{hasTotalTime}}" class="group-label total-left">整卷剩余 ⏱ {{totalTimeText}}</text>
     </view>
 
     <view class="q-card card">
@@ -89,6 +90,53 @@
         </block>
       </view>
 
+      <!-- 多选题（找相同 / 类比 / 找不同）：点按切换选中，不自动跳题 -->
+      <view wx:elif="{{qType==='multi'}}" class="multi-wrap">
+        <view wx:if="{{q.matrix || q.analogy}}" class="target-box">
+          <text class="matrix-tip">{{q.analogy ? '上图：第一个图形经某种变化成为第二个；下图：第三个图形经同样变化应为？' : '目标图案（选出与之完全相同的图形，可多选）'}}</text>
+          <canvas type="2d" id="targetCanvas" class="target-canvas {{q.analogy ? 'wide' : ''}}" role="img" aria-label="题目目标图案"></canvas>
+        </view>
+
+        <!-- 图形多选：整块网格画在单个 canvas，透明覆盖层承接点击与选中框 -->
+        <view wx:if="{{multiFigures}}" class="multi-fig-wrap" style="height:{{multiFigHeight}}rpx;">
+          <canvas type="2d" id="multiCanvas" class="multi-canvas" role="img" aria-label="可多选的图形选项网格"></canvas>
+          <view class="multi-hit-grid" style="grid-template-columns:repeat({{multiCols}},1fr);">
+            <view
+              wx:for="{{multiSel}}"
+              wx:key="idx"
+              wx:for-index="idx"
+              class="multi-hit {{item ? 'sel' : ''}}"
+              data-idx="{{idx}}"
+              bindtap="toggleMulti"
+              role="checkbox"
+              aria-checked="{{item}}"
+              aria-label="图形选项 {{['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R'][idx]}}{{item ? '，已选中' : ''}}"
+            ></view>
+          </view>
+        </view>
+
+        <!-- 文本多选 -->
+        <view wx:else class="choice-list">
+          <view
+            class="choice-opt {{multiSel[idx] ? 'sel' : ''}}"
+            wx:for="{{q.options}}"
+            wx:key="idx"
+            wx:for-index="idx"
+            bindtap="toggleMulti"
+            data-idx="{{idx}}"
+            role="checkbox"
+            aria-checked="{{multiSel[idx]}}"
+            aria-label="选项 {{['A','B','C','D','E','F'][idx]}}：{{item}}{{multiSel[idx] ? '，已选中' : ''}}"
+          >
+            <text class="opt-key">{{['A','B','C','D','E','F'][idx]}}</text>
+            <text class="opt-text">{{item}}</text>
+            <view class="multi-check {{multiSel[idx] ? 'on' : ''}}"></view>
+          </view>
+        </view>
+
+        <view class="multi-hint">本题可多选：点按切换选中，选好后点「{{current === total - 1 ? '提交' : '下一题'}}」</view>
+      </view>
+
       <!-- 矩阵题（SPM） -->
       <view wx:elif="{{qType==='matrix'}}" class="matrix-wrap">
         <view class="matrix-box">
@@ -121,6 +169,6 @@
       </button>
     </view>
 
-    <view class="answered-tip">已作答 {{answeredCount}} / {{total}}（选完后自动跳下一题）</view>
+    <view class="answered-tip">已作答 {{answeredCount}} / {{total}}{{qType === 'multi' ? '（多选题，选好后点「下一题」）' : '（选完后自动跳下一题）'}}</view>
   </view>
 </view>

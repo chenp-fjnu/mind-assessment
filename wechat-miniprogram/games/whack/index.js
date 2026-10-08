@@ -37,6 +37,8 @@ module.exports = {
     { value: 4, label: '20 只' },
   ],
   metric: { key: 'hits', label: '命中', unit: '只', better: 'higher' },
+  // 使用玩家页统一底部开始按钮（而非组件内开始按钮）
+  showStartButton: true,
   generate,
   score,
 }

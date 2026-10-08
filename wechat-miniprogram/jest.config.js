@@ -12,7 +12,7 @@ module.exports = {
     '!**/node_modules/**',
   ],
   coveragePathIgnorePatterns: ['/node_modules/', '/test/'],
-  // 随测试补全逐步抬高；当前实际约 74/48/76/77
+  // 随测试补全逐步抬高；当前实际约 70/46/74/72
   coverageThreshold: {
     global: { statements: 60, branches: 45, functions: 65, lines: 65 },
   },

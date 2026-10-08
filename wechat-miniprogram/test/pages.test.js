@@ -59,7 +59,7 @@ describe('我的页 mine', () => {
 describe('关于页 about', () => {
   test('onLoad 统计模块/类型/方法数', () => {
     const ctx = loadPage('pages/about/about.js')
-    expect(ctx.data.moduleCount).toBe(23)
+    expect(ctx.data.moduleCount).toBe(getMetaList().length)
     expect(ctx.data.typeCount).toBeGreaterThan(0)
     expect(ctx.data.methodCount).toBeGreaterThan(0)
     expect(Array.isArray(ctx.data.sources)).toBe(true)
@@ -69,7 +69,7 @@ describe('关于页 about', () => {
 describe('测评 tab 页 assess', () => {
   test('onLoad 列出全部量表并分类', () => {
     const ctx = loadPage('pages/assess/assess.js')
-    expect(ctx.data.moduleCount).toBe(23)
+    expect(ctx.data.moduleCount).toBe(getMetaList().length)
     expect(ctx.data.groups.length).toBeGreaterThan(0)
   })
   test('关键词查询参数过滤', () => {
@@ -394,12 +394,15 @@ describe("个人资料页 profile", () => {
     expect(typeof ctx.data.nickname).toBe("string")
   })
   test("onChooseAvatar 将临时头像持久化到本地", () => {
+    global.wx.env = { USER_DATA_PATH: "/user" }
     global.wx.getFileSystemManager = () => ({
-      saveFile: (o) => o.success({ savedFilePath: "/saved/a.png" }),
+      saveFileSync: () => {},
     })
     const ctx = loadPage("pages/profile/profile.js")
+    // 测试环境的系统版本 mock 不满足 2.21.2，这里直接放开能力开关
+    ctx.data.canUseChooseAvatar = true
     ctx.onChooseAvatar({ detail: { avatarUrl: "/tmp/a.png" } })
-    expect(ctx.data.avatarUrl).toBe("/saved/a.png")
+    expect(ctx.data.avatarUrl).toMatch(/^\/user\/avatar_\d+\.png$/)
   })
 })
 

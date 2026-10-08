@@ -13,6 +13,7 @@ const HOT_CONFIG = [
   { kind: 'assess', id: 'holland' },    // 高考志愿/职业规划权威首选
   { kind: 'assess', id: 'big5' },       // 学术界黄金标准
   { kind: 'assess', id: 'hbdi' },       // 全脑优势 思维风格/职场自我探索
+  { kind: 'assess', id: 'n808' },       // 808神测 限时图形多选/观察推理
   // 方法类
   { kind: 'method', id: 'smart' },      // 目标管理国民工具
   { kind: 'method', id: 'pomodoro' },   // 番茄工作法 国民级时间管理

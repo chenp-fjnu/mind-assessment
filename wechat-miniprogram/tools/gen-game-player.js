@@ -18,23 +18,24 @@ const { LOADERS } = require(path.join(base, 'utils', 'game-registry'))
 
 const BREATH_GAMES = ['box-breathing', 'breath-478', 'mindfulness', 'resonance']
 
-function familyOf(id) {
+function metaOf(id) {
   try {
-    const mod = require(path.join(base, 'games', id, 'index'))
-    return mod.family || ''
+    return require(path.join(base, 'games', id, 'index'))
   } catch (e) {
-    return ''
+    return {}
   }
 }
 
 const entries = []
 Object.keys(LOADERS).forEach((id) => {
-  const fam = familyOf(id)
-  if (fam === 'breath' && BREATH_GAMES.includes(id)) {
-    entries.push({ id, tag: id + '-game', compPath: `../../games/${id}/game`, breath: false })
-    return
-  }
-  entries.push({ id, tag: id + '-game', compPath: `../../games/${id}/game`, breath: false })
+  const meta = metaOf(id)
+  entries.push({
+    id,
+    tag: id + '-game',
+    compPath: `../../games/${id}/game`,
+    breath: (meta.family || '') === 'breath' && BREATH_GAMES.includes(id),
+    showStartButton: !!meta.showStartButton,
+  })
 })
 
 // 1) game.json 的 usingComponents（保留其余页面配置字段；从真实路径读取，写入输出目录）
@@ -50,8 +51,8 @@ fs.writeFileSync(gameJsonWrite, JSON.stringify(gameJson, null, 2) + '\n')
 
 // 2) games-block.wxml 的 wx:if 挂载块
 const lines = entries.map((e) => {
-  // whack 等需要统一开始按钮的游戏，额外绑定显示/隐藏事件
-  const extraBinds = e.id === 'whack'
+  // 统一底部开始按钮的游戏（meta.showStartButton）额外绑定显示/隐藏事件
+  const extraBinds = e.showStartButton
     ? ' bind:showStartButton="onShowStartButton" bind:hideStartButton="onHideStartButton"'
     : ''
   return `    <${e.tag} wx:if="{{gameId === '${e.id}'}}" id="trainGame" level="{{level}}" board-width="{{boardWidth}}" board-height="{{boardHeight}}" fullscreen="{{fullscreen}}" bind:finish="onFinish"${extraBinds} />`

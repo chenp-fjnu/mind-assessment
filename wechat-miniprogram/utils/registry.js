@@ -27,6 +27,7 @@ const LOADERS = {
   temperament: () => require('../modules/temperament/index'),
   hbdi: () => require('../modules/hbdi/index'),
   hogwarts: () => require('../modules/hogwarts/index'),
+  n808: () => require('../modules/n808/index'),
 }
 
 const MODULES_META = require('./modules-meta')

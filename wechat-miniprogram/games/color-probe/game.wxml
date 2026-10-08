@@ -1,0 +1,19 @@
+<view class="cp">
+  <view class="info">第 {{idx + 1}} / {{n}} 组　正确 {{correct}}</view>
+  <view class="stage">
+    <view wx:if="{{phase === 'show' && cur}}" class="set" aria-label="请记住这些色块">
+      <view wx:for="{{cur.set}}" wx:key="key" class="chip" style="background:{{item.hex}};"></view>
+    </view>
+    <view wx:if="{{phase === 'probe' && cur}}" class="digits" style="color:{{cur.color.hex}};">{{cur.digits}}</view>
+    <view wx:if="{{phase === 'fb'}}" class="fb">{{cur.digits}} <text class="mark {{mark === '✓' ? 'ok' : 'bad'}}">{{mark}}</text></view>
+    <view wx:if="{{phase === 'idle' || phase === 'done'}}" class="glyph">🧩</view>
+  </view>
+  <view wx:if="{{phase === 'probe'}}" class="keys">
+    <view class="key j" bindtap="onAnswer" data-key="J" role="button" aria-label="出现过，按 J">J 出现过</view>
+    <view class="key f" bindtap="onAnswer" data-key="F" role="button" aria-label="没出现，按 F">F 没出现</view>
+    <view class="key sp" bindtap="onAnswer" data-key="space" role="button" aria-label="数字为 05 或 15，按空格">空格 05/15</view>
+  </view>
+  <view wx:if="{{phase === 'idle'}}" class="tip">记色块 → 消失后看带色数字：<text class="hl">05/15 按空格</text>，否则 J 出现过 / F 没出现</view>
+  <view wx:if="{{phase === 'idle'}}" class="btn-start" bindtap="start" role="button" aria-label="开始游戏">开始游戏</view>
+  <view wx:if="{{phase === 'done'}}" class="tip">完成！正确 {{correct}} / {{total}}</view>
+</view>
