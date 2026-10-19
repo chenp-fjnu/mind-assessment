@@ -1,5 +1,5 @@
 /**
- * 用户工具单元测试：本地结构化存储，为后端（用户+记录落库）做准备。
+ * 用户工具单元测试：本地结构化存储（当前版本纯本地、离线，无云同步）。
  * 运行：npm run test:simulate
  */
 const user = require('../utils/user')
@@ -48,11 +48,16 @@ describe('utils/user', () => {
     expect(second.id).toBe(first.id)
   })
 
-  test('记录结构含预留的 openid/unionid 字段，默认空串', () => {
+  test('本地用户结构仅含离线字段，不含云同步占位字段', () => {
     user.ensureUser()
     const u = user.getUser()
-    expect(u.openid).toBe('')
-    expect(u.unionid).toBe('')
+    // 当前版本为纯本地存储：不应再存在云同步预留字段
+    expect(u.openid).toBeUndefined()
+    expect(u.unionid).toBeUndefined()
+    expect(u.syncStatus).toBeUndefined()
+    // 本地字段齐全
+    expect(u.id).toBeTruthy()
+    expect(u.gender).toBe('unknown')
     expect(Array.isArray(user.GENDERS)).toBe(true)
   })
 })

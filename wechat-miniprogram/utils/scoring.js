@@ -7,6 +7,8 @@
  * 原始分范围 0-60，对应百分位与 IQ（均数100、标准差15）估算。
  */
 
+const { reverseValue } = require('./reverse')
+
 // 原始分 -> 百分位（16-30岁成人参考近似值）
 // P2-14: 补充 0-19 分低分常模，避免线性回退导致精度丢失
 const RAW_TO_PERCENTILE = {
@@ -118,6 +120,7 @@ function describeLevel(iq) {
 
 /**
  * 单题计分（自动处理反向）。raw 为 null/undefined 时视作 0（未答按默认分）。
+ * 调用方须传入已换算到分值区间的 raw（scoring.js 系由调用方自行做索引→分值换算）。
  * Likert 反向计分标准公式：reverse 后分值 = (scaleMin + scaleMax) - raw
  */
 function scoreItem(raw, q) {
@@ -126,7 +129,7 @@ function scoreItem(raw, q) {
   const sc = q.scale || {}
   const min = sc.min != null ? sc.min : 0
   const max = sc.max != null ? sc.max : sc.labels ? sc.labels.length - 1 : 0
-  return min + max - raw
+  return reverseValue(raw, min, max)
 }
 
 // 按维度汇总（可选 dim 过滤），自动处理反向计分

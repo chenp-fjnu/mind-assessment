@@ -21,9 +21,17 @@ Component({
   },
   lifetimes: {
     attached() { this.reset() },
+    detached() { this.clearTimers() },
   },
   methods: {
+    clearTimers() {
+      if (this._t) {
+        clearTimeout(this._t)
+        this._t = null
+      }
+    },
     reset() {
+      this.clearTimers()
       const seed = mod.generate(this.data.level)
       this._seed = seed
       const cells = []
@@ -106,7 +114,8 @@ Component({
       const key1 = 'cells[' + fromIdx + '].wallFlash'
       const key2 = 'cells[' + toIdx + '].wallFlash'
       this.setData({ [key1]: true, [key2]: true })
-      setTimeout(() => {
+      if (this._t) clearTimeout(this._t)
+      this._t = setTimeout(() => {
         this.setData({ [key1]: false, [key2]: false })
       }, 150)
     },

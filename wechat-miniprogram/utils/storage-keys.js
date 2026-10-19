@@ -14,7 +14,4 @@ module.exports = {
   // 主题
   THEME_PREF: 'user-theme-preference',
   EFFECTIVE_THEME: 'current-effective-theme',
-  // 带 id 的键拼接助手
-  progressKey: (id) => 'ma_progress_' + id,
-  trainKey: (id, level) => 'ma_train_' + id + '__' + level,
 }

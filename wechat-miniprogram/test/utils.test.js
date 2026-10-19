@@ -5,6 +5,7 @@
 const { readableTextColor, hexToRgba, hexToRgb } = require('../utils/color')
 const { isDark } = require('../utils/theme')
 const { scoreItem, computeResult } = require('../utils/scoring')
+const { reverseValue } = require('../utils/reverse')
 const { computeTrend, isNumeric, fmtMD } = require('../utils/trend')
 const { getResultView } = require('../utils/result-view')
 const { getModule, getMetaList, TYPE_LABELS } = require('../utils/registry')
@@ -36,6 +37,20 @@ describe('color', () => {
 describe('theme', () => {
   test('isDark 无 wx 环境安全返回布尔', () => {
     expect(typeof isDark()).toBe('boolean')
+  })
+})
+
+describe('reverse', () => {
+  test('反向计分 min+max-raw（0-based 与 1-based 通用）', () => {
+    expect(reverseValue(0, 0, 4)).toBe(4) // Likert 0-4
+    expect(reverseValue(1, 1, 5)).toBe(5) // Likert 1-5
+    expect(reverseValue(4, 1, 5)).toBe(2)
+    expect(reverseValue(5, 1, 5)).toBe(1)
+    expect(reverseValue(3, 0, 3)).toBe(0) // DASS 0-3
+  })
+  test('null/undefined 视作 0', () => {
+    expect(reverseValue(null, 1, 5)).toBe(0)
+    expect(reverseValue(undefined, 0, 4)).toBe(0)
   })
 })
 

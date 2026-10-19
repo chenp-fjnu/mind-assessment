@@ -199,7 +199,7 @@ wechat-miniprogram/
 
 ### 用户档案与「云同步」
 
-`utils/user.js` 维护本地用户档案（`ma_user`）与记录集合（`ma_records`），结构上预留了微信云开发同步（字段对齐 openid/unionid、`syncUserToCloud`/`syncRecordToCloud`）。**当前云调用为占位实现（返回 `Promise.resolve()`），未实际接入后端**，相关同步 UI（mine/profile 的「同步状态」）仅作演示。如需上线需补充 `wx.cloud.init` 与云函数。
+`utils/user.js` 维护本地用户档案（`ma_user`），**当前为纯本地、离线实现，无云端同步**。如需上线云同步，接入微信云开发（`wx.cloud.init` + `user`/`records` 云函数）时按需补回同步逻辑；本地字段结构已兼容。相关同步 UI（mine/profile 的「同步状态」）已移除，about 页明确标注「当前版本纯本地存储」。
 
 ---
 

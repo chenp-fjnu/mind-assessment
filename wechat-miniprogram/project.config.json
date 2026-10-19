@@ -8,7 +8,16 @@
       { "type": "folder", "value": "tools" },
       { "type": "folder", "value": "docs" },
       { "type": "folder", "value": "scripts" },
-      { "type": "folder", "value": ".github" }
+      { "type": "folder", "value": ".github" },
+      { "type": "file", "value": "package-lock.json" },
+      { "type": "file", "value": "package.json" },
+      { "type": "file", "value": "jest.config.js" },
+      { "type": "file", "value": "analyze.js" },
+      { "type": "file", "value": ".eslintrc.js" },
+      { "type": "file", "value": ".prettierrc.json" },
+      { "type": "file", "value": ".editorconfig" },
+      { "type": "file", "value": ".gitattributes" },
+      { "type": "suffix", "value": "md" }
     ],
     "include": []
   },

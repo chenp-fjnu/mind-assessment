@@ -16,9 +16,21 @@ Component({
   },
   lifetimes: {
     attached() { this.reset() },
+    detached() { this.clearTimers() },
   },
   methods: {
+    clearTimers() {
+      if (this._t1) {
+        clearTimeout(this._t1)
+        this._t1 = null
+      }
+      if (this._t2) {
+        clearTimeout(this._t2)
+        this._t2 = null
+      }
+    },
     reset() {
+      this.clearTimers()
       const seed = mod.generate(this.data.level)
       this.setData({
         trials: seed.trials,
@@ -42,7 +54,8 @@ Component({
       }
       this.setData({ cur: this.data.list[this.data.idx], phase: 'show' })
       // 显示一段时间后自动进入答题阶段
-      setTimeout(() => {
+      if (this._t1) clearTimeout(this._t1)
+      this._t1 = setTimeout(() => {
         if (this.data.phase === 'show') {
           this.setData({ phase: 'answer' })
         }
@@ -58,7 +71,8 @@ Component({
       
       // 反馈
       this.setData({ phase: 'feedback', lastCorrect: ok })
-      setTimeout(() => {
+      if (this._t2) clearTimeout(this._t2)
+      this._t2 = setTimeout(() => {
         if (next >= this.data.trials) {
           this.finish()
         } else {

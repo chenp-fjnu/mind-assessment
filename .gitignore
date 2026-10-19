@@ -81,3 +81,6 @@ wechat-miniprogram/tools/tmp-audio/
 .gencheck/
 wechat-miniprogram/package-lock.json
 wechat-miniprogram/package-lock.json
+
+# WorkBuddy workspace data (agent memory/cache, keep out of repo)
+.workbuddy/

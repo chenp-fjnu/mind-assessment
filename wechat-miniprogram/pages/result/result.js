@@ -9,9 +9,7 @@ const { useTheme } = require('../../utils/theme-store')
 const SK = require('../../utils/storage-keys')
 const { pad2 } = require('../../utils/format')
 const { getDpr } = require('../../utils/device')
-
-// 与 pages/test/test.js 保持一致的数据结构版本
-const SCHEMA_VERSION = 1
+const { SCHEMA_VERSION } = require('../../utils/constants')
 
 Page({
   data: {
@@ -73,44 +71,8 @@ Page({
       return
     }
 
-    // 测评时间 / 距上次重测间隔
-    const myHist = allHist
-      .filter((h) => h.id === id)
-      .sort((a, b) => b.time - a.time)
-    let testedTime = ''
-    let retestGap = ''
-    if (myHist.length) {
-      const t = new Date(myHist[0].time)
-      testedTime =
-        t.getFullYear() + '-' + pad2(t.getMonth() + 1) + '-' + pad2(t.getDate()) +
-        ' ' + pad2(t.getHours()) + ':' + pad2(t.getMinutes())
-      if (myHist.length >= 2) {
-        const gap = Math.round((myHist[0].time - myHist[1].time) / 86400000)
-        retestGap = gap <= 0 ? '今天' : gap + ' 天前'
-      }
-    }
-    // 距上次重测间隔（retakeHint）：与本次记录时间不同的同测评表最近一条历史比较
-    let retakeHint = ''
-    try {
-      const selfTimeSrc = (app.globalData.lastResult && app.globalData.lastResult.time) || (myHist[0] && myHist[0].time) || Date.now()
-      const selfTs = new Date(selfTimeSrc).getTime()
-      if (!isNaN(selfTs)) {
-        const prev = myHist
-          .filter((h) => h.id === id && h.time !== selfTimeSrc)
-          .sort((a, b) => b.time - a.time)
-        if (prev.length) {
-          const prevTs = new Date(prev[0].time).getTime()
-          if (!isNaN(prevTs)) {
-            const days = Math.round((selfTs - prevTs) / 86400000)
-            retakeHint = days <= 0 ? '距上次测评不到 1 天' : '距上次测评 ' + days + ' 天'
-          }
-        } else {
-          retakeHint = '首次测评'
-        }
-      }
-    } catch (e) {
-      retakeHint = ''
-    }
+    // 测评时间 / 距上次重测间隔（逻辑抽离至 _computeTestTimes，便于单测）
+    const { testedTime, retestGap, retakeHint } = this._computeTestTimes(allHist, id)
 
     this.dpr = getDpr()
     const questions = mod.getQuestions()
@@ -222,12 +184,8 @@ Page({
       noteText,
       recommend: relations.relatedMethods(mod.id),
       recommendGames: relations.relatedGames(mod.id),
-    }, () => {
-      if (this.data.showTrend) this.drawTrend()
-      this.drawCardToTemp((path) => {
-        if (path) this._shareImage = path
-      })
     })
+    // 画布渲染统一放在 onReady（节点布局完成后绘制），避免此处与 onReady 重复绘制分享卡片
     if (schemaNotice) {
       wx.showToast({ title: '量表已更新，历史结果仅供参考', icon: 'none' })
     }
@@ -261,10 +219,55 @@ Page({
   onReady() {
     this.dpr = getDpr()
     if (this.data.meta && this.data.meta.name) {
+      // 首次渲染完成、画布节点就绪后统一绘制：趋势图 + 分享卡片（各一次，杜绝重复绘制）
+      if (this.data.showTrend) this.drawTrend()
       this.drawCardToTemp((path) => {
         if (path) this._shareImage = path
       })
     }
+  },
+
+  // 纯函数：由历史算出「测评时间 / 距上次重测间隔 / 重测提示」，便于单测
+  _computeTestTimes(allHist, id) {
+    const myHist = allHist
+      .filter((h) => h.id === id)
+      .sort((a, b) => b.time - a.time)
+    let testedTime = ''
+    let retestGap = ''
+    if (myHist.length) {
+      const t = new Date(myHist[0].time)
+      testedTime =
+        t.getFullYear() + '-' + pad2(t.getMonth() + 1) + '-' + pad2(t.getDate()) +
+        ' ' + pad2(t.getHours()) + ':' + pad2(t.getMinutes())
+      if (myHist.length >= 2) {
+        const gap = Math.round((myHist[0].time - myHist[1].time) / 86400000)
+        retestGap = gap <= 0 ? '今天' : gap + ' 天前'
+      }
+    }
+    // 距上次重测间隔（retakeHint）：与本次记录时间不同的同测评表最近一条历史比较
+    let retakeHint = ''
+    try {
+      const app = getApp()
+      const selfTimeSrc = (app.globalData.lastResult && app.globalData.lastResult.time) || (myHist[0] && myHist[0].time) || Date.now()
+      const selfTs = new Date(selfTimeSrc).getTime()
+      if (!isNaN(selfTs)) {
+        const prev = myHist
+          .filter((h) => h.id === id && h.time !== selfTimeSrc)
+          .sort((a, b) => b.time - a.time)
+        if (prev.length) {
+          const prevTs = new Date(prev[0].time).getTime()
+          if (!isNaN(prevTs)) {
+            const days = Math.round((selfTs - prevTs) / 86400000)
+            retakeHint = days <= 0 ? '距上次测评不到 1 天' : '距上次测评 ' + days + ' 天'
+          }
+        } else {
+          retakeHint = '首次测评'
+        }
+      }
+    } catch (e) {
+      retakeHint = ''
+    }
+    return { testedTime, retestGap, retakeHint, myHist }
   },
 
   drawCardToTemp(done) {

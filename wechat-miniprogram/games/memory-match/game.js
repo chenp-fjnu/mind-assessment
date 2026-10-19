@@ -18,9 +18,17 @@ Component({
   },
   lifetimes: {
     attached() { this.reset() },
+    detached() { this.clearPending() },
   },
   methods: {
+    clearPending() {
+      if (this._t) {
+        clearTimeout(this._t)
+        this._t = null
+      }
+    },
     reset() {
+      this.clearPending()
       const pairs = this.data.level
       const seed = mod.generate(pairs)
       const cards = seed.deck.map((sym, id) => ({
@@ -72,7 +80,8 @@ Component({
           this.setData({ [ka]: true, [kb]: true, flipped: [], lock: false, matched })
           if (matched >= this.data.level) this.finish()
         } else {
-          setTimeout(() => {
+          this.clearPending()
+          this._t = setTimeout(() => {
             const ra = 'cards[' + a + '].faceUp'
             const rb = 'cards[' + b + '].faceUp'
             this.setData({ [ra]: false, [rb]: false, flipped: [], lock: false })

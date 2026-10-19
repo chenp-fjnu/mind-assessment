@@ -5,11 +5,10 @@ const { useTheme } = require('../../utils/theme-store')
 const { getUserId } = require('../../utils/user')
 const { getDpr } = require('../../utils/device')
 const SK = require('../../utils/storage-keys')
+const { SCHEMA_VERSION } = require('../../utils/constants')
 
 // 历史记录硬上限：超出后仅保留最近 N 条，并对用户可见提示
 const HISTORY_LIMIT = 30
-// 数据结构版本：模块题量/计分方式变更时递增，用于识别旧记录
-const SCHEMA_VERSION = 1
 
 // 整卷倒计时 mm:ss 展示
 function fmtClock(sec) {
@@ -107,6 +106,7 @@ Page({
     this.dpr = getDpr()
     this.mod = mod
     this._timer = null
+    this._finished = false // 是否已交卷；onUnload/onHide 据此决定是否兜底保存进度
     // 整卷倒计时：模块定义 totalTimeLimit（秒）时启用，超时直接交卷
     this._totalLimit = mod.totalTimeLimit || 0
     this._timer3 = null
@@ -673,16 +673,29 @@ Page({
     })
   },
 
-  saveProgress() {
-    const now = Date.now()
-    // 节流：最多每 2 秒写一次，降低低端机 Storage IO 压力
-    if (this._lastSave && now - this._lastSave < 2000) return
-    this._lastSave = now
+  // 实际写盘：节流与强制落盘共用
+  writeProgress() {
+    if (!this.data.meta || !this.data.meta.id) return
     wx.setStorageSync(SK.PROGRESS_PREFIX + this.data.meta.id, {
       answers: this.data.answers,
       current: this.data.current,
       startedAt: this._startedAt || Date.now(),
     })
+  },
+
+  saveProgress() {
+    const now = Date.now()
+    // 节流：最多每 2 秒写一次，降低低端机 Storage IO 压力
+    if (this._lastSave && now - this._lastSave < 2000) return
+    this._lastSave = now
+    this.writeProgress()
+  },
+
+  // 绕过节流的强制落盘：用于 onUnload/onHide，避免 2 秒内连续答题后退出丢进度
+  saveProgressForce() {
+    if (this._finished) return // 已交卷：doSubmit 已清除进度，不可再写回
+    this._lastSave = Date.now()
+    this.writeProgress()
   },
 
   submit() {
@@ -725,6 +738,7 @@ Page({
   doSubmit() {
     if (this._submitting) return
     this._submitting = true
+    this._finished = true // 交卷后 onUnload/onHide 不再兜底保存进度（doSubmit 已清进度）
     if (this._timer) clearTimeout(this._timer)
     this.stopCountdown()
     this.stopTotalTimer()
@@ -770,7 +784,13 @@ Page({
     wx.reLaunch({ url: `/pages/result/result?id=${this.data.meta.id}` })
   },
 
+  // 切后台（home 键/被其它页覆盖）时兜底落盘，避免节流窗口内进度丢失
+  onHide() {
+    this.saveProgressForce()
+  },
+
   onUnload() {
+    this.saveProgressForce()
     this._submitting = false
     this.stopCountdown()
     this.stopTotalTimer()

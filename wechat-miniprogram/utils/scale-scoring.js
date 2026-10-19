@@ -3,6 +3,8 @@
  * 支持：反向计分、求和、百分比转换、等级判定
  */
 
+const { reverseValue } = require('./reverse')
+
 /**
  * 计算量表维度得分
  * @param {Array} answers - 答案数组
@@ -22,8 +24,9 @@ function computeScaleScores(answers, questions, dimensions, opts = {}) {
     // 对于 min=1 的量表：索引 0→分值1, 索引 4→分值5
     // 对于 min=0 的量表：索引 0→分值0, 索引 3→分值3（DASS-21 等）
     const actual = raw == null ? defaultVal : (raw + min);
-    // P0-2: 修复反向计分公式，使用 (max + min - actual) 替代 (max + 1 - raw)
-    const val = q.reverse ? (max + min - actual) : actual;
+    // 反向计分统一走 utils/reverse.js 的 reverseValue（single source of truth）
+    // actual 经上面已确保非 null，reverseValue 的 null→0 分支此处不会触发，行为与原公式一致
+    const val = q.reverse ? reverseValue(actual, min, max) : actual;
     scores[q.dimension].push(val);
   });
 

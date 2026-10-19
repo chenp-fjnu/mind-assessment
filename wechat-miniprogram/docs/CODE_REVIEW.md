@@ -56,17 +56,25 @@
 | **F9** | **趋势图日期显示优化** | `utils/canvas.js` | **>8/10 条时按间隔显示日期，保留首尾，避免重叠** |
 | **F10** | **方法练习趋势可视化** | `pages/methods/detail.js`, `pages/methods/practice.js`, `pages/methods/detail.wxml`, `pages/methods/practice.wxml` | **新增 canvas 折线图，复用 renderTrend，显示首次→最近变化** |
 | **F11** | **严格 Lint + CI 门槛** | `package.json`, `.github/workflows/ci.yml` | **新增 `lint:strict`（max-warnings 0），CI 强制通过** |
+| **F12** | **反向计分公式双实现**（`scoring.scoreItem` 与 `scale-scoring.computeScaleScores` 各写一遍 `min+max-raw`） | 新增 `utils/reverse.js`（单一来源）；两处 `require` 复用 | **抽取 `reverseValue(raw,min,max)` 纯函数为唯一公式实现，`scoreItem`/`computeScaleScores` 共用；各自的答案编码/索引换算/null 处理保持原样（属各自职责，非重复）。新增 `reverse` 单测，覆盖率 100%** |
+| **F13** | **答题进度丢失边界**：`test.js` `saveProgress` 2 秒节流，但 `onUnload` 仅清定时器不兜底落盘，2 秒内连续答题后退出丢进度 | `pages/test/test.js` | **新增 `saveProgressForce()`（绕过节流强制落盘）+ `onUnload`/`onHide` 兜底调用；用 `_finished` 标志位区分「已交卷」（`doSubmit` 已清进度，不再写回）与「中途退出」，避免把刚清掉的进度重新写回** |
+| **F14** | **4 个游戏定时器泄漏**：`memory-match`/`mirror`/`number-maze`/`visual-search` 有 pending `setTimeout` 却无清理钩子，组件卸载后回调仍 `setData`/`triggerEvent` | 上述 4 个 `game.js` | **补 `lifetimes.detached` + 各 `clearTimers/clearPending`，`reset()` 先清旧定时器，新建前先 `clearTimeout`（对齐 `box-breathing` 范例）。已扫描全部 34 游戏：21 个含定时器的均已具备清理钩子** |
+| **F15** | **死代码**：`storage-keys.js` 的 `progressKey()`/`trainKey()` 全仓无调用方 | `utils/storage-keys.js` | **删除两个未用助手（页面直接用 `PROGRESS_PREFIX`/`TRAIN_PREFIX` 字符串拼接）** |
+| **F16** | **`SCHEMA_VERSION` 双写**：`test.js` 与 `result.js` 各定义 `=1`，易漂移 | 新增 `utils/constants.js`；两页面 `require` | **抽到 `utils/constants.js` 单一来源，`test.js`/`result.js` 统一引用** |
+| **F17** | **云同步占位死代码**（对应 I1，本地功能保留）：`user.js` 的 `CLOUD_ENABLED`/`isCloudEnabled`/`initCloud`/`syncNow`/`getSyncStatus`/`syncUserToCloud` 及 `openid/unionid/syncStatus/lastSync` 字段全仓无调用方 | `utils/user.js`, `test/user.test.js` | **删除云占位函数与预留字段，保留全部本地功能（`ensureUser`/`getUser`/`getUserId`/`saveUser`/`GENDERS` 等）。与 F5/I1「纯本地、不接云」决策一致。测试同步改为断言「无云占位字段」** |
+| **F18** | **主包体积冗余**：`wechat-miniprogram/project.config.json`（`app.json` 同目录、生效配置）的 `packOptions.ignore` 已排除 `node_modules/coverage/test/tools/docs/scripts/.github`，但根目录一批**纯开发文件**仍被打包进主包（`package-lock.json` 159K、`README.md` 37K、`package.json`、`jest.config.js`、`analyze.js`、`.eslintrc.js`、`.prettierrc.json`、`.editorconfig`、`.gitattributes`），合计约 200K 无运行时价值 | `wechat-miniprogram/project.config.json` | **补 `packOptions.ignore`：按 `file` 排除上述 8 个开发文件 + 按 `suffix:md` 排除所有 markdown。排除后实测算力包内容 ≈ **1.93 MiB**（assets 224K + games 546K + utils 460K + modules 316K + pages 345K + 运行时根文件 ≈34K），远低于 2M 主包上限，**无需分包**。注：早期误判「ignore 为空、coverage 4.8M 会被打包」系读错文件——生效的是 `wechat-miniprogram/` 内的 `project.config.json`（appid `wx215011be68b87714`），非仓库根目录那份（appid `wxcb1a57da3ff2a353`，已过期）；`.wav` 源文件在已被忽略的 `tools/` 内，音频实为 84K 而非 988K** |
+| **F19** | **结果页 `onLoad` 过重 + 分享卡片重复绘制**：`onLoad`（200+ 行）的 `setData` 回调里 `drawCardToTemp`，与 `onReady` 里的 `drawCardToTemp` **各绘一遍**，`renderCard` 空跑两次；趋势图仅绘于 `setData` 回调 | `pages/result/result.js` | **画布渲染统一收拢到 `onReady`（节点布局完成、画布就绪后一次绘制：趋势图 + 分享卡片），移除 `setData` 回调；`_shareImage` 仅在 `onShareAppMessage` 时被消费，`onReady` 必然先于分享触发，行为不变。另把自洽的时间计算块（`testedTime`/`retestGap`/`retakeHint`）抽为纯方法 `_computeTestTimes(allHist,id)`，`onLoad` 由 196 行减至 ~150 行。纯函数抽离后便于补单测** |
 
-修复后 `npm run lint` 与 `npm run lint:strict` 均 **0 error / 0 warning**。
+修复后 `npm run lint` 与 `npm run lint:strict` 均 **0 error / 0 warning**，`node test/smoke.js`（170）+ Jest（266）+ 覆盖率门槛全绿。
 
 ---
 
 ## 4. 遗留问题与风险（Issues）
 
-### I1 · 云同步是「假功能」（高优先级 · 误导性）⚠️ **已缓解：UI 隐藏 + 明确标注**
-- `utils/user.js` 的 `syncUserToCloud` / `syncRecordToCloud` 直接 `return Promise.resolve()`，`wx.cloud` 调用全部注释；`saveUser`/`syncNow` 虽触发同步但**无任何实际网络行为**。
-- `ma_records` 记录集合**从未被写入**：`saveRecord`（user.js:139）全仓**无任何调用方**，训练/方法/测评分别写入 `ma_train_*`/`ma_practices`/`ma_history`，与 `user.js` 的 `getRecords` 完全脱节。
-- **现状**：已在 `mine`/`profile`/`about` 移除同步 UI，并在 about 页明确标注「当前版本为纯本地存储，未接入云同步，数据仅存在本机，更换设备/清理缓存/卸载将丢失」。如需上线云同步，需补全 `wx.cloud.init` 与云函数。
+### I1 · 云同步是「假功能」（高优先级 · 误导性）✅ **已解决：占位死代码删除（F17）+ UI 隐藏（F5）**
+- ~~`utils/user.js` 的 `syncUserToCloud` / `syncRecordToCloud` 直接 `return Promise.resolve()`~~ **已删除全部云占位函数与 `openid/unionid/syncStatus/lastSync` 字段（F17）**。
+- `user.js` 现为**纯本地实现**，文件头注释已注明「当前版本纯本地离线；如需云同步接入微信云开发时按需补回」。
+- **现状**：代码与「纯本地」决策一致，无误导性同步 UI。上线云同步需新建 `wx.cloud.init` 与云函数，并在 `user.js` 重新引入同步逻辑（非破坏性，本地字段已兼容）。
 
 ### I2 · `theme.js` 设计系统未被实际使用（中优先级 · 过度设计）✅ **已完成：精简仅保留 isDark**
 
@@ -81,22 +89,27 @@
 ## 5. 改进建议（按优先级）
 
 ### P0 · 数据真实性与合规
-1. **处理云同步占位**（对应 I1）：当前方案为「隐藏 UI + 明确标注本地优先」；如需真正云同步，接入微信云开发（`app.js` 调 `wx.cloud.init`、补 `user`/`records` 云函数，`user.js` 字段已就绪）。
+1. **处理云同步占位**（对应 I1）：✅ **已完成（F17）** —— 删除全部云占位死代码，代码与「纯本地」决策一致。如需真正云同步，接入微信云开发（`app.js` 调 `wx.cloud.init`、补 `user`/`records` 云函数，本地字段已兼容）。
 
 ### P1 · 架构与可维护性
-2. **常量集中化**：`ma_history`/`ma_practices`/`ma_train_`/`ma_user`/`ma_records` 等存储键散落在多文件，建议在 `utils/storage-keys.js` 统一定义（当前已大部分集中，仅 `ma_records` 相关已移除）。
+2. **常量集中化**：✅ **已完成** —— `SCHEMA_VERSION` 抽到 `utils/constants.js`（F16）；存储键集中于 `utils/storage-keys.js`，未用的 `progressKey`/`trainKey` 已删（F15）。
+3. **计分逻辑收敛**：✅ **已完成（F12）** —— 反向计分公式收敛到 `utils/reverse.js` 单一来源，消除双实现漂移风险。
+4. **答题进度健壮性**：✅ **已完成（F13）** —— `onUnload`/`onHide` 兜底落盘，杜绝节流窗口内退出丢进度。
+5. **游戏生命周期清理**：✅ **已完成（F14）** —— 全部含定时器的游戏补 `detached` 清理钩子。
+6. **主包体积**：✅ **已完成（F18）** —— `packOptions.ignore` 补全开发文件排除；实测打包内容 ≈1.93 MiB，低于 2M 上限，无需分包。若后续音频/素材继续膨胀逼近上限，再考虑 `subpackages`（把 `games/`、`modules/` 拆到子包）或素材远程化。
+7. **结果页可维护性**：✅ **已完成（F19）** —— `onLoad` 拆分（时间计算抽为 `_computeTestTimes`）、分享卡片重复绘制消除（画布渲染统一收拢 `onReady`）。
 
 ### P2 · 体验与科学
-3. **结果页趋势增强**：数值趋势已补间隔日期显示，后续可考虑横向滚动容器或交互式缩放。
-4. **常模溯源**：`modules-meta.js` 的 `reference`/`scoring` 已补，建议在详情页/关于页给出更醒目免责声明与文献链接。
+6. **结果页趋势增强**：数值趋势已补间隔日期显示，后续可考虑横向滚动容器或交互式缩放。
+7. **常模溯源**：`modules-meta.js` 的 `reference`/`scoring` 已补，建议在详情页/关于页给出更醒目免责声明与文献链接。
 
 ### P3 · 工程化
-5. 补充 `user.js` 云同步分支的单元测试（mock `wx.cloud`），防止占位实现被误认为已可用。
-6. 考虑逐步引入 TypeScript（从 `utils/registry`、`utils/game-registry` 等核心模块开始）。
+8. 若未来接入云同步，补 `wx.cloud` 分支的单元测试（当前 `user.js` 已为纯本地实现，无云分支）。
+9. 考虑逐步引入 TypeScript（从 `utils/registry`、`utils/game-registry` 等核心模块开始）。
 
 ---
 
 ## 6. 本次文档改进清单
 - `README.md`：目录结构补全 5 大板块全部页面与 utils；新增「产品功能总览（五大板块）」「跨域关联」「主题与无障碍」「用户档案与云同步」四节；修正「22 套 → 23 套」；changelog 追加 code review 条目与已知问题声明。
-- `docs/CODE_REVIEW.md`：（本文件）业务/架构盘点 + 问题清单 + 改进建议，**新增「已修复问题」F5–F11，「遗留问题」I1–I5 状态更新**。
-- 代码修复：F1–F11（见第 3 节）。
+- `docs/CODE_REVIEW.md`：（本文件）业务/架构盘点 + 问题清单 + 改进建议，**「已修复问题」F5–F17、「遗留问题」I1–I5 状态更新**。
+- 代码修复：F1–F17（见第 3 节）。

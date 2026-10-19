@@ -21,9 +21,17 @@ Component({
   },
   lifetimes: {
     attached() { this.reset() },
+    detached() { this.clearTimers() },
   },
   methods: {
+    clearTimers() {
+      if (this._t) {
+        clearTimeout(this._t)
+        this._t = null
+      }
+    },
     reset() {
+      this.clearTimers()
       this._seed = mod.generate({ level: this.data.level, trials: this.getTrialsForLevel(this.data.level) })
       const firstTrial = this._seed.trialsData[0]
       const cells = firstTrial.cells.map((color) => ({ color, correct: false, wrong: false }))
@@ -74,7 +82,8 @@ Component({
         // 正确：闪烁绿色反馈
         const key = 'cells[' + idx + ']'
         this.setData({ [key + '.correct']: true })
-        setTimeout(() => {
+        if (this._t) clearTimeout(this._t)
+        this._t = setTimeout(() => {
           this.setData({ [key + '.correct']: false })
           this.nextTrial()
         }, 200)
@@ -84,7 +93,8 @@ Component({
         if (wx.vibrateShort) wx.vibrateShort({ type: 'light' })
         const key = 'cells[' + idx + ']'
         this.setData({ [key + '.wrong']: true })
-        setTimeout(() => {
+        if (this._t) clearTimeout(this._t)
+        this._t = setTimeout(() => {
           this.setData({ [key + '.wrong']: false })
         }, 300)
       }
