@@ -28,6 +28,7 @@ const LOADERS = {
   hbdi: () => require('../modules/hbdi/index'),
   hogwarts: () => require('../modules/hogwarts/index'),
   n808: () => require('../modules/n808/index'),
+  mind6: () => require('../modules/mind6/index'),
 }
 
 const MODULES_META = require('./modules-meta')
