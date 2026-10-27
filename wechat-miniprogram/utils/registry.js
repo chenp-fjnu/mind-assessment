@@ -7,6 +7,7 @@ const LOADERS = {
   big5: () => require('../modules/big5/index'),
   epq: () => require('../modules/epq/index'),
   disc: () => require('../modules/disc/index'),
+  map: () => require('../modules/map/index'),
   pf16: () => require('../modules/pf16/index'),
   sds: () => require('../modules/sds/index'),
   sas: () => require('../modules/sas/index'),

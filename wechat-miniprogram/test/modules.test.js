@@ -109,3 +109,67 @@ describe('808 神经元测试（n808）', () => {
     expect(r.groupStats).toBeTruthy()
   })
 })
+
+describe('MAP 职业性格测验', () => {
+  const mod = getModule('map')
+
+  test('40 迫选题，每题 2 选项', () => {
+    const qs = mod.getQuestions()
+    expect(qs.length).toBe(40)
+    qs.forEach((q) => {
+      expect(q.type).toBe('choice')
+      expect(q.options.length).toBe(2)
+      expect(['M', 'A', 'P']).toContain(q.dim)
+      expect(q.trait).toBeTruthy()
+      expect([0, 1]).toContain(q.high)
+    })
+  })
+
+  test('24 项特质全覆盖（每维度 8 项）', () => {
+    const qs = mod.getQuestions()
+    const byDim = { M: new Set(), A: new Set(), P: new Set() }
+    qs.forEach((q) => byDim[q.dim].add(q.trait))
+    expect(byDim.M.size).toBe(8)
+    expect(byDim.A.size).toBe(8)
+    expect(byDim.P.size).toBe(8)
+    expect(byDim.M.size + byDim.A.size + byDim.P.size).toBe(24)
+  })
+
+  test('全高作答得 100%，全低作答得分低', () => {
+    const qs = mod.getQuestions()
+    const rHi = mod.computeResult(qs.map((q) => q.high), qs)
+    expect(rHi.percent).toBe(100)
+    expect(rHi.level).toBe('高')
+    expect(rHi.groups.M.percent).toBe(100)
+    expect(rHi.groups.A.percent).toBe(100)
+    expect(rHi.groups.P.percent).toBe(100)
+
+    const rLo = mod.computeResult(qs.map((q) => (q.high === 0 ? 1 : 0)), qs)
+    expect(rLo.percent).toBe(0)
+    expect(rLo.level).toBe('低')
+    expect(rLo.groups.M.percent).toBe(0)
+  })
+
+  test('部分作答不计入未答题目', () => {
+    const qs = mod.getQuestions()
+    const answers = qs.map((q, i) => (i < 5 ? q.high : null))
+    const r = mod.computeResult(answers, qs)
+    expect(r.totalStat.skipped).toBe(35)
+    expect(r.raw).toBe(5)
+  })
+
+  test('结果视图：3 维度 groups + interpretations 数组', () => {
+    const qs = mod.getQuestions()
+    const r = mod.computeResult(qs.map((q) => q.high), qs)
+    const view = mod.getResultView(r, mod.resultLayout)
+    expect(view.groups.length).toBe(3)
+    expect(['M', 'A', 'P']).toEqual(view.groups.map((g) => g.key))
+    view.groups.forEach((g) => {
+      expect(typeof g.percent).toBe('number')
+      expect(g.display).toBeTruthy()
+    })
+    expect(Array.isArray(view.interpretations)).toBe(true)
+    expect(view.interpretations.length).toBe(4)
+    expect(view.showBipolar).toBe(false)
+  })
+})

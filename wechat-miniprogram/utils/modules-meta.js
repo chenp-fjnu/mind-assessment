@@ -78,6 +78,26 @@ module.exports = [
     "hot": false
   },
   {
+    "id": "map",
+    "type": "career",
+    "name": "MAP 职业性格测验",
+    "shortName": "MAP",
+    "icon": "🧭",
+    "color": "#0ea5e9",
+    "desc": "本土化职业性格测验：思维倾向、态度和动力、人际特点三大维度，24 项特质迫选作答。",
+    "questionCount": 40,
+    "duration": 15,
+    "tag": [
+      "职业",
+      "性格",
+      "胜任力",
+      "迫选"
+    ],
+    "reference": "MAP（Measuring Aptitude and Personality）本土化职业性格模型 · 标准版 40 题迫选",
+    "scoring": "迫选二选一计分：每特质 hi/(hi+lo) 百分位，每维度聚合，level 高/中/低",
+    "hot": true
+  },
+  {
     "id": "pf16",
     "type": "personality",
     "name": "卡特尔 16PF 人格测验",

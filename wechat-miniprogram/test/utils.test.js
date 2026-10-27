@@ -112,8 +112,8 @@ describe('trend', () => {
 
 describe('registry 完整性', () => {
   const meta = getMetaList()
-  test('25 个量表均有 reference 与 scoring', () => {
-    expect(meta.length).toBe(25)
+  test('全部量表均有 reference 与 scoring', () => {
+    expect(meta.length).toBeGreaterThanOrEqual(26)
     meta.forEach((m) => {
       expect(m.reference && String(m.reference).trim()).toBeTruthy()
       expect(m.scoring && String(m.scoring).trim()).toBeTruthy()

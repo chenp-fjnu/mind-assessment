@@ -24,6 +24,7 @@ const ASSESS_ID_TO_GAME_DIM = {
   hbdi: ['exec', 'attention'],          // 全脑优势 → 决策执行 + 专注
   holland: ['exec'],
   disc: ['exec'],
+  map: ['exec'],
   n808: ['attention', 'memory', 'exec'], // 808 神测 → 专注/记忆/多任务执行
 }
 
