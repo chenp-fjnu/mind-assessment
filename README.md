@@ -1,5 +1,7 @@
 # 心智测评中心
 
+> ⚠️ **文档说明**：本文档描述的是历史 UniApp 工程结构（`mind-assessment-uniapp/`、`server/` 等已不在仓库）；当前仓库仅含原生微信小程序 `wechat-miniprogram/`（27 套量表 / 9 大类 + 34 个训练游戏），现状一览以 [`wechat-miniprogram/README.md`](wechat-miniprogram/README.md) 为准。
+
 多平台心理测评与认知训练应用，基于 **UniApp + Vue 3** 跨平台框架，一套代码同时构建 **微信小程序** 与 **H5 网页版**。
 
 > 📱 **另有独立原生小程序**：`wechat-miniprogram/` 目录是基于原生微信小程序的**纯前端**实现（无后端、无网络请求，数据存本地），集成同样 14 套量表，详见 [`wechat-miniprogram/README.md`](wechat-miniprogram/README.md)。

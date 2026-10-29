@@ -1,6 +1,6 @@
 ﻿# 心智探索局（Mind Quest）· 微信小程序
 
-纯前端**原生**微信小程序，集成 **25 套心理学量表**（人格、情绪、智力、职业、自我认知、压力、睡眠、社交、积极心理等 9 大类），并在「训练」Tab 内置 **34 个脑力训练游戏**（注意力 / 工作记忆 / 反应速度 / 放松正念 / 执行功能 5 大认知维度）；支持离线测评、本地保存、结果可视化与同量表历史趋势对比。无后端、无网络请求，所有数据仅存于本地 `Storage`。
+纯前端**原生**微信小程序，集成 **27 套心理学量表**（人格、情绪、智力、职业、自我认知、压力、睡眠、社交、积极心理等 9 大类），并在「训练」Tab 内置 **34 个脑力训练游戏**（注意力 / 工作记忆 / 反应速度 / 放松正念 / 执行功能 5 大认知维度）；支持离线测评、本地保存、结果可视化与同量表历史趋势对比。无后端、无网络请求，所有数据仅存于本地 `Storage`。
 
 > ⚠️ 免责声明：所有量表均为**简化 / 教育版**自陈问卷，计分与常模为公开资料整理的近似值，仅供自我探索与娱乐参考，不构成任何医学诊断或专业建议。
 
@@ -22,11 +22,11 @@ wechat-miniprogram/
 ├── app.js / app.json / app.wxss      # 全局逻辑、页面注册、全局样式（含深色模式 CSS 变量）
 ├── project.config.json / sitemap.json
 ├── package.json                      # 测试脚本与开发依赖
-├── modules/                          # 25 个量表模块（每个 index.js 自包含）
+├── modules/                          # 27 个量表模块（每个 index.js 自包含）
 │   ├── mbti/ big5/ epq/ disc/ pf16/  # 人格 / 性格
 │   ├── sds/ sas/ gad7/ dass21/       # 情绪筛查
-│   ├── ses/ las/                     # 自我认知
-│   ├── holland/                      # 职业兴趣
+│   ├── ses/ las/ mind6/              # 自我认知
+│   ├── holland/ map/                 # 职业兴趣
 │   ├── spm/                          # 瑞文图形推理（questions.js 懒加载）
 │   ├── wechsler/                     # 韦氏智力（积木题含真实候选图形数据）
 │   └── n808/                         # 808 神测（限时图形多选，随机种子确定性生成）
@@ -38,7 +38,7 @@ wechat-miniprogram/
 │   └── hanoi/ task-switch/ wisconsin/ tower-london/ dual-square/                                            # 执行功能（5）
 ├── pages/
 │   ├── index/                        # 首页：分类量表 + 最近测评 + 方法/训练精选入口
-│   ├── assess/                       # 「测评」Tab：按类别（9 大类）浏览全部 25 套量表 + 搜索
+│   ├── assess/                       # 「测评」Tab：按类别（9 大类）浏览全部 27 套量表 + 搜索
 │   ├── detail/                       # 量表说明页（含详解、参考来源/计分方式、关联方法/训练）
 │   ├── test/                         # 答题页（量表题 / 选择题 / 矩阵题 / 图形四选一 / 多选 + 整卷倒计时）
 │   ├── result/                       # 结果页（维度 / 双极 / 分测验 / 解读 / 趋势 / 存图）
@@ -53,7 +53,7 @@ wechat-miniprogram/
 │   └── train/                        # 训练 Tab：train 列表页 + game 通用播放器
 ├── utils/
 │   ├── registry.js                   # 模块注册表与查询（getModule / getMetaList / modulesByType）
-│   ├── modules-meta.js               # 23 量表轻量元数据（type/icon/reference/scoring 等）
+│   ├── modules-meta.js               # 27 量表轻量元数据（type/icon/reference/scoring 等）
 │   ├── game-registry.js              # 训练游戏注册表（getGame / gamesByDim / getMetaList）
 │   ├── train-store.js                # 训练成绩存储（ma_train_<id>，趋势复用 trend.js）
 │   ├── relations.js                  # 跨域关联：测评→相关方法/训练（详情页/结果页复用）
@@ -80,7 +80,7 @@ wechat-miniprogram/
 
 ---
 
-## 25 套量表一览
+## 27 套量表一览
 
 | 模块 id | 名称 | 类别 | 题数 | 题型 | 主结果字段 |
 | --- | --- | --- | --- | --- | --- |
@@ -109,12 +109,14 @@ wechat-miniprogram/
 | `hbdi` | HBDI 全脑优势测评 | 人格性格 | 40 | 选择 | 全脑优势 |
 | `hogwarts` | 霍格沃茨分院测试 | 人格性格 | 28 | 选择 | 归属学院 |
 | `n808` | 808 神经元测试 | 智力推理 | 24 | 多选(图形) | 正确率 |
+| `map` | MAP 职业性格测验 | 职业兴趣 | 40 | 迫选二选一 | 职业性格画像 |
+| `mind6` | 心智成长六层次 | 自我认知 | 24 | 情境单选 | 当前认知层级 |
 
 ---
 
 ## 训练游戏模块（脑力训练）
 
-除 25 套自评量表外，小程序新增独立 **「训练」Tab**，提供类舒尔特方格的互动脑力训练游戏，覆盖全部认知维度。所有游戏均为**离线、本地记录、无后端**，仅供自我探索与训练热身，不构成医学诊断。
+除 27 套自评量表外，小程序新增独立 **「训练」Tab**，提供类舒尔特方格的互动脑力训练游戏，覆盖全部认知维度。所有游戏均为**离线、本地记录、无后端**，仅供自我探索与训练热身，不构成医学诊断。
 
 ### 已落地游戏（34 个，每维度多个）
 
@@ -180,7 +182,7 @@ wechat-miniprogram/
 
 | 板块 | 入口页 | 核心能力 | 本地存储键 |
 | --- | --- | --- | --- |
-| **测评** | `pages/assess`、`pages/index` | 25 套量表按 9 大类浏览/搜索 → 详情 → 答题 → 结果 → 趋势 | `ma_history`（≤30）、`ma_progress_<id>` |
+| **测评** | `pages/assess`、`pages/index` | 27 套量表按 9 大类浏览/搜索 → 详情 → 答题 → 结果 → 趋势 | `ma_history`（≤30）、`ma_progress_<id>` |
 | **方法** | `pages/methods` | 22 个心智方法知识库（含步骤/贴士/示例），部分支持「互动练习」按 `schema` 填表打卡 | `ma_practices`（≤50/方法） |
 | **训练** | `pages/train` | 34 个脑力游戏，5 大认知维度，难度分级、计时、成绩与趋势 | `ma_train_<id>`（≤50） |
 | **我的** | `pages/mine` | 三类记录汇总、主题切换（跟随系统/浅/深）、云同步占位入口 | `user-theme-preference`、`ma_user` |
@@ -264,9 +266,9 @@ module.exports = {
 
 | 测试 | 命令 | 依赖 | 说明 |
 | --- | --- | --- | --- |
-| 冒烟（评分链路） | `npm test`（`node test/smoke.js`） | 无 | 25 模块评分 + 韦氏候选完整性 + `getResultView` 视图构造流程，**170 项** |
+| 冒烟（评分链路） | `npm test`（`node test/smoke.js`） | 无 | 27 模块评分 + 韦氏候选完整性 + `getResultView` 视图构造流程，**182 项** |
 | 模块单测 | `npm run test:simulate` → Jest `modules.test.js` | jest | 模块评分 / 候选 / 选项数断言 / n808 多选计分与题面确定性 |
-| 工具单测 | `npm run test:simulate` → Jest `utils.test.js` | jest | `color`/`scoring`/`trend`/`result-view`/`registry`/`figure`/`methods-data` 纯函数、模块契约（`getResultView` 标准化结构、25 量表 `reference`/`scoring` 非空）、图形色盲纹理 |
+| 工具单测 | `npm run test:simulate` → Jest `utils.test.js` | jest | `color`/`scoring`/`trend`/`result-view`/`registry`/`figure`/`methods-data` 纯函数、模块契约（`getResultView` 标准化结构、27 量表 `reference`/`scoring` 非空）、图形色盲纹理 |
 | 页面单测 | `npm run test:simulate` → Jest `index.page.test.js` | jest | `detail`/`result`/`index`/`test` 页面 `onLoad` 渲染数据（基于 mock 运行时 `wx`/`Page`，**无需** `@miniprogram/simulate`） |
 | 全量 | `npm run test:all` | jest | 先跑冒烟再跑 Jest；`npm run test:coverage` 附覆盖率报告 |
 
@@ -283,7 +285,7 @@ CI（`.github/workflows/ci.yml`）：push/PR 触及 `wechat-miniprogram/**` 时�
 按优先级排列，供后续迭代参考：
 
 ### 高优先 · 架构健壮性
-1. **统一结果视图契约**：把 `result.js` 的鸭子类型分支收敛为模块统一实现 `getResultView(r, layout)` → 返回标准化视图模型 `{ groups, dims, subtests, interpretations, showBipolar }`，页面只渲染。新模块零样板、避免漏接 `build*` 导致白屏。**（已完成：23 个模块全部迁移，回退分支已移除）**
+1. **统一结果视图契约**：把 `result.js` 的鸭子类型分支收敛为模块统一实现 `getResultView(r, layout)` → 返回标准化视图模型 `{ groups, dims, subtests, interpretations, showBipolar }`，页面只渲染。新模块零样板、避免漏接 `build*` 导致白屏。**（已完成：27 个模块全部迁移，回退分支已移除）**
 2. **`computeResult` 容错**：`result.js` 用 try/catch 包裹评分，异常时显示兜底结果而非整页崩溃（尤其旧版 `answers` 格式变更时）。
 3. **趋势图增强**：数值趋势补 x 轴日期标签、>N 条时支持缩放；类型趋势展示「最近一次 vs 首次」变化。
 
@@ -346,6 +348,7 @@ CI（`.github/workflows/ci.yml`）：push/PR 触及 `wechat-miniprogram/**` 时�
 - **Lint 全面清零 + 严格模式（P1/P3）**：清理 `modules/hbdi/index.js`、`games/breath-478/game.js`、`games/hanoi/game.js`、`games/mindfulness/game.js`、`games/resonance/game.js`、`pages/profile/profile.js` 等 6 处未用变量警告；新增 `npm run lint:strict`（`--max-warnings 0`），CI 强制通过，`npm run lint` 与 `npm run lint:strict` 均达成 **0 error / 0 warning**。
 - **趋势图日期智能显示（P2）**：`utils/canvas.js` `renderTrend` 优化：≤10 条全显示日期，>10 条按间隔采样（保留首尾），避免重叠；`renderFullPageCard` 同步更新。
 - **方法练习趋势可视化（P2）**：`pages/methods/detail.js`、`pages/methods/practice.js` 新增 `computePracticeTrend` + canvas 折线图（复用 `renderTrend`），`detail.wxml`/`practice.wxml` 新增 `#practiceTrendCanvas`，支持首次→最近变化、变化量/方向、日期标签，与测评趋势体验对齐。
+- **新增 mind6 与 MAP（2026-10-27）**：新增 `mind6`（心智成长六层次，认知六层级，24 题情境单选）与 `map`（MAP 职业性格测验，40 题迫选二选一 / 24 项特质），量表数 25→27。
 
 > 路线图高/中优先项基本落地；CI 已接入 Jest + 覆盖率 + 严格 Lint。**已知问题**：`utils/user.js` 云同步为占位实现（未接后端），当前方案为「隐藏 UI + 明确标注本地优先」；如需真正云同步需补全 `wx.cloud.init` 与云函数；详见 [`docs/CODE_REVIEW.md`](docs/CODE_REVIEW.md)。
 
