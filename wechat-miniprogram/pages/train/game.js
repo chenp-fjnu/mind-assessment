@@ -100,7 +100,11 @@ Page({
     let text = ''
     if (t && t.showTrend && t.trendValues.length >= 2) {
       text =
-        '近期 ' + t.trendValues[0] + ' → ' + t.trendValues[t.trendValues.length - 1] + (g.metric.unit || '')
+        '近期 ' +
+        t.trendValues[0] +
+        ' → ' +
+        t.trendValues[t.trendValues.length - 1] +
+        (g.metric.unit || '')
     }
     this.setData({ trendText: text })
   },
@@ -168,12 +172,14 @@ Page({
     const m = g.metric
     chips.push({ label: m.label, value: r[m.key] + (m.unit || '') })
     if (r.time != null) chips.push({ label: '用时', value: Math.round(r.time * 10) / 10 + 's' })
-    if (r.duration != null) chips.push({ label: '时长', value: Math.round(r.duration * 10) / 10 + 's' })
+    if (r.duration != null)
+      chips.push({ label: '时长', value: Math.round(r.duration * 10) / 10 + 's' })
     if (r.errors != null) chips.push({ label: '错误', value: r.errors })
     if (r.moves != null) chips.push({ label: '步数', value: r.moves })
     if (r.correct != null) chips.push({ label: '正确', value: r.correct + '/' + (r.total || '') })
     if (r.rounds != null) chips.push({ label: '轮数', value: r.rounds })
     if (r.score != null) chips.push({ label: '得分', value: r.score })
+    if (r.bestCombo != null) chips.push({ label: '最高连击', value: r.bestCombo })
     return chips
   },
   replay() {
@@ -207,7 +213,7 @@ Page({
   },
   goBack() {
     wx.navigateBack({
-      fail: () => wx.switchTab({ url: '/pages/train/train' })
+      fail: () => wx.switchTab({ url: '/pages/train/train' }),
     })
   },
   // 棋盘区域内拦截 touchmove，避免手指轻微滑动被页面当成滚动、导致 bindtap 被取消

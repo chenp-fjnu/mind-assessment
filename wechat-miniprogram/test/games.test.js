@@ -6,11 +6,13 @@ const { getMetaList, getGame } = require('../utils/game-registry')
 const trainStore = require('../utils/train-store')
 
 describe('训练游戏注册表', () => {
-  test('包含 34 个游戏且维度齐全', () => {
+  test('包含 35 个游戏且维度齐全', () => {
     const list = getMetaList()
-    expect(list.length).toBe(34)
+    expect(list.length).toBe(35)
     const dims = list.map((g) => g.dim)
-    expect(dims).toEqual(expect.arrayContaining(['attention', 'memory', 'reaction', 'relax', 'exec']))
+    expect(dims).toEqual(
+      expect.arrayContaining(['attention', 'memory', 'reaction', 'relax', 'exec'])
+    )
   })
 
   test('每个游戏暴露统一契约字段', () => {
@@ -31,9 +33,7 @@ describe('舒尔特方格', () => {
     const s = g.generate(5)
     expect(s.size).toBe(5)
     expect(s.cells.length).toBe(25)
-    expect([...s.cells].sort((a, b) => a - b)).toEqual(
-      Array.from({ length: 25 }, (_, i) => i + 1)
-    )
+    expect([...s.cells].sort((a, b) => a - b)).toEqual(Array.from({ length: 25 }, (_, i) => i + 1))
   })
   test('score 用时越短得分越高', () => {
     const fast = g.score({ size: 5, time: 10, errors: 0 })
@@ -66,6 +66,22 @@ describe('舒尔特方格', () => {
   test('compare 对缺失常模尺寸返回 null', () => {
     expect(g.compare(2, 5, '18+')).toBeNull()
     expect(g.compare(5, null, '18+')).toBeNull()
+  })
+})
+
+describe('解压连字', () => {
+  const g = getGame('connect')
+  test('generate 返回 size×size 的 1..N 排列', () => {
+    const s = g.generate(7)
+    expect(s.size).toBe(7)
+    expect(s.total).toBe(49)
+    expect(s.cells.length).toBe(49)
+    expect([...s.cells].sort((a, b) => a - b)).toEqual(Array.from({ length: 49 }, (_, i) => i + 1))
+  })
+  test('score 越顺（快、少错、高连击）得分越高', () => {
+    const smooth = g.score({ total: 49, time: 40, errors: 0, bestCombo: 8 })
+    const rough = g.score({ total: 49, time: 120, errors: 6, bestCombo: 1 })
+    expect(smooth.score).toBeGreaterThan(rough.score)
   })
 })
 
@@ -147,8 +163,24 @@ describe('N-Back', () => {
     expect(s.gridSize).toBe('medium')
   })
   test('score 正确率越高得分越高', () => {
-    const good = g.score({ correct: 18, total: 20, times: [600, 600], visualCorrect: 18, visualTotal: 20, auditoryCorrect: 18, auditoryTotal: 20 })
-    const bad = g.score({ correct: 8, total: 20, times: [600, 600], visualCorrect: 8, visualTotal: 20, auditoryCorrect: 8, auditoryTotal: 20 })
+    const good = g.score({
+      correct: 18,
+      total: 20,
+      times: [600, 600],
+      visualCorrect: 18,
+      visualTotal: 20,
+      auditoryCorrect: 18,
+      auditoryTotal: 20,
+    })
+    const bad = g.score({
+      correct: 8,
+      total: 20,
+      times: [600, 600],
+      visualCorrect: 8,
+      visualTotal: 20,
+      auditoryCorrect: 8,
+      auditoryTotal: 20,
+    })
     expect(good.score).toBeGreaterThan(bad.score)
     expect(good.accuracy).toBe(0.9)
     expect(good.visualAccuracy).toBe(0.9)
@@ -156,10 +188,10 @@ describe('N-Back', () => {
   })
   test('isMatch 正确判断 N 步匹配', () => {
     const seq = [1, 2, 3, 1, 2, 3]
-    expect(g.isMatch(seq, 3, 3)).toBe(true)  // seq[3] === seq[0]
-    expect(g.isMatch(seq, 4, 3)).toBe(true)  // seq[4] === seq[1]
+    expect(g.isMatch(seq, 3, 3)).toBe(true) // seq[3] === seq[0]
+    expect(g.isMatch(seq, 4, 3)).toBe(true) // seq[4] === seq[1]
     expect(g.isMatch(seq, 2, 3)).toBe(false) // idx < n
-    expect(g.isMatch(seq, 5, 3)).toBe(true)  // seq[5] === seq[2]
+    expect(g.isMatch(seq, 5, 3)).toBe(true) // seq[5] === seq[2]
   })
 })
 
@@ -303,7 +335,11 @@ describe('放松正念游戏', () => {
     expect(s.cycles).toBe(3)
   })
   test('resonance 返回吸气4呼气6', () => {
-    expect(getGame('resonance').generate(5).phases.map((p) => p.dur)).toEqual([4, 6])
+    expect(
+      getGame('resonance')
+        .generate(5)
+        .phases.map((p) => p.dur)
+    ).toEqual([4, 6])
   })
   test('mindfulness 返回引导语', () => {
     expect(getGame('mindfulness').generate(4).prompts.length).toBeGreaterThan(0)
@@ -379,7 +415,13 @@ describe('808 专题游戏', () => {
     s.trials.forEach((t) => {
       answers[t.answer]++
       const inSet = t.set.some((c) => c.key === t.color.key)
-      expect(t.answer).toBe(g.answerOf(t.set.map((c) => c.key), t.color.key, t.digits))
+      expect(t.answer).toBe(
+        g.answerOf(
+          t.set.map((c) => c.key),
+          t.color.key,
+          t.digits
+        )
+      )
       if (['05', '15'].includes(t.digits)) expect(t.answer).toBe('space')
       else expect(t.answer).toBe(inSet ? 'J' : 'F')
     })
@@ -400,36 +442,97 @@ describe('808 专题游戏', () => {
   })
 })
 
-describe('训练游戏计分单调性（覆盖全部 34 个游戏）', () => {
+describe('训练游戏计分单调性（覆盖全部 35 个游戏）', () => {
   const cases = {
-    'bigger-number': [{ total: 10, correct: 10 }, { total: 10, correct: 4 }],
-    'color-match': [{ total: 20, correct: 20 }, { total: 20, correct: 10 }],
-    corsi: [{ total: 9, correct: 9 }, { total: 9, correct: 3 }],
-    'digit-span': [{ total: 9, correct: 9 }, { total: 9, correct: 2 }],
-    'double-decision': [{ total: 12, correct: 12 }, { total: 12, correct: 6 }],
-    'go-no-go': [{ total: 24, correct: 24 }, { total: 24, correct: 12 }],
-    mirror: [{ total: 10, correct: 10 }, { total: 10, correct: 5 }],
-    simon: [{ total: 8, correct: 8 }, { total: 8, correct: 3 }],
-    'task-switch': [{ total: 12, correct: 12 }, { total: 12, correct: 5 }],
-    wisconsin: [{ total: 10, correct: 10 }, { total: 10, correct: 4 }],
-    'pattern-memory': [{ total: 9, correct: 9 }, { total: 9, correct: 3 }],
+    'bigger-number': [
+      { total: 10, correct: 10 },
+      { total: 10, correct: 4 },
+    ],
+    'color-match': [
+      { total: 20, correct: 20 },
+      { total: 20, correct: 10 },
+    ],
+    corsi: [
+      { total: 9, correct: 9 },
+      { total: 9, correct: 3 },
+    ],
+    'digit-span': [
+      { total: 9, correct: 9 },
+      { total: 9, correct: 2 },
+    ],
+    'double-decision': [
+      { total: 12, correct: 12 },
+      { total: 12, correct: 6 },
+    ],
+    'go-no-go': [
+      { total: 24, correct: 24 },
+      { total: 24, correct: 12 },
+    ],
+    mirror: [
+      { total: 10, correct: 10 },
+      { total: 10, correct: 5 },
+    ],
+    simon: [
+      { total: 8, correct: 8 },
+      { total: 8, correct: 3 },
+    ],
+    'task-switch': [
+      { total: 12, correct: 12 },
+      { total: 12, correct: 5 },
+    ],
+    wisconsin: [
+      { total: 10, correct: 10 },
+      { total: 10, correct: 4 },
+    ],
+    'pattern-memory': [
+      { total: 9, correct: 9 },
+      { total: 9, correct: 3 },
+    ],
     'breath-478': [{ cycles: 6 }, { cycles: 2 }],
     resonance: [{ cycles: 8 }, { cycles: 2 }],
     mindfulness: [{ cycles: 5 }, { cycles: 1 }],
     cps: [{ clicks: 60 }, { clicks: 20 }],
-    whack: [{ hits: 18, misses: 2 }, { hits: 5, misses: 10 }],
-    hanoi: [{ moves: 7, optimal: 7 }, { moves: 27, optimal: 7 }],
+    whack: [
+      { hits: 18, misses: 2 },
+      { hits: 5, misses: 10 },
+    ],
+    connect: [
+      { total: 49, time: 40, errors: 0, bestCombo: 8 },
+      { total: 49, time: 120, errors: 6, bestCombo: 1 },
+    ],
+    hanoi: [
+      { moves: 7, optimal: 7 },
+      { moves: 27, optimal: 7 },
+    ],
     'tower-london': [{ moves: 3 }, { moves: 30 }],
-    'edge-focus': [{ total: 8, correct: 8 }, { total: 8, correct: 3 }],
-    'digit-n2': [{ total: 10, correct: 10 }, { total: 10, correct: 4 }],
-    'aud-cpt': [{ total: 12, correct: 12 }, { total: 12, correct: 5 }],
-    'color-probe': [{ total: 4, correct: 4 }, { total: 4, correct: 2 }],
-    'dual-square': [{ total: 3, correct: 3 }, { total: 3, correct: 1 }],
+    'edge-focus': [
+      { total: 8, correct: 8 },
+      { total: 8, correct: 3 },
+    ],
+    'digit-n2': [
+      { total: 10, correct: 10 },
+      { total: 10, correct: 4 },
+    ],
+    'aud-cpt': [
+      { total: 12, correct: 12 },
+      { total: 12, correct: 5 },
+    ],
+    'color-probe': [
+      { total: 4, correct: 4 },
+      { total: 4, correct: 2 },
+    ],
+    'dual-square': [
+      { total: 3, correct: 3 },
+      { total: 3, correct: 1 },
+    ],
     'find-rule': [
       { targetCount: 8, found: 8, errors: 0, time: 8 },
       { targetCount: 8, found: 4, errors: 5, time: 40 },
     ],
-    'visual-search': [{ time: 2, errors: 0 }, { time: 20, errors: 10 }],
+    'visual-search': [
+      { time: 2, errors: 0 },
+      { time: 20, errors: 10 },
+    ],
   }
   Object.keys(cases).forEach((id) => {
     test(`${id} 好成绩得分高于差成绩`, () => {

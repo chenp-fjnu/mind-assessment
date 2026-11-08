@@ -36,6 +36,7 @@
     "task-switch-game": "../../games/task-switch/game",
     "wisconsin-game": "../../games/wisconsin/game",
     "tower-london-game": "../../games/tower-london/game",
-    "dual-square-game": "../../games/dual-square/game"
+    "dual-square-game": "../../games/dual-square/game",
+    "connect-game": "../../games/connect/game"
   }
 }

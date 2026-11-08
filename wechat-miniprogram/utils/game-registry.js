@@ -36,6 +36,7 @@ const LOADERS = {
   wisconsin: () => require('../games/wisconsin/index'),
   'tower-london': () => require('../games/tower-london/index'),
   'dual-square': () => require('../games/dual-square/index'),
+  connect: () => require('../games/connect/index'),
 }
 
 const DIM_LABELS = {

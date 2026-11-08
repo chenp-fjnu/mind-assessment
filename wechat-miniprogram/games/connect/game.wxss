@@ -1,0 +1,131 @@
+.connect {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.stage {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+}
+.board {
+  flex: 1;
+  min-width: 0;
+  margin: 0 auto;
+}
+.cell {
+  aspect-ratio: 1 / 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--card-bg);
+  border: 2rpx solid var(--border-light);
+  border-radius: 14rpx;
+  font-weight: 700;
+  color: var(--text-primary);
+  transition:
+    background 0.12s,
+    border-color 0.12s,
+    color 0.12s,
+    transform 0.12s;
+}
+.cell.found {
+  background: var(--bg-tertiary);
+  border-color: transparent;
+  color: transparent;
+}
+/* 连点对：蓝色涟漪 */
+.cell.pop {
+  animation: pop 260ms ease-out;
+}
+@keyframes pop {
+  0% {
+    transform: scale(0.5);
+    background: rgba(37, 99, 235, 0.55);
+  }
+  55% {
+    transform: scale(1.12);
+    background: rgba(37, 99, 235, 0.32);
+  }
+  100% {
+    transform: scale(1);
+    background: var(--bg-tertiary);
+  }
+}
+/* 点错：红闪 + 抖动 */
+.cell.wrong {
+  animation: wrong 220ms ease-in-out;
+}
+@keyframes wrong {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-8rpx);
+    background: rgba(239, 68, 68, 0.28);
+  }
+  75% {
+    transform: translateX(8rpx);
+    background: rgba(239, 68, 68, 0.28);
+  }
+}
+/* 左侧进度列（当前 + 前两个），固定宽度常驻，避免棋盘随气泡出现而抖动 */
+.rail {
+  flex: 0 0 72rpx;
+  width: 72rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12rpx;
+}
+.bubble {
+  width: 56rpx;
+  height: 56rpx;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28rpx;
+  font-weight: 800;
+  color: #fff;
+}
+.bubble.ghost {
+  background: var(--bg-brand-strong);
+  color: var(--text-tertiary);
+}
+.bubble.cur {
+  background: #2563eb;
+  box-shadow: 0 6rpx 16rpx rgba(37, 99, 235, 0.4);
+  animation: curpulse 900ms ease-in-out infinite;
+}
+@keyframes curpulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.12);
+  }
+}
+.hint {
+  display: flex;
+  align-items: center;
+  gap: 28rpx;
+  margin-top: 28rpx;
+  font-size: 28rpx;
+  font-weight: 600;
+  color: var(--text-tertiary);
+}
+.hint-combo {
+  color: var(--text-tertiary);
+  transition:
+    color 0.15s,
+    transform 0.15s;
+}
+.hint-combo.hot {
+  color: #2563eb;
+  transform: scale(1.08);
+}

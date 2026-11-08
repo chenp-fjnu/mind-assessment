@@ -33,3 +33,4 @@
     <wisconsin-game wx:if="{{gameId === 'wisconsin'}}" id="trainGame" level="{{level}}" board-width="{{boardWidth}}" board-height="{{boardHeight}}" fullscreen="{{fullscreen}}" bind:finish="onFinish" />
     <tower-london-game wx:if="{{gameId === 'tower-london'}}" id="trainGame" level="{{level}}" board-width="{{boardWidth}}" board-height="{{boardHeight}}" fullscreen="{{fullscreen}}" bind:finish="onFinish" />
     <dual-square-game wx:if="{{gameId === 'dual-square'}}" id="trainGame" level="{{level}}" board-width="{{boardWidth}}" board-height="{{boardHeight}}" fullscreen="{{fullscreen}}" bind:finish="onFinish" />
+    <connect-game wx:if="{{gameId === 'connect'}}" id="trainGame" level="{{level}}" board-width="{{boardWidth}}" board-height="{{boardHeight}}" fullscreen="{{fullscreen}}" bind:finish="onFinish" />
