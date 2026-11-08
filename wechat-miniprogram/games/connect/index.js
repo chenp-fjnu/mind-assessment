@@ -44,6 +44,7 @@ module.exports = {
   desc: '按 1→N 顺序连点数字，连击越顺越解压。',
   reference: '视觉搜索 + 手速；点得越顺、错得越少、连击越高，得分越高。',
   levels: [
+    { value: 4, label: '4×4 躺平' },
     { value: 5, label: '5×5 入门' },
     { value: 6, label: '6×6' },
     { value: 7, label: '7×7 解压' },

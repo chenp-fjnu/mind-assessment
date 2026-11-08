@@ -14,7 +14,7 @@
       <view
         wx:for="{{cells}}"
         wx:key="idx"
-        class="cell {{item.found ? 'found' : ''}} {{pop === index ? 'pop' : ''}} {{shakeIdx === index ? 'wrong' : ''}}"
+        class="cell {{item.found ? 'found' : ''}} {{pop === index ? popClass : ''}} {{shakeIdx === index ? 'wrong' : ''}}"
         data-n="{{item.n}}"
         data-idx="{{index}}"
         bindtap="onTap"
@@ -29,7 +29,7 @@
 
   <view class="hint">
     <text class="hint-progress">已连 {{foundCount}} / {{total}}</text>
-    <text class="hint-combo {{combo >= 3 ? 'hot' : ''}}">连击 {{combo}}</text>
+    <text class="hint-combo {{combo >= 3 ? 'hot' : ''}} {{comboFlash ? 'flash' : ''}}">连击 {{combo}}</text>
     <text class="hint-err" wx:if="{{errors > 0}}">失误 {{errors}}</text>
   </view>
 </view>

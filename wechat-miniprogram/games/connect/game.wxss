@@ -54,6 +54,48 @@
     background: var(--bg-tertiary);
   }
 }
+/* 5 连：热（更强蓝 + 光晕） */
+.cell.pop.hot {
+  animation: popHot 280ms ease-out;
+}
+@keyframes popHot {
+  0% {
+    transform: scale(0.5);
+    background: rgba(59, 130, 246, 0.6);
+    box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.5);
+  }
+  55% {
+    transform: scale(1.16);
+    background: rgba(59, 130, 246, 0.42);
+    box-shadow: 0 0 20rpx 6rpx rgba(37, 99, 235, 0.55);
+  }
+  100% {
+    transform: scale(1);
+    background: var(--bg-tertiary);
+    box-shadow: 0 0 0 0 rgba(37, 99, 235, 0);
+  }
+}
+/* 10 连：爆（金色爆发） */
+.cell.pop.blaze {
+  animation: popBlaze 300ms ease-out;
+}
+@keyframes popBlaze {
+  0% {
+    transform: scale(0.45);
+    background: rgba(245, 158, 11, 0.68);
+    box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.55);
+  }
+  50% {
+    transform: scale(1.22);
+    background: rgba(245, 158, 11, 0.46);
+    box-shadow: 0 0 28rpx 10rpx rgba(245, 158, 11, 0.6);
+  }
+  100% {
+    transform: scale(1);
+    background: var(--bg-tertiary);
+    box-shadow: 0 0 0 0 rgba(245, 158, 11, 0);
+  }
+}
 /* 点错：红闪 + 抖动 */
 .cell.wrong {
   animation: wrong 220ms ease-in-out;
@@ -128,4 +170,20 @@
 .hint-combo.hot {
   color: #2563eb;
   transform: scale(1.08);
+}
+/* 连击里程碑脉冲（每 5 连） */
+.hint-combo.flash {
+  animation: comboFlash 450ms ease-out;
+}
+@keyframes comboFlash {
+  0% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(1.35);
+    color: #f59e0b;
+  }
+  100% {
+    transform: scale(1.08);
+  }
 }

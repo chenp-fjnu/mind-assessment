@@ -170,6 +170,9 @@ Page({
   buildChips(r, g) {
     const chips = []
     const m = g.metric
+    // 解压连字零失误：置顶「完美连字」奖励芯片
+    if (this.data.gameId === 'connect' && r.errors === 0)
+      chips.push({ label: '完美连字', value: '零失误' })
     chips.push({ label: m.label, value: r[m.key] + (m.unit || '') })
     if (r.time != null) chips.push({ label: '用时', value: Math.round(r.time * 10) / 10 + 's' })
     if (r.duration != null)
@@ -178,7 +181,8 @@ Page({
     if (r.moves != null) chips.push({ label: '步数', value: r.moves })
     if (r.correct != null) chips.push({ label: '正确', value: r.correct + '/' + (r.total || '') })
     if (r.rounds != null) chips.push({ label: '轮数', value: r.rounds })
-    if (r.score != null) chips.push({ label: '得分', value: r.score })
+    // 主指标本身就是得分时，首枚芯片已展示得分，避免重复
+    if (r.score != null && m.key !== 'score') chips.push({ label: '得分', value: r.score })
     if (r.bestCombo != null) chips.push({ label: '最高连击', value: r.bestCombo })
     return chips
   },
