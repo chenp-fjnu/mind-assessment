@@ -3,7 +3,7 @@ const { hexToRgba } = require('../../utils/color')
 const trainStore = require('../../utils/train-store')
 const { useTheme } = require('../../utils/theme-store')
 
-const DIM_ORDER = ['attention', 'memory', 'reaction', 'relax', 'exec']
+const DIM_ORDER = ['attention', 'memory', 'reaction', 'relax', 'exec', 'logic']
 
 function fmtBest(value, unit) {
   if (value == null) return '暂无记录'

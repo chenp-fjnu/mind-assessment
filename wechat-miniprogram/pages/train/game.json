@@ -37,6 +37,7 @@
     "wisconsin-game": "../../games/wisconsin/game",
     "tower-london-game": "../../games/tower-london/game",
     "dual-square-game": "../../games/dual-square/game",
-    "connect-game": "../../games/connect/game"
+    "connect-game": "../../games/connect/game",
+    "calc-24-game": "../../games/calc-24/game"
   }
 }

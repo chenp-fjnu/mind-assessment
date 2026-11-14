@@ -1,0 +1,51 @@
+<view class="c24">
+  <view class="info">第 {{pi + 1}}/{{problems}} 题　用时 {{time}}s</view>
+  <view class="target">目标 {{cur.target}}</view>
+
+  <view class="cards">
+    <view
+      wx:for="{{cards}}"
+      wx:key="index"
+      class="card {{item.used ? 'used' : ''}}"
+      data-idx="{{index}}"
+      bindtap="onNum"
+      role="button"
+      aria-label="数字 {{item.v}}"
+    >{{item.v}}</view>
+  </view>
+
+  <view class="expr {{flash === 'bad' ? 'bad' : ''}}">
+    <block wx:if="{{tokens.length}}">
+      <text
+        wx:for="{{tokens}}"
+        wx:key="index"
+        class="tok {{item.t === 'num' ? 'num' : 'op'}}"
+      >{{item.v}}</text>
+    </block>
+    <text wx:else class="ph">点数字与运算符拼出算式</text>
+  </view>
+
+  <view wx:if="{{showAns}}" class="ans">参考：{{cur.answer}}</view>
+
+  <view class="ops">
+    <view
+      wx:for="{{['+', '-', '*', '/', '(', ')']}}"
+      wx:key="*this"
+      class="opbtn"
+      data-op="{{item}}"
+      bindtap="onOp"
+      role="button"
+      aria-label="运算符 {{item}}"
+    >{{item}}</view>
+  </view>
+
+  <view class="acts">
+    <view class="act ghost" bindtap="onBack" role="button" aria-label="删除">⌫</view>
+    <view class="act ghost" bindtap="onClear" role="button" aria-label="清空">清空</view>
+    <view class="act ghost" bindtap="onHint" role="button" aria-label="提示">提示</view>
+    <view class="act go" bindtap="onSubmit" role="button" aria-label="提交">＝</view>
+  </view>
+
+  <view wx:if="{{phase === 'idle'}}" class="tip">4 个数字各用一次，加减乘除各组合凑出 24，点「＝」提交</view>
+  <view wx:if="{{phase === 'done'}}" class="tip">完成！用时 {{time}}s</view>
+</view>

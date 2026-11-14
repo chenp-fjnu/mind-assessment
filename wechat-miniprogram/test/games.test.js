@@ -6,12 +6,12 @@ const { getMetaList, getGame } = require('../utils/game-registry')
 const trainStore = require('../utils/train-store')
 
 describe('训练游戏注册表', () => {
-  test('包含 35 个游戏且维度齐全', () => {
+  test('包含 36 个游戏且维度齐全', () => {
     const list = getMetaList()
-    expect(list.length).toBe(35)
+    expect(list.length).toBe(36)
     const dims = list.map((g) => g.dim)
     expect(dims).toEqual(
-      expect.arrayContaining(['attention', 'memory', 'reaction', 'relax', 'exec'])
+      expect.arrayContaining(['attention', 'memory', 'reaction', 'relax', 'exec', 'logic'])
     )
   })
 
@@ -442,7 +442,7 @@ describe('808 专题游戏', () => {
   })
 })
 
-describe('训练游戏计分单调性（覆盖全部 35 个游戏）', () => {
+describe('训练游戏计分单调性（覆盖全部 36 个游戏）', () => {
   const cases = {
     'bigger-number': [
       { total: 10, correct: 10 },
@@ -533,6 +533,10 @@ describe('训练游戏计分单调性（覆盖全部 35 个游戏）', () => {
       { time: 2, errors: 0 },
       { time: 20, errors: 10 },
     ],
+    'calc-24': [
+      { time: 5, correct: 4, total: 4, errors: 0 },
+      { time: 60, correct: 2, total: 4, errors: 2 },
+    ],
   }
   Object.keys(cases).forEach((id) => {
     test(`${id} 好成绩得分高于差成绩`, () => {
@@ -552,6 +556,42 @@ describe('训练游戏计分单调性（覆盖全部 35 个游戏）', () => {
     expect(g.score({ size: 5, time: 10, errors: 0 }).score).toBeGreaterThan(
       g.score({ size: 5, time: 60, errors: 5 }).score
     )
+  })
+})
+
+describe('算24点', () => {
+  const g = getGame('calc-24')
+  test('evalExpr 正确求值（优先级 / 括号 / 多数字）', () => {
+    expect(g.evalExpr('3 * 4 + 2').value).toBe(14)
+    expect(g.evalExpr('(1 + 5) * (2 + 2)').value).toBe(24)
+    expect(g.evalExpr('13 + 11').value).toBe(24)
+    expect(g.evalExpr('5 - 1').value).toBe(4)
+  })
+  test('evalExpr 拒绝除零 / 非法 / 不完整', () => {
+    expect(g.evalExpr('1 / 0').ok).toBe(false)
+    expect(g.evalExpr('1 / 0').reason).toMatch(/0/)
+    expect(g.evalExpr('1 @ 2').ok).toBe(false)
+    expect(g.evalExpr('(1 + 2').ok).toBe(false)
+    expect(g.evalExpr('1 +').ok).toBe(false)
+  })
+  test('check24 校验数字使用与结果', () => {
+    expect(g.check24('(1 + 5) * (2 + 2)', [1, 5, 2, 2]).ok).toBe(true)
+    expect(g.check24('1 + 5', [1, 5, 2, 2]).ok).toBe(false) // 数字不全
+    expect(g.check24('(1 + 5) * (2 + 1)', [1, 5, 2, 2]).ok).toBe(false) // 重复用 1、少 2
+    expect(g.check24('1 + 2 + 3 + 4', [1, 2, 3, 4]).ok).toBe(false) // 结果 10
+  })
+  test('generate 各难度均给出有解答案且可被校验', () => {
+    ;[1, 2, 3].forEach((lv) => {
+      const st = g.generate(lv)
+      expect(st.target).toBe(24)
+      expect(st.nums).toHaveLength(4)
+      expect(st.answer).toBeTruthy()
+      expect(g.check24(st.answer, st.nums).ok).toBe(true)
+    })
+  })
+  test('已知无解组合返回 null', () => {
+    expect(g.solve24([1, 1, 1, 1])).toBeNull()
+    expect(g.solve24([1, 2, 3, 4])).not.toBeNull()
   })
 })
 

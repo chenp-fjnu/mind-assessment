@@ -1,6 +1,6 @@
 ﻿# 心智探索局（Mind Quest）· 微信小程序
 
-纯前端**原生**微信小程序，集成 **27 套心理学量表**（人格、情绪、智力、职业、自我认知、压力、睡眠、社交、积极心理等 9 大类），并在「训练」Tab 内置 **35 个脑力训练游戏**（注意力 / 工作记忆 / 反应速度 / 放松正念 / 执行功能 5 大认知维度）；支持离线测评、本地保存、结果可视化与同量表历史趋势对比。无后端、无网络请求，所有数据仅存于本地 `Storage`。
+纯前端**原生**微信小程序，集成 **27 套心理学量表**（人格、情绪、智力、职业、自我认知、压力、睡眠、社交、积极心理等 9 大类），并在「训练」Tab 内置 **36 个脑力训练游戏**（注意力 / 工作记忆 / 反应速度 / 放松正念 / 执行功能 / 逻辑计算 6 大认知维度）；支持离线测评、本地保存、结果可视化与同量表历史趋势对比。无后端、无网络请求，所有数据仅存于本地 `Storage`。
 
 > ⚠️ 免责声明：所有量表均为**简化 / 教育版**自陈问卷，计分与常模为公开资料整理的近似值，仅供自我探索与娱乐参考，不构成任何医学诊断或专业建议。
 
@@ -30,7 +30,7 @@ wechat-miniprogram/
 │   ├── spm/                          # 瑞文图形推理（questions.js 懒加载）
 │   ├── wechsler/                     # 韦氏智力（积木题含真实候选图形数据）
 │   └── n808/                         # 808 神测（限时图形多选，随机种子确定性生成）
-├── games/                            # 训练游戏（每个 <id>/ 含 index.js 逻辑 + game.js 组件，共 35 个）
+├── games/                            # 训练游戏（每个 <id>/ 含 index.js 逻辑 + game.js 组件，共 36 个）
 │   ├── schulte/ cancellation/ visual-search/ find-rule/ number-maze/ mirror/ edge-focus/ aud-cpt/          # 注意力（8）
 │   ├── memory-match/ pattern-memory/ simon/ digit-span/ corsi/ n-back/ digit-n2/ color-probe/               # 工作记忆（8）
 │   ├── stroop/ reaction-time/ flanker/ whack/ go-no-go/ bigger-number/ cps/ color-match/ double-decision/  # 反应速度（9）
@@ -118,7 +118,7 @@ wechat-miniprogram/
 
 除 27 套自评量表外，小程序新增独立 **「训练」Tab**，提供类舒尔特方格的互动脑力训练游戏，覆盖全部认知维度。所有游戏均为**离线、本地记录、无后端**，仅供自我探索与训练热身，不构成医学诊断。
 
-### 已落地游戏（35 个，每维度多个）
+### 已落地游戏（36 个，每维度多个）
 
 | 游戏 id | 名称 | 维度 | 玩法 | 主指标 |
 | --- | --- | --- | --- | --- |
@@ -157,6 +157,7 @@ wechat-miniprogram/
 | `wisconsin` | 威斯康星 | 执行功能 | 按维度归类卡片（4~12 题） | 得分↑ |
 | `tower-london` | 伦敦塔 | 执行功能 | 最少步数达成目标排列（3 球） | 步数↓ |
 | `dual-square` | 双任务方块 | 执行功能 | 按空格×组方块 + 判高低音双任务（3~6 轮） | 得分↑ |
+| `calc-24` | 算 24 点 | 逻辑计算 | 4 数各用一次 + 加减乘除拼出 24（4~8 题） | 用时↓ |
 
 ### 架构与契约
 
@@ -168,7 +169,7 @@ wechat-miniprogram/
     generate(level), score(state) }
   ```
 - **播放器**：`pages/train/game` 通过 `usingComponents` 按 `gameId` 渲染对应组件，统一处理难度选择、计时、成绩保存、最佳/趋势展示。
-- **列表页**：`pages/train/train` 按维度分区（注意力/工作记忆/反应速度/放松正念/执行功能），支持搜索与分类筛选。
+- **列表页**：`pages/train/train` 按维度分区（注意力/工作记忆/反应速度/放松正念/执行功能/逻辑计算），支持搜索与分类筛选。
 - **成绩存储**：`utils/train-store.js`，键 `ma_train_<id>`（上限 50 条），趋势复用 `utils/trend.js` 的 `computeTrend`。
 
 > 资料与候选清单见 `docs/brain-games-catalog.md`（含数字划消、N-Back、Flanker、打地鼠、反应时间、4-7-8 呼吸等可后续增量补齐的游戏）。
@@ -185,7 +186,7 @@ wechat-miniprogram/
 | --- | --- | --- | --- |
 | **测评** | `pages/assess`、`pages/index` | 27 套量表按 9 大类浏览/搜索 → 详情 → 答题 → 结果 → 趋势 | `ma_history`（≤30）、`ma_progress_<id>` |
 | **方法** | `pages/methods` | 22 个心智方法知识库（含步骤/贴士/示例），部分支持「互动练习」按 `schema` 填表打卡 | `ma_practices`（≤50/方法） |
-| **训练** | `pages/train` | 35 个脑力游戏，5 大认知维度，难度分级、计时、成绩与趋势 | `ma_train_<id>`（≤50） |
+| **训练** | `pages/train` | 36 个脑力游戏，6 大认知维度，难度分级、计时、成绩与趋势 | `ma_train_<id>`（≤50） |
 | **我的** | `pages/mine` | 三类记录汇总、主题切换（跟随系统/浅/深）、云同步占位入口 | `user-theme-preference`、`ma_user` |
 | **档案** | `pages/profile` | 微信头像/昵称/性别/生日本地档案 | `ma_user` |
 | **关于** | `pages/about` | 数据来源、隐私协议入口、各板块数量统计 | — |
@@ -350,6 +351,7 @@ CI（`.github/workflows/ci.yml`）：push/PR 触及 `wechat-miniprogram/**` 时�
 - **趋势图日期智能显示（P2）**：`utils/canvas.js` `renderTrend` 优化：≤10 条全显示日期，>10 条按间隔采样（保留首尾），避免重叠；`renderFullPageCard` 同步更新。
 - **方法练习趋势可视化（P2）**：`pages/methods/detail.js`、`pages/methods/practice.js` 新增 `computePracticeTrend` + canvas 折线图（复用 `renderTrend`），`detail.wxml`/`practice.wxml` 新增 `#practiceTrendCanvas`，支持首次→最近变化、变化量/方向、日期标签，与测评趋势体验对齐。
 - **新增 mind6 与 MAP（2026-10-27）**：新增 `mind6`（心智成长六层次，认知六层级，24 题情境单选）与 `map`（MAP 职业性格测验，40 题迫选二选一 / 24 项特质），量表数 25→27。
+- **新增「算 24 点」游戏与新「逻辑计算」维度（2026-11-08）**：新增 `games/calc-24`（4 数各用一次、加减乘除拼出 24，4~8 题），主指标为用时（越低越好），与 schulte/hanoi 同款计时契约；`utils/game-registry.js` 注册 `calc-24` 并在 `DIM_LABELS` 增「逻辑计算」（`logic`），`pages/train/train.js` `DIM_ORDER` 追加 `logic`，认知维度 5→6。求解器为 4 数排列 × 3 运算符 × 5 种括号结构的完全括号化枚举，`evalExpr` 为递归下降解析器（支持多数字、空格、除零提示），`check24` 校验语法/数字各用一次/结果=24；`node tools/gen-game-player.js` 重新生成玩家页挂载（`showStartButton` 走宿主统一开始按钮，公平计时），`check-game-player.js` 闸门通过。`test/games.test.js` 加专项断言（求解/求值/校验/单调性）、计数 35→36，`test/train.page.test.js` 维度/总数/chips 同步 6/36/7，全套 284 测试 + `lint:strict` 0 警告通过。
 
 > 路线图高/中优先项基本落地；CI 已接入 Jest + 覆盖率 + 严格 Lint。**已知问题**：`utils/user.js` 云同步为占位实现（未接后端），当前方案为「隐藏 UI + 明确标注本地优先」；如需真正云同步需补全 `wx.cloud.init` 与云函数；详见 [`docs/CODE_REVIEW.md`](docs/CODE_REVIEW.md)。
 

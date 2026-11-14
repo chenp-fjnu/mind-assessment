@@ -37,6 +37,7 @@ const LOADERS = {
   'tower-london': () => require('../games/tower-london/index'),
   'dual-square': () => require('../games/dual-square/index'),
   connect: () => require('../games/connect/index'),
+  'calc-24': () => require('../games/calc-24/index'),
 }
 
 const DIM_LABELS = {
@@ -45,6 +46,7 @@ const DIM_LABELS = {
   reaction: '反应速度',
   relax: '放松正念',
   exec: '执行功能',
+  logic: '逻辑计算',
 }
 
 const _cache = {}

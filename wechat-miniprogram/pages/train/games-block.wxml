@@ -34,3 +34,4 @@
     <tower-london-game wx:if="{{gameId === 'tower-london'}}" id="trainGame" level="{{level}}" board-width="{{boardWidth}}" board-height="{{boardHeight}}" fullscreen="{{fullscreen}}" bind:finish="onFinish" />
     <dual-square-game wx:if="{{gameId === 'dual-square'}}" id="trainGame" level="{{level}}" board-width="{{boardWidth}}" board-height="{{boardHeight}}" fullscreen="{{fullscreen}}" bind:finish="onFinish" />
     <connect-game wx:if="{{gameId === 'connect'}}" id="trainGame" level="{{level}}" board-width="{{boardWidth}}" board-height="{{boardHeight}}" fullscreen="{{fullscreen}}" bind:finish="onFinish" />
+    <calc-24-game wx:if="{{gameId === 'calc-24'}}" id="trainGame" level="{{level}}" board-width="{{boardWidth}}" board-height="{{boardHeight}}" fullscreen="{{fullscreen}}" bind:finish="onFinish" bind:showStartButton="onShowStartButton" bind:hideStartButton="onHideStartButton" />

@@ -6,14 +6,14 @@
 const { loadPage } = require('./page-helper')
 
 describe('训练列表页 train', () => {
-  test('onLoad 按 5 维度分组并构建 chips', () => {
+  test('onLoad 按 6 维度分组并构建 chips', () => {
     const ctx = loadPage('pages/train/train.js')
-    expect(ctx.data.groups.length).toBe(5)
+    expect(ctx.data.groups.length).toBe(6)
     const total = ctx.data.groups.reduce((n, g) => n + g.games.length, 0)
-    expect(total).toBe(35)
+    expect(total).toBe(36)
     expect(ctx.data.typeChips[0].key).toBe('')
-    expect(ctx.data.typeChips.length).toBe(6)
-    expect(ctx.data.filteredGroups.length).toBe(5)
+    expect(ctx.data.typeChips.length).toBe(7)
+    expect(ctx.data.filteredGroups.length).toBe(6)
   })
 
   test('每个游戏卡片含 id/name/desc/最佳文案', () => {
@@ -43,7 +43,7 @@ describe('训练列表页 train', () => {
     expect(ids.length).toBeGreaterThanOrEqual(1)
     expect(ids).toContain('schulte')
     ctx.clearSearch()
-    expect(ctx.data.filteredGroups.length).toBe(5)
+    expect(ctx.data.filteredGroups.length).toBe(6)
   })
 
   test('goGame 跳转训练播放页', () => {
