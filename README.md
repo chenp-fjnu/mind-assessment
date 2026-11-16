@@ -1,3 +1,14 @@
+---
+项目: mind-assessment
+名称: 心智测评中心
+类型: 微信小程序
+状态: 已交付
+客户: 万有空间
+技术栈: 原生小程序（纯前端，无后端）
+开始: 2026-10-14
+最后更新: 2026-10-14
+---
+
 # 心智测评中心
 
 > ⚠️ **文档说明**：本文档描述的是历史 UniApp 工程结构（`mind-assessment-uniapp/`、`server/` 等已不在仓库）；当前仓库仅含原生微信小程序 `wechat-miniprogram/`（27 套量表 / 9 大类 + 34 个训练游戏），现状一览以 [`wechat-miniprogram/README.md`](wechat-miniprogram/README.md) 为准。
