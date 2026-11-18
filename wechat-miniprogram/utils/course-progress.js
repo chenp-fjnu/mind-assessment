@@ -113,11 +113,12 @@ function getCourseState(course) {
     percent: requiredSteps.length ? Math.round((completedRequiredCount / requiredSteps.length) * 100) : 100,
     started: !!progress.startedAt,
     complete: requiredDone,
-    steps: course.steps.map((step) => ({
+    steps: course.steps.map((step, index) => ({
       ...step,
       completed: completed.indexOf(step.id) >= 0,
       skipped: progress.skippedStepIds.indexOf(step.id) >= 0,
       current: progress.currentStepId === step.id,
+      isLast: index === course.steps.length - 1,
     })),
   }
 }

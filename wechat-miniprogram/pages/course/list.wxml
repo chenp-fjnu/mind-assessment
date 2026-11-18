@@ -1,37 +1,56 @@
 <view class="theme-wrapper {{themeClass}}">
   <view class="scroll-page course-page">
-    <view class="intro-card">
-      <text class="intro-title">按自己的节奏开始</text>
-      <text class="intro-desc">每条路线都由现有测评、方法或训练组成。可以跳过步骤，也可以随时回到完整内容库。</text>
-      <text wx:if="{{goalLabel}}" class="goal-label">你的选择：{{goalLabel}}</text>
+    <view class="hero">
+      <text class="hero-eyebrow">从这里开始</text>
+      <text class="hero-title">课程路线</text>
+      <text class="hero-sub">按你的目标，选一条轻量路线慢慢体验。</text>
+      <view class="hero-meta">
+        <text class="pill">{{courses.length}} 条体验路线</text>
+        <text wx:if="{{goalLabel}}" class="pill">当前目标：{{goalLabel}}</text>
+      </view>
     </view>
 
-    <view wx:for="{{courses}}" wx:key="id" wx:for-item="course" class="course-card">
+    <view class="section-heading">
+      <text class="section-title">{{goalLabel ? '为你准备的路线' : '选择一条路线'}}</text>
+      <text class="section-sub">每一步都可以跳过，也可以随时回到内容库。</text>
+    </view>
+
+    <view wx:for="{{courses}}" wx:key="id" wx:for-item="course" class="card course-card">
       <view class="course-head">
-        <view class="course-icon" style="background:{{course.color}};">{{course.icon}}</view>
+        <view class="course-icon" style="background:{{course.tint}};color:{{course.color}};">{{course.icon}}</view>
         <view class="course-heading">
-          <text wx:if="{{course.recommended}}" class="recommended-label">为你推荐</text>
+          <text wx:if="{{course.recommended}}" class="recommended-label" style="color:{{course.color}};">为你推荐</text>
           <text class="course-title">{{course.name}}</text>
-          <text class="course-tagline">{{course.tagline}}</text>
         </view>
+        <text class="arrow">›</text>
       </view>
-      <text class="course-persona">适合：{{course.persona}}</text>
+
+      <text class="course-tagline">{{course.tagline}}</text>
       <view class="course-meta">
-        <text>约 {{course.totalMinutes}} 分钟</text>
-        <text>{{course.steps.length}} 个步骤</text>
+        <text class="meta-chip">约 {{course.totalMinutes}} 分钟</text>
+        <text class="meta-chip">{{course.steps.length}} 个步骤</text>
       </view>
+      <view class="persona-row">
+        <text class="persona-label">适合</text>
+        <text class="course-persona">{{course.persona}}</text>
+      </view>
+
       <view wx:if="{{course.started}}" class="progress-row">
+        <view class="progress-copy">
+          <text class="progress-label">{{course.complete ? '必做步骤已完成' : '必做步骤'}}</text>
+          <text class="progress-text">{{course.completedRequiredCount}}/{{course.requiredStepCount}}</text>
+        </view>
         <view class="progress-track"><view class="progress-fill" style="width:{{course.percent}}%;"></view></view>
-        <text class="progress-text">{{course.complete ? '必做步骤已完成' : course.completedRequiredCount + '/' + course.requiredStepCount + ' 个必做步骤'}}</text>
       </view>
+
       <button class="course-button" data-id="{{course.id}}" bindtap="openCourse" aria-label="查看课程：{{course.name}}">
-        {{course.started ? '继续 / 查看路线' : '查看路线'}}
+        {{course.started ? '继续这条路线' : '查看路线'}}
       </button>
     </view>
 
-    <view wx:if="{{empty}}" class="empty-card">
+    <view wx:if="{{empty}}" class="card empty-card">
       <text>暂时没有可用课程，可以直接浏览测评、方法或训练。</text>
     </view>
-    <view class="footer">课程用于自我探索与练习，不构成诊断或治疗建议。</view>
+    <view class="footer">课程由现有内容组成，仅供自我探索与练习，不构成诊断或治疗建议。</view>
   </view>
 </view>

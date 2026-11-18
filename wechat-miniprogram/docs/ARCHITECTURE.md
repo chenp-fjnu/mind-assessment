@@ -286,7 +286,7 @@ npm run test:all     → validate + smoke + Jest coverage（CI 同款）
 
 - `test/setup.js` 提供最小 `wx/Page/Component/App/getApp` mock 与 canvas noop。
 - `test/page-helper.js` 用 `jest.isolateModules` 加载页面并执行 `onLoad`。
-- 覆盖率现状为 66.43% 语句 / 47.82% 分支 / 71.79% 函数 / 67.96% 行；`theme-store.js`、`tri808.js`、`scoring.js` 是主要缺口。
+- 覆盖率现状为 66.43% 语句 / 47.82% 分支 / 71.79% 函数 / 67.97% 行；`theme-store.js`、`tri808.js`、`scoring.js` 是主要缺口。
 
 ---
 

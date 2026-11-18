@@ -1,6 +1,7 @@
 const { getMetaList } = require('./registry')
 const methodsData = require('./methods-data')
 const gameRegistry = require('./game-registry')
+const { hexToRgba } = require('./color')
 
 const COURSES = [
   {
@@ -80,6 +81,7 @@ function findSource(kind, id) {
 function resolveCourse(course) {
   return Object.assign({}, course, {
     goalLabel: GOAL_LABELS[course.goal],
+    tint: hexToRgba(course.color, 0.12),
     steps: course.steps.map((step) => {
       const source = findSource(step.kind, step.id)
       if (!source) throw new Error('课程内容不存在: ' + course.id + '/' + step.kind + '/' + step.id)

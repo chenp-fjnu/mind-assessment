@@ -297,7 +297,7 @@ module.exports = {
 | 专项单测 | Jest `a11y` / `cue` / `privacy` / `share` / `sound` | jest | 无障碍标签、提示音、隐私授权、分享卡、音效 |
 | 全量 | `npm run test:all` | jest | `validate` + 冒烟 + Jest 覆盖率（CI 同款） |
 
-当前基线：**14 个 Jest 套件 / 308 项测试**；覆盖率门槛（`jest.config.js`）为语句 60%、分支 45%、函数/行 65%，实际 **66.43% 语句 / 47.82% 分支 / 71.79% 函数 / 67.96% 行**。
+当前基线：**14 个 Jest 套件 / 308 项测试**；覆盖率门槛（`jest.config.js`）为语句 60%、分支 45%、函数/行 65%，实际 **66.43% 语句 / 47.82% 分支 / 71.79% 函数 / 67.97% 行**。
 
 CI（`.github/workflows/ci.yml`）：push/PR 触及 `wechat-miniprogram/**` 时于 Node 18 依次跑 `npm test`（冒烟）、`npm run validate`、`npm run test:coverage`（Jest + 覆盖率）与 `lint:strict`。
 
