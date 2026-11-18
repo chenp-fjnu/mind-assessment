@@ -27,7 +27,7 @@
 
       <text class="course-tagline">{{course.tagline}}</text>
       <view class="course-meta">
-        <text class="meta-chip">约 {{course.totalMinutes}} 分钟</text>
+        <text class="meta-chip">约 {{course.totalMinutes}} 分钟（含选做）</text>
         <text class="meta-chip">{{course.steps.length}} 个步骤</text>
       </view>
       <view class="persona-row">

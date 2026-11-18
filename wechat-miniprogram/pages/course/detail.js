@@ -47,7 +47,7 @@ Page({
     const stepId = e.currentTarget.dataset.id
     const course = this.data.course
     const step = course && course.steps.find((item) => item.id === stepId)
-    if (!step) return
+    if (!step || step.kind === 'reflect') return
     courseProgress.start(course.id)
     courseProgress.setCurrentStep(course.id, step.id)
     const context = '&courseId=' + course.id + '&stepId=' + step.id
@@ -56,6 +56,31 @@ Page({
     else if (step.kind === 'method') url = '/pages/methods/detail?id=' + step.id + context
     else if (step.kind === 'train') url = '/pages/train/game?gameId=' + step.id + context
     if (url) wx.navigateTo({ url })
+  },
+  updateReflection(e) {
+    const stepId = e.currentTarget.dataset.id
+    const value = e.detail.value
+    this.setData({
+      steps: this.data.steps.map((step) => step.id === stepId ? Object.assign({}, step, { reflection: value }) : step),
+    })
+  },
+  saveReflection(e) {
+    const course = this.data.course
+    const stepId = e.currentTarget.dataset.id
+    const step = this.data.steps.find((item) => item.id === stepId && item.isReflection)
+    if (!course || !step) return
+    if (!step.reflection || !step.reflection.trim()) {
+      wx.showToast({ title: '先写下一条记录', icon: 'none' })
+      return
+    }
+    try {
+      courseProgress.saveReflection(course.id, stepId, step.reflection)
+      this.loadCourse()
+      wx.showToast({ title: '已保存在本机', icon: 'success' })
+    } catch (error) {
+      console.error('[course] 保存回顾失败:', error)
+      wx.showToast({ title: '保存失败，请重试', icon: 'none' })
+    }
   },
   skipStep(e) {
     const course = this.data.course
@@ -67,7 +92,7 @@ Page({
   resetProgress() {
     wx.showModal({
       title: '清除课程进度',
-      content: '只会清除这条路线的完成状态，不会删除测评、练习或训练记录。',
+      content: '会清除这条路线的进度和课程回顾，不会删除测评、练习或训练记录。',
       confirmText: '清除进度',
       success: (result) => {
         if (!result.confirm) return

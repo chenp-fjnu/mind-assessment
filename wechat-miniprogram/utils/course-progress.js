@@ -9,12 +9,13 @@ function readAll() {
 function read(courseId) {
   const stored = readAll()[courseId]
   if (!stored || typeof stored !== 'object') {
-    return { currentStepId: '', completedStepIds: [], skippedStepIds: [], startedAt: 0, updatedAt: 0 }
+    return { currentStepId: '', completedStepIds: [], skippedStepIds: [], reflections: {}, startedAt: 0, updatedAt: 0 }
   }
   return {
     currentStepId: stored.currentStepId || '',
     completedStepIds: Array.isArray(stored.completedStepIds) ? stored.completedStepIds : [],
     skippedStepIds: Array.isArray(stored.skippedStepIds) ? stored.skippedStepIds : [],
+    reflections: stored.reflections && typeof stored.reflections === 'object' && !Array.isArray(stored.reflections) ? stored.reflections : {},
     startedAt: Number(stored.startedAt) || 0,
     updatedAt: Number(stored.updatedAt) || 0,
   }
@@ -76,6 +77,22 @@ function completeStep(courseId, stepId) {
   return write(courseId, progress)
 }
 
+function saveReflection(courseId, stepId, value) {
+  const course = getCourse(courseId)
+  const step = course && course.steps.find((item) => item.id === stepId && item.kind === 'reflect')
+  if (!step) throw new Error('课程回顾步骤不存在: ' + courseId + '/' + stepId)
+  if (typeof value !== 'string' || !value.trim()) throw new Error('课程回顾内容不能为空')
+
+  const progress = read(courseId)
+  progress.reflections[stepId] = value.trim().slice(0, 500)
+  if (!progress.startedAt) progress.startedAt = Date.now()
+  if (progress.completedStepIds.indexOf(stepId) < 0) progress.completedStepIds.push(stepId)
+  progress.skippedStepIds = progress.skippedStepIds.filter((id) => id !== stepId)
+  const next = getNextStep(course, progress)
+  progress.currentStepId = next ? next.id : ''
+  return write(courseId, progress)
+}
+
 function skipStep(courseId, stepId) {
   const course = getCourse(courseId)
   if (!course || !course.steps.some((step) => step.id === stepId)) {
@@ -115,6 +132,7 @@ function getCourseState(course) {
     complete: requiredDone,
     steps: course.steps.map((step, index) => ({
       ...step,
+      reflection: progress.reflections[step.id] || '',
       completed: completed.indexOf(step.id) >= 0,
       skipped: progress.skippedStepIds.indexOf(step.id) >= 0,
       current: progress.currentStepId === step.id,
@@ -123,4 +141,4 @@ function getCourseState(course) {
   }
 }
 
-module.exports = { read, hasStep, start, setCurrentStep, completeStep, skipStep, reset, getCourseState }
+module.exports = { read, hasStep, start, setCurrentStep, completeStep, saveReflection, skipStep, reset, getCourseState }

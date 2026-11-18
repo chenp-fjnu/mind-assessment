@@ -11,9 +11,30 @@ describe('course data and progress', () => {
       expect(course.steps.length).toBeGreaterThan(0)
       course.steps.forEach((step) => {
         expect(step.name).toBeTruthy()
-        expect(['assess', 'method', 'train']).toContain(step.kind)
+        expect(['assess', 'method', 'train', 'reflect']).toContain(step.kind)
       })
     })
+  })
+
+  test('optional reflection is saved locally and does not change required progress', () => {
+    const storage = {}
+    const originalGet = global.wx.getStorageSync
+    const originalSet = global.wx.setStorageSync
+    global.wx.getStorageSync = (key) => storage[key]
+    global.wx.setStorageSync = (key, value) => { storage[key] = value }
+    try {
+      expect(() => courseProgress.saveReflection('focus', 'focus-plan', '  ')).toThrow('课程回顾内容不能为空')
+      courseProgress.saveReflection('focus', 'focus-plan', '  先完成任务的第一小步  ')
+      const state = courseProgress.getCourseState(coursesData.getCourse('focus'))
+      const reflection = state.steps.find((step) => step.id === 'focus-plan')
+      expect(reflection.completed).toBe(true)
+      expect(reflection.reflection).toBe('先完成任务的第一小步')
+      expect(state.completedRequiredCount).toBe(0)
+      expect(courseProgress.read('focus').reflections['focus-plan']).toBe('先完成任务的第一小步')
+    } finally {
+      global.wx.getStorageSync = originalGet
+      global.wx.setStorageSync = originalSet
+    }
   })
 
   test('completion advances through required steps while an optional step may be skipped', () => {
@@ -43,7 +64,11 @@ describe('course data and progress', () => {
   test('reset clears only the selected course progress', () => {
     const storage = {
       ma_course_progress: {
-        emotion: { currentStepId: 'abc', completedStepIds: ['box-breathing'] },
+        emotion: {
+          currentStepId: 'abc',
+          completedStepIds: ['box-breathing'],
+          reflections: { 'emotion-plan': '自然呼吸' },
+        },
         focus: { currentStepId: 'n-back', completedStepIds: ['schulte'] },
       },
     }

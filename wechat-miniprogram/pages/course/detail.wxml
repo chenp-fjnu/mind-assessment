@@ -8,14 +8,18 @@
       <text class="hero-title">{{course.name}}</text>
       <text class="hero-sub">{{course.tagline}}</text>
       <view class="hero-meta">
-        <text class="pill">约 {{course.totalMinutes}} 分钟</text>
+        <text class="pill">约 {{course.totalMinutes}} 分钟（含选做）</text>
         <text class="pill">{{stepCount}} 个步骤</text>
       </view>
       <text class="hero-cadence">{{course.cadence}}</text>
     </view>
 
     <view class="card section outcome-card">
-      <text class="section-title">这条路线会带你</text>
+      <text class="section-title">路线目标</text>
+      <text class="section-text">{{course.objective}}</text>
+      <text class="outcome-label">为什么这样安排</text>
+      <text class="section-text">{{course.why}}</text>
+      <text class="outcome-label">完成后带走</text>
       <text class="section-text">{{course.outcome}}</text>
     </view>
 
@@ -58,10 +62,31 @@
           <text class="step-title">{{step.title}}</text>
           <text class="step-name">{{step.name}} · 约 {{step.minutes}} 分钟</text>
           <text class="step-why">{{step.why}}</text>
+          <view wx:if="{{step.task}}" class="step-task">
+            <text class="step-task-label">本步尝试</text>
+            <text class="step-task-text">{{step.task}}</text>
+          </view>
+          <view wx:if="{{step.isReflection}}" class="reflection-box">
+            <text class="reflection-prompt">{{step.prompt}}</text>
+            <textarea
+              class="reflection-input"
+              data-id="{{step.id}}"
+              value="{{step.reflection}}"
+              maxlength="500"
+              auto-height
+              placeholder="{{step.placeholder}}"
+              bindinput="updateReflection"
+              aria-label="{{step.title}}的个人记录"
+            />
+            <text class="reflection-note">记录仅保存在本机；不必填写敏感信息，留下一项小行动即可。</text>
+          </view>
           <text wx:if="{{step.completed}}" class="step-status is-complete">已完成</text>
           <text wx:elif="{{step.skipped}}" class="step-status">已跳过 · 可补做</text>
           <view class="step-actions">
-            <button class="step-button" data-id="{{step.id}}" bindtap="openStep" aria-label="开始步骤：{{step.title}}">
+            <button wx:if="{{step.isReflection}}" class="step-button" data-id="{{step.id}}" bindtap="saveReflection" aria-label="保存并完成：{{step.title}}">
+              {{step.completed ? '更新我的记录' : '保存并完成'}}
+            </button>
+            <button wx:else class="step-button" data-id="{{step.id}}" bindtap="openStep" aria-label="开始步骤：{{step.title}}">
               {{step.completed ? '再做一次' : (step.skipped ? '补做这一步' : '开始这一步')}}
             </button>
             <button wx:if="{{!step.completed && !step.skipped}}" class="skip-button" data-id="{{step.id}}" bindtap="skipStep" aria-label="暂时跳过：{{step.title}}">跳过</button>
@@ -75,7 +100,7 @@
       <button class="text-button" bindtap="goHome" aria-label="返回首页">返回首页</button>
     </view>
     <button wx:if="{{started}}" class="reset-button" bindtap="resetProgress" aria-label="清除这条课程的进度">清除课程进度</button>
-    <view class="footer">路线进度仅保存在本机；内容用于自我探索与练习，不构成医学诊断或治疗建议。</view>
+    <view class="footer">路线进度与课程回顾仅保存在本机；内容用于自我探索与练习，不构成医学诊断或治疗建议。</view>
   </view>
 
   <view wx:else class="invalid">
