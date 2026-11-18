@@ -5,7 +5,7 @@
       <text class="hero-sub">测评 · 方法 · 训练，陪你认识并锻炼心智</text>
     </view>
 
-    <view wx:if="{{goalFormVisible}}" class="goal-card">
+    <view wx:if="{{goalFormVisible}}" class="card home-card goal-card">
       <text class="goal-title">你现在最想做什么？</text>
       <text class="goal-sub">选一个方向看看短课程，也可以直接浏览全部。</text>
       <view class="goal-options">
@@ -22,54 +22,67 @@
       <text wx:if="{{selectedGoal}}" class="text-action browse-action" bindtap="toggleGoalForm" role="button" aria-label="取消更换目标">取消更换</text>
     </view>
 
-    <view wx:elif="{{courseId}}" class="status-card">
+    <view wx:elif="{{courseId}}" class="card home-card status-card">
       <text class="status-eyebrow">{{courseStarted ? '继续你的路线' : '为你推荐'}}</text>
       <text class="status-title">{{courseName}}</text>
       <text class="status-desc">{{courseMessage}}</text>
       <button class="primary-action" bindtap="goCourse" aria-label="{{courseActionLabel}}：{{courseName}}">{{courseActionLabel}}</button>
-      <text class="text-action change-goal" bindtap="toggleGoalForm" role="button" aria-label="更换目标">更换目标</text>
-      <text class="text-action change-goal" bindtap="clearGoal" role="button" aria-label="清除目标选择">清除目标</text>
+      <view class="status-actions">
+        <text class="text-action" bindtap="toggleGoalForm" role="button" aria-label="更换目标">更换目标</text>
+        <text class="action-divider">·</text>
+        <text class="text-action" bindtap="clearGoal" role="button" aria-label="清除目标选择">清除目标</text>
+      </view>
     </view>
 
-    <view wx:elif="{{welcomeBack}}" class="status-card">
+    <view wx:elif="{{welcomeBack}}" class="card home-card status-card">
       <text class="status-eyebrow">欢迎回来</text>
       <text class="status-title">继续你的探索</text>
       <text class="status-desc">最近的记录还在本机。你也可以选一个目标，让首页按你的兴趣推荐内容。</text>
       <button class="primary-action" bindtap="goHistory" aria-label="查看最近记录">查看最近记录</button>
-      <text class="text-action change-goal" bindtap="toggleGoalForm" role="button" aria-label="选择一个目标">选择一个目标</text>
+      <view class="status-actions">
+        <text class="text-action" bindtap="toggleGoalForm" role="button" aria-label="选择一个目标">选择一个目标</text>
+      </view>
     </view>
 
-    <view wx:elif="{{selectedGoal === 'browse'}}" class="status-card">
+    <view wx:elif="{{selectedGoal === 'browse'}}" class="card home-card status-card">
       <text class="status-eyebrow">自由探索</text>
       <text class="status-title">从感兴趣的内容开始</text>
       <text class="status-desc">不需要先选课程，测评、方法和训练都可以直接浏览。</text>
       <button class="primary-action" bindtap="goCourseList" aria-label="查看课程路线">查看课程路线</button>
-      <text class="text-action change-goal" bindtap="toggleGoalForm" role="button" aria-label="选择目标">选择目标</text>
-      <text class="text-action change-goal" bindtap="clearGoal" role="button" aria-label="清除浏览选择">清除选择</text>
+      <view class="status-actions">
+        <text class="text-action" bindtap="toggleGoalForm" role="button" aria-label="选择目标">选择目标</text>
+        <text class="action-divider">·</text>
+        <text class="text-action" bindtap="clearGoal" role="button" aria-label="清除浏览选择">清除选择</text>
+      </view>
     </view>
 
     <view class="quick-entries" aria-label="内容入口">
       <view class="entry-card assess-entry" bindtap="goAssess" role="button" aria-label="浏览测评">
-        <text class="entry-icon">🧭</text>
+        <view class="entry-icon-wrap"><text class="entry-icon">🧭</text></view>
         <text class="entry-title">测一测</text>
       </view>
       <view class="entry-card method-entry" bindtap="goMethods" role="button" aria-label="浏览方法">
-        <text class="entry-icon">🧰</text>
+        <view class="entry-icon-wrap"><text class="entry-icon">🧰</text></view>
         <text class="entry-title">学方法</text>
       </view>
       <view class="entry-card train-entry" bindtap="goTrain" role="button" aria-label="浏览训练">
-        <text class="entry-icon">🎮</text>
+        <view class="entry-icon-wrap"><text class="entry-icon">🎮</text></view>
         <text class="entry-title">练一练</text>
       </view>
     </view>
 
     <view class="search-control">
-      <view class="search-toggle" bindtap="toggleSearch" role="button" aria-label="{{searchOpen ? '收起搜索' : '搜索内容'}}">⌕ <text>{{searchOpen ? '收起搜索' : '搜索'}}</text></view>
+      <view class="card search-toggle" bindtap="toggleSearch" role="button" aria-label="{{searchOpen ? '收起搜索' : '搜索内容'}}">
+        <text class="search-icon">🔍</text>
+        <text class="search-label">搜索测评、方法或训练</text>
+        <text class="search-chevron">{{searchOpen ? '收起' : '›'}}</text>
+      </view>
     </view>
     <view wx:if="{{searchOpen}}" class="home-search">
       <input
         class="home-search-input"
         placeholder="搜索测评 / 方法 / 训练"
+        placeholder-class="home-search-ph"
         value="{{homeKeyword}}"
         bindinput="onHomeSearchInput"
         bindconfirm="onHomeSearch"
@@ -78,7 +91,7 @@
       />
     </view>
 
-    <view class="more-toggle" bindtap="toggleMore" role="button" aria-label="{{moreExpanded ? '收起更多内容' : '展开热门推荐和最近记录'}}">
+    <view class="card more-toggle" bindtap="toggleMore" role="button" aria-label="{{moreExpanded ? '收起更多内容' : '展开热门推荐和最近记录'}}">
       <text>{{moreExpanded ? '收起' : '更多推荐与最近记录'}}</text>
       <text>{{moreExpanded ? '⌃' : '⌄'}}</text>
     </view>
@@ -91,8 +104,7 @@
         </view>
         <view class="hot-grid">
           <view
-            class="hot-card"
-            data-kind="{{h.kind}}"
+            class="hot-card hot-card-{{h.kind}}"
             wx:for="{{visibleHotPicks}}"
             wx:key="id"
             wx:for-item="h"
@@ -119,8 +131,7 @@
         </view>
         <view class="hot-grid">
           <view
-            class="hot-card"
-            data-kind="{{h.kind}}"
+            class="hot-card hot-card-{{h.kind}}"
             wx:for="{{recentItems}}"
             wx:key="id"
             wx:for-item="h"
