@@ -1,158 +1,123 @@
 ---
 项目: mind-assessment
-名称: 心智测评中心
-类型: 微信小程序
-状态: 已交付
-技术栈: 原生小程序（纯前端，无后端）
-开始: 2026-10-14
-最后更新: 2026-10-14
+名称: 心智探索局（Mind Quest）
+类型: 微信小程序（原生）
+状态: 已交付 · 维护中
+技术栈: 原生小程序（纯前端 / 无后端 / 无网络请求）
+开始: 2026-08-10
+最后更新: 2026-11-18
 ---
 
-# 心智测评中心
+# 心智探索局（Mind Quest）
 
-> ⚠️ **文档说明**：本文档描述的是历史 UniApp 工程结构（`mind-assessment-uniapp/`、`server/` 等已不在仓库）；当前仓库仅含原生微信小程序 `wechat-miniprogram/`（27 套量表 / 9 大类 + 34 个训练游戏），现状一览以 [`wechat-miniprogram/README.md`](wechat-miniprogram/README.md) 为准。
+> 纯前端**原生微信小程序**：**27 套心理量表 + 24 个心智方法 + 36 个脑力训练游戏**，围绕「测评 → 方法 → 训练 → 记录」形成自我探索闭环。所有题目、计分与结果均在设备本地完成，数据只写入本机 `Storage`。
 
-多平台心理测评与认知训练应用，基于 **UniApp + Vue 3** 跨平台框架，一套代码同时构建 **微信小程序** 与 **H5 网页版**。
+> **仓库说明**：早期版本的 UniApp/H5 前端（`mind-assessment-uniapp/`）、Node 服务（`server/`）与独立测试套件（`mind-assessment/`）已从仓库移除。当前唯一可运行工程是 [`wechat-miniprogram/`](wechat-miniprogram/)，根目录文档不再描述已不存在的目录或部署流程。
 
-> 📱 **另有独立原生小程序**：`wechat-miniprogram/` 目录是基于原生微信小程序的**纯前端**实现（无后端、无网络请求，数据存本地），集成同样 14 套量表，详见 [`wechat-miniprogram/README.md`](wechat-miniprogram/README.md)。
+---
 
-## 项目结构
+## 现状一览
 
-```
-心智测验小程序/
-├── mind-assessment-uniapp/       # UniApp 跨平台前端（H5 + 小程序）
-│   ├── src/
-│   │   ├── components/           #   通用组件（FigureView, MatrixView）
-│   │   ├── modules/              #   测评模块（14个 TypeScript 模块）+ 模块系统
-│   │   ├── pages/                #   页面（17个 Vue 页面）
-│   │   │   ├── index/            #     启动页
-│   │   │   ├── hub/              #     首页
-│   │   │   ├── category/         #     分类浏览
-│   │   │   ├── runner/           #     测评答题
-│   │   │   ├── report/           #     结果报告
-│   │   │   ├── payment/          #     支付页
-│   │   │   ├── history/          #     历史记录
-│   │   │   ├── login/            #     登录页
-│   │   │   ├── privacy/          #     隐私政策
-│   │   │   └── games/            #     认知训练游戏（8个）
-│   │   ├── stores/               #   Pinia 状态管理（app/user）
-│   │   ├── utils/                #   工具函数（auth/http/pay/format/storage等）
-│   │   ├── static/               #   静态资源
-│   │   ├── App.vue               #   应用根组件
-│   │   ├── main.ts               #   应用入口
-│   │   ├── manifest.json         #   UniApp 平台配置
-│   │   └── pages.json            #   页面路由配置
-│   ├── index.html                #   H5 入口模板
-│   ├── vite.config.ts            #   Vite 构建配置
-│   ├── tsconfig.json             #   TypeScript 配置
-│   └── package.json              #   依赖（vue3/pinia/uni-app/vite）
-│
-├── mind-assessment/              # 测试套件 + 共享 JS 模块
-│   ├── shared/                   #   纯 JS 测评模块（供 Jest 测试用）
-│   │   ├── modules/              #     14个测评模块 + 模块系统
-│   │   └── utils/                #     工具函数（评分/格式化/存储等）
-│   ├── tests/                    #   测试套件
-│   │   ├── frontend/             #     前端模块单元测试（10个）
-│   │   └── server/               #     后端 API 集成测试（7个）
-│   ├── scripts/                  #   工具脚本（题目生成等）
-│   ├── jest.config.js            #   Jest 主配置
-│   ├── jest.frontend.config.js   #   前端测试配置
-│   ├── jest.server.config.js     #   后端测试配置
-│   └── package.json              #   测试依赖（jest/express/jsonwebtoken/supertest）
-│
-├── server/                       # Node.js 后端服务
-│   ├── config/                   #   价格表等服务端配置
-│   ├── routes/                   #   API 路由（auth/pay/result）
-│   ├── utils/                    #   工具（JWT/微信支付/存储适配器/校验）
-│   ├── app.js                    #   Express 入口
-│   ├── questions.json            #   SPM 题库数据
-│   ├── .env.example              #   环境变量示例
-│   └── package.json              #   后端依赖
-│
-├── 部署说明.md                    # H5 部署指南
-└── .gitignore                    # 根级 Git 忽略规则
+| 维度 | 现状 |
+| --- | --- |
+| 量表 | **27 套**，覆盖 9 大类（人格 8 / 职业 3 / 情绪 5 / 自我 4 / 智力 3 / 压力 1 / 睡眠 1 / 社交 1 / 积极心理 1） |
+| 方法 | **24 个**心智方法，4 个分类，全部支持结构化「互动练习」打卡 |
+| 训练 | **36 个**脑力游戏，6 大认知维度（注意力 9 / 工作记忆 8 / 反应速度 9 / 放松正念 4 / 执行功能 5 / 逻辑计算 1） |
+| 页面 | **14 个**（5 个底部 Tab + 详情/答题/结果/历史/关于/档案/方法详情/方法练习/训练播放器） |
+| 数据 | 纯本地 `Storage`，无后端、无网络请求、无云同步 |
+| 测试 | 冒烟 **182** 项 + Jest **284** 项（13 个测试套件）；覆盖率约 **70% 语句 / 46% 分支 / 74% 函数 / 72% 行** |
+| 质量门 | `validate`（元数据/玩家页一致性）+ `lint:strict`（0 warning）+ `test:all`，CI 全绿 |
+
+---
+
+## 目录结构
+
+```text
+mind-assessment/
+├── wechat-miniprogram/          # 唯一运行工程：原生微信小程序
+│   ├── app.js / app.json / app.wxss
+│   ├── modules/                 # 27 个量表模块（每个 index.js 自包含）
+│   ├── games/                   # 36 个训练游戏（index.js 纯逻辑 + game.js 组件）
+│   ├── pages/                   # 14 个页面（首页/测评/方法/训练/我的 + 详情/答题/结果/历史等）
+│   ├── utils/                   # 注册表、存储、评分、趋势、主题、绘图等纯函数与工具
+│   ├── test/                    # 冒烟 + Jest 单测/页面测试
+│   ├── scripts/ tools/          # 一致性校验与代码生成脚本
+│   └── docs/                    # 架构、审查、游戏清单
+├── project.config.json          # 历史遗留配置（未声明 miniprogramRoot，无实际作用）
+└── README.md
 ```
 
-## 架构说明
+> ⚠️ 请在微信开发者工具中直接「导入项目」→ 选择 **`wechat-miniprogram/`** 子目录。根目录的 `project.config.json` 是早期工程留下的占位配置，与子工程 AppID 不一致，导入根目录会因缺少 `app.json` 而无法编译。
 
-| 维度 | 说明 |
-|------|------|
-| 前端框架 | UniApp + Vue 3 + TypeScript + Pinia |
-| 构建工具 | Vite 5 |
-| 支持平台 | 微信小程序、H5（浏览器） |
-| 测评模块 | 14 个（TypeScript，统一模块系统） |
-| 认知游戏 | 8 个 |
-| 后端 | Node.js + Express（独立部署） |
-| 测试 | Jest 单元测试 + API 集成测试（572 个测试） |
-| 状态管理 | Pinia（stores/user.ts, stores/app.ts） |
+---
 
-> 前端使用 UniApp 条件编译（`#ifdef MP-WEIXIN`/`#ifdef H5`）在同一代码库中同时支持微信小程序和 H5 平台。
+## 业务闭环
 
-## 测评模块一览
+```text
+测评：assess / index → detail（说明+来源+关联）→ test（答题/续答/计时）
+      → result（维度/双极/分测验/趋势/存图）→ history（筛选/删除/导出）
 
-| 类别 | 模块 |
-|------|------|
-| 智力 | SPM 瑞文推理、韦氏智力 |
-| 人格 | MBTI、Big Five、16PF、EPQ、DISC |
-| 情绪 | SDS、SAS、GAD-7、DASS-21 |
-| 职业 | Holland 霍兰德 |
-| 自我 | SES 自尊、LAS 孤独感 |
+方法：methods（24 个方法）→ detail（正文/步骤/贴士/示例）
+      → practice（按 schema 填表打卡）→ ma_practices → 练习趋势
 
-## 认知训练游戏
+训练：train（6 维度/搜索/筛选）→ train/game（难度/计时/成绩）
+      → ma_train_<id>__<level> → 最佳成绩 + 趋势 + 最近训练
+```
 
-舒尔特方格、斯特鲁普测试、数字广度、N-Back、反应速度、图形记忆、序列推理、心理旋转
+跨域关联由 `utils/relations.js` 统一计算：量表按类型或显式 id 推荐相关方法与训练游戏，供详情页和结果页复用，避免各页重复映射。
+
+---
 
 ## 快速开始
 
-### 后端服务
+### 运行小程序
+
+1. 安装[微信开发者工具](https://developers.weixin.qq.com/miniprogram/dev/devtools/download.html)。
+2. 「导入项目」→ 目录选择 **`wechat-miniprogram/`**（不是仓库根目录）。
+3. 使用测试号，或把 `wechat-miniprogram/project.config.json` 中的 AppID 换成自己的。
+4. 基础库建议 **3.0.0+**（工程已开启 `lazyCodeLoading: requiredComponents`）。
+
+### 开发与质量命令
 
 ```bash
-cd server
-cp .env.example .env          # 填入微信配置
-npm install && npm start
-```
-
-### 前端（H5 + 小程序）
-
-```bash
-cd mind-assessment-uniapp
+cd wechat-miniprogram
 npm install
 
-# H5 开发
-npm run dev:h5
-
-# H5 生产构建
-npm run build:h5
-
-# 微信小程序开发
-npm run dev:mp-weixin
-
-# 微信小程序生产构建
-npm run build:mp-weixin
-# 构建产物在 dist/build/mp-weixin，用微信开发者工具导入运行
+npm test                 # 冒烟：评分链路 + 模块/结果视图契约（182 项）
+npm run validate         # 元数据 + 玩家页组件挂载一致性校验
+npm run test:simulate    # Jest 单测 / 页面测试（284 项）
+npm run test:coverage    # Jest + 覆盖率
+npm run test:all         # validate + 冒烟 + Jest 覆盖率（CI 同款）
+npm run lint:strict      # ESLint，0 error / 0 warning
 ```
 
-### 类型检查
+---
 
-```bash
-cd mind-assessment-uniapp
-npx vue-tsc --noEmit
-```
+## 文档索引
 
-### 运行测试
+| 文档 | 内容 |
+| --- | --- |
+| [`wechat-miniprogram/README.md`](wechat-miniprogram/README.md) | 功能清单、量表/游戏明细、目录、测试与更新日志 |
+| [`wechat-miniprogram/docs/ARCHITECTURE.md`](wechat-miniprogram/docs/ARCHITECTURE.md) | 分层架构、业务流、数据模型、模块契约、扩展指南 |
+| [`wechat-miniprogram/docs/CODE_REVIEW.md`](wechat-miniprogram/docs/CODE_REVIEW.md) | 2026-11-18 代码审查：问题清单、优先级与改进路线图 |
+| [`wechat-miniprogram/docs/brain-games-catalog.md`](wechat-miniprogram/docs/brain-games-catalog.md) | 训练游戏的范式来源与选型依据 |
 
-```bash
-cd mind-assessment
-npm install
-npx jest --no-cache           # 全部测试（572个）
-npx jest --config jest.frontend.config.js   # 仅前端模块测试
-npx jest --config jest.server.config.js     # 仅后端 API 测试
-```
+---
+
+## 设计约束
+
+- **离线优先**：不依赖登录、后端或云函数；卸载/清缓存会丢失本地记录，关于页已明确提示。
+- **本地数据版本化**：测评记录带 `schemaVersion`；量表题量变化时结果页按题量匹配兜底。
+- **可测试性**：量表评分、游戏生成/计分、趋势、结果视图均为纯函数；页面通过最小 `wx` mock 运行 `onLoad`。
+- **无障碍**：交互元素带 `role`/`aria-label`，图形题提供序号/字母徽标与色盲纹理冗余通道。
+- **生成文件不可手改**：`pages/train/game.json`、`pages/train/games-block.wxml`、`utils/modules-meta.js` 由脚本生成，CI 有校验闸门。
+
+---
 
 ## 免责声明
 
-本平台所有测评结果基于参考常模估算，仅供个人探索与娱乐参考，不构成医学诊断。如需专业评估，请联系心理援助热线或心理评估专业人员。
+本平台所有量表均为**简化 / 教育版**自陈问卷，计分与常模为公开资料整理的近似值；训练游戏仅作认知热身与自我探索。所有结果**不构成医学诊断或专业建议**。如有持续情绪困扰或疑似认知问题，请咨询心理/精神科专业人员。
 
 ## 许可证
 
-MIT License
+教育 / 演示用途。量表名称与版权归原作者与出版方所有；本实现仅作技术演示，MIT License。

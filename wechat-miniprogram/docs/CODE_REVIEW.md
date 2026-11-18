@@ -1,117 +1,325 @@
-# 心智探索局 · 小程序代码审查与改进建议
+# 心智探索局 · 代码审查与改进建议
 
-> **注意**：审查基准为当时状态（23 量表 / 31 游戏 / 11 页面）；截至 2026-10-27 代码已演进为 27 量表 / 34 游戏 / 14 页面（smoke 182 项 + Jest 275 项）。
+> **审查日期**：2026-11-18
+> **审查基线**：`wechat-miniprogram/` 当前工作区 —— 27 套量表 / 24 个方法 / 36 个游戏 / 14 个页面
+> **验证状态**：`npm run validate` 通过；`node test/smoke.js` 182/182；Jest 13 suites / 284 tests；`lint:strict` 0 error / 0 warning；覆盖率约 70% 语句 / 46% 分支 / 74% 函数 / 72% 行
+> **配套文档**：[`ARCHITECTURE.md`](ARCHITECTURE.md)（架构与业务流）、[`../README.md`](../README.md)（功能清单）、[`brain-games-catalog.md`](brain-games-catalog.md)（游戏范式）
 
-> 本文档在「全面梳理代码与业务功能」基础上，记录架构盘点、已修复问题、遗留问题与按优先级排列的改进建议。
-> 配套：根目录 `README.md`（产品/运行/架构说明）、`docs/brain-games-catalog.md`（训练游戏候选清单）。
-> 审查基准：`wechat-miniprogram/` 当前工作区（23 量表 / 31 游戏 / 11 页面 / 约 30 个 utils）。
+> 说明：本文第 4 节保留 F1–F19 历史修复档案；第 3 节是 2026-11-18 复审新增的问题，按严重度排序。文档中早期条目里的「23 套 / 31 游戏」等数字是当时快照，不代表当前状态。
 
 ---
 
-## 1. 业务功能梳理
+## 1. 业务与架构速览
 
-小程序定位为**纯前端、离线、无后端**的心理学自我探索工具，围绕「**测评 · 方法 · 训练**」形成闭环：
-
-| 板块 | 页面 | 业务功能 | 数据落点（Storage） |
+| 板块 | 页面 | 核心能力 | 数据落点 |
 | --- | --- | --- | --- |
-| 测评 | `index` / `assess` / `detail` / `test` / `result` / `history` | 23 套量表（9 大类：人格/情绪/智力/职业/自我/压力/睡眠/社交/积极心理），答题→评分→可视化→同量表历史趋势 | `ma_history`(≤30)、`ma_progress_<id>` |
-| 方法 | `methods`（列表 / `detail` / `practice`） | 22 个心智方法知识库；部分方法提供 `schema` 驱动的「互动练习」打卡，**新增练习趋势图表可视化** | `ma_practices`(≤50/方法) |
-| 训练 | `train`（列表 / `game` 播放器） | 31 个脑力游戏，5 大认知维度，难度分级、计时、成绩与趋势 | `ma_train_<id>`(≤50) |
-| 我的 | `mine` / `profile` / `about` | 记录汇总、主题切换、用户档案、关于/隐私/数据来源 | `ma_user`、`user-theme-preference` |
-| 跨域关联 | `relations.js` 被 `detail`/`result` 调用 | 依量表 `type`/特定 id 推荐相关方法与训练游戏 | — |
+| 测评 | `index` / `assess` / `detail` / `test` / `result` / `history` | 27 套量表（9 类）→ 答题 → 评分 → 视图 → 趋势 → 存图 | `ma_history`(≤30)、`ma_progress_<id>` |
+| 方法 | `methods` / `methods/detail` / `methods/practice` | 24 个方法（4 类），schema 驱动互动练习 + 趋势 | `ma_practices`(≤50/方法) |
+| 训练 | `train` / `train/game` | 36 个游戏（6 维度），难度隔离、最佳、趋势、年龄常模 | `ma_train_<id>__<level>`(≤50)、`ma_train_last` |
+| 我的 | `mine` / `profile` / `about` | 记录汇总、主题、档案、隐私与来源 | `ma_user`、主题键 |
+| 跨域 | `relations.js` | 量表 → 相关方法/训练推荐 | — |
 
-**关键业务流：**
-- 测评闭环：`assess` 选量表 → `detail`（详解+来源+关联入口）→ `test`（自动跳题/续答/SPM 分组）→ `result`（维度/双极/分测验/趋势/存图）→ `history`（筛选/删除）。
-- 训练闭环：`train` 列表（按维度分区+搜索）→ `game` 通用播放器（`usingComponents` 按 `gameId` 渲染 `games/<id>/game.js`）→ `train-store` 存成绩 → 趋势复用 `trend.js`。
-- 方法闭环：`methods` 列表 → `detail`（正文/步骤/贴士/示例）→ 可发起 `practice` 互动练习 → 写入 `ma_practices`，**练习趋势图表化展示**。
+**架构亮点**
 
-**数据模型要点：**
-- 模块契约（约定大于配置）：每个 `modules/<id>/index.js` 暴露 `{ id, type, name, ..., getQuestions, computeResult, getResultView }`，`getResultView(r, layout)` 返回标准化 `{ groups, dims, subtests, interpretations, showBipolar }`，页面只渲染、零鸭子类型分支。
-- 游戏契约：`games/<id>/index.js`（纯逻辑：元数据/`generate`/`score`）+ `game.js`（`Component` 交互渲染），由 `game-registry.js` 字面量 require 注册保证打包。
-- 注册表双写：`registry.js` / `game-registry.js` 用「loader 函数包裹字面量 require」既延迟加载又确保微信打包器静态分析。
+- 注册表用「loader + 字面量 require」兼顾懒加载与微信静态打包。
+- 结果视图统一为 `{ groups, dims, subtests, interpretations, showBipolar }`，页面零鸭子类型分支。
+- 量表评分、游戏生成/计分、趋势、结果视图均为纯函数；Jest 可在 Node 中直接跑。
+- 生成文件（玩家页挂载、元数据）有 `validate` 闸门，避免手改漂移。
+- 生命周期清理、隐私封装、无障碍标签、色盲纹理等横切能力已成体系。
 
 ---
 
-## 2. 代码架构盘点（亮点）
+## 2. 本次审查方法
 
-- **统一结果视图契约**：`getResultView` 收敛全部 23 模块，消除 `result.js` 的鸭子类型分支，smoke/Jest 共用，可维护性强。
-- **注册表 + 字面量 require**：规避动态 require 导致的「模块未打包」运行时报错，是微信小程序分包/主包场景的最佳实践。
-- **`utils/` 单一职责清晰**：`color`（唯一颜色工具）、`scale-scoring`、`scoring`、`trend`、`result-view`、`figure`（含色盲纹理）等纯函数可单测。
-- **测试体系较完整**：`test/smoke.js`（158 项评分链路）+ Jest（`modules.test`/`utils.test`/`pages.test`）+ `npm run test:all` + `jest.config` 覆盖率门槛 + GitHub Actions CI。
-- **主题系统**：`theme-store.js` 的 `useTheme(page)` 注入 `themeClass` 并同步原生 `tabBar`/`navigationBar`，`onThemeChange` 实时响应系统切换。
-- **工程化**：ESLint + Prettier + `format`/`lint` 脚本、`.editorconfig`、隐私合规 `privacy.js`。
+1. 阅读全部页面、`utils/`、模块/游戏注册表与代表性模块/游戏实现。
+2. 运行 `validate`、冒烟、Jest、`lint:strict`、覆盖率，确认基线全绿。
+3. 用 Node 最小 mock 复现关键数据问题（训练记录时间、主题 AUTO、历史最佳方向）。
+4. 对照 README/CODE_REVIEW/brain-games-catalog 与代码实际计数、字段、流程，标出文档漂移。
 
 ---
 
-## 3. 已修复的问题（本次审查 + 最新优化）
+## 3. 新发现问题（2026-11-18）
 
-| # | 问题 | 位置 | 修复 |
-| --- | --- | --- | --- |
-| F1 | `save()` 保存即崩溃：`GENDERS` 未导入、`syncUserToCloud` 未导出 → `ReferenceError` | `pages/profile/profile.js:105,110` | 从 `user.js` 导入 `GENDERS`；改为 `saveUser(...)` 后直接 `showToast`（云同步为占位，见 I1） |
-| F2 | ESLint 将 `getCurrentPages` 报为 `no-undef` error（实为微信全局 API） | `utils/theme-store.js:104,132` | `.eslintrc.js` `globals` 增加 `getCurrentPages`/`requirePlugin` |
-| F3 | 死代码：`result.js` 未用的 `methodsData` 导入、`mine.js` 未用的 `saveUser` 导入、`theme-store.js` 未用的 `root` 变量 | `result.js:7` / `mine.js:3` / `theme-store.js:108` | 删除未用导入/变量 |
-| F4 | 文档不一致：intro/表格称「23 套」，changelog 多处遗留「22 套/22 个模块」 | `README.md` | 全量替换为 23 |
-| **F5** | **云同步假功能误导用户** | `pages/mine/mine.wxml`, `pages/profile/profile.wxml`, `pages/about/about.wxml` | **移除同步状态/立即同步 UI，about 页明确标注「当前版本为纯本地存储，未接入云同步」** |
-| **F6** | **theme.js 过度设计（死代码）** | `utils/theme.js` | **精简仅保留 `isDark()`，删除 PALETTE/SEMANTIC/GRADIENTS/FUNCTIONAL/resolve/generateCSSVariables** |
-| **F7** | **applyTheme 冗余** | `utils/theme-store.js` | **已删除 applyTheme，逻辑合并入 useTheme/updateNativeUI** |
-| **F8** | **Lint warnings 清理** | `modules/hbdi/index.js`, `games/breath-478/game.js`, `games/hanoi/game.js`, `games/mindfulness/game.js`, `games/resonance/game.js`, `pages/profile/profile.js` | **移除未用变量，`npm run lint` 现 0 error 0 warning** |
-| **F9** | **趋势图日期显示优化** | `utils/canvas.js` | **>8/10 条时按间隔显示日期，保留首尾，避免重叠** |
-| **F10** | **方法练习趋势可视化** | `pages/methods/detail.js`, `pages/methods/practice.js`, `pages/methods/detail.wxml`, `pages/methods/practice.wxml` | **新增 canvas 折线图，复用 renderTrend，显示首次→最近变化** |
-| **F11** | **严格 Lint + CI 门槛** | `package.json`, `.github/workflows/ci.yml` | **新增 `lint:strict`（max-warnings 0），CI 强制通过** |
-| **F12** | **反向计分公式双实现**（`scoring.scoreItem` 与 `scale-scoring.computeScaleScores` 各写一遍 `min+max-raw`） | 新增 `utils/reverse.js`（单一来源）；两处 `require` 复用 | **抽取 `reverseValue(raw,min,max)` 纯函数为唯一公式实现，`scoreItem`/`computeScaleScores` 共用；各自的答案编码/索引换算/null 处理保持原样（属各自职责，非重复）。新增 `reverse` 单测，覆盖率 100%** |
-| **F13** | **答题进度丢失边界**：`test.js` `saveProgress` 2 秒节流，但 `onUnload` 仅清定时器不兜底落盘，2 秒内连续答题后退出丢进度 | `pages/test/test.js` | **新增 `saveProgressForce()`（绕过节流强制落盘）+ `onUnload`/`onHide` 兜底调用；用 `_finished` 标志位区分「已交卷」（`doSubmit` 已清进度，不再写回）与「中途退出」，避免把刚清掉的进度重新写回** |
-| **F14** | **4 个游戏定时器泄漏**：`memory-match`/`mirror`/`number-maze`/`visual-search` 有 pending `setTimeout` 却无清理钩子，组件卸载后回调仍 `setData`/`triggerEvent` | 上述 4 个 `game.js` | **补 `lifetimes.detached` + 各 `clearTimers/clearPending`，`reset()` 先清旧定时器，新建前先 `clearTimeout`（对齐 `box-breathing` 范例）。已扫描全部 34 游戏：21 个含定时器的均已具备清理钩子** |
-| **F15** | **死代码**：`storage-keys.js` 的 `progressKey()`/`trainKey()` 全仓无调用方 | `utils/storage-keys.js` | **删除两个未用助手（页面直接用 `PROGRESS_PREFIX`/`TRAIN_PREFIX` 字符串拼接）** |
-| **F16** | **`SCHEMA_VERSION` 双写**：`test.js` 与 `result.js` 各定义 `=1`，易漂移 | 新增 `utils/constants.js`；两页面 `require` | **抽到 `utils/constants.js` 单一来源，`test.js`/`result.js` 统一引用** |
-| **F17** | **云同步占位死代码**（对应 I1，本地功能保留）：`user.js` 的 `CLOUD_ENABLED`/`isCloudEnabled`/`initCloud`/`syncNow`/`getSyncStatus`/`syncUserToCloud` 及 `openid/unionid/syncStatus/lastSync` 字段全仓无调用方 | `utils/user.js`, `test/user.test.js` | **删除云占位函数与预留字段，保留全部本地功能（`ensureUser`/`getUser`/`getUserId`/`saveUser`/`GENDERS` 等）。与 F5/I1「纯本地、不接云」决策一致。测试同步改为断言「无云占位字段」** |
-| **F18** | **主包体积冗余**：`wechat-miniprogram/project.config.json`（`app.json` 同目录、生效配置）的 `packOptions.ignore` 已排除 `node_modules/coverage/test/tools/docs/scripts/.github`，但根目录一批**纯开发文件**仍被打包进主包（`package-lock.json` 159K、`README.md` 37K、`package.json`、`jest.config.js`、`analyze.js`、`.eslintrc.js`、`.prettierrc.json`、`.editorconfig`、`.gitattributes`），合计约 200K 无运行时价值 | `wechat-miniprogram/project.config.json` | **补 `packOptions.ignore`：按 `file` 排除上述 8 个开发文件 + 按 `suffix:md` 排除所有 markdown。排除后实测算力包内容 ≈ **1.93 MiB**（assets 224K + games 546K + utils 460K + modules 316K + pages 345K + 运行时根文件 ≈34K），远低于 2M 主包上限，**无需分包**。注：早期误判「ignore 为空、coverage 4.8M 会被打包」系读错文件——生效的是 `wechat-miniprogram/` 内的 `project.config.json`（appid `wx215011be68b87714`），非仓库根目录那份（appid `wxcb1a57da3ff2a353`，已过期）；`.wav` 源文件在已被忽略的 `tools/` 内，音频实为 84K 而非 988K** |
-| **F19** | **结果页 `onLoad` 过重 + 分享卡片重复绘制**：`onLoad`（200+ 行）的 `setData` 回调里 `drawCardToTemp`，与 `onReady` 里的 `drawCardToTemp` **各绘一遍**，`renderCard` 空跑两次；趋势图仅绘于 `setData` 回调 | `pages/result/result.js` | **画布渲染统一收拢到 `onReady`（节点布局完成、画布就绪后一次绘制：趋势图 + 分享卡片），移除 `setData` 回调；`_shareImage` 仅在 `onShareAppMessage` 时被消费，`onReady` 必然先于分享触发，行为不变。另把自洽的时间计算块（`testedTime`/`retestGap`/`retakeHint`）抽为纯方法 `_computeTestTimes(allHist,id)`，`onLoad` 由 196 行减至 ~150 行。纯函数抽离后便于补单测** |
+| # | 严重度 | 问题 | 位置 | 影响 |
+| --- | --- | --- | --- | --- |
+| N1 | **P0** | 训练成绩的「游戏耗时」覆盖了「记录时间戳」 | `utils/train-store.js:22-25`、`pages/train/game.js:129-139` | 训练历史显示 1970 年、趋势日期错误、最近训练排序错误 |
+| N2 | **P1** | 测评历史配额兜底对 `const` 变量重新赋值 | `pages/test/test.js:768-779` | 存储超限时抛 `TypeError`，兜底失效、记录丢失 |
+| N3 | **P1** | 进行中测评的「上次编辑」用了题号当时间戳 | `pages/history/history.js:83-85`、`history.wxml:57` | 显示 1970-01-01；进行中列表按题号而非时间排序 |
+| N4 | **P1** | 从历史打开旧记录时，结果页时间/GAP 取的是最新记录 | `pages/history/history.js:170`、`pages/result/result.js:252-266` | 「测评时间 / 距上次测评」与所选记录不符 |
+| N5 | **P1** | 主题「跟随系统」实际始终为浅色 | `utils/theme-store.js:69-87`、`app.json` | AUTO 模式失效；需手动切深色 |
+| N6 | **P2** | 训练播放页首屏最佳成绩恒为「暂无记录」 | `pages/train/game.js:73` | 进页时 Hero 与难度芯片信息不一致（芯片正确、Hero 错误） |
+| N7 | **P2** | 详情页「历史最佳」一律取最大值 | `pages/detail/detail.js:69-70` | 焦虑/抑郁等越低越好的量表，把最差成绩标成「最佳」 |
+| N8 | **P2** | 交卷时 `computeResult` 无异常保护 | `pages/test/test.js:746-749` | 评分异常会崩溃且进度已删；结果页的兜底来不及生效 |
+| N9 | **P2** | 文档/注释计数与实现漂移 | 根 README、`wechat-miniprogram/README.md`、`about.js`、`tools/gen-game-player.js` | README 已在本轮修正；`about.js` 来源列表、生成器注释仍为手工维护 |
+| N10 | **P3** | 详情/方法页保存图片未走隐私封装 | `pages/detail/detail.js:125`、`pages/methods/detail.js:142` | 与结果页 `withPrivacy` 行为不一致，新基础库下可能被拦截 |
+| N11 | **P3** | 关键缺陷缺少回归测试 | `test/` | N1/N2/N3/N4/N5 在当前 284 项测试下仍全绿 |
+| N12 | **P3** | 根目录遗留 `project.config.json` 与子工程不一致 | 仓库根 `project.config.json` | 无 `miniprogramRoot`、AppID 与 `wechat-miniprogram/project.config.json` 不同；导入根目录无法编译 |
 
-修复后 `npm run lint` 与 `npm run lint:strict` 均 **0 error / 0 warning**，`node test/smoke.js`（170）+ Jest（266）+ 覆盖率门槛全绿。
+### N1 · 训练记录时间戳被游戏耗时覆盖（P0）
+
+**证据**
+
+- `train-store.save()`：
+  ```js
+  const rec = Object.assign(
+    { rid, level, time: Date.now(), summary: String(metricValue), userId },
+    detail || {}
+  )
+  ```
+- `pages/train/game.js` 的 `onFinish` 传入 `detail.time = r.time`，而 `r.time` 是**单局耗时（秒）**。
+
+**实测**
+
+```text
+record.time = 12.5  → fmt(record.time) = 1970-01-01 08:00
+```
+
+**影响**
+
+- `history.js` 训练记录 `timeText: fmt(r.time)` → 1970 年；
+- `trainStore.allRecords()` 按 `time` 排序 → 实际按「单局耗时」排序；
+- `trainStore.trend()` 把 `r.time` 当日期传给 `computeTrend` → 趋势图横轴错误；
+- 首页 `lastTimes()` 用同一字段 → 「最近训练」排序错误。
+
+**建议**
+
+1. 记录级 `time` 永远由 `save()` 写入 `Date.now()`，禁止 `detail` 覆盖；
+2. 把游戏耗时改名为 `elapsed`（或 `duration`），在 `onFinish` 中传 `elapsed: r.time`；
+3. 旧数据兼容：读取时若 `time < 1e12`（明显是秒级耗时），按 `rid` 中的时间或当前时间兜底，并标记 `timeReliable=false`；
+4. 增加回归测试：保存带 `time` 的 detail 后，断言 `record.time` 为毫秒时间戳、`fmt` 不是 1970、趋势日期正确。
+
+### N2 · 配额兜底对 const 重新赋值（P1）
+
+**证据**：`pages/test/test.js:768-779`
+
+```js
+const trimmed = hist.slice(0, HISTORY_LIMIT)
+...
+for (let guard = 0; guard < trimmed.length; guard++) {
+  try {
+    wx.setStorageSync(SK.HISTORY, trimmed)
+    break
+  } catch (e) {
+    trimmed = trimmed.slice(0, trimmed.length - 1)  // TypeError
+  }
+}
+```
+
+**影响**：仅在 `Storage` 超限时触发；一旦触发，异常向上冒泡，交卷流程中断，用户刚完成的测评无法保存（进度已在前面删除）。
+
+**建议**：改为 `let trimmed`；同时把「删除进度」移到保存成功之后，失败时保留进度并提示「存储空间不足，请清理后重试」。
+
+### N3 · 进行中测评的「上次编辑」时间错误（P1）
+
+**证据**
+
+- `test.js:679-683` 进度结构只有 `{ answers, current, startedAt }`，没有 `updatedAt`；
+- `history.js:83-85`：
+  ```js
+  updated: prog.current || 0,
+  updatedText: fmt(prog.current || 0)
+  ```
+- `history.wxml:57` 直接展示「上次编辑：{{p.updatedText}}」。
+
+**影响**：`fmt(3)` → `1970-01-01 08:00`；`out.sort((a,b) => b.updated - a.updated)` 按答题位置排序，不是按最近编辑。
+
+**建议**：进度写入时加 `updatedAt: Date.now()`；历史页用 `prog.updatedAt` 排序与展示，缺失时显示「进行中」而非 1970 时间。可同时展示「已答 X/Y」。
+
+### N4 · 归档记录的时间/GAP 取错（P1）
+
+**证据**
+
+- `history.open()` 只传 `{ id, answers }`，没有 `time`；
+- `result.js:252`：
+  ```js
+  const selfTimeSrc = (app.globalData.lastResult && app.globalData.lastResult.time)
+    || (myHist[0] && myHist[0].time) || Date.now()
+  ```
+- `_computeTestTimes` 的 `testedTime` 也固定用 `myHist[0]`（最新一条）。
+
+**影响**：从历史打开旧记录时，页面显示的时间、重测间隔、重测提示都按最新记录计算，容易误导用户。
+
+**建议**：`history.open()` 传 `time: item.time`；`test.doSubmit` 的 `lastResult` 也带 `time: record.time`；`_computeTestTimes(allHist, id, selectedTime)` 显式接收所选记录时间（或 `rid` 定位记录），不要依赖 `myHist[0]`。
+
+### N5 · 主题 AUTO 模式失效（P1）
+
+**证据**
+
+- `theme-store.getSystemTheme()` 只读 `wx.getWindowInfo().theme` 与 `wx.getDeviceInfo().theme`；
+- 按微信官方文档，`theme` 在 `wx.getSystemInfoSync()` 返回值中；`getWindowInfo/getDeviceInfo` 不提供该字段；
+- `app.json` 未声明 `darkmode` / `themeLocation`。
+
+**实测**
+
+```text
+mock getSystemInfoSync().theme = 'dark'
+getSystemTheme() → 'light'
+```
+
+**影响**：用户选择「跟随系统」后，系统深色模式不会生效；手动选深色正常。
+
+**建议**：在 `getSystemTheme()` 中优先读 `wx.getSystemInfoSync().theme`，并保留现有 API 作为兜底；如需响应系统切换，按官方要求补 `app.json` 的 `darkmode: true` 与 `themeLocation`，或明确把 AUTO 降级为「跟随系统（首次启动读取）」。补主题单测，覆盖 dark/light/不支持三种情况。
+
+### N6 · 训练播放页首屏最佳成绩错误（P2）
+
+**证据**：`pages/train/game.js:73`
+
+```js
+bestText: fmtBest(trainStore.best(this.data.gameId, level, g.metric.better), g.metric.unit)
+```
+
+同一 `setData` 中才写入 `gameId: id`，此时 `this.data.gameId` 仍为 `''`，查询键变成 `ma_train___3`。
+
+**影响**：Hero 的「维度 · 最佳」恒为「暂无记录」；难度芯片的 `levelsWithBest` 用 `id` 计算，显示正确，造成同页信息矛盾。
+
+**建议**：改用局部变量 `id`；补测试：预置一条成绩后加载页面，断言 `data.bestText` 含实际最佳值。
+
+### N7 · 「历史最佳」方向语义错误（P2）
+
+**证据**：`pages/detail/detail.js:69-70`
+
+```js
+const nums = mine.map((h) => parseFloat(h.summary)).filter((n) => !isNaN(n))
+if (nums.length >= 2) info.best = { summary: String(Math.max.apply(null, nums)) }
+```
+
+**影响**：GAD-7 / PHQ-9 / SDS / SAS / PSS / PSQI / UCLA 等「越低越好」的量表，最大值被标为「历史最佳」；用户可能把最差状态当作改善目标。
+
+**建议**：在模块 `resultLayout` 增加 `better: 'higher' | 'lower' | 'none'`（或独立 `metric` 元数据），详情页按方向取 min/max；类型型量表隐藏「最佳」，改显示「最近类型」或「测评次数」。这是数据语义问题，优先级可高于普通 UI 缺陷。
+
+### N8 · 交卷评分缺少异常保护（P2）
+
+**证据**：`pages/test/test.js:746-749`
+
+```js
+wx.removeStorageSync(SK.PROGRESS_PREFIX + this.data.meta.id)
+const r = this.mod.computeResult(...)
+```
+
+**影响**：任一模块因旧答案格式/数据异常抛错，页面直接崩溃；此时进度已删除，用户无法恢复。结果页虽然有 try/catch，但根本不会跳转。
+
+**建议**：先 `try` 计算、成功后再删进度并写历史；失败时保留进度、`showModal` 提示并提供「重试/返回」。可复用结果页的兜底视图。
+
+### N9 · 文档与实现漂移（P2）
+
+| 位置 | 审查时现状 | 实际 / 本轮处理 |
+| --- | --- | --- |
+| 根 README（旧） | 34 个游戏 / 14 套量表 / UniApp + server 结构 | 36 / 27 / 仅原生小程序；**本轮已重写** |
+| `wechat-miniprogram/README.md` | 「22 个方法」、注意力 8、`ma_train_<id>`、路线图已完成项仍标未做 | 24 个方法 / 注意力 9 / `ma_train_<id>__<level>`；**本轮已修正** |
+| `about.js` 数据来源 | 手工维护 9 条来源 | 27 套量表；未列 PHQ-9/PSQI/PSS/UCLA 等（属「精选来源」而非完整清单） |
+| `tools/gen-game-player.js` 注释 | 「31 个 wx:if」 | 36 个（仅注释，不影响生成结果） |
+| `docs/brain-games-catalog.md` | 「全部 36 已落地」但 A5 图形追踪、A6 数字密码未实现 | 实际游戏以 registry 为准；**本轮已标注候选/已落地状态与存储键** |
+
+**建议**：文档计数尽量从 `getMetaList().length` / `METHODS.length` / `gameReg.getMetaList().length` 生成（About 页已如此），README 在发布前跑一次计数核对；`about.js` 的来源列表改为「精选文献」表述或按模块聚合，避免用户误以为是全部来源。
+
+### N10 · 保存图片的隐私封装不一致（P3）
+
+`pages/result/result.js` 的 `saveCard` 使用 `withPrivacy`，而 `pages/detail/detail.js` 与 `pages/methods/detail.js` 的 `saveCard` 直接调用 `saveToAlbum`。微信 2.32.3+ 对相册写入有隐私授权要求，虽然 `registerPrivacyModal` 可兜底，但行为不一致，低版本/审核场景容易出问题。
+
+**建议**：把 `withPrivacy` 收进 `share.saveToAlbum`，或三处统一包裹；补一条静态/单测断言。
+
+### N11 · 回归测试缺口（P3）
+
+当前 284 项 Jest 全绿，但以下场景没有测试：
+
+- 训练记录 `time` 语义（N1）；
+- 测评历史配额兜底（N2）；
+- 进行中测评的时间与排序（N3）；
+- 从历史打开旧记录的时间/GAP（N4）；
+- 主题 AUTO 的系统深色分支（N5）；
+- 详情页「历史最佳」方向（N7）。
+
+**建议**：每修一个 P0/P1 补一条最小回归，优先覆盖 `train-store`、`history`、`theme-store`、`detail`。覆盖率门槛可从 60/45 逐步提到 70/55。
+
+### N12 · 根目录遗留工程配置（P3）
+
+仓库根 `project.config.json` 没有 `miniprogramRoot`，AppID（`wxcb1a…`）与 `wechat-miniprogram/project.config.json`（`wx2150…`）也不一致。它没有实际作用，却会让「导入仓库根目录」的开发者遇到「找不到 app.json」的编译错误。
+
+**建议**：删除根配置文件，或补 `"miniprogramRoot": "wechat-miniprogram/"` 并统一 AppID；同时在 README 明确「必须导入 `wechat-miniprogram/` 子目录」（本轮已补说明）。
 
 ---
 
-## 4. 遗留问题与风险（Issues）
+## 4. 历史修复档案（F1–F19）
 
-### I1 · 云同步是「假功能」（高优先级 · 误导性）✅ **已解决：占位死代码删除（F17）+ UI 隐藏（F5）**
-- ~~`utils/user.js` 的 `syncUserToCloud` / `syncRecordToCloud` 直接 `return Promise.resolve()`~~ **已删除全部云占位函数与 `openid/unionid/syncStatus/lastSync` 字段（F17）**。
-- `user.js` 现为**纯本地实现**，文件头注释已注明「当前版本纯本地离线；如需云同步接入微信云开发时按需补回」。
-- **现状**：代码与「纯本地」决策一致，无误导性同步 UI。上线云同步需新建 `wx.cloud.init` 与云函数，并在 `user.js` 重新引入同步逻辑（非破坏性，本地字段已兼容）。
+以下为前几轮审查已落地的问题，保留用于追溯；当前代码已不再包含这些缺陷。
 
-### I2 · `theme.js` 设计系统未被实际使用（中优先级 · 过度设计）✅ **已完成：精简仅保留 isDark**
-
-### I3 · `applyTheme()` 形同虚设（低优先级）✅ **已完成：已删除**
-
-### I4 · 残留 lint warning（低优先级 · 工程整洁）✅ **已完成：全部清理**
-
-### I5 · 文档/实现细微错位 ✅ **已完成：首页导航收敛、文档同步**
-
----
-
-## 5. 改进建议（按优先级）
-
-### P0 · 数据真实性与合规
-1. **处理云同步占位**（对应 I1）：✅ **已完成（F17）** —— 删除全部云占位死代码，代码与「纯本地」决策一致。如需真正云同步，接入微信云开发（`app.js` 调 `wx.cloud.init`、补 `user`/`records` 云函数，本地字段已兼容）。
-
-### P1 · 架构与可维护性
-2. **常量集中化**：✅ **已完成** —— `SCHEMA_VERSION` 抽到 `utils/constants.js`（F16）；存储键集中于 `utils/storage-keys.js`，未用的 `progressKey`/`trainKey` 已删（F15）。
-3. **计分逻辑收敛**：✅ **已完成（F12）** —— 反向计分公式收敛到 `utils/reverse.js` 单一来源，消除双实现漂移风险。
-4. **答题进度健壮性**：✅ **已完成（F13）** —— `onUnload`/`onHide` 兜底落盘，杜绝节流窗口内退出丢进度。
-5. **游戏生命周期清理**：✅ **已完成（F14）** —— 全部含定时器的游戏补 `detached` 清理钩子。
-6. **主包体积**：✅ **已完成（F18）** —— `packOptions.ignore` 补全开发文件排除；实测打包内容 ≈1.93 MiB，低于 2M 上限，无需分包。若后续音频/素材继续膨胀逼近上限，再考虑 `subpackages`（把 `games/`、`modules/` 拆到子包）或素材远程化。
-7. **结果页可维护性**：✅ **已完成（F19）** —— `onLoad` 拆分（时间计算抽为 `_computeTestTimes`）、分享卡片重复绘制消除（画布渲染统一收拢 `onReady`）。
-
-### P2 · 体验与科学
-6. **结果页趋势增强**：数值趋势已补间隔日期显示，后续可考虑横向滚动容器或交互式缩放。
-7. **常模溯源**：`modules-meta.js` 的 `reference`/`scoring` 已补，建议在详情页/关于页给出更醒目免责声明与文献链接。
-
-### P3 · 工程化
-8. 若未来接入云同步，补 `wx.cloud` 分支的单元测试（当前 `user.js` 已为纯本地实现，无云分支）。
-9. 考虑逐步引入 TypeScript（从 `utils/registry`、`utils/game-registry` 等核心模块开始）。
+| # | 问题 | 结果 |
+| --- | --- | --- |
+| F1 | `profile.save()` 崩溃（`GENDERS` 未导入、云同步函数未导出） | 已修 |
+| F2 | ESLint 将 `getCurrentPages` 报 `no-undef` | 已修 |
+| F3 | `result/mine/theme-store` 未用导入/变量 | 已清 |
+| F4 | 文档「23 套/22 个」不一致 | 已同步 |
+| F5 | 云同步 UI 误导用户 | 已移除，明确纯本地 |
+| F6 | `theme.js` 过度设计 | 精简为 `isDark()` |
+| F7 | `applyTheme` 冗余 | 删除 |
+| F8 | lint warnings | 清零 |
+| F9 | 趋势图日期重叠 | 按间隔采样 |
+| F10 | 方法练习无趋势图 | 已补 canvas 趋势 |
+| F11 | 无严格 lint 门槛 | `lint:strict` + CI |
+| F12 | 反向计分双实现 | 收敛到 `utils/reverse.js` |
+| F13 | 答题进度节流窗口丢失 | `onHide/onUnload` 强制落盘 |
+| F14 | 4 个游戏定时器泄漏 | 全量补 `detached` 清理 |
+| F15 | `progressKey/trainKey` 死代码 | 删除 |
+| F16 | `SCHEMA_VERSION` 双写 | 收敛到 `utils/constants.js` |
+| F17 | 云同步占位死代码 | 删除，保留纯本地 |
+| F18 | 主包混入开发文件 | `packOptions.ignore` 补全 |
+| F19 | 结果页重复绘制/`onLoad` 过重 | 收拢到 `onReady` + `_computeTestTimes` |
 
 ---
 
-## 6. 本次文档改进清单
-- `README.md`：目录结构补全 5 大板块全部页面与 utils；新增「产品功能总览（五大板块）」「跨域关联」「主题与无障碍」「用户档案与云同步」四节；修正「22 套 → 23 套」；changelog 追加 code review 条目与已知问题声明。
-- `docs/CODE_REVIEW.md`：（本文件）业务/架构盘点 + 问题清单 + 改进建议，**「已修复问题」F5–F17、「遗留问题」I1–I5 状态更新**。
-- 代码修复：F1–F17（见第 3 节）。
+## 5. 改进路线图
+
+### P0 · 数据正确性（建议立即处理）
+
+- [ ] **N1 训练记录时间戳**：拆分 `time`（记录时间）与 `elapsed`（游戏耗时），兼容旧数据，补回归。
+- [ ] 交卷流程「先算分、后删进度、再写历史」，失败可重试（N8 的一部分）。
+
+### P1 · 用户可见的正确性
+
+- [ ] **N2** `const trimmed` → `let`，并补配额兜底测试。
+- [ ] **N3** 进度写入 `updatedAt`，历史页按真实时间排序/展示。
+- [ ] **N4** 归档记录传递 `time`/`rid`，结果页按所选记录计算时间与 GAP。
+- [ ] **N5** 修复主题 AUTO 检测（`getSystemInfoSync().theme` + `darkmode` 配置/降级说明）。
+- [ ] **N7** 为量表补充 `better` 方向元数据，修正「历史最佳」。
+
+### P2 · 体验与工程化
+
+- [ ] **N6** 训练播放页用局部 `id` 计算首屏最佳，补预置记录测试。
+- [ ] **N9** 文档/About/注释计数自动化或发布前核对。
+- [ ] **N10** 保存图片统一走 `withPrivacy`。
+- [ ] **N11** 补齐 6 类回归测试，逐步提高覆盖率门槛。
+- [ ] 测评历史上限从全局 30 条提升到 50–100，或按量表分别限流；给用户清理入口。
+- [ ] 结果页/详情页增加「数据版本/常模版本」可见说明。
+- [ ] `SCHEMA_VERSION` 改为「全局 + 每模块」双版本，模块题量/计分变更时精确提示。
+
+### P3 · 架构与可维护性
+
+- [ ] `test.js`（约 790 行）拆分：答题状态机、计时器、canvas 绘制、交卷存储分别抽模块。
+- [ ] `history.load()` 不在列表阶段把 `answers` 全量放进 `data`，打开时按 `rid` 读取，降低内存。
+- [ ] `train.js onShow` 避免在双重循环里重复 `gamesByDim()`，一次取 meta map。
+- [ ] `relations.js` 的维度推荐从「取每维前 2 个」改为显式 id 配置或权重表，减少新增游戏后的关联漂移。
+- [ ] 逐步引入 TypeScript（从 `utils/registry`、`game-registry`、`train-store` 开始）。
+- [ ] 考虑把 `games/`、`modules/` 拆子包，为素材增长留空间（当前主包仍低于 2M，非紧急）。
+- [ ] **N12** 删除根目录遗留 `project.config.json`，或补 `miniprogramRoot` 并统一 AppID。
+
+### 数据 / 科学（长期）
+
+- [ ] 常模按年龄/性别分组，标注版本与文献链接；当前仅为教育近似值。
+- [ ] 训练成绩与量表结果不做因果/诊断解释，保持免责声明与「训练热身」定位。
+- [ ] 若未来接云同步：补 `wx.cloud` 分支、迁移/冲突策略与隐私合规测试。
+
+---
+
+## 6. 本轮文档更新
+
+- 根 `README.md`：重写为当前真实状态，移除已不存在的 UniApp/server/部署说明，补 27/24/36/14 计数、测试命令与文档索引。
+- `wechat-miniprogram/README.md`：修正方法数（22→24）、游戏维度分组（注意力 9 + 逻辑计算 1）、存储键（`ma_train_<id>__<level>`）、测试计数与路线图。
+- 新增 `docs/ARCHITECTURE.md`：分层、业务流、数据模型、模块/游戏契约、生成文件与扩展指南。
+- `docs/brain-games-catalog.md`：澄清「36 个已落地」与候选清单的差异，更新存储键说明。
+- 本文件：刷新基线，新增 N1–N12，重排 P0–P3 路线图。
+
+---
+
+## 7. 审查结论
+
+当前工程的模块化、测试与生成式接线在同类小程序中属于较完整水平，基线可稳定运行。**最值得优先处理的是 N1**：它不是样式问题，而是会让训练历史、趋势和「最近训练」同时失真的数据层缺陷；其次是 N2–N5 这组用户可见的时间/主题/记录语义问题。修复这些后再做文档计数自动化与测试补强，收益最高。
