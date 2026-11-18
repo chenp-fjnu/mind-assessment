@@ -63,7 +63,7 @@
       </view>
       <view class="entry-card method-entry" bindtap="goMethods" role="button" aria-label="浏览方法">
         <view class="entry-icon-wrap"><text class="entry-icon">🧰</text></view>
-        <text class="entry-title">学方法</text>
+        <text class="entry-title">学一学</text>
       </view>
       <view class="entry-card train-entry" bindtap="goTrain" role="button" aria-label="浏览训练">
         <view class="entry-icon-wrap"><text class="entry-icon">🎮</text></view>
