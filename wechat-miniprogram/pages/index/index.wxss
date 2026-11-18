@@ -89,9 +89,12 @@
   font-size: var(--font-size-sm);
 }
 .goal-more {
-  display: block;
+  display: inline-block;
   margin-top: 12rpx;
-  padding: 10rpx 8rpx;
+  padding: 8rpx 16rpx;
+  border: 1rpx solid var(--border-light);
+  border-radius: var(--radius-full);
+  background: var(--bg-brand);
 }
 .other-goals {
   margin-top: 12rpx;
@@ -111,6 +114,11 @@
   min-height: 64rpx;
   margin: 10rpx 0 0;
   padding: 12rpx 16rpx;
+  border: 1rpx solid var(--border-light);
+  border-radius: var(--radius-full);
+  background: var(--bg-tertiary);
+  color: var(--color-brand-700);
+  font-weight: var(--font-weight-semibold);
 }
 .browse-action {
   display: block;
@@ -140,6 +148,14 @@
   align-items: center;
   justify-content: center;
   margin-top: 8rpx;
+}
+.status-actions .text-action {
+  padding: 8rpx 16rpx;
+  border: 1rpx solid var(--border-light);
+  border-radius: var(--radius-full);
+  background: var(--bg-tertiary);
+  color: var(--color-brand-700);
+  font-weight: var(--font-weight-semibold);
 }
 .action-divider {
   color: var(--border-medium);

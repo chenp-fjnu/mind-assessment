@@ -172,6 +172,10 @@
   background: var(--color-brand);
 }
 .course-button {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   height: 80rpx;
   margin: 22rpx 0 0;
   border-radius: var(--radius-full);
@@ -179,7 +183,9 @@
   color: var(--text-inverse);
   font-size: var(--font-size-lg);
   font-weight: var(--font-weight-semibold);
-  line-height: 80rpx;
+  line-height: normal;
+  text-align: center;
+  box-shadow: var(--shadow-sm);
 }
 .course-button::after {
   border: 0;

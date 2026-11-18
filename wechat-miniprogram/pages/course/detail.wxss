@@ -246,28 +246,40 @@
 }
 .step-button,
 .skip-button,
-.secondary-button {
+.secondary-button,
+.text-button,
+.reset-button {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   height: 72rpx;
   margin: 0;
   border-radius: var(--radius-full);
   font-size: var(--font-size-sm);
-  line-height: 72rpx;
+  line-height: normal;
+  text-align: center;
 }
 .step-button {
+  min-width: 0;
   flex: 1;
   background: var(--color-brand);
   color: var(--text-inverse);
+  box-shadow: var(--shadow-sm);
   font-weight: var(--font-weight-semibold);
 }
 .skip-button,
 .secondary-button {
+  border: 1rpx solid var(--border-medium);
   padding: 0 22rpx;
-  background: var(--btn-secondary-bg);
+  background: var(--bg-card);
   color: var(--btn-secondary-text);
+  font-weight: var(--font-weight-medium);
 }
 .step-button::after,
 .skip-button::after,
-.secondary-button::after {
+.secondary-button::after,
+.text-button::after {
   border: 0;
 }
 .bottom-actions {
@@ -281,21 +293,20 @@
   flex: 1;
 }
 .text-button {
-  background: transparent;
-  color: var(--text-brand);
-}
-.text-button::after {
   border: 1rpx solid var(--border-focus);
+  background: var(--color-brand-50);
+  color: var(--color-brand-700);
+  font-weight: var(--font-weight-semibold);
 }
 .reset-button {
-  display: block;
-  height: 64rpx;
+  min-width: 220rpx;
   margin: 20rpx auto 0;
-  padding: 0 18rpx;
-  background: transparent;
-  color: var(--text-muted);
-  font-size: var(--font-size-xs);
-  line-height: 64rpx;
+  padding: 0 22rpx;
+  border: 1rpx solid var(--border-light);
+  background: var(--bg-tertiary);
+  color: var(--text-secondary);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
 }
 .reset-button::after {
   border: 0;
