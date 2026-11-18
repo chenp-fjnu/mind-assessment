@@ -214,7 +214,6 @@ Page({
     courseStarted: false,
     goalFormVisible: false,
     welcomeBack: false,
-    otherGoalsVisible: false,
   },
   onLoad() {
     useTheme(this)
@@ -314,21 +313,18 @@ Page({
     }
     wx.setStorageSync(SK.USER_GOAL, goal)
     wx.setStorageSync(SK.ONBOARDING, true)
-    this.setData({ selectedGoal: goal, goalFormVisible: false, otherGoalsVisible: false }, () => {
+    this.setData({ selectedGoal: goal, goalFormVisible: false }, () => {
       this.loadHomeState()
       if (course) wx.navigateTo({ url: '/pages/course/detail?id=' + course.id })
     })
   },
   toggleGoalForm() {
-    this.setData({ goalFormVisible: !this.data.goalFormVisible, otherGoalsVisible: false })
+    this.setData({ goalFormVisible: !this.data.goalFormVisible })
   },
   clearGoal() {
     wx.removeStorageSync(SK.USER_GOAL)
     wx.removeStorageSync(SK.ONBOARDING)
-    this.setData({ selectedGoal: '', goalLabel: '', courseId: '', goalFormVisible: true, otherGoalsVisible: false })
-  },
-  toggleOtherGoals() {
-    this.setData({ otherGoalsVisible: !this.data.otherGoalsVisible })
+    this.setData({ selectedGoal: '', goalLabel: '', courseId: '', goalFormVisible: true })
   },
   rotateHot() {
     const picks = this.data.hotPicks

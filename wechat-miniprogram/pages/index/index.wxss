@@ -83,27 +83,9 @@
 .text-action::after {
   border: 0;
 }
-.goal-more,
 .text-action {
   color: var(--text-brand);
   font-size: var(--font-size-sm);
-}
-.goal-more {
-  display: inline-block;
-  margin-top: 12rpx;
-  padding: 8rpx 16rpx;
-  border: 1rpx solid var(--border-light);
-  border-radius: var(--radius-full);
-  background: var(--bg-brand);
-}
-.other-goals {
-  margin-top: 12rpx;
-  padding: 16rpx 20rpx;
-  border-radius: var(--radius-lg);
-  background: var(--bg-brand);
-  color: var(--text-secondary);
-  font-size: var(--font-size-sm);
-  line-height: var(--line-height-normal);
 }
 .text-action {
   display: inline-block;

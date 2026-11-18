@@ -7,18 +7,13 @@
 
     <view wx:if="{{goalFormVisible}}" class="card home-card goal-card">
       <text class="goal-title">你现在最想做什么？</text>
-      <text class="goal-sub">选一个方向看看短课程，也可以直接浏览全部。</text>
+      <text class="goal-sub">选一个方向看看短课程，或先浏览全部内容。</text>
       <view class="goal-options">
         <button class="goal-option" data-goal="self" bindtap="chooseGoal" aria-label="选择想更了解自己">了解自己</button>
         <button class="goal-option" data-goal="focus" bindtap="chooseGoal" aria-label="选择提升专注">提升专注</button>
         <button class="goal-option" data-goal="emotion" bindtap="chooseGoal" aria-label="选择调节压力或情绪">调节压力</button>
       </view>
-      <view class="goal-more" bindtap="toggleOtherGoals" role="button" aria-label="查看其他方向">其他方向{{otherGoalsVisible ? ' 收起' : ' ›'}}</view>
-      <view wx:if="{{otherGoalsVisible}}" class="other-goals">
-        <text>职业、睡眠、人际关系和脑力训练课程尚未纳入本次试点。</text>
-        <button class="text-action" data-goal="browse" bindtap="chooseGoal" aria-label="浏览全部内容">浏览全部内容</button>
-      </view>
-      <button wx:if="{{!otherGoalsVisible}}" class="text-action browse-action" data-goal="browse" bindtap="chooseGoal" aria-label="先随便看看">先随便看看</button>
+      <button class="text-action browse-action" data-goal="browse" bindtap="chooseGoal" aria-label="先随便看看">先随便看看</button>
       <text wx:if="{{selectedGoal}}" class="text-action browse-action" bindtap="toggleGoalForm" role="button" aria-label="取消更换目标">取消更换</text>
     </view>
 
