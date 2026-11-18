@@ -1,5 +1,6 @@
 const { getModule, TYPE_LABELS, getMetaList } = require('../../utils/registry')
 const { readableTextColor } = require('../../utils/color')
+const { directionFor, pickBest } = require('../../utils/scale-direction')
 const { genCard, saveToAlbum } = require('../../utils/share')
 const { useTheme } = require('../../utils/theme-store')
 const relations = require('../../utils/relations')
@@ -66,8 +67,12 @@ Page({
     const mine = all.filter((h) => h.id === mod.id)
     if (!mine.length) return
     const info = { count: mine.length, last: { summary: mine[0].summary, level: mine[0].level } }
-    const nums = mine.map((h) => parseFloat(h.summary)).filter((n) => !isNaN(n))
-    if (nums.length >= 2) info.best = { summary: String(Math.max.apply(null, nums)) }
+    const direction = directionFor(mod.id)
+    const nums = mine.map((h) => h.summary).filter((v) => v !== '' && v != null)
+    if (nums.length >= 2 && direction !== 'none') {
+      const best = pickBest(nums, direction)
+      if (best != null) info.best = { summary: String(best), direction }
+    }
     this.setData({ history: info })
   },
   start() {

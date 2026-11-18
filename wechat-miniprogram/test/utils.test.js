@@ -7,11 +7,13 @@ const { isDark } = require('../utils/theme')
 const { scoreItem, computeResult } = require('../utils/scoring')
 const { reverseValue } = require('../utils/reverse')
 const { computeTrend, isNumeric, fmtMD } = require('../utils/trend')
+const { fmt } = require('../utils/format')
 const { getResultView } = require('../utils/result-view')
 const { getModule, getMetaList, TYPE_LABELS } = require('../utils/registry')
 const { textureForColor, COLOR_TEXTURE, drawShape, drawCell } = require('../utils/figure')
 const methodsData = require('../utils/methods-data')
 const trainStore = require('../utils/train-store')
+const { directionFor, pickBest } = require('../utils/scale-direction')
 
 function pickAnswer(q) {
   if (q.answer != null) return q.answer
@@ -269,5 +271,71 @@ describe('train-store 按等级分离记录与统计', () => {
     trainStore.deleteRecord('schulte', 3, rec.rid)
     expect(trainStore.load('schulte', 3).length).toBe(1)
     expect(trainStore.load('schulte', 3)[0].summary).toBe('12')
+  })
+
+  test('记录级 time 由存储层写入，游戏耗时只进 elapsed', () => {
+    const before = Date.now()
+    trainStore.save('schulte', 3, 8, { elapsed: 12.5, errors: 0 })
+    const rec = trainStore.load('schulte', 3)[0]
+    expect(rec.elapsed).toBe(12.5)
+    expect(rec.time).toBeGreaterThanOrEqual(before)
+    expect(rec.time).toBeLessThan(1e12 + before) // 毫秒时间戳，而非 12.5 秒
+    expect(fmt(rec.time)).not.toContain('1970')
+    trainStore.save('schulte', 3, 9, { elapsed: 11 })
+    const t = trainStore.trend('schulte', 3)
+    expect(t.showTrend).toBe(true)
+    expect(t.trendDates.length).toBe(2)
+    t.trendDates.forEach((d) => expect(d).toMatch(/^\d{2}-\d{2}$/))
+  })
+
+  test('旧数据（time 为秒）按 rid 时间戳自动还原', () => {
+    const ts = new Date(2026, 10, 1, 10, 30).getTime()
+    store['ma_train_schulte__3'] = [{ rid: ts + '_abc', level: 3, time: 12.5, summary: '9' }]
+    const rec = trainStore.load('schulte', 3)[0]
+    expect(rec.time).toBe(ts)
+    expect(rec.elapsed).toBe(12.5)
+    expect(fmt(rec.time)).toContain('2026-11-01')
+    expect(trainStore.allRecords()[0].time).toBe(ts)
+  })
+})
+
+describe('scale-direction 历史最佳方向', () => {
+  test('症状类越低越好，能力/积极类越高越好，类型类不判断', () => {
+    expect(directionFor('gad7')).toBe('lower')
+    expect(directionFor('phq9')).toBe('lower')
+    expect(directionFor('psqi')).toBe('lower')
+    expect(directionFor('cdrise')).toBe('higher')
+    expect(directionFor('spm')).toBe('higher')
+    expect(directionFor('mbti')).toBe('none')
+  })
+
+  test('pickBest 按方向取最小/最大，none 返回 null', () => {
+    expect(pickBest(['18', '3', '9'], 'lower')).toBe(3)
+    expect(pickBest(['18', '3', '9'], 'higher')).toBe(18)
+    expect(pickBest(['18', '3', '9'], 'none')).toBeNull()
+    expect(pickBest([], 'lower')).toBeNull()
+  })
+})
+
+describe('theme-store 系统主题', () => {
+  const themeStore = require('../utils/theme-store')
+  afterEach(() => {
+    global.wx.getSystemInfoSync = () => ({ pixelRatio: 2 })
+    global.wx.getWindowInfo = () => ({ pixelRatio: 2 })
+    delete global.wx.getDeviceInfo
+  })
+
+  test('优先读取 getSystemInfoSync().theme', () => {
+    global.wx.getSystemInfoSync = () => ({ theme: 'dark' })
+    global.wx.getWindowInfo = () => ({})
+    expect(themeStore.getSystemTheme()).toBe('dark')
+  })
+
+  test('兼容 windowInfo.theme，并在缺失时回退浅色', () => {
+    global.wx.getSystemInfoSync = () => ({})
+    global.wx.getWindowInfo = () => ({ theme: 'dark' })
+    expect(themeStore.getSystemTheme()).toBe('dark')
+    global.wx.getWindowInfo = () => ({})
+    expect(themeStore.getSystemTheme()).toBe('light')
   })
 })

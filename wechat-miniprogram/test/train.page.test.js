@@ -72,6 +72,20 @@ describe('训练播放页 game', () => {
     expect(ctx.data.bestText).toBe('暂无记录')
   })
 
+  test('onLoad 首屏最佳成绩使用当前 gameId（预置成绩可见）', () => {
+    const ts = Date.now()
+    global.wx.getStorageSync = (k) =>
+      k === 'ma_train_schulte__3' ? [{ rid: ts + '_a', level: 3, time: ts, summary: '9' }] : []
+    try {
+      const ctx = loadPage('pages/train/game.js', { gameId: 'schulte', level: 3 })
+      expect(ctx.data.bestText).toContain('9')
+      const chip = ctx.data.levels.find((l) => l.value === 3)
+      expect(chip.bestText).toContain('9')
+    } finally {
+      global.wx.getStorageSync = () => []
+    }
+  })
+
   test('非法 gameId 提示且 meta 为 null', () => {
     let toast = ''
     global.wx.showToast = (o) => {

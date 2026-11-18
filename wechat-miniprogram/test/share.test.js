@@ -65,6 +65,19 @@ describe('share.saveToAlbum', () => {
     expect(toast).toHaveBeenCalledWith(expect.objectContaining({ title: '生成失败' }))
   })
 
+  test('未通过隐私授权时不写入相册', () => {
+    const toast = jest.spyOn(wx, 'showToast').mockImplementation(() => {})
+    const save = jest.spyOn(wx, 'saveImageToPhotosAlbum').mockImplementation(() => {})
+    wx.requirePrivacyAuthorize = (o) => o && o.fail && o.fail()
+    try {
+      saveToAlbum('tmp://x.png')
+      expect(save).not.toHaveBeenCalled()
+      expect(toast).toHaveBeenCalledWith(expect.objectContaining({ title: '需要授权后才能使用该功能' }))
+    } finally {
+      delete wx.requirePrivacyAuthorize
+    }
+  })
+
   test('保存成功提示已保存', () => {
     const toast = jest.spyOn(wx, 'showToast').mockImplementation(() => {})
     jest.spyOn(wx, 'saveImageToPhotosAlbum').mockImplementation((o) => o.success && o.success())

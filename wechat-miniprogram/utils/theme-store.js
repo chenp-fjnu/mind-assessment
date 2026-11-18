@@ -68,15 +68,24 @@ function updateNativeUI(theme) {
 
 function getSystemTheme() {
   try {
+    // 首选 getSystemInfoSync().theme：官方仅在该接口返回 theme，
+    // 且需要 app.json 声明 "darkmode": true（见 app.json / theme.json）。
+    if (wx.getSystemInfoSync) {
+      const sys = wx.getSystemInfoSync()
+      if (sys && (sys.theme === 'dark' || sys.theme === 'light')) {
+        return sys.theme === 'dark' ? THEME_MODES.DARK : THEME_MODES.LIGHT
+      }
+    }
+    // 兼容部分基础库/旧封装在 window/device 信息中透传 theme 的情况
     if (wx.getWindowInfo) {
       const windowInfo = wx.getWindowInfo()
-      if (windowInfo.theme) {
+      if (windowInfo && windowInfo.theme) {
         return windowInfo.theme === 'dark' ? THEME_MODES.DARK : THEME_MODES.LIGHT
       }
     }
     if (wx.getDeviceInfo) {
       const deviceInfo = wx.getDeviceInfo()
-      if (deviceInfo.theme) {
+      if (deviceInfo && deviceInfo.theme) {
         return deviceInfo.theme === 'dark' ? THEME_MODES.DARK : THEME_MODES.LIGHT
       }
     }

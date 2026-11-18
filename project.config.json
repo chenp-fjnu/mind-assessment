@@ -15,11 +15,12 @@
     "minifyWXML": true
   },
   "compileType": "miniprogram",
+  "miniprogramRoot": "wechat-miniprogram/",
   "simulatorPluginLibVersion": {},
   "packOptions": {
     "ignore": [],
     "include": []
   },
-  "appid": "wxcb1a57da3ff2a353",
+  "appid": "wx215011be68b87714",
   "editorSetting": {}
 }

@@ -60,7 +60,7 @@ Page({
       const qn = mod.getQuestions().length
       const hit = hist.find((h) => h.answers && h.answers.length === qn)
       if (hit) {
-        saved = { id, answers: hit.answers, totalTime: hit.totalTime || 0 }
+        saved = { id, answers: hit.answers, totalTime: hit.totalTime || 0, time: hit.time, rid: hit.rid }
         if (hit.schemaVersion != null && hit.schemaVersion !== SCHEMA_VERSION) {
           schemaNotice = true
         }
@@ -72,7 +72,7 @@ Page({
     }
 
     // 测评时间 / 距上次重测间隔（逻辑抽离至 _computeTestTimes，便于单测）
-    const { testedTime, retestGap, retakeHint } = this._computeTestTimes(allHist, id)
+    const { testedTime, retestGap, retakeHint } = this._computeTestTimes(allHist, id, saved && saved.time)
 
     this.dpr = getDpr()
     const questions = mod.getQuestions()
@@ -229,44 +229,39 @@ Page({
   },
 
   // 纯函数：由历史算出「测评时间 / 距上次重测间隔 / 重测提示」，便于单测
-  _computeTestTimes(allHist, id) {
+  // selectedTime：当前查看的记录时间（从历史打开旧记录时必须传入，否则会误用最新一条）
+  _computeTestTimes(allHist, id, selectedTime) {
     const myHist = allHist
       .filter((h) => h.id === id)
       .sort((a, b) => b.time - a.time)
+    let idx = 0
+    if (selectedTime != null) {
+      const hit = myHist.findIndex((h) => Number(h.time) === Number(selectedTime))
+      if (hit >= 0) idx = hit
+    }
+    const cur = myHist[idx]
+    const prev = myHist[idx + 1]
     let testedTime = ''
     let retestGap = ''
-    if (myHist.length) {
-      const t = new Date(myHist[0].time)
+    if (cur) {
+      const t = new Date(cur.time)
       testedTime =
         t.getFullYear() + '-' + pad2(t.getMonth() + 1) + '-' + pad2(t.getDate()) +
         ' ' + pad2(t.getHours()) + ':' + pad2(t.getMinutes())
-      if (myHist.length >= 2) {
-        const gap = Math.round((myHist[0].time - myHist[1].time) / 86400000)
+      if (prev) {
+        const gap = Math.round((cur.time - prev.time) / 86400000)
         retestGap = gap <= 0 ? '今天' : gap + ' 天前'
       }
     }
-    // 距上次重测间隔（retakeHint）：与本次记录时间不同的同测评表最近一条历史比较
+    // 距上次重测间隔（retakeHint）：所选记录与更早一条比较
     let retakeHint = ''
-    try {
-      const app = getApp()
-      const selfTimeSrc = (app.globalData.lastResult && app.globalData.lastResult.time) || (myHist[0] && myHist[0].time) || Date.now()
-      const selfTs = new Date(selfTimeSrc).getTime()
-      if (!isNaN(selfTs)) {
-        const prev = myHist
-          .filter((h) => h.id === id && h.time !== selfTimeSrc)
-          .sort((a, b) => b.time - a.time)
-        if (prev.length) {
-          const prevTs = new Date(prev[0].time).getTime()
-          if (!isNaN(prevTs)) {
-            const days = Math.round((selfTs - prevTs) / 86400000)
-            retakeHint = days <= 0 ? '距上次测评不到 1 天' : '距上次测评 ' + days + ' 天'
-          }
-        } else {
-          retakeHint = '首次测评'
-        }
+    if (cur) {
+      if (!prev) {
+        retakeHint = '首次测评'
+      } else {
+        const days = Math.round((cur.time - prev.time) / 86400000)
+        retakeHint = days <= 0 ? '距上次测评不到 1 天' : '距上次测评 ' + days + ' 天'
       }
-    } catch (e) {
-      retakeHint = ''
     }
     return { testedTime, retestGap, retakeHint, myHist }
   },

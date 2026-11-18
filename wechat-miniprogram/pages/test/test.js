@@ -680,6 +680,7 @@ Page({
       answers: this.data.answers,
       current: this.data.current,
       startedAt: this._startedAt || Date.now(),
+      updatedAt: Date.now(),
     })
   },
 
@@ -738,14 +739,28 @@ Page({
   doSubmit() {
     if (this._submitting) return
     this._submitting = true
-    this._finished = true // 交卷后 onUnload/onHide 不再兜底保存进度（doSubmit 已清进度）
     if (this._timer) clearTimeout(this._timer)
     this.stopCountdown()
     this.stopTotalTimer()
     this.markTime()
-    wx.removeStorageSync(SK.PROGRESS_PREFIX + this.data.meta.id)
     const layout = this.mod.resultLayout || {}
-    const r = this.mod.computeResult(this.data.answers, this.data.questions, { timings: this._timings })
+    // 先算分：评分异常时保留答题进度并提示重试，避免「进度已删、记录未存」
+    let r
+    try {
+      r = this.mod.computeResult(this.data.answers, this.data.questions, { timings: this._timings })
+    } catch (e) {
+      console.error('[test] computeResult failed:', e)
+      this._submitting = false
+      wx.showModal({
+        title: '交卷失败',
+        content: '评分时出现异常，你的答题进度已保留，可稍后重试。',
+        showCancel: false,
+      })
+      return
+    }
+    // 算分成功后再标记完成并清除进度，防止 onUnload/onHide 把进度写回
+    this._finished = true
+    wx.removeStorageSync(SK.PROGRESS_PREFIX + this.data.meta.id)
     const pv = r[layout.primaryField || 'score']
     const hist = wx.getStorageSync(SK.HISTORY) || []
     const record = {
@@ -765,22 +780,33 @@ Page({
     hist.unshift(record)
     // 超出上限时仅保留最近 N 条，并提示用户（避免静默丢数据）
     const dropped = Math.max(0, hist.length - HISTORY_LIMIT)
-    const trimmed = hist.slice(0, HISTORY_LIMIT)
+    let trimmed = hist.slice(0, HISTORY_LIMIT)
     if (dropped > 0) {
       wx.showToast({ title: '仅保留最近 ' + HISTORY_LIMIT + ' 条记录', icon: 'none' })
     }
     // 配额兜底：写入失败时 progressively 丢弃最旧记录直至成功
-    for (let guard = 0; guard < trimmed.length; guard++) {
+    let saved = false
+    for (let guard = 0; guard <= trimmed.length; guard++) {
       try {
         wx.setStorageSync(SK.HISTORY, trimmed)
+        saved = true
         break
       } catch (e) {
         trimmed = trimmed.slice(0, trimmed.length - 1)
       }
     }
+    if (!saved || trimmed.indexOf(record) === -1) {
+      wx.showToast({ title: '存储空间不足，本次记录未保存', icon: 'none' })
+    }
 
     const app = getApp()
-    app.globalData.lastResult = { id: this.data.meta.id, answers: this.data.answers, totalTime: record.totalTime }
+    app.globalData.lastResult = {
+      id: this.data.meta.id,
+      answers: this.data.answers,
+      totalTime: record.totalTime,
+      time: record.time,
+      rid: record.rid,
+    }
     wx.reLaunch({ url: `/pages/result/result?id=${this.data.meta.id}` })
   },
 

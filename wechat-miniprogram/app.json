@@ -16,17 +16,17 @@
     "pages/train/game"
   ],
   "window": {
-    "navigationBarTextStyle": "white",
+    "navigationBarTextStyle": "@navTxtStyle",
     "navigationBarTitleText": "心智探索局",
-    "navigationBarBackgroundColor": "#1e293b",
-    "backgroundColor": "#f1f5f9",
-    "backgroundTextStyle": "dark"
+    "navigationBarBackgroundColor": "@navBgColor",
+    "backgroundColor": "@bgColor",
+    "backgroundTextStyle": "@bgTxtStyle"
   },
   "tabBar": {
-    "color": "#64748b",
-    "selectedColor": "#7c3aed",
-    "backgroundColor": "#ffffff",
-    "borderStyle": "black",
+    "color": "@tabFontColor",
+    "selectedColor": "@tabSelectedColor",
+    "backgroundColor": "@tabBgColor",
+    "borderStyle": "@tabBorderStyle",
     "list": [
       { "pagePath": "pages/index/index", "text": "首页", "iconPath": "assets/tabicons/home.png", "selectedIconPath": "assets/tabicons/home_on.png" },
       { "pagePath": "pages/assess/assess", "text": "测评", "iconPath": "assets/tabicons/assess.png", "selectedIconPath": "assets/tabicons/assess_on.png" },
@@ -36,6 +36,8 @@
     ]
   },
   "style": "v2",
+  "darkmode": true,
+  "themeLocation": "theme.json",
   "lazyCodeLoading": "requiredComponents",
   "sitemapLocation": "sitemap.json",
   "__usePrivacyCheck__": true

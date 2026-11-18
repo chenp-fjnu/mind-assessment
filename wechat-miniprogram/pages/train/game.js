@@ -70,7 +70,7 @@ Page({
       level,
       levelLabel,
       tint: hexToRgba(g.color, 0.12),
-      bestText: fmtBest(trainStore.best(this.data.gameId, level, g.metric.better), g.metric.unit),
+      bestText: fmtBest(trainStore.best(id, level, g.metric.better), g.metric.unit),
       family: g.family || (g.dim === 'relax' ? 'breath' : ''),
       showStartBtn: false,
       startBtnText: '开始游戏',
@@ -128,7 +128,8 @@ Page({
     const level = this.data.level
     trainStore.save(this.data.gameId, level, metricVal, {
       levelLabel: this.data.levelLabel,
-      time: r.time,
+      // 单局耗时用 elapsed 传递；记录级 time 由 train-store 写入时间戳
+      elapsed: r.time,
       errors: r.errors,
       score: r.score,
       correct: r.correct,

@@ -21,6 +21,28 @@ describe('详情页 detail', () => {
     const ctx = loadPage('pages/detail/detail.js', { id: 'nope' })
     expect(ctx.data.invalid).toBe(true)
   })
+
+  test('历史最佳按量表方向选择（症状类取最小，能力类取最大）', () => {
+    const gadHist = [
+      { id: 'gad7', rid: 'a', name: 'GAD-7', summary: '3', time: 1 },
+      { id: 'gad7', rid: 'b', name: 'GAD-7', summary: '18', time: 2 },
+    ]
+    const gsesHist = [
+      { id: 'gses', rid: 'c', name: 'GSES', summary: '20', time: 1 },
+      { id: 'gses', rid: 'd', name: 'GSES', summary: '35', time: 2 },
+    ]
+    try {
+      global.wx.getStorageSync = (k) => (k === 'ma_history' ? gadHist : [])
+      const low = loadPage('pages/detail/detail.js', { id: 'gad7' })
+      expect(low.data.history.best.summary).toBe('3')
+
+      global.wx.getStorageSync = (k) => (k === 'ma_history' ? gsesHist : [])
+      const high = loadPage('pages/detail/detail.js', { id: 'gses' })
+      expect(high.data.history.best.summary).toBe('35')
+    } finally {
+      global.wx.getStorageSync = () => []
+    }
+  })
 })
 
 describe('结果页 result', () => {

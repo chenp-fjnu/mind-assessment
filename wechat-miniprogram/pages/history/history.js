@@ -71,6 +71,8 @@ function buildInProgressAssess() {
       if (answered === 0) return
       const total = mod.questionCount || 0
       const percent = total ? Math.round((answered / total) * 100) : 0
+      // updatedAt 由答题页写入；旧数据回退 startedAt；都缺失时显示「进行中」而不是 1970
+      const updated = prog.updatedAt || prog.startedAt || 0
       out.push({
         id,
         rid: k,
@@ -80,8 +82,8 @@ function buildInProgressAssess() {
         answered,
         total,
         percent,
-        updated: prog.current || 0,
-        updatedText: fmt(prog.current || 0),
+        updated,
+        updatedText: updated ? fmt(updated) : '进行中',
       })
     })
     out.sort((a, b) => b.updated - a.updated)
@@ -167,7 +169,12 @@ Page({
     const idx = e.currentTarget.dataset.idx
     const item = this.data.list[idx]
     if (!item) return
-    getApp().globalData.lastResult = { id: item.id, answers: item.answers }
+    getApp().globalData.lastResult = {
+      id: item.id,
+      answers: item.answers,
+      time: item.time,
+      rid: item.rid,
+    }
     wx.navigateTo({ url: '/pages/result/result?id=' + item.id })
   },
   openMethod(e) {

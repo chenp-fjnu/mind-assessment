@@ -7,21 +7,43 @@ const SK = require('./storage-keys')
 const PREFIX = SK.TRAIN_PREFIX
 const LAST_KEY = SK.TRAIN_LAST
 
+// 毫秒时间戳下限（2001-09-09）；小于它的 time 视为旧版误写入的「单局耗时（秒）」
+const MIN_TS = 1e12
+
+// 旧数据兼容：早期版本把单局耗时写进了记录级 time（秒），导致历史显示 1970 年。
+// 这里按 rid 前缀（Date.now()）还原记录时间，并把原值迁到 elapsed（秒）。
+function normalizeRecord(r) {
+  if (!r || typeof r !== 'object') return r
+  const t = Number(r.time)
+  if (!isFinite(t) || t >= MIN_TS) return r
+  const ridTs = parseInt(String(r.rid || '').split('_')[0], 10)
+  if (!isFinite(ridTs) || ridTs < MIN_TS) return r
+  return Object.assign({}, r, {
+    time: ridTs,
+    elapsed: r.elapsed == null ? t : r.elapsed,
+  })
+}
+
 // 每个 (游戏, 难度) 对应一个独立存储键，保证历史与最佳按等级分开统计
 function key(id, level) {
   return PREFIX + id + '__' + level
 }
 
 function load(id, level) {
-  return wx.getStorageSync(key(id, level)) || []
+  return (wx.getStorageSync(key(id, level)) || []).map(normalizeRecord)
 }
 
 function save(id, level, metricValue, detail) {
   const k = key(id, level)
   let arr = wx.getStorageSync(k) || []
+  // 记录级 time / rid 由存储层统一生成，禁止 detail 覆盖：
+  // 游戏耗时应通过 elapsed（秒）传递，避免时间戳被覆盖成 1970。
+  const extra = Object.assign({}, detail || {})
+  delete extra.time
+  delete extra.rid
   const rec = Object.assign(
     { rid: Date.now() + '_' + Math.random().toString(36).slice(2, 8), level: level, time: Date.now(), summary: String(metricValue), userId: getUserId() },
-    detail || {}
+    extra
   )
   arr.push(rec)
   if (arr.length > 50) arr = arr.slice(-50)
@@ -91,7 +113,7 @@ function allRecords() {
     const id = k.slice(PREFIX.length, idx)
     const level = k.slice(idx + 2)
     const recs = wx.getStorageSync(k) || []
-    recs.forEach((r) => out.push(Object.assign({ gameId: id, level: level }, r)))
+    recs.map(normalizeRecord).forEach((r) => out.push(Object.assign({ gameId: id, level: level }, r)))
   })
   out.sort((a, b) => b.time - a.time)
   return out
