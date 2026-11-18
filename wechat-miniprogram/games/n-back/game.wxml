@@ -1,99 +1,116 @@
 <view class="nb">
-  <!-- 开始界面 -->
-  <view wx:if="{{phase === 'idle'}}" class="start-screen">
+  <view wx:if="{{phase === 'idle'}}" class="screen-card">
+    <view class="eyebrow">工作记忆训练</view>
     <text class="title">N-Back</text>
-    <text class="desc">同时判断视觉位置与听觉字母是否与 {{n }} 步前匹配</text>
-    <view class="config">
-      <view class="config-item">
-        <text class="config-label">模式</text>
-        <text class="config-value">{{modeLabel}}</text>
+    <text class="desc">判断当前刺激是否与 {{n}} 步前相同。开头 {{n}} 个刺激用于熟悉节奏，不用作答。</text>
+
+    <view class="setting">
+      <text class="setting-title">训练模式</text>
+      <view class="option-row">
+        <view class="option {{mode === 'dual' ? 'active' : ''}}" data-mode="dual" bindtap="onModeChange" role="button">双重</view>
+        <view class="option {{mode === 'visual' ? 'active' : ''}}" data-mode="visual" bindtap="onModeChange" role="button">仅视觉</view>
+        <view class="option {{mode === 'auditory' ? 'active' : ''}}" data-mode="auditory" bindtap="onModeChange" role="button">仅听觉</view>
       </view>
-      <view class="config-item">
-        <text class="config-label">网格</text>
-        <text class="config-value">{{gridLabel}}</text>
-      </view>
-      <view class="config-item">
-        <text class="config-label">N 值</text>
-        <text class="config-value">{{n }}</text>
-      </view>
-      <view class="config-item">
-        <text class="config-label">轮数</text>
-        <text class="config-value">{{trials }}</text>
+      <text class="setting-hint">{{idleTip}}</text>
+    </view>
+
+    <view wx:if="{{mode !== 'auditory'}}" class="setting">
+      <text class="setting-title">视觉网格</text>
+      <view class="option-row">
+        <view class="option {{gridSize === 'small' ? 'active' : ''}}" data-size="small" bindtap="onGridSizeChange" role="button">3 × 3</view>
+        <view class="option {{gridSize === 'medium' ? 'active' : ''}}" data-size="medium" bindtap="onGridSizeChange" role="button">4 × 4</view>
       </view>
     </view>
-    <button class="btn-start" bindtap="start">开始游戏</button>
+
+    <view class="summary">
+      <view><text class="summary-label">难度</text><text class="summary-value">N = {{n}}</text></view>
+      <view><text class="summary-label">轮数</text><text class="summary-value">{{trials}} 轮</text></view>
+    </view>
+    <button class="primary-button" bindtap="start">开始训练</button>
   </view>
 
-  <!-- 游戏界面 -->
-  <view wx:elif="{{phase !== 'idle'}}" class="game-screen">
+  <view wx:elif="{{phase === 'done'}}" class="screen-card result-card">
+    <view class="result-icon">✓</view>
+    <text class="title">训练完成</text>
+    <text class="desc">N = {{n}} · {{modeLabel}} · {{trials}} 轮</text>
+    <view class="score-card">
+      <text class="score-label">本次得分</text>
+      <text class="score-value">{{score}}</text>
+      <text class="score-detail">总体正确率 {{Math.round(result.accuracy * 100)}}% · {{result.correct}} / {{result.total}} 项正确</text>
+    </view>
+    <view wx:if="{{mode !== 'auditory'}}" class="result-row">
+      <text>视觉正确率</text><text>{{Math.round(result.visualAccuracy * 100)}}%</text>
+    </view>
+    <view wx:if="{{mode !== 'visual'}}" class="result-row">
+      <text>听觉正确率</text><text>{{Math.round(result.auditoryAccuracy * 100)}}%</text>
+    </view>
+    <text wx:if="{{result.avgRt}}" class="result-footnote">平均作答用时 {{result.avgRt}} ms</text>
+    <button class="primary-button" bindtap="replay">再练一次</button>
+  </view>
+
+  <view wx:else class="game-screen">
     <view class="header">
-      <view class="info">N = {{n }} · {{modeLabel}} · {{gridLabel}}</view>
-      <view class="progress">第 {{roundIdx + 1}} / {{trials }} 题</view>
+      <view>
+        <text wx:if="{{stimulusIdx < n}}" class="round-label">熟悉阶段 · 第 {{stimulusIdx + 1}} / {{n}} 个刺激</text>
+        <text wx:if="{{phase === 'feedback'}}" class="round-label">本轮反馈</text>
+        <text wx:if="{{stimulusIdx >= n && phase !== 'feedback'}}" class="round-label">第 {{roundIdx + 1}} / {{trials}} 轮</text>
+        <text class="round-meta">N = {{n}} · {{modeLabel}}</text>
+      </view>
+      <view class="progress-track"><view class="progress-value" style="width:{{roundIdx / trials * 100}}%;"></view></view>
     </view>
 
-    <view wx:if="{{mode !== 'auditory'}}" class="visual-area">
-      <view class="area-label">视觉位置</view>
-      <view class="grid" style="grid-template-columns: repeat({{gridCols}}, {{cellSize}}rpx); gap: 12rpx; justify-content: center;">
+    <view wx:if="{{mode !== 'auditory'}}" class="stimulus-panel">
+      <text class="panel-label">视觉位置</text>
+      <view class="grid" style="grid-template-columns:repeat({{gridCols}}, {{cellSize}}rpx);gap:12rpx;">
         <block wx:for="{{gridCols * gridCols}}" wx:key="*this">
           <view class="cell {{phase === 'show' && index === shownPos ? 'on' : ''}}"
-                wx:if="{{mode !== 'auditory'}}"
-                style="width:{{cellSize}}rpx;height:{{cellSize}}rpx;"></view>
+            style="width:{{cellSize}}rpx;height:{{cellSize}}rpx;"></view>
         </block>
       </view>
     </view>
 
-    <view wx:if="{{mode !== 'visual'}}" class="auditory-area">
-      <view class="area-label">听觉字母</view>
-      <view class="letter-display {{phase === 'show' ? 'showing' : ''}}">
-        {{shownLetter || '—'}}
-      </view>
-      <view class="letter-hint">当前字母：{{shownLetter || '等待中...'}}</view>
+    <view wx:if="{{mode !== 'visual'}}" class="stimulus-panel auditory-panel">
+      <text class="panel-label">听觉字母</text>
+      <view class="letter-display {{phase === 'show' ? 'showing' : ''}}">♫</view>
+      <text class="panel-hint">{{phase === 'show' ? '听辨并记住字母，不显示文字提示' : '听觉刺激将通过语音播放'}}</text>
     </view>
 
-    <view wx:if="{{phase === 'answer'}}" class="answers">
-      <view wx:if="{{mode === 'dual'}}" class="dual-answers">
-        <view class="dual-matrix">
-          <view class="matrix-row">
-            <view class="abtn dual-btn match-both" bindtap="onDualAnswer" data-visual="1" data-auditory="1" role="button">
-              <text class="btn-icon">✓</text><text>视觉✓ 听觉✓</text>
-            </view>
-            <view class="abtn dual-btn match-visual" bindtap="onDualAnswer" data-visual="1" data-auditory="0" role="button">
-              <text class="btn-icon">✓</text><text>视觉✓ 听觉✗</text>
-            </view>
-          </view>
-          <view class="matrix-row">
-            <view class="abtn dual-btn match-auditory" bindtap="onDualAnswer" data-visual="0" data-auditory="1" role="button">
-              <text class="btn-icon">✗</text><text>视觉✗ 听觉✓</text>
-            </view>
-            <view class="abtn dual-btn match-neither" bindtap="onDualAnswer" data-visual="0" data-auditory="0" role="button">
-              <text class="btn-icon">✗</text><text>视觉✗ 听觉✗</text>
-            </view>
-          </view>
+    <view wx:if="{{phase === 'show'}}" class="status-message">
+      <text wx:if="{{stimulusIdx < n}}">建立记忆基准…</text>
+      <text wx:else>记住刺激…</text>
+    </view>
+    <view wx:if="{{phase === 'warmup'}}" class="status-message">熟悉阶段，不需要作答</view>
+
+    <view wx:if="{{phase === 'answer'}}" class="answer-card">
+      <text class="answer-title">与 {{n}} 步前相比，当前刺激是否相同？</text>
+      <view wx:if="{{mode !== 'auditory'}}" class="answer-group">
+        <text class="answer-label">视觉位置</text>
+        <view class="answer-options">
+          <view class="answer-option {{hasVisualAnswer && selectedVisual ? 'selected' : ''}}" data-match="1" bindtap="onVisualAnswer" role="button">相同</view>
+          <view class="answer-option {{hasVisualAnswer && !selectedVisual ? 'selected' : ''}}" data-match="0" bindtap="onVisualAnswer" role="button">不同</view>
         </view>
-        <view class="dual-hint">点击对应组合：当前视觉/听觉是否与 {{n }} 步前匹配</view>
       </view>
-
-      <view wx:elif="{{mode === 'visual'}}" class="single-answers">
-        <view class="abtn yes" bindtap="onVisualAnswer" data-match="1" role="button" aria-label="匹配">匹配 ✓</view>
-        <view class="abtn no" bindtap="onVisualAnswer" data-match="0" role="button" aria-label="不匹配">不匹配 ✗</view>
+      <view wx:if="{{mode !== 'visual'}}" class="answer-group">
+        <text class="answer-label">听觉字母</text>
+        <view class="answer-options">
+          <view class="answer-option {{hasAuditoryAnswer && selectedAuditory ? 'selected' : ''}}" data-match="1" bindtap="onAuditoryAnswer" role="button">相同</view>
+          <view class="answer-option {{hasAuditoryAnswer && !selectedAuditory ? 'selected' : ''}}" data-match="0" bindtap="onAuditoryAnswer" role="button">不同</view>
+        </view>
       </view>
-
-      <view wx:elif="{{mode === 'auditory'}}" class="single-answers">
-        <view class="abtn yes" bindtap="onAuditoryAnswer" data-match="1" role="button" aria-label="匹配">匹配 ✓</view>
-        <view class="abtn no" bindtap="onAuditoryAnswer" data-match="0" role="button" aria-label="不匹配">不匹配 ✗</view>
-      </view>
+      <button class="primary-button submit-button" disabled="{{!canSubmit}}" bindtap="submitAnswer">确认答案</button>
     </view>
 
-    <view wx:if="{{phase === 'show'}}" class="tip">{{showTip}}</view>
-    <view wx:if="{{phase === 'done'}}" class="tip done">完成！得分：{{score || '计算中...'}}</view>
-
-    <view wx:if="{{lastResult && phase === 'answer'}}" class="feedback">
-      <view class="feedback-item {{lastResult.visual && lastResult.visual.ok ? 'correct' : 'wrong'}}">
-        视觉：{{lastResult.visual && lastResult.visual.said ? '匹配' : '不匹配'}} / 正确：{{lastResult.visual && lastResult.visual.expected ? '匹配' : '不匹配'}}
+    <view wx:if="{{phase === 'feedback'}}" class="feedback-card">
+      <text class="feedback-title">第 {{roundIdx}} 轮</text>
+      <view wx:if="{{lastResult.visual}}" class="feedback-row {{lastResult.visual.ok ? 'correct' : 'wrong'}}">
+        <text>视觉</text>
+        <text>你选：{{lastResult.visual.said ? '相同' : '不同'}} · 正确：{{lastResult.visual.expected ? '相同' : '不同'}}</text>
       </view>
-      <view class="feedback-item {{lastResult.auditory && lastResult.auditory.ok ? 'correct' : 'wrong'}}">
-        听觉：{{lastResult.auditory && lastResult.auditory.said ? '匹配' : '不匹配'}} / 正确：{{lastResult.auditory && lastResult.auditory.expected ? '匹配' : '不匹配'}}
+      <view wx:if="{{lastResult.auditory}}" class="feedback-row {{lastResult.auditory.ok ? 'correct' : 'wrong'}}">
+        <text>听觉</text>
+        <text>你选：{{lastResult.auditory.said ? '相同' : '不同'}} · 正确：{{lastResult.auditory.expected ? '相同' : '不同'}}</text>
       </view>
+      <text class="feedback-hint">继续保持节奏…</text>
     </view>
   </view>
 </view>

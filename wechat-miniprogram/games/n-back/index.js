@@ -6,7 +6,7 @@ const GRID_POSITIONS = {
   small: 9,
   medium: 16,
 }
-const AUDIO_LETTERS = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']
+const AUDIO_LETTERS = ['A', 'D', 'F', 'J', 'K', 'L', 'S', 'X']
 
 function generateSequence(length, poolSize) {
   return Array.from({ length }, () => Math.floor(Math.random() * poolSize))
@@ -20,13 +20,15 @@ function generate(opts) {
 
   const visualPool = GRID_POSITIONS[gridSize]
   const auditoryPool = AUDIO_LETTERS.length
+  const sequenceLength = trials + n
 
-  const visualSeq = generateSequence(trials, visualPool)
-  const auditorySeq = generateSequence(trials, auditoryPool)
+  const visualSeq = generateSequence(sequenceLength, visualPool)
+  const auditorySeq = generateSequence(sequenceLength, auditoryPool)
 
   return {
     n,
     trials,
+    warmup: n,
     mode,
     gridSize,
     visualSeq,
@@ -79,7 +81,7 @@ module.exports = {
   dimLabel: '工作记忆',
   icon: '🎴',
   color: '#8b5cf6',
-  desc: '经典双重 N-Back 训练：同时判断视觉位置与听觉字母是否与 N 步前匹配，有效提升工作记忆容量。',
+  desc: '判断当前刺激是否与 N 步前相同，可单独练习视觉、听觉或双重工作记忆。',
   reference: 'Jaeggi et al. (2008) PNAS - Dual N-Back 改善流体智力',
   hot: true,
   levels: [

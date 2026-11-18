@@ -1,10 +1,32 @@
 const mod = require('./index')
+const cue = require('../../utils/cue')
+
+const STIMULUS_MS = 650
+const FEEDBACK_MS = 500
 
 Component({
   properties: {
-    level: { type: Number, value: 1, observer() { this.reset() } },
-    boardWidth: { type: Number, value: 705, observer() { this.applySizing() } },
-    boardHeight: { type: Number, value: 0, observer() { this.applySizing() } },
+    level: {
+      type: Number,
+      value: 1,
+      observer() {
+        this.reset()
+      },
+    },
+    boardWidth: {
+      type: Number,
+      value: 705,
+      observer() {
+        this.applySizing()
+      },
+    },
+    boardHeight: {
+      type: Number,
+      value: 0,
+      observer() {
+        this.applySizing()
+      },
+    },
   },
   data: {
     n: 1,
@@ -14,9 +36,10 @@ Component({
     visualSeq: [],
     auditorySeq: [],
     roundIdx: 0,
+    stimulusIdx: 0,
     shownPos: -1,
     shownLetter: '',
-    phase: 'idle', // idle | show | answer | done
+    phase: 'idle', // idle | show | warmup | answer | feedback | done
     correct: 0,
     total: 0,
     visualCorrect: 0,
@@ -25,22 +48,24 @@ Component({
     auditoryTotal: 0,
     times: [],
     answerTs: 0,
-    visualMatch: false,
-    auditoryMatch: false,
+    selectedVisual: false,
+    selectedAuditory: false,
+    hasVisualAnswer: false,
+    hasAuditoryAnswer: false,
+    canSubmit: false,
     gridCols: 3,
     lastResult: null,
+    result: null,
     score: 0,
     cellSize: 0,
   },
   lifetimes: {
     attached() {
-      this.audioCtx = wx.createInnerAudioContext()
-      this.audioCtx.autoplay = true
       this.reset()
     },
     detached() {
       this.clearTimer()
-      if (this.audioCtx) this.audioCtx.destroy()
+      cue.stop()
     },
   },
   methods: {
@@ -71,11 +96,15 @@ Component({
     reset() {
       this.clearTimer()
       const levelMeta = this.getLevelMeta(this.data.level)
+      this.prepareGame(levelMeta.mode, levelMeta.gridSize)
+    },
+    prepareGame(mode, gridSize) {
+      this.clearTimer()
       const seed = mod.generate({
-        n: levelMeta.n,
-        trials: levelMeta.trials,
-        mode: levelMeta.mode,
-        gridSize: levelMeta.gridSize,
+        n: this.getLevelMeta(this.data.level).n,
+        trials: this.getLevelMeta(this.data.level).trials,
+        mode,
+        gridSize,
       })
       const gridCols = mod.GRID_SIZES[seed.gridSize]
       this.setData({
@@ -86,6 +115,7 @@ Component({
         visualSeq: seed.visualSeq,
         auditorySeq: seed.auditorySeq,
         roundIdx: 0,
+        stimulusIdx: 0,
         shownPos: -1,
         shownLetter: '',
         phase: 'idle',
@@ -97,10 +127,14 @@ Component({
         auditoryTotal: 0,
         times: [],
         answerTs: 0,
-        visualMatch: false,
-        auditoryMatch: false,
+        selectedVisual: false,
+        selectedAuditory: false,
+        hasVisualAnswer: false,
+        hasAuditoryAnswer: false,
+        canSubmit: false,
         gridCols,
         lastResult: null,
+        result: null,
         score: 0,
       })
       this.computeCellSize()
@@ -116,14 +150,21 @@ Component({
         gridSize: lvl.gridSize,
       }
     },
+    onModeChange(e) {
+      const mode = e.currentTarget.dataset.mode
+      if (['dual', 'visual', 'auditory'].indexOf(mode) < 0) return
+      this.prepareGame(mode, this.data.gridSize)
+    },
+    onGridSizeChange(e) {
+      const gridSize = e.currentTarget.dataset.size
+      if (!mod.GRID_SIZES[gridSize]) return
+      this.prepareGame(this.data.mode, gridSize)
+    },
     updateComputed() {
       const modeLabels = { dual: '双重', visual: '仅视觉', auditory: '仅听觉' }
-      const gridLabels = { small: '3×3', medium: '4×4' }
       this.setData({
         modeLabel: modeLabels[this.data.mode] || this.data.mode,
-        gridLabel: gridLabels[this.data.gridSize] || this.data.gridSize,
         idleTip: this.getIdleTip(),
-        showTip: this.getShowTip(),
       })
     },
     getIdleTip() {
@@ -132,18 +173,15 @@ Component({
       if (mode === 'visual') return `判断当前方块位置是否与 ${n} 步前相同`
       return `判断当前字母是否与 ${n} 步前相同`
     },
-    getShowTip() {
-      const { mode } = this.data
-      if (mode === 'dual') return '记住位置与字母…'
-      if (mode === 'visual') return '记住位置…'
-      return '记住字母…'
-    },
     start() {
       if (this.data.phase !== 'idle' && this.data.phase !== 'done') return
       this.showRound()
     },
+    replay() {
+      this.prepareGame(this.data.mode, this.data.gridSize)
+    },
     showRound() {
-      const i = this.data.roundIdx
+      const i = this.data.stimulusIdx
       const pos = this.data.visualSeq[i]
       const letter = mod.AUDIO_LETTERS[this.data.auditorySeq[i]]
 
@@ -151,52 +189,86 @@ Component({
         phase: 'show',
         shownPos: pos,
         shownLetter: letter,
-        lastResult: null,
+        selectedVisual: false,
+        selectedAuditory: false,
+        hasVisualAnswer: false,
+        hasAuditoryAnswer: false,
+        canSubmit: false,
       })
 
-      this.playLetter(letter)
+      if (this.data.mode !== 'visual') this.playLetter(letter)
 
       this.timer = setTimeout(() => {
+        this.timer = null
+        if (i < this.data.n) {
+          this.setData({
+            phase: 'warmup',
+            shownPos: -1,
+            shownLetter: '',
+          })
+          this.timer = setTimeout(() => {
+            this.timer = null
+            this.setData({ stimulusIdx: i + 1 })
+            this.showRound()
+          }, FEEDBACK_MS)
+          return
+        }
         this.setData({
           phase: 'answer',
           shownPos: -1,
           shownLetter: '',
           answerTs: Date.now(),
         })
-      }, 600)
+      }, STIMULUS_MS)
     },
     playLetter(letter) {
-      if (!this.audioCtx) return
-      // 实际项目可接入 TTS 服务播放字母发音
-      // 这里用振动作为听觉提示的替代
-      wx.vibrateShort({ type: 'light' })
+      cue.play('l' + letter.toLowerCase())
     },
     onVisualAnswer(e) {
       if (this.data.phase !== 'answer' || this.data.mode === 'auditory') return
-      this.answerRound([{ modality: 'visual', said: e.currentTarget.dataset.match === '1' }])
+      this.updateAnswerSelection('visual', e.currentTarget.dataset.match === '1')
     },
     onAuditoryAnswer(e) {
       if (this.data.phase !== 'answer' || this.data.mode === 'visual') return
-      this.answerRound([{ modality: 'auditory', said: e.currentTarget.dataset.match === '1' }])
+      this.updateAnswerSelection('auditory', e.currentTarget.dataset.match === '1')
     },
-    onDualAnswer(e) {
-      if (this.data.phase !== 'answer' || this.data.mode !== 'dual') return
-      // 双重模式下一次作答同时处理视觉与听觉两个维度，但共用同一个轮次索引，
-      // 每轮只推进一次 roundIdx，保证与序列位置正确对齐
-      this.answerRound([
-        { modality: 'visual', said: e.currentTarget.dataset.visual === '1' },
-        { modality: 'auditory', said: e.currentTarget.dataset.auditory === '1' },
-      ])
+    updateAnswerSelection(modality, said) {
+      if (this.data.phase !== 'answer') return
+      const updates =
+        modality === 'visual'
+          ? { selectedVisual: said, hasVisualAnswer: true }
+          : { selectedAuditory: said, hasAuditoryAnswer: true }
+      const hasVisualAnswer = updates.hasVisualAnswer || this.data.hasVisualAnswer
+      const hasAuditoryAnswer = updates.hasAuditoryAnswer || this.data.hasAuditoryAnswer
+      updates.canSubmit =
+        this.data.mode === 'dual'
+          ? hasVisualAnswer && hasAuditoryAnswer
+          : this.data.mode === 'visual'
+            ? hasVisualAnswer
+            : hasAuditoryAnswer
+      this.setData(updates)
+    },
+    submitAnswer() {
+      if (this.data.phase !== 'answer' || !this.data.canSubmit) return
+      const answers = []
+      if (this.data.mode !== 'auditory') {
+        answers.push({ modality: 'visual', said: this.data.selectedVisual })
+      }
+      if (this.data.mode !== 'visual') {
+        answers.push({ modality: 'auditory', said: this.data.selectedAuditory })
+      }
+      this.answerRound(answers)
     },
     answerRound(answers) {
-      const i = this.data.roundIdx
+      const i = this.data.stimulusIdx
       const n = this.data.n
 
       let correct = this.data.correct
-      const lastResult = { ...this.data.lastResult }
+      const lastResult = {}
       const updates = {
         total: this.data.total + answers.length,
-        roundIdx: i + 1,
+        roundIdx: this.data.roundIdx + 1,
+        stimulusIdx: i + 1,
         times: this.data.times.concat(Date.now() - this.data.answerTs),
       }
 
@@ -211,13 +283,13 @@ Component({
       updates.correct = correct
       updates.lastResult = lastResult
 
-      const next = i + 1
-      if (next >= this.data.trials) {
-        this.finish(updates)
-      } else {
-        this.setData({ ...updates, phase: 'show' })
-        this.showRound()
-      }
+      const next = this.data.roundIdx + 1
+      this.setData({ ...updates, phase: 'feedback' })
+      this.timer = setTimeout(() => {
+        this.timer = null
+        if (next >= this.data.trials) this.finish(updates)
+        else this.showRound()
+      }, FEEDBACK_MS)
     },
     finish(updates) {
       this.clearTimer()
@@ -230,7 +302,7 @@ Component({
         auditoryCorrect: updates.auditoryCorrect,
         auditoryTotal: updates.auditoryTotal,
       })
-      this.setData({ phase: 'done', ...updates, score: result.score })
+      this.setData({ phase: 'done', ...updates, result, score: result.score })
       this.triggerEvent('finish', result)
     },
   },

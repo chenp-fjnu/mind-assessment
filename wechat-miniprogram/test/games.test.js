@@ -4,6 +4,8 @@
  */
 const { getMetaList, getGame } = require('../utils/game-registry')
 const trainStore = require('../utils/train-store')
+const fs = require('fs')
+const path = require('path')
 
 describe('训练游戏注册表', () => {
   test('包含 36 个游戏且维度齐全', () => {
@@ -149,18 +151,29 @@ describe('N-Back', () => {
   const g = getGame('n-back')
   test('generate 返回视觉和听觉序列', () => {
     const s = g.generate({ n: 2, trials: 20, mode: 'dual', gridSize: 'small' })
-    expect(s.visualSeq.length).toBe(20)
-    expect(s.auditorySeq.length).toBe(20)
+    expect(s.visualSeq.length).toBe(22)
+    expect(s.auditorySeq.length).toBe(22)
+    expect(s.warmup).toBe(2)
     expect(s.n).toBe(2)
     expect(s.mode).toBe('dual')
     expect(s.gridSize).toBe('small')
   })
   test('generate visual only 模式', () => {
     const s = g.generate({ n: 2, trials: 15, mode: 'visual', gridSize: 'medium' })
-    expect(s.visualSeq.length).toBe(15)
-    expect(s.auditorySeq.length).toBe(15)
+    expect(s.visualSeq.length).toBe(17)
+    expect(s.auditorySeq.length).toBe(17)
     expect(s.mode).toBe('visual')
     expect(s.gridSize).toBe('medium')
+  })
+  test('听觉序列只使用已配置语音字母', () => {
+    const s = g.generate({ n: 1, trials: 40, mode: 'auditory', gridSize: 'small' })
+    s.auditorySeq.forEach((value) => {
+      const letter = g.AUDIO_LETTERS[value]
+      expect(letter).toBeTruthy()
+      expect(
+        fs.existsSync(path.join(__dirname, '../assets/audio/l' + letter.toLowerCase() + '.mp3'))
+      ).toBe(true)
+    })
   })
   test('score 正确率越高得分越高', () => {
     const good = g.score({
