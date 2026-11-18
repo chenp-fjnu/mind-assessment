@@ -71,14 +71,7 @@
       </view>
     </view>
 
-    <view class="search-control">
-      <view class="card search-toggle" bindtap="toggleSearch" role="button" aria-label="{{searchOpen ? '收起搜索' : '搜索内容'}}">
-        <text class="search-icon">🔍</text>
-        <text class="search-label">搜索测评、方法或训练</text>
-        <text class="search-chevron">{{searchOpen ? '收起' : '›'}}</text>
-      </view>
-    </view>
-    <view wx:if="{{searchOpen}}" class="home-search">
+    <view class="home-search">
       <input
         class="home-search-input"
         placeholder="搜索测评 / 方法 / 训练"
@@ -91,65 +84,59 @@
       />
     </view>
 
-    <view class="card more-toggle" bindtap="toggleMore" role="button" aria-label="{{moreExpanded ? '收起更多内容' : '展开热门推荐和最近记录'}}">
-      <text>{{moreExpanded ? '收起' : '更多推荐与最近记录'}}</text>
-      <text>{{moreExpanded ? '⌃' : '⌄'}}</text>
+    <view wx:if="{{visibleHotPicks.length}}" class="section hot-section">
+      <view class="section-head">
+        <text class="section-title">热门推荐</text>
+        <text class="section-more" bindtap="rotateHot" role="button" aria-label="换一批推荐">换一批</text>
+      </view>
+      <view class="hot-grid">
+        <view
+          class="hot-card hot-card-{{h.kind}}"
+          wx:for="{{visibleHotPicks}}"
+          wx:key="id"
+          wx:for-item="h"
+          bindtap="goHot"
+          data-item="{{h}}"
+          role="button"
+          aria-label="{{h.name}}，{{h.kindLabel}}"
+        >
+          <view class="hot-card-content">
+            <view class="hot-icon-row">
+              <view class="hot-icon-wrap"><text class="hot-icon">{{h.icon}}</text></view>
+              <text class="hot-kind">{{h.kindLabel}}</text>
+            </view>
+            <text class="hot-name">{{h.name}}</text>
+          </view>
+        </view>
+      </view>
     </view>
 
-    <view wx:if="{{moreExpanded}}">
-      <view wx:if="{{visibleHotPicks.length}}" class="section hot-section">
-        <view class="section-head">
-          <text class="section-title">热门推荐</text>
-          <text class="section-more" bindtap="rotateHot" role="button" aria-label="换一批推荐">换一批</text>
-        </view>
-        <view class="hot-grid">
-          <view
-            class="hot-card hot-card-{{h.kind}}"
-            wx:for="{{visibleHotPicks}}"
-            wx:key="id"
-            wx:for-item="h"
-            bindtap="goHot"
-            data-item="{{h}}"
-            role="button"
-            aria-label="{{h.name}}，{{h.kindLabel}}"
-          >
-            <view class="hot-card-content">
-              <view class="hot-icon-row">
-                <view class="hot-icon-wrap"><text class="hot-icon">{{h.icon}}</text></view>
-                <text class="hot-kind">{{h.kindLabel}}</text>
-              </view>
-              <text class="hot-name">{{h.name}}</text>
+    <view class="section recent-section">
+      <view class="section-head">
+        <text class="section-title">最近探索</text>
+        <text class="section-more" bindtap="goHistory" role="button" aria-label="查看全部记录">全部记录 ›</text>
+      </view>
+      <view wx:if="{{recentItems.length}}" class="hot-grid">
+        <view
+          class="hot-card hot-card-{{h.kind}}"
+          wx:for="{{recentItems}}"
+          wx:key="id"
+          wx:for-item="h"
+          bindtap="goHot"
+          data-item="{{h}}"
+          role="button"
+          aria-label="{{h.name}}，{{h.kindLabel}}"
+        >
+          <view class="hot-card-content">
+            <view class="hot-icon-row">
+              <view class="hot-icon-wrap"><text class="hot-icon">{{h.icon}}</text></view>
+              <text class="hot-kind">{{h.kindLabel}}</text>
             </view>
+            <text class="hot-name">{{h.name}}</text>
           </view>
         </view>
       </view>
-
-      <view wx:if="{{recentItems.length}}" class="section recent-section">
-        <view class="section-head">
-          <text class="section-title">最近探索</text>
-          <text class="section-more" bindtap="goHistory" role="button" aria-label="查看全部记录">全部记录 ›</text>
-        </view>
-        <view class="hot-grid">
-          <view
-            class="hot-card hot-card-{{h.kind}}"
-            wx:for="{{recentItems}}"
-            wx:key="id"
-            wx:for-item="h"
-            bindtap="goHot"
-            data-item="{{h}}"
-            role="button"
-            aria-label="{{h.name}}，{{h.kindLabel}}"
-          >
-            <view class="hot-card-content">
-              <view class="hot-icon-row">
-                <view class="hot-icon-wrap"><text class="hot-icon">{{h.icon}}</text></view>
-                <text class="hot-kind">{{h.kindLabel}}</text>
-              </view>
-              <text class="hot-name">{{h.name}}</text>
-            </view>
-          </view>
-        </view>
-      </view>
+      <view wx:else class="recent-empty">完成一次测评、方法练习或训练后，最近探索会显示在这里。</view>
     </view>
 
     <view class="footer">结果仅供自我探索与学习参考，不构成医学诊断</view>

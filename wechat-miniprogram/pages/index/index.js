@@ -148,8 +148,6 @@ Page({
     hotPicks: [],
     recentItems: [],
     homeKeyword: '',
-    searchOpen: false,
-    moreExpanded: false,
     hotOffset: 0,
     visibleHotPicks: [],
     selectedGoal: '',
@@ -269,12 +267,6 @@ Page({
   },
   toggleOtherGoals() {
     this.setData({ otherGoalsVisible: !this.data.otherGoalsVisible })
-  },
-  toggleSearch() {
-    this.setData({ searchOpen: !this.data.searchOpen })
-  },
-  toggleMore() {
-    this.setData({ moreExpanded: !this.data.moreExpanded })
   },
   rotateHot() {
     const picks = this.data.hotPicks
