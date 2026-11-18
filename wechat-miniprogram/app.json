@@ -13,7 +13,9 @@
     "pages/mine/mine",
     "pages/profile/profile",
     "pages/train/train",
-    "pages/train/game"
+    "pages/train/game",
+    "pages/course/list",
+    "pages/course/detail"
   ],
   "window": {
     "navigationBarTextStyle": "@navTxtStyle",

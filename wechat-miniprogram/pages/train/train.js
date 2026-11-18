@@ -2,6 +2,8 @@ const { gamesByDim, DIM_LABELS } = require('../../utils/game-registry')
 const { hexToRgba } = require('../../utils/color')
 const trainStore = require('../../utils/train-store')
 const { useTheme } = require('../../utils/theme-store')
+const SK = require('../../utils/storage-keys')
+const { getListRecommendations } = require('../../utils/list-recommendations')
 
 const DIM_ORDER = ['attention', 'memory', 'reaction', 'relax', 'exec', 'logic']
 
@@ -20,6 +22,9 @@ Page({
     gameCount: 0,
     dimCount: 0,
     recordCount: 0,
+    newcomerGames: [],
+    recommendedGames: [],
+    showAll: false,
   },
   onLoad() {
     useTheme(this)
@@ -44,7 +49,12 @@ Page({
     const typeChips = [{ key: '', label: '全部' }].concat(
       DIM_ORDER.filter((d) => byDim[d]).map((d) => ({ key: d, label: DIM_LABELS[d] || d }))
     )
-    this.setData({ groups, typeChips, filteredGroups: groups })
+    this.setData({
+      groups,
+      typeChips,
+      filteredGroups: groups,
+    })
+    this.refreshRecommendations()
     this.refreshStats()
     this.applyFilter()
   },
@@ -60,6 +70,7 @@ Page({
       }),
     }))
     this.setData({ groups })
+    this.refreshRecommendations()
     this.refreshStats()
     this.applyFilter()
   },
@@ -70,6 +81,20 @@ Page({
     const recordCount = trainStore.allRecords().length
     this.setData({ gameCount, dimCount, recordCount })
   },
+  refreshRecommendations() {
+    const allGames = this.data.groups.reduce((list, group) => list.concat(group.games), [])
+    const goalValue = wx.getStorageSync(SK.USER_GOAL)
+    const goal = typeof goalValue === 'string' ? goalValue : ''
+    const picks = getListRecommendations(
+      'train',
+      allGames,
+      goal,
+      ['schulte', 'memory-match', 'whack', 'box-breathing'],
+      ['n-back', 'reaction-time', 'cps'],
+      3
+    )
+    this.setData({ newcomerGames: picks.newcomer, recommendedGames: picks.recommended })
+  },
   onSearch(e) {
     this.setData({ keyword: e.detail.value })
     this.applyFilter()
@@ -79,8 +104,20 @@ Page({
     this.applyFilter()
   },
   onSelectDim(e) {
-    this.setData({ activeDim: e.currentTarget.dataset.key })
+    this.setData({ activeDim: e.currentTarget.dataset.key, showAll: false })
     this.applyFilter()
+  },
+  showAllGames() {
+    this.setData({ showAll: true })
+  },
+  showRecommendations() {
+    this.setData({ showAll: false, activeDim: '', keyword: '' })
+    this.applyFilter()
+  },
+  goCourses() {
+    const storedGoal = wx.getStorageSync(SK.USER_GOAL)
+    const goal = typeof storedGoal === 'string' ? storedGoal : 'browse'
+    wx.navigateTo({ url: '/pages/course/list?goal=' + goal })
   },
   applyFilter() {
     const { groups, keyword, activeDim } = this.data

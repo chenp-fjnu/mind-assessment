@@ -36,12 +36,40 @@
       >{{item.label}}</view>
     </scroll-view>
 
-    <view wx:if="{{!groups.length}}" class="empty-search">
-      <text class="empty-search-icon">🔎</text>
-      <text class="empty-search-text">没有找到匹配的方法</text>
+    <view wx:if="{{!showAll && !keyword && !activeCategory}}" class="recommendations">
+      <view class="group" wx:if="{{newcomerMethods.length}}">
+        <view class="group-title">新人首选</view>
+        <view class="card item" wx:for="{{newcomerMethods}}" wx:key="id" wx:for-item="m" bindtap="goDetail" data-id="{{m.id}}" role="button" aria-label="{{m.name}}，{{m.summary}}">
+          <view class="item-icon" style="background:{{m.tint}};">{{m.icon}}</view>
+          <view class="item-body">
+            <view class="item-head"><text class="item-name">{{m.name}}</text></view>
+            <text class="item-desc">{{m.summary}}</text>
+          </view>
+          <text class="arrow">›</text>
+        </view>
+      </view>
+      <view class="group" wx:if="{{recommendedMethods.length}}">
+        <view class="group-title">为你推荐</view>
+        <view class="card item" wx:for="{{recommendedMethods}}" wx:key="id" wx:for-item="m" bindtap="goDetail" data-id="{{m.id}}" role="button" aria-label="{{m.name}}，{{m.summary}}">
+          <view class="item-icon" style="background:{{m.tint}};">{{m.icon}}</view>
+          <view class="item-body">
+            <view class="item-head"><text class="item-name">{{m.name}}</text></view>
+            <text class="item-desc">{{m.summary}}</text>
+          </view>
+          <text class="arrow">›</text>
+        </view>
+      </view>
+      <button class="browse-all" bindtap="showAllMethods" aria-label="查看全部 {{count}} 个方法">查看全部 {{count}} 个方法</button>
     </view>
 
-    <view class="group" wx:for="{{groups}}" wx:key="category" wx:for-item="g">
+    <view wx:if="{{(keyword || activeCategory) && !groups.length}}" class="empty-search">
+      <text class="empty-search-icon">🔎</text>
+      <text class="empty-search-text">没有找到匹配的方法</text>
+      <button class="empty-action" bindtap="goCourses" aria-label="看看课程路线">看看课程路线</button>
+    </view>
+
+    <view wx:if="{{showAll && !keyword && !activeCategory}}" class="collapse-all" bindtap="showRecommendations" role="button" aria-label="收起完整方法列表">收起全部</view>
+    <view wx:if="{{showAll || keyword || activeCategory}}" class="group" wx:for="{{groups}}" wx:key="category" wx:for-item="g">
       <view class="group-title">{{g.category}}</view>
       <view
         class="card item"

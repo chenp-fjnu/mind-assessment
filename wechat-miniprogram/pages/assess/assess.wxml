@@ -36,12 +36,42 @@
       >{{item.label}}</view>
     </scroll-view>
 
-    <view wx:if="{{!groups.length}}" class="empty-search">
-      <text class="empty-search-icon">🔎</text>
-      <text class="empty-search-text">没有找到匹配的测评表</text>
+    <view wx:if="{{!showAll && !keyword && !activeType}}" class="recommendations">
+      <view class="group" wx:if="{{newcomerModules.length}}">
+        <view class="group-title">新人首选</view>
+        <view class="card item" wx:for="{{newcomerModules}}" wx:key="id" wx:for-item="m" bindtap="goDetail" data-id="{{m.id}}" role="button" aria-label="{{m.name}}，{{m.questionCount}} 题，约 {{m.duration}} 分钟">
+          <view class="item-icon" style="background:{{m.tint}};">{{m.icon}}</view>
+          <view class="item-body">
+            <view class="item-head"><text class="item-name">{{m.name}}</text></view>
+            <text class="item-desc">{{m.desc}}</text>
+            <view class="item-meta"><text>{{m.questionCount}} 题</text><text class="dot">·</text><text>约 {{m.duration}} 分钟</text></view>
+          </view>
+          <text class="arrow">›</text>
+        </view>
+      </view>
+      <view class="group" wx:if="{{recommendedModules.length}}">
+        <view class="group-title">为你推荐</view>
+        <view class="card item" wx:for="{{recommendedModules}}" wx:key="id" wx:for-item="m" bindtap="goDetail" data-id="{{m.id}}" role="button" aria-label="{{m.name}}，{{m.questionCount}} 题，约 {{m.duration}} 分钟">
+          <view class="item-icon" style="background:{{m.tint}};">{{m.icon}}</view>
+          <view class="item-body">
+            <view class="item-head"><text class="item-name">{{m.name}}</text></view>
+            <text class="item-desc">{{m.desc}}</text>
+            <view class="item-meta"><text>{{m.questionCount}} 题</text><text class="dot">·</text><text>约 {{m.duration}} 分钟</text></view>
+          </view>
+          <text class="arrow">›</text>
+        </view>
+      </view>
+      <button class="browse-all" bindtap="showAllModules" aria-label="查看全部 {{moduleCount}} 套测评">查看全部 {{moduleCount}} 套测评</button>
     </view>
 
-    <view class="group" wx:for="{{groups}}" wx:key="type" wx:for-item="g">
+    <view wx:if="{{(keyword || activeType) && !groups.length}}" class="empty-search">
+      <text class="empty-search-icon">🔎</text>
+      <text class="empty-search-text">没有找到匹配的测评表</text>
+      <button class="empty-action" bindtap="goCourses" aria-label="看看课程路线">看看课程路线</button>
+    </view>
+
+    <view wx:if="{{showAll && !keyword && !activeType}}" class="collapse-all" bindtap="showRecommendations" role="button" aria-label="收起完整测评列表">收起全部</view>
+    <view wx:if="{{showAll || keyword || activeType}}" class="group" wx:for="{{groups}}" wx:key="type" wx:for-item="g">
       <view class="group-title">{{g.label}}</view>
       <view
         class="card item"
@@ -57,7 +87,6 @@
         <view class="item-body">
           <view class="item-head">
             <text class="item-name">{{m.name}}</text>
-            <text class="badge-free">免费</text>
           </view>
           <text class="item-desc">{{m.desc}}</text>
           <view class="item-meta">

@@ -6,6 +6,7 @@ const { getUserId } = require('../../utils/user')
 const { getDpr } = require('../../utils/device')
 const SK = require('../../utils/storage-keys')
 const { SCHEMA_VERSION } = require('../../utils/constants')
+const courseProgress = require('../../utils/course-progress')
 
 // 历史记录硬上限：超出后仅保留最近 N 条，并对用户可见提示
 const HISTORY_LIMIT = 30
@@ -97,6 +98,10 @@ Page({
 
   onLoad(query) {
     useTheme(this)
+    const courseId = (query && query.courseId) || ''
+    const courseStepId = (query && query.stepId) || ''
+    this._courseId = courseProgress.hasStep(courseId, courseStepId) ? courseId : ''
+    this._courseStepId = this._courseId ? courseStepId : ''
     const mod = getModule(query.id)
     if (!mod) {
       wx.showToast({ title: '未找到测评', icon: 'none' })
@@ -797,6 +802,8 @@ Page({
     }
     if (!saved || trimmed.indexOf(record) === -1) {
       wx.showToast({ title: '存储空间不足，本次记录未保存', icon: 'none' })
+    } else if (this._courseId && this._courseStepId) {
+      courseProgress.completeStep(this._courseId, this._courseStepId)
     }
 
     const app = getApp()
@@ -807,7 +814,10 @@ Page({
       time: record.time,
       rid: record.rid,
     }
-    wx.reLaunch({ url: `/pages/result/result?id=${this.data.meta.id}` })
+    const courseContext = this._courseId
+      ? '&courseId=' + this._courseId + '&stepId=' + this._courseStepId
+      : ''
+    wx.reLaunch({ url: `/pages/result/result?id=${this.data.meta.id}${courseContext}` })
   },
 
   // 切后台（home 键/被其它页覆盖）时兜底落盘，避免节流窗口内进度丢失

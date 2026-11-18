@@ -6,6 +6,7 @@ const { useTheme } = require('../../utils/theme-store')
 const relations = require('../../utils/relations')
 const assessIntro = require('../../utils/assess-intro')
 const SK = require('../../utils/storage-keys')
+const courseProgress = require('../../utils/course-progress')
 
 // 渐变映射
 const GRADIENT_MAP = {
@@ -17,6 +18,8 @@ const GRADIENT_MAP = {
 Page({
   data: {
     id: '',
+    courseId: '',
+    courseStepId: '',
     meta: {},
     invalid: false,
     history: { count: 0 },
@@ -36,6 +39,8 @@ Page({
     const gradient = GRADIENT_MAP[kind] || GRADIENT_MAP.assess
     this.setData({
       id: mod.id,
+      courseId: courseProgress.hasStep(query.courseId, query.stepId) ? query.courseId : '',
+      courseStepId: courseProgress.hasStep(query.courseId, query.stepId) ? query.stepId : '',
       meta: {
         icon: mod.icon,
         name: mod.name,
@@ -76,7 +81,8 @@ Page({
     this.setData({ history: info })
   },
   start() {
-    wx.navigateTo({ url: `/pages/test/test?id=${this.data.id}` })
+    const context = this.data.courseId ? '&courseId=' + this.data.courseId + '&stepId=' + this.data.courseStepId : ''
+    wx.navigateTo({ url: `/pages/test/test?id=${this.data.id}${context}` })
   },
   goMethod(e) {
     wx.navigateTo({ url: `/pages/methods/detail?id=${e.currentTarget.dataset.id}` })

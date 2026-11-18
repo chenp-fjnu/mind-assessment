@@ -7,6 +7,7 @@
  */
 const { getModule } = require('../utils/registry')
 const metaList = require('../utils/modules-meta')
+const { getCourseList } = require('../utils/courses-data')
 
 let errors = 0
 
@@ -30,8 +31,16 @@ metaList.forEach((m) => {
   }
 })
 
+let courseCount = 0
+try {
+  courseCount = getCourseList().length
+} catch (e) {
+  console.error('✗ 课程内容引用无效：', e.message)
+  errors++
+}
+
 if (errors) {
   console.error(`\n校验失败：${errors} 处不一致`)
   process.exit(1)
 }
-console.log(`✓ meta 校验通过：${metaList.length} 个模块，getResultView / 题目数均一致`)
+console.log(`✓ meta 校验通过：${metaList.length} 个模块，getResultView / 题目数均一致；${courseCount} 条课程路线引用有效`)

@@ -1,0 +1,60 @@
+<view class="theme-wrapper {{themeClass}}">
+  <view wx:if="{{course}}" class="scroll-page course-detail">
+    <view class="course-hero" style="border-top-color:{{course.color}};">
+      <text class="course-kicker">{{course.goalLabel}}</text>
+      <text class="course-title">{{course.name}}</text>
+      <text class="course-tagline">{{course.tagline}}</text>
+      <view class="course-meta">
+        <text>全程约 {{course.totalMinutes}} 分钟</text>
+        <text>{{course.cadence}}</text>
+      </view>
+      <text class="course-outcome">完成后：{{course.outcome}}</text>
+    </view>
+
+    <view wx:if="{{course.disclaimer}}" class="disclaimer">
+      <text>{{course.disclaimer}}</text>
+    </view>
+
+    <view class="progress-card">
+      <view class="progress-head">
+        <text class="progress-title">{{complete ? '必做步骤已完成' : (started ? '按自己的节奏继续' : '路线预览')}}</text>
+        <text>{{completedRequiredCount}}/{{requiredStepCount}} 个必做步骤</text>
+      </view>
+      <view class="progress-track"><view class="progress-fill" style="width:{{percent}}%;"></view></view>
+    </view>
+
+    <view class="timeline">
+      <view wx:for="{{steps}}" wx:key="id" wx:for-item="step" wx:for-index="stepIndex" class="step-card {{step.completed ? 'is-complete' : ''}} {{step.current ? 'is-current' : ''}}">
+        <view class="step-marker">{{step.completed ? '✓' : (step.skipped ? '↷' : (step.current ? '▶' : stepIndex + 1))}}</view>
+        <view class="step-body">
+          <view class="step-heading">
+            <text class="step-title">{{step.title}}</text>
+            <text wx:if="{{step.optional}}" class="optional-label">可选</text>
+          </view>
+          <text class="step-name">{{step.name}} · 约 {{step.minutes}} 分钟</text>
+          <text class="step-why">{{step.why}}</text>
+          <text wx:if="{{step.completed}}" class="step-status">已完成</text>
+          <text wx:elif="{{step.skipped}}" class="step-status">已跳过，可随时补做</text>
+          <view class="step-actions">
+            <button class="step-button" data-id="{{step.id}}" bindtap="openStep" aria-label="开始步骤：{{step.title}}">
+              {{step.completed ? '再做一次' : (step.current ? '开始这一步' : '查看 / 开始')}}
+            </button>
+            <text wx:if="{{!step.completed && !step.skipped}}" class="skip-button" data-id="{{step.id}}" bindtap="skipStep" role="button" aria-label="暂时跳过：{{step.title}}">暂时跳过</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class="bottom-actions">
+      <button class="secondary-button" bindtap="goList" aria-label="返回课程列表">返回课程列表</button>
+      <button class="text-button" bindtap="goHome" aria-label="返回首页">回到首页</button>
+    </view>
+    <button wx:if="{{started}}" class="reset-button" bindtap="resetProgress" aria-label="清除这条课程的进度">清除课程进度</button>
+    <view class="footer">练习结果仅供自我探索与学习参考，不构成医学诊断或治疗建议。</view>
+  </view>
+
+  <view wx:else class="invalid-card">
+    <text>没有找到这条课程路线。</text>
+    <button class="secondary-button" bindtap="goList" aria-label="返回课程列表">返回课程列表</button>
+  </view>
+</view>

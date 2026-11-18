@@ -50,8 +50,10 @@ function save(id, level, metricValue, detail) {
   try {
     wx.setStorageSync(k, arr)
   } catch (e) {
-    // 超出配额时丢弃最旧
-    if (arr.length > 1) wx.setStorageSync(k, arr.slice(1))
+    // 超出配额时丢弃最旧记录；只有仍包含本次成绩时才算保存成功。
+    if (arr.length <= 1) throw e
+    arr = arr.slice(1)
+    wx.setStorageSync(k, arr)
   }
   return arr
 }

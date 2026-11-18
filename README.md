@@ -23,9 +23,9 @@
 | 量表 | **27 套**，覆盖 9 大类（人格 8 / 职业 3 / 情绪 5 / 自我 4 / 智力 3 / 压力 1 / 睡眠 1 / 社交 1 / 积极心理 1） |
 | 方法 | **24 个**心智方法，4 个分类，全部支持结构化「互动练习」打卡 |
 | 训练 | **36 个**脑力游戏，6 大认知维度（注意力 9 / 工作记忆 8 / 反应速度 9 / 放松正念 4 / 执行功能 5 / 逻辑计算 1） |
-| 页面 | **14 个**（5 个底部 Tab + 详情/答题/结果/历史/关于/档案/方法详情/方法练习/训练播放器） |
+| 页面 | **16 个**（5 个底部 Tab + 11 个业务/详情页，含课程列表与详情） |
 | 数据 | 纯本地 `Storage`，无后端、无网络请求、无云同步 |
-| 测试 | 冒烟 **182** 项 + Jest **284** 项（13 个测试套件）；覆盖率约 **70% 语句 / 46% 分支 / 74% 函数 / 72% 行** |
+| 测试 | 冒烟 **182** 项 + Jest **308** 项（14 个测试套件）；覆盖率 **66.43% 语句 / 47.82% 分支 / 71.79% 函数 / 67.96% 行** |
 | 质量门 | `validate`（元数据/玩家页一致性）+ `lint:strict`（0 warning）+ `test:all`，CI 全绿 |
 
 ---
@@ -38,7 +38,7 @@ mind-assessment/
 │   ├── app.js / app.json / app.wxss
 │   ├── modules/                 # 27 个量表模块（每个 index.js 自包含）
 │   ├── games/                   # 36 个训练游戏（index.js 纯逻辑 + game.js 组件）
-│   ├── pages/                   # 14 个页面（首页/测评/方法/训练/我的 + 详情/答题/结果/历史等）
+│   ├── pages/                   # 16 个页面（含课程列表与课程详情）
 │   ├── utils/                   # 注册表、存储、评分、趋势、主题、绘图等纯函数与工具
 │   ├── test/                    # 冒烟 + Jest 单测/页面测试
 │   ├── scripts/ tools/          # 一致性校验与代码生成脚本
@@ -62,6 +62,9 @@ mind-assessment/
 
 训练：train（6 维度/搜索/筛选）→ train/game（难度/计时/成绩）
       → ma_train_<id>__<level> → 最佳成绩 + 趋势 + 最近训练
+
+课程：首页按目标推荐 → 3 条短课程路线 → 测评/方法/训练完成后记录本地进度
+      → 可继续、跳过可选步骤，或返回课程时间线
 ```
 
 跨域关联由 `utils/relations.js` 统一计算：量表按类型或显式 id 推荐相关方法与训练游戏，供详情页和结果页复用，避免各页重复映射。
@@ -85,7 +88,7 @@ npm install
 
 npm test                 # 冒烟：评分链路 + 模块/结果视图契约（182 项）
 npm run validate         # 元数据 + 玩家页组件挂载一致性校验
-npm run test:simulate    # Jest 单测 / 页面测试（284 项）
+npm run test:simulate    # Jest 单测 / 页面测试（308 项）
 npm run test:coverage    # Jest + 覆盖率
 npm run test:all         # validate + 冒烟 + Jest 覆盖率（CI 同款）
 npm run lint:strict      # ESLint，0 error / 0 warning
@@ -100,6 +103,7 @@ npm run lint:strict      # ESLint，0 error / 0 warning
 | [`wechat-miniprogram/README.md`](wechat-miniprogram/README.md) | 功能清单、量表/游戏明细、目录、测试与更新日志 |
 | [`wechat-miniprogram/docs/ARCHITECTURE.md`](wechat-miniprogram/docs/ARCHITECTURE.md) | 分层架构、业务流、数据模型、模块契约、扩展指南 |
 | [`wechat-miniprogram/docs/CODE_REVIEW.md`](wechat-miniprogram/docs/CODE_REVIEW.md) | 2026-11-18 代码审查：问题清单、优先级与改进路线图 |
+| [`wechat-miniprogram/docs/UX_COURSE_PLAN.md`](wechat-miniprogram/docs/UX_COURSE_PLAN.md) | 用户交互减负、课程路线试点与安全/隐私边界 |
 | [`wechat-miniprogram/docs/brain-games-catalog.md`](wechat-miniprogram/docs/brain-games-catalog.md) | 训练游戏的范式来源与选型依据 |
 
 ---

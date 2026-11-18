@@ -32,10 +32,12 @@ Page({
     showBipolar: false,
     showDims: false,
     showSubtests: false,
+    courseId: '',
   },
 
   onLoad(query) {
     useTheme(this)
+    this.setData({ courseId: (query && query.courseId) || '' })
     const app = getApp()
     let saved = app.globalData.lastResult
     const id = query.id || (saved && saved.id)
@@ -386,6 +388,10 @@ Page({
 
   goHome() {
     wx.reLaunch({ url: '/pages/index/index' })
+  },
+  goCourse() {
+    if (!this.data.courseId) return
+    wx.reLaunch({ url: '/pages/course/detail?id=' + this.data.courseId })
   },
   goMethod(e) {
     const id = e.currentTarget.dataset.id

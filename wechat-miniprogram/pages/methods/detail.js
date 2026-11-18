@@ -2,6 +2,7 @@ const methodsData = require('../../utils/methods-data')
 const { genCard, saveToAlbum } = require('../../utils/share')
 const { useTheme } = require('../../utils/theme-store')
 const SK = require('../../utils/storage-keys')
+const courseProgress = require('../../utils/course-progress')
 const { renderTrend } = require('../../utils/canvas')
 const { getDpr } = require('../../utils/device')
 
@@ -47,10 +48,16 @@ Page({
     content: [],
     steps: [],
     practiceTrend: null,
+    courseId: '',
+    courseStepId: '',
   },
   onLoad(query) {
     useTheme(this)
     const id = query.id
+    const courseId = (query && query.courseId) || ''
+    const courseStepId = (query && query.stepId) || ''
+    this._courseId = courseProgress.hasStep(courseId, courseStepId) ? courseId : ''
+    this._courseStepId = this._courseId ? courseStepId : ''
     const method = methodsData.getMethod(id)
     if (!method) {
       this.setData({ method: null })
@@ -105,7 +112,8 @@ Page({
       })
   },
   goPractice() {
-    wx.navigateTo({ url: '/pages/methods/practice?id=' + this._id })
+    const context = this._courseId ? '&courseId=' + this._courseId + '&stepId=' + this._courseStepId : ''
+    wx.navigateTo({ url: '/pages/methods/practice?id=' + this._id + context })
   },
   goBack() {
     wx.navigateBack({ delta: 1 })

@@ -2,6 +2,7 @@ const methodsData = require('../../utils/methods-data')
 const { useTheme } = require('../../utils/theme-store')
 const { getUserId } = require('../../utils/user')
 const SK = require('../../utils/storage-keys')
+const courseProgress = require('../../utils/course-progress')
 const { renderTrend } = require('../../utils/canvas')
 const { getDpr } = require('../../utils/device')
 
@@ -49,9 +50,16 @@ Page({
     practices: [],
     list: [],
     themeClass: 'theme-light',
+    courseId: '',
+    courseSaved: false,
   },
   onLoad(query) {
     useTheme(this)
+    const courseId = (query && query.courseId) || ''
+    const courseStepId = (query && query.stepId) || ''
+    this._courseId = courseProgress.hasStep(courseId, courseStepId) ? courseId : ''
+    this._courseStepId = this._courseId ? courseStepId : ''
+    this.setData({ courseId: this._courseId })
     if (query && query.id) {
       this.loadForm(query.id)
     } else {
@@ -144,12 +152,20 @@ Page({
     if (list.length > 50) list.length = 50
     stored[id] = list
     wx.setStorageSync(STORE_KEY, stored)
+    if (this._courseId && this._courseStepId) {
+      courseProgress.completeStep(this._courseId, this._courseStepId)
+      this.setData({ courseSaved: true })
+    }
     const practices = list.map((entry) => this.decorate(entry, schema))
     const practiceTrend = computePracticeTrend(this.data.method, schema)
     this.setData({ practices, practiceTrend }, () => {
       this.drawPracticeTrend()
     })
     wx.showToast({ title: '已保存', icon: 'success' })
+  },
+  goCourse() {
+    if (!this._courseId) return
+    wx.reLaunch({ url: '/pages/course/detail?id=' + this._courseId })
   },
   drawPracticeTrend() {
     const trend = this.data.practiceTrend

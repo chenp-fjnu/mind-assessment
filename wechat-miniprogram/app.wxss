@@ -483,6 +483,37 @@ button::after {
 .rounded-md { border-radius: var(--radius-md); }
 .rounded-lg { border-radius: var(--radius-lg); }
 .rounded-xl { border-radius: var(--radius-xl); }
+
+.recommendations .item-desc {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.browse-all,
+.empty-action {
+  display: block;
+  margin: 20rpx 32rpx;
+  padding: 18rpx 24rpx;
+  border: 1rpx solid var(--card-border);
+  border-radius: var(--radius-lg);
+  background: var(--card-bg);
+  color: var(--text-brand);
+  font-size: var(--font-size-md);
+}
+.browse-all::after,
+.empty-action::after {
+  border: 0;
+}
+.collapse-all {
+  margin: 20rpx 32rpx 0;
+  padding: 16rpx 4rpx;
+  color: var(--text-brand);
+  font-size: var(--font-size-sm);
+  text-align: right;
+}
+.empty-action {
+  margin: 20rpx 0 0;
+}
 .rounded-xxl { border-radius: var(--radius-xxl); }
 .rounded-full { border-radius: var(--radius-full); }
 

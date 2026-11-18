@@ -2,6 +2,7 @@ const { getMetaList, TYPE_LABELS } = require('../../utils/registry')
 const SK = require('../../utils/storage-keys')
 const { hexToRgba } = require('../../utils/color')
 const { useTheme } = require('../../utils/theme-store')
+const { getListRecommendations } = require('../../utils/list-recommendations')
 
 function buildModuleList() {
   return getMetaList().map((m) => ({
@@ -42,6 +43,9 @@ Page({
     moduleCount: 0,
     typeCount: 0,
     assessRecordCount: 0,
+    newcomerModules: [],
+    recommendedModules: [],
+    showAll: false,
   },
   onLoad(query) {
     useTheme(this)
@@ -58,10 +62,12 @@ Page({
       typeCount: types.length,
       keyword: kw,
     }, () => { if (kw) this.applyFilter() })
+    this.refreshRecommendations()
     this.refreshRecords()
   },
   onShow() {
     this.refreshRecords()
+    this.refreshRecommendations()
     const app = getApp()
     const kw = app.globalData.searchKeyword
     if (kw) {
@@ -72,6 +78,19 @@ Page({
   refreshRecords() {
     const assessRecordCount = (wx.getStorageSync(SK.HISTORY) || []).length
     this.setData({ assessRecordCount })
+  },
+  refreshRecommendations() {
+    const goalValue = wx.getStorageSync(SK.USER_GOAL)
+    const goal = typeof goalValue === 'string' ? goalValue : ''
+    const picks = getListRecommendations(
+      'assess',
+      this.data.allModules,
+      goal,
+      ['gses', 'holland', 'mind6', 'mbti'],
+      ['gad7', 'big5', 'n808'],
+      3
+    )
+    this.setData({ newcomerModules: picks.newcomer, recommendedModules: picks.recommended })
   },
   applyFilter() {
     const { allModules, keyword, activeType } = this.data
@@ -90,7 +109,18 @@ Page({
     this.setData({ keyword: '' }, () => this.applyFilter())
   },
   onType(e) {
-    this.setData({ activeType: e.currentTarget.dataset.type }, () => this.applyFilter())
+    this.setData({ activeType: e.currentTarget.dataset.type, showAll: false }, () => this.applyFilter())
+  },
+  showAllModules() {
+    this.setData({ showAll: true })
+  },
+  showRecommendations() {
+    this.setData({ showAll: false, activeType: '', keyword: '' }, () => this.applyFilter())
+  },
+  goCourses() {
+    const storedGoal = wx.getStorageSync(SK.USER_GOAL)
+    const goal = typeof storedGoal === 'string' ? storedGoal : 'browse'
+    wx.navigateTo({ url: '/pages/course/list?goal=' + goal })
   },
   goDetail(e) {
     const id = e.currentTarget.dataset.id

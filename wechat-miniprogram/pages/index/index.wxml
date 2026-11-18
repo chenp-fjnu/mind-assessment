@@ -1,27 +1,72 @@
 <view class="theme-wrapper {{themeClass}}">
   <view class="scroll-page">
-    <!-- Hero 区 -->
     <view class="hero">
       <text class="hero-title">心智探索局</text>
       <text class="hero-sub">测评 · 方法 · 训练，陪你认识并锻炼心智</text>
-      <view class="hero-stats">
-        <view class="stat-item">
-          <text class="stat-num">{{moduleCount}}</text>
-          <text class="stat-label">套测评</text>
-        </view>
-        <view class="stat-item">
-          <text class="stat-num">{{methodCount}}</text>
-          <text class="stat-label">个方法</text>
-        </view>
-        <view class="stat-item">
-          <text class="stat-num">{{gameCount}}</text>
-          <text class="stat-label">个训练</text>
-        </view>
+    </view>
+
+    <view wx:if="{{goalFormVisible}}" class="goal-card">
+      <text class="goal-title">你现在最想做什么？</text>
+      <text class="goal-sub">选一个方向看看短课程，也可以直接浏览全部。</text>
+      <view class="goal-options">
+        <button class="goal-option" data-goal="self" bindtap="chooseGoal" aria-label="选择想更了解自己">了解自己</button>
+        <button class="goal-option" data-goal="focus" bindtap="chooseGoal" aria-label="选择提升专注">提升专注</button>
+        <button class="goal-option" data-goal="emotion" bindtap="chooseGoal" aria-label="选择调节压力或情绪">调节压力</button>
+      </view>
+      <view class="goal-more" bindtap="toggleOtherGoals" role="button" aria-label="查看其他方向">其他方向{{otherGoalsVisible ? ' 收起' : ' ›'}}</view>
+      <view wx:if="{{otherGoalsVisible}}" class="other-goals">
+        <text>职业、睡眠、人际关系和脑力训练课程尚未纳入本次试点。</text>
+        <button class="text-action" data-goal="browse" bindtap="chooseGoal" aria-label="浏览全部内容">浏览全部内容</button>
+      </view>
+      <button wx:if="{{!otherGoalsVisible}}" class="text-action browse-action" data-goal="browse" bindtap="chooseGoal" aria-label="先随便看看">先随便看看</button>
+      <text wx:if="{{selectedGoal}}" class="text-action browse-action" bindtap="toggleGoalForm" role="button" aria-label="取消更换目标">取消更换</text>
+    </view>
+
+    <view wx:elif="{{courseId}}" class="status-card">
+      <text class="status-eyebrow">{{courseStarted ? '继续你的路线' : '为你推荐'}}</text>
+      <text class="status-title">{{courseName}}</text>
+      <text class="status-desc">{{courseMessage}}</text>
+      <button class="primary-action" bindtap="goCourse" aria-label="{{courseActionLabel}}：{{courseName}}">{{courseActionLabel}}</button>
+      <text class="text-action change-goal" bindtap="toggleGoalForm" role="button" aria-label="更换目标">更换目标</text>
+      <text class="text-action change-goal" bindtap="clearGoal" role="button" aria-label="清除目标选择">清除目标</text>
+    </view>
+
+    <view wx:elif="{{welcomeBack}}" class="status-card">
+      <text class="status-eyebrow">欢迎回来</text>
+      <text class="status-title">继续你的探索</text>
+      <text class="status-desc">最近的记录还在本机。你也可以选一个目标，让首页按你的兴趣推荐内容。</text>
+      <button class="primary-action" bindtap="goHistory" aria-label="查看最近记录">查看最近记录</button>
+      <text class="text-action change-goal" bindtap="toggleGoalForm" role="button" aria-label="选择一个目标">选择一个目标</text>
+    </view>
+
+    <view wx:elif="{{selectedGoal === 'browse'}}" class="status-card">
+      <text class="status-eyebrow">自由探索</text>
+      <text class="status-title">从感兴趣的内容开始</text>
+      <text class="status-desc">不需要先选课程，测评、方法和训练都可以直接浏览。</text>
+      <button class="primary-action" bindtap="goCourseList" aria-label="查看课程路线">查看课程路线</button>
+      <text class="text-action change-goal" bindtap="toggleGoalForm" role="button" aria-label="选择目标">选择目标</text>
+      <text class="text-action change-goal" bindtap="clearGoal" role="button" aria-label="清除浏览选择">清除选择</text>
+    </view>
+
+    <view class="quick-entries" aria-label="内容入口">
+      <view class="entry-card assess-entry" bindtap="goAssess" role="button" aria-label="浏览测评">
+        <text class="entry-icon">🧭</text>
+        <text class="entry-title">测一测</text>
+      </view>
+      <view class="entry-card method-entry" bindtap="goMethods" role="button" aria-label="浏览方法">
+        <text class="entry-icon">🧰</text>
+        <text class="entry-title">学方法</text>
+      </view>
+      <view class="entry-card train-entry" bindtap="goTrain" role="button" aria-label="浏览训练">
+        <text class="entry-icon">🎮</text>
+        <text class="entry-title">练一练</text>
       </view>
     </view>
 
-    <!-- 全局搜索：跳转测评页（测评页为 tab，关键词经 globalData 传递） -->
-    <view class="home-search">
+    <view class="search-control">
+      <view class="search-toggle" bindtap="toggleSearch" role="button" aria-label="{{searchOpen ? '收起搜索' : '搜索内容'}}">⌕ <text>{{searchOpen ? '收起搜索' : '搜索'}}</text></view>
+    </view>
+    <view wx:if="{{searchOpen}}" class="home-search">
       <input
         class="home-search-input"
         placeholder="搜索测评 / 方法 / 训练"
@@ -33,71 +78,70 @@
       />
     </view>
 
-    <!-- 热门推荐：网格布局 2列，精简卡片 -->
-    <view wx:if="{{hotPicks.length}}" class="section hot-section">
-      <view class="section-head">
-        <text class="section-title">🔥 热门推荐</text>
-      </view>
-      <view class="hot-grid">
-        <view
-          class="hot-card"
-          data-kind="{{h.kind}}"
-          wx:for="{{hotPicks}}"
-          wx:key="index"
-          wx:for-item="h"
-          bindtap="goHot"
-          data-item="{{h}}"
-          role="button"
-          aria-label="{{h.name}}，{{h.kindLabel}}"
-        >
-          <view class="hot-card-content">
-            <view class="hot-icon-row">
-              <view class="hot-icon-wrap">
-                <text class="hot-icon">{{h.icon}}</text>
+    <view class="more-toggle" bindtap="toggleMore" role="button" aria-label="{{moreExpanded ? '收起更多内容' : '展开热门推荐和最近记录'}}">
+      <text>{{moreExpanded ? '收起' : '更多推荐与最近记录'}}</text>
+      <text>{{moreExpanded ? '⌃' : '⌄'}}</text>
+    </view>
+
+    <view wx:if="{{moreExpanded}}">
+      <view wx:if="{{visibleHotPicks.length}}" class="section hot-section">
+        <view class="section-head">
+          <text class="section-title">热门推荐</text>
+          <text class="section-more" bindtap="rotateHot" role="button" aria-label="换一批推荐">换一批</text>
+        </view>
+        <view class="hot-grid">
+          <view
+            class="hot-card"
+            data-kind="{{h.kind}}"
+            wx:for="{{visibleHotPicks}}"
+            wx:key="id"
+            wx:for-item="h"
+            bindtap="goHot"
+            data-item="{{h}}"
+            role="button"
+            aria-label="{{h.name}}，{{h.kindLabel}}"
+          >
+            <view class="hot-card-content">
+              <view class="hot-icon-row">
+                <view class="hot-icon-wrap"><text class="hot-icon">{{h.icon}}</text></view>
+                <text class="hot-kind">{{h.kindLabel}}</text>
               </view>
-              <text class="hot-kind">{{h.kindLabel}}</text>
+              <text class="hot-name">{{h.name}}</text>
             </view>
-            <text class="hot-name">{{h.name}}</text>
+          </view>
+        </view>
+      </view>
+
+      <view wx:if="{{recentItems.length}}" class="section recent-section">
+        <view class="section-head">
+          <text class="section-title">最近探索</text>
+          <text class="section-more" bindtap="goHistory" role="button" aria-label="查看全部记录">全部记录 ›</text>
+        </view>
+        <view class="hot-grid">
+          <view
+            class="hot-card"
+            data-kind="{{h.kind}}"
+            wx:for="{{recentItems}}"
+            wx:key="id"
+            wx:for-item="h"
+            bindtap="goHot"
+            data-item="{{h}}"
+            role="button"
+            aria-label="{{h.name}}，{{h.kindLabel}}"
+          >
+            <view class="hot-card-content">
+              <view class="hot-icon-row">
+                <view class="hot-icon-wrap"><text class="hot-icon">{{h.icon}}</text></view>
+                <text class="hot-kind">{{h.kindLabel}}</text>
+              </view>
+              <text class="hot-name">{{h.name}}</text>
+            </view>
           </view>
         </view>
       </view>
     </view>
 
-    <!-- 分隔线 -->
-    <view class="divider"></view>
-
-    <!-- 最近探索：跨板块最近记录，去重展示，避免与底部 Tab 入口重复 -->
-    <view wx:if="{{recentItems.length}}" class="section recent-section">
-      <view class="section-head">
-        <text class="section-title">🕘 最近探索</text>
-        <text class="section-more" bindtap="goHistory" role="button" aria-label="查看全部记录">全部记录 ›</text>
-      </view>
-      <view class="hot-grid">
-        <view
-          class="hot-card"
-          data-kind="{{h.kind}}"
-          wx:for="{{recentItems}}"
-          wx:key="index"
-          wx:for-item="h"
-          bindtap="goHot"
-          data-item="{{h}}"
-          role="button"
-          aria-label="{{h.name}}，{{h.kindLabel}}"
-        >
-          <view class="hot-card-content">
-            <view class="hot-icon-row">
-              <view class="hot-icon-wrap">
-                <text class="hot-icon">{{h.icon}}</text>
-              </view>
-              <text class="hot-kind">{{h.kindLabel}}</text>
-            </view>
-            <text class="hot-name">{{h.name}}</text>
-          </view>
-        </view>
-      </view>
-    </view>
-
-    <view class="footer">结果仅供自我探索与娱乐，不构成医学诊断</view>
+    <view class="footer">结果仅供自我探索与学习参考，不构成医学诊断</view>
     <view class="about-link" bindtap="goAbout" role="button" aria-label="关于心智探索局">关于心智探索局 ›</view>
   </view>
 </view>

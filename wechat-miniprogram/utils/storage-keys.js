@@ -9,6 +9,10 @@ module.exports = {
   // 训练
   TRAIN_PREFIX: 'ma_train_', // 训练成绩前缀：ma_train_<id>__<level>
   TRAIN_LAST: 'ma_train_last', // 最近一次训练（游戏 + 难度）
+  // 课程
+  USER_GOAL: 'ma_user_goal', // 用户主动选择的首页目标
+  ONBOARDING: 'ma_onboarding_done', // 是否完成或跳过目标引导
+  COURSE_PROGRESS: 'ma_course_progress', // 本地课程路线进度
   // 用户（云同步当前为占位实现，见 utils/user.js）
   USER: 'ma_user',
   // 主题

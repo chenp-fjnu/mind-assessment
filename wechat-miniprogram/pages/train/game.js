@@ -4,6 +4,7 @@ const trainStore = require('../../utils/train-store')
 const { useTheme } = require('../../utils/theme-store')
 const { getUser } = require('../../utils/user')
 const schulte = require('../../games/schulte/index')
+const courseProgress = require('../../utils/course-progress')
 
 function fmtBest(value, unit) {
   if (value == null) return '暂无记录'
@@ -33,6 +34,10 @@ Page({
   },
   onLoad(query) {
     useTheme(this)
+    const courseId = (query && query.courseId) || ''
+    const courseStepId = (query && query.stepId) || ''
+    this._courseId = courseProgress.hasStep(courseId, courseStepId) ? courseId : ''
+    this._courseStepId = this._courseId ? courseStepId : ''
     const id = query.gameId
     const g = getGame(id)
     if (!g) {
@@ -126,25 +131,36 @@ Page({
     const r = e.detail
     const metricVal = r[g.metric.key]
     const level = this.data.level
-    trainStore.save(this.data.gameId, level, metricVal, {
-      levelLabel: this.data.levelLabel,
-      // 单局耗时用 elapsed 传递；记录级 time 由 train-store 写入时间戳
-      elapsed: r.time,
-      errors: r.errors,
-      score: r.score,
-      correct: r.correct,
-      total: r.total,
-      rounds: r.rounds,
-      moves: r.moves,
-      duration: r.duration,
-    })
-    trainStore.setLast(this.data.gameId, level, {
-      levelLabel: this.data.levelLabel,
-      name: g.name,
-      icon: g.icon,
-      color: g.color,
-      dimLabel: g.dimLabel,
-    })
+    let saved = false
+    try {
+      trainStore.save(this.data.gameId, level, metricVal, {
+        levelLabel: this.data.levelLabel,
+        // 单局耗时用 elapsed 传递；记录级 time 由 train-store 写入时间戳
+        elapsed: r.time,
+        errors: r.errors,
+        score: r.score,
+        correct: r.correct,
+        total: r.total,
+        rounds: r.rounds,
+        moves: r.moves,
+        duration: r.duration,
+      })
+      saved = true
+    } catch (error) {
+      wx.showToast({ title: '训练成绩未能保存', icon: 'none' })
+    }
+    if (saved) {
+      if (this._courseId && this._courseStepId) {
+        courseProgress.completeStep(this._courseId, this._courseStepId)
+      }
+      trainStore.setLast(this.data.gameId, level, {
+        levelLabel: this.data.levelLabel,
+        name: g.name,
+        icon: g.icon,
+        color: g.color,
+        dimLabel: g.dimLabel,
+      })
+    }
     const best = trainStore.best(this.data.gameId, level, g.metric.better)
     // 同步刷新当前难度芯片上的最佳文案
     const levels = this.data.levels.map((l) =>

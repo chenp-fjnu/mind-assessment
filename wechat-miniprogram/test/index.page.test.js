@@ -70,6 +70,8 @@ describe('首页 index', () => {
     expect(ctx.data.moduleCount).toBe(IDS.length)
     expect(ctx.data.featuredAssess.length).toBe(5)
     expect(ctx.data.hotPicks.length).toBe(10)
+    expect(ctx.data.visibleHotPicks).toHaveLength(3)
+    expect(ctx.data.goalFormVisible).toBe(true)
   })
 
   test('goAssess 跳转到测评 tab', () => {

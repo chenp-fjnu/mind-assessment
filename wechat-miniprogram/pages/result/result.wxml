@@ -170,6 +170,7 @@
 
     <view class="bottom-bar">
       <button class="btn save" bindtap="saveCard" aria-label="保存结果卡片到相册">保存结果卡片</button>
+      <button wx:if="{{courseId}}" class="btn ghost" bindtap="goCourse" aria-label="返回课程继续下一步">返回课程继续下一步</button>
       <view class="btn-row">
         <button class="btn ghost" bindtap="retest" aria-label="重新测评">重新测评</button>
         <button class="btn home" style="background:{{meta.color}};color:{{meta.colorText}};" bindtap="goHome" aria-label="返回首页">返回首页</button>

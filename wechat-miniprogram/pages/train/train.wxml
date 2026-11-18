@@ -35,7 +35,34 @@
       >{{item.label}}</text>
     </scroll-view>
 
-    <view wx:for="{{filteredGroups}}" wx:key="dim" class="group">
+    <view wx:if="{{!showAll && !keyword && !activeDim}}" class="recommendations">
+      <view class="group" wx:if="{{newcomerGames.length}}">
+        <view class="group-title">新人首选</view>
+        <view wx:for="{{newcomerGames}}" wx:key="id" wx:for-item="g" class="item card" bindtap="goGame" data-id="{{g.id}}" role="button" aria-label="{{g.name}}">
+          <view class="item-icon" style="background:{{g.tint}};">{{g.icon}}</view>
+          <view class="item-body">
+            <view class="item-head"><text class="item-name">{{g.name}}</text></view>
+            <text class="item-desc">{{g.desc}}</text>
+          </view>
+          <text class="arrow">›</text>
+        </view>
+      </view>
+      <view class="group" wx:if="{{recommendedGames.length}}">
+        <view class="group-title">为你推荐</view>
+        <view wx:for="{{recommendedGames}}" wx:key="id" wx:for-item="g" class="item card" bindtap="goGame" data-id="{{g.id}}" role="button" aria-label="{{g.name}}">
+          <view class="item-icon" style="background:{{g.tint}};">{{g.icon}}</view>
+          <view class="item-body">
+            <view class="item-head"><text class="item-name">{{g.name}}</text></view>
+            <text class="item-desc">{{g.desc}}</text>
+          </view>
+          <text class="arrow">›</text>
+        </view>
+      </view>
+      <button class="browse-all" bindtap="showAllGames" aria-label="查看全部 {{gameCount}} 个训练">查看全部 {{gameCount}} 个训练</button>
+    </view>
+
+    <view wx:if="{{showAll && !keyword && !activeDim}}" class="collapse-all" bindtap="showRecommendations" role="button" aria-label="收起完整训练列表">收起全部</view>
+    <view wx:if="{{showAll || keyword || activeDim}}" wx:for="{{filteredGroups}}" wx:key="dim" class="group">
       <view class="group-title">{{item.dimLabel}}</view>
       <view
         wx:for="{{item.games}}"
@@ -60,9 +87,10 @@
       </view>
     </view>
 
-    <view wx:if="{{filteredGroups.length === 0}}" class="empty-search">
+    <view wx:if="{{(keyword || activeDim) && filteredGroups.length === 0}}" class="empty-search">
       <text class="empty-search-icon">🔍</text>
       <text class="empty-search-text">没有找到匹配的训练</text>
+      <button class="empty-action" bindtap="goCourses" aria-label="看看课程路线">看看课程路线</button>
     </view>
 
     <view class="footer">训练游戏仅供自我探索与热身，不构成医学诊断</view>

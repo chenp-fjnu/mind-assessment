@@ -5,20 +5,23 @@ const gameReg = require('../../utils/game-registry')
 const trainStore = require('../../utils/train-store')
 const { useTheme } = require('../../utils/theme-store')
 const SK = require('../../utils/storage-keys')
+const coursesData = require('../../utils/courses-data')
+const courseProgress = require('../../utils/course-progress')
 
 // 热门推荐配置：跨板块精选，按当前热度排序
 const HOT_CONFIG = [
   // 测评类
   { kind: 'assess', id: 'mbti' },       // 社交破冰全民热点
+  // 方法与训练类交错呈现，避免首屏推荐被单一内容类型占满
+  { kind: 'method', id: 'smart' },
+  { kind: 'train', id: 'schulte' },
   { kind: 'assess', id: 'holland' },    // 高考志愿/职业规划权威首选
   { kind: 'assess', id: 'big5' },       // 学术界黄金标准
   { kind: 'assess', id: 'hbdi' },       // 全脑优势 思维风格/职场自我探索
   { kind: 'assess', id: 'n808' },       // 808神测 限时图形多选/观察推理
   // 方法类
-  { kind: 'method', id: 'smart' },      // 目标管理国民工具
   { kind: 'method', id: 'pomodoro' },   // 番茄工作法 国民级时间管理
   // 训练类
-  { kind: 'train', id: 'schulte' },     // 注意力训练 国民级/飞行员背书
   { kind: 'train', id: 'whack' },       // 打地鼠 反应速度/手眼协调
   { kind: 'train', id: 'cps' },         // 连点测试 点击速度/手指灵活度
 ]
@@ -145,6 +148,20 @@ Page({
     hotPicks: [],
     recentItems: [],
     homeKeyword: '',
+    searchOpen: false,
+    moreExpanded: false,
+    hotOffset: 0,
+    visibleHotPicks: [],
+    selectedGoal: '',
+    goalLabel: '',
+    courseId: '',
+    courseName: '',
+    courseMessage: '',
+    courseActionLabel: '',
+    courseStarted: false,
+    goalFormVisible: false,
+    welcomeBack: false,
+    otherGoalsVisible: false,
   },
   onLoad() {
     useTheme(this)
@@ -172,6 +189,45 @@ Page({
       hotPicks,
       recentItems: buildRecent(lastMap),
       hotAssessCount,
+      visibleHotPicks: hotPicks.slice(0, 3),
+    }, () => this.loadHomeState())
+  },
+  loadHomeState() {
+    const storedGoal = wx.getStorageSync(SK.USER_GOAL)
+    const goal = typeof storedGoal === 'string' ? storedGoal : ''
+    const onboardingDone = wx.getStorageSync(SK.ONBOARDING) === true
+    const welcomeBack = !goal && !onboardingDone && this.data.recentItems.length > 0
+    const course = coursesData.getCourseForGoal(goal)
+    const state = course ? courseProgress.getCourseState(course) : null
+    const nextStep = state && state.steps.find((step) => !step.completed && !step.skipped)
+    let courseMessage = ''
+    let courseActionLabel = ''
+    if (course) {
+      if (state.complete) {
+        courseMessage = '已完成必做步骤，可以回顾路线或浏览其他内容。'
+        courseActionLabel = '查看课程'
+      } else if (state.started && nextStep) {
+        const index = course.steps.findIndex((step) => step.id === nextStep.id) + 1
+        courseMessage = '第 ' + index + '/' + course.steps.length + ' 步 · ' + nextStep.title + ' · 约 ' + nextStep.minutes + ' 分钟'
+        courseActionLabel = '继续课程'
+      } else {
+        courseMessage = course.tagline
+        courseActionLabel = '看看课程'
+      }
+    } else if (goal === 'browse') {
+      courseMessage = '先按自己的兴趣浏览测评、方法和训练。'
+      courseActionLabel = '查看课程路线'
+    }
+    this.setData({
+      selectedGoal: goal,
+      goalLabel: coursesData.GOAL_LABELS[goal] || '',
+      courseId: course ? course.id : '',
+      courseName: course ? course.name : '',
+      courseMessage,
+      courseActionLabel,
+      courseStarted: !!(state && state.started),
+      goalFormVisible: !goal && !onboardingDone && !welcomeBack,
+      welcomeBack,
     })
   },
   goAssess() { wx.switchTab({ url: '/pages/assess/assess' }) },
@@ -182,6 +238,51 @@ Page({
   goGame(e) { wx.navigateTo({ url: `/pages/train/game?gameId=${e.currentTarget.dataset.id}` }) },
   goHistory() { wx.navigateTo({ url: '/pages/history/history' }) },
   goAbout() { wx.navigateTo({ url: '/pages/about/about' }) },
+  goCourseList() {
+    const goal = this.data.selectedGoal || 'browse'
+    wx.navigateTo({ url: '/pages/course/list?goal=' + goal })
+  },
+  goCourse() {
+    if (!this.data.courseId) {
+      this.goCourseList()
+      return
+    }
+    wx.navigateTo({ url: '/pages/course/detail?id=' + this.data.courseId })
+  },
+  chooseGoal(e) {
+    const goal = e.currentTarget.dataset.goal
+    if (!coursesData.GOAL_LABELS[goal]) return
+    wx.setStorageSync(SK.USER_GOAL, goal)
+    wx.setStorageSync(SK.ONBOARDING, true)
+    this.setData({ selectedGoal: goal, goalFormVisible: false, otherGoalsVisible: false }, () => {
+      this.loadHomeState()
+      if (goal !== 'browse') this.goCourseList()
+    })
+  },
+  toggleGoalForm() {
+    this.setData({ goalFormVisible: !this.data.goalFormVisible, otherGoalsVisible: false })
+  },
+  clearGoal() {
+    wx.removeStorageSync(SK.USER_GOAL)
+    wx.removeStorageSync(SK.ONBOARDING)
+    this.setData({ selectedGoal: '', goalLabel: '', courseId: '', goalFormVisible: true, otherGoalsVisible: false })
+  },
+  toggleOtherGoals() {
+    this.setData({ otherGoalsVisible: !this.data.otherGoalsVisible })
+  },
+  toggleSearch() {
+    this.setData({ searchOpen: !this.data.searchOpen })
+  },
+  toggleMore() {
+    this.setData({ moreExpanded: !this.data.moreExpanded })
+  },
+  rotateHot() {
+    const picks = this.data.hotPicks
+    if (picks.length <= 3) return
+    const offset = (this.data.hotOffset + 3) % picks.length
+    const rotated = picks.slice(offset).concat(picks.slice(0, offset))
+    this.setData({ hotOffset: offset, visibleHotPicks: rotated.slice(0, 3) })
+  },
   onHomeSearchInput(e) {
     this.setData({ homeKeyword: e.detail.value })
   },

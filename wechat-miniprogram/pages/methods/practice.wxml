@@ -69,6 +69,7 @@
     </view>
     <button class="btn save" style="background:{{method.color}};" bindtap="savePractice" aria-label="保存这次练习">保存这次练习</button>
     <text class="save-tip">练习仅保存在本机，仅你可见</text>
+    <button wx:if="{{courseId && courseSaved}}" class="btn save" bindtap="goCourse" aria-label="返回课程继续下一步">返回课程继续下一步</button>
   </view>
 
   <view class="card sec" wx:if="{{practices.length}}">

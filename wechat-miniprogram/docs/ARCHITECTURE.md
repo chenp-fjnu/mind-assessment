@@ -2,7 +2,7 @@
 
 > 更新日期：2026-11-18
 > 适用工程：[`wechat-miniprogram/`](../README.md)
-> 规模基线：27 套量表 / 24 个方法 / 36 个训练游戏 / 14 个页面
+> 规模基线：27 套量表 / 24 个方法 / 36 个训练游戏 / 16 个页面
 
 本文说明当前代码的分层、业务流程、数据模型和扩展方式，供后续维护与二次开发使用。问题清单与优先级见 [`CODE_REVIEW.md`](CODE_REVIEW.md)。
 
@@ -24,8 +24,8 @@
 
 ```text
 ┌──────────────────────────── pages/ ────────────────────────────┐
-│ 首页 index │ 测评 assess/detail/test/result │ 方法 methods/*     │
-│ 训练 train/game │ 记录 history │ 我的 mine/profile/about         │
+│ 首页 index │ 课程 course/list/detail │ 测评 assess/detail/test/result │
+│ 方法 methods/* │ 训练 train/game │ 记录 history │ 我的 mine/profile/about │
 └───────────────┬───────────────────────────────┬─────────────────┘
                 │                               │
         ┌───────▼────────┐              ┌───────▼────────┐
@@ -70,6 +70,8 @@
 assess（分类/搜索）→ detail（详解/来源/关联/历史）
 → test（答题）→ result（评分/视图/趋势/存图）→ history（记录）
 ```
+
+测评、方法、训练三个库页默认展示最多 4 个新人精选和 3 个目标相关内容；用户可展开完整列表，搜索与分类筛选仍作用于全量内容。
 
 #### 答题页 `pages/test/test.js`
 
@@ -120,6 +122,15 @@ assess（分类/搜索）→ detail（详解/来源/关联/历史）
 - `pages/profile` 本地保存头像/昵称/性别/生日；修改生日即时落盘（影响舒尔特年龄组）。
 - `pages/about` 展示数据来源、隐私入口和各板块数量。
 
+### 3.5 目标与课程路线
+
+- 首页 (`pages/index`) 用本地目标决定课程入口与推荐排序；无历史的新用户看到目标引导，有历史但未选目标的用户看到欢迎回访入口。
+- `pages/course/list` 展示 3 条试点路线，`pages/course/detail` 展示步骤、时长、必做/可选状态及继续入口。当前路线分别覆盖自我探索、专注练习、压力调节。
+- `utils/courses-data.js` 从测评/方法/训练注册表解析课程内容；`scripts/check-meta.js` 的 `npm run validate` 检查引用是否有效。
+- `utils/course-progress.js` 管理进度。活动成功保存后才标记对应步骤完成，不将课程开始前的旧记录回填为路线完成；`currentStepId` 指向待办步骤，完成度按必做步骤计算，可选步骤可跳过。课程详情可清除单条路线状态，不删除活动记录。
+- 用户目标、引导状态和路线进度分别保存在 `ma_user_goal`、`ma_onboarding_done`、`ma_course_progress`，均为本地数据，不上传。
+- 测评通过答题 URL 将 `courseId/stepId` 传给结果页（答题后使用 `wx.reLaunch`）；结果、方法练习和训练保存成功后更新课程进度。
+
 ---
 
 ## 4. 数据模型与存储
@@ -133,6 +144,9 @@ assess（分类/搜索）→ detail（详解/来源/关联/历史）
 | `ma_practices` | `{ [methodId]: Entry[] }` | `methods/practice.js` | 首页、详情、历史、我的 | 每方法 ≤50 条 |
 | `ma_train_<id>__<level>` | `Entry[]` | `train-store.js` | 训练列表/播放页/历史/首页 | 每难度 ≤50 条 |
 | `ma_train_last` | `{ id, level, levelLabel, name, icon, color, dimLabel, time }` | `train-store.setLast` | 首页「继续训练」 | 单条 |
+| `ma_user_goal` | `string` | 首页目标选择 | 首页、课程大厅、测评/方法/训练列表 | 本地推荐目标 |
+| `ma_onboarding_done` | `boolean` | 首页目标引导 | 首页 | 已选择目标或选择先浏览 |
+| `ma_course_progress` | `{ [courseId]: { currentStepId, completedStepIds, skippedStepIds, startedAt, updatedAt } }` | `course-progress.js` | 首页、课程列表/详情、测评结果、方法练习、训练播放页 | 仅存路线状态；不存活动成绩 |
 | `ma_user` | `{ id, nickname, avatarUrl, gender, birthday, createdAt, updatedAt }` | `user.js` | 我的、档案、舒尔特年龄组 | 本地单用户 |
 | `user-theme-preference` | `'auto' \| 'light' \| 'dark'` | `theme-store.js` | 全站 | — |
 | `current-effective-theme` | `'light' \| 'dark'` | `theme-store.js` | 启动同步原生 UI | — |
@@ -264,7 +278,7 @@ module.exports = {
 ```text
 npm run validate     → check-meta（模块/题量/视图契约）+ check-game-player（生成一致性）
 npm test             → test/smoke.js（纯 Node 评分链路，182 项）
-npm run test:simulate→ Jest（13 suites / 284 tests）
+npm run test:simulate→ Jest（14 suites / 308 tests）
 npm run test:coverage→ Jest + 覆盖率门槛（60/45/65/65）
 npm run lint:strict  → ESLint 0 error / 0 warning
 npm run test:all     → validate + smoke + Jest coverage（CI 同款）
@@ -272,7 +286,7 @@ npm run test:all     → validate + smoke + Jest coverage（CI 同款）
 
 - `test/setup.js` 提供最小 `wx/Page/Component/App/getApp` mock 与 canvas noop。
 - `test/page-helper.js` 用 `jest.isolateModules` 加载页面并执行 `onLoad`。
-- 覆盖率现状约 70% 语句 / 46% 分支 / 74% 函数 / 72% 行；`theme-store.js`、`tri808.js`、`scoring.js` 是主要缺口。
+- 覆盖率现状为 66.43% 语句 / 47.82% 分支 / 71.79% 函数 / 67.96% 行；`theme-store.js`、`tri808.js`、`scoring.js` 是主要缺口。
 
 ---
 

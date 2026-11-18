@@ -2,6 +2,7 @@ const methodsData = require('../../utils/methods-data')
 const { hexToRgba } = require('../../utils/color')
 const { useTheme } = require('../../utils/theme-store')
 const SK = require('../../utils/storage-keys')
+const { getListRecommendations } = require('../../utils/list-recommendations')
 
 function buildList() {
   return methodsData.METHODS.map((m) => Object.assign({}, m, { tint: hexToRgba(m.color, 0.12) }))
@@ -27,6 +28,9 @@ Page({
     interactiveCount: 0,
     categoryCount: 0,
     methodRecordCount: 0,
+    newcomerMethods: [],
+    recommendedMethods: [],
+    showAll: false,
   },
   onLoad() {
     useTheme(this)
@@ -47,16 +51,31 @@ Page({
       interactiveCount: allMethods.filter((m) => m.interactive).length,
       categoryCount: categories.length,
     })
+    this.refreshRecommendations()
     this.refreshRecords()
   },
   onShow() {
     this.refreshRecords()
+    this.refreshRecommendations()
   },
   refreshRecords() {
     const practices = wx.getStorageSync(SK.PRACTICES) || {}
     let methodRecordCount = 0
     Object.keys(practices).forEach((k) => { methodRecordCount += (practices[k] || []).length })
     this.setData({ methodRecordCount })
+  },
+  refreshRecommendations() {
+    const goalValue = wx.getStorageSync(SK.USER_GOAL)
+    const goal = typeof goalValue === 'string' ? goalValue : ''
+    const picks = getListRecommendations(
+      'method',
+      this.data.allMethods,
+      goal,
+      ['pomodoro', 'mindful', 'smart', 'abc'],
+      ['flow', 'threegood', 'grow'],
+      3
+    )
+    this.setData({ newcomerMethods: picks.newcomer, recommendedMethods: picks.recommended })
   },
   applyFilter() {
     const { allMethods, keyword, activeCategory } = this.data
@@ -78,7 +97,18 @@ Page({
     this.setData({ keyword: '' }, () => this.applyFilter())
   },
   onCategory(e) {
-    this.setData({ activeCategory: e.currentTarget.dataset.category }, () => this.applyFilter())
+    this.setData({ activeCategory: e.currentTarget.dataset.category, showAll: false }, () => this.applyFilter())
+  },
+  showAllMethods() {
+    this.setData({ showAll: true })
+  },
+  showRecommendations() {
+    this.setData({ showAll: false, activeCategory: '', keyword: '' }, () => this.applyFilter())
+  },
+  goCourses() {
+    const storedGoal = wx.getStorageSync(SK.USER_GOAL)
+    const goal = typeof storedGoal === 'string' ? storedGoal : 'browse'
+    wx.navigateTo({ url: '/pages/course/list?goal=' + goal })
   },
   goDetail(e) {
     const id = e.currentTarget.dataset.id

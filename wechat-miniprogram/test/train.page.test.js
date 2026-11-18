@@ -124,6 +124,27 @@ describe('训练播放页 game', () => {
     expect(labels).toContain('用时')
   })
 
+  test('成绩保存失败时提示用户且不完成课程步骤', () => {
+    const originalSet = global.wx.setStorageSync
+    const originalToast = global.wx.showToast
+    let toast = ''
+    global.wx.setStorageSync = () => { throw new Error('storage full') }
+    global.wx.showToast = (options) => { toast = options.title }
+    try {
+      const ctx = loadPage('pages/train/game.js', {
+        gameId: 'box-breathing',
+        courseId: 'emotion',
+        stepId: 'box-breathing',
+      })
+      ctx.onFinish({ detail: { time: 12, errors: 0, score: 900 } })
+      expect(toast).toBe('训练成绩未能保存')
+      expect(ctx.data.finished).toBe(true)
+    } finally {
+      global.wx.setStorageSync = originalSet
+      global.wx.showToast = originalToast
+    }
+  })
+
   test('replay 重置结果状态', () => {
     const ctx = loadPage('pages/train/game.js', { gameId: 'schulte' })
     ctx.onFinish({ detail: { time: 12, errors: 0, score: 900 } })
