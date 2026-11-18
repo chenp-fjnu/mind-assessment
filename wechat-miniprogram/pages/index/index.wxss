@@ -25,6 +25,13 @@
   margin: 24rpx 32rpx 0;
   padding: 28rpx 32rpx;
 }
+.home-card button {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
 .goal-title,
 .status-title {
   display: block;
@@ -57,6 +64,9 @@
   min-width: 0;
   flex: 1;
   height: 76rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin: 0;
   padding: 0 8rpx;
   border: 1rpx solid var(--border-light);
@@ -65,7 +75,7 @@
   color: var(--color-brand-700);
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-semibold);
-  line-height: 76rpx;
+  line-height: normal;
   white-space: nowrap;
 }
 .goal-option::after,
@@ -96,6 +106,12 @@
   display: inline-block;
   padding: 8rpx 10rpx;
 }
+.home-card button.text-action {
+  width: 100%;
+  min-height: 64rpx;
+  margin: 10rpx 0 0;
+  padding: 12rpx 16rpx;
+}
 .browse-action {
   display: block;
   margin: 10rpx auto 0;
@@ -106,6 +122,9 @@
 .primary-action {
   width: 100%;
   height: 84rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin: 20rpx 0 0;
   padding: 0 24rpx;
   border-radius: var(--radius-full);
@@ -113,7 +132,8 @@
   color: var(--text-inverse);
   font-size: var(--font-size-lg);
   font-weight: var(--font-weight-semibold);
-  line-height: 84rpx;
+  line-height: normal;
+  text-align: center;
 }
 .status-actions {
   display: flex;
