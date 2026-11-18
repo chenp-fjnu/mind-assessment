@@ -4,15 +4,36 @@ const courseProgress = require('../utils/course-progress')
 const { getListRecommendations } = require('../utils/list-recommendations')
 
 describe('course data and progress', () => {
-  test('all pilot course steps resolve to registered content', () => {
+  test('all course steps resolve to registered content', () => {
     const courses = coursesData.getCourseList()
-    expect(courses.map((course) => course.id)).toEqual(['self-intro', 'focus', 'emotion'])
+    expect(courses.map((course) => course.id)).toEqual([
+      'self-intro',
+      'focus',
+      'emotion',
+      'action-start',
+      'relaxation',
+      'communication-practice',
+    ])
     courses.forEach((course) => {
       expect(course.steps.length).toBeGreaterThan(0)
       course.steps.forEach((step) => {
         expect(step.name).toBeTruthy()
         expect(['assess', 'method', 'train', 'reflect']).toContain(step.kind)
       })
+    })
+  })
+
+  test('new goals recommend their required course content in the matching library', () => {
+    const cases = [
+      ['action', 'method', ['woop', 'tinyhabits', 'pomodoro']],
+      ['relax', 'train', ['mindfulness']],
+      ['communication', 'method', ['nvc', 'grow']],
+    ]
+    cases.forEach(([goal, kind, expectedIds]) => {
+      const course = coursesData.getCourseForGoal(goal)
+      const items = course.steps.filter((step) => step.kind === kind)
+      const recommendations = getListRecommendations(kind, items, goal, [], [], 10)
+      expect(recommendations.recommended.map((item) => item.id)).toEqual(expectedIds)
     })
   })
 

@@ -125,7 +125,7 @@ assess（分类/搜索）→ detail（详解/来源/关联/历史）
 ### 3.5 目标与课程路线
 
 - 首页 (`pages/index`) 用本地目标决定课程入口与推荐排序；无历史的新用户看到目标引导，有历史但未选目标的用户看到欢迎回访入口。
-- `pages/course/list` 展示 3 条试点路线，`pages/course/detail` 展示步骤、时长、必做/可选状态及继续入口。当前路线分别覆盖自我探索、专注练习、压力调节。
+- `pages/course/list` 展示 6 条目标路线，`pages/course/detail` 展示步骤、时长、必做/可选状态及继续入口。路线覆盖自我探索、专注练习、压力调节、行动启动、放松练习与沟通表达。
 - `utils/courses-data.js` 从测评/方法/训练注册表解析课程内容；`scripts/check-meta.js` 的 `npm run validate` 检查引用是否有效。
 - `utils/course-progress.js` 管理进度。活动成功保存后才标记对应步骤完成，不将课程开始前的旧记录回填为路线完成；`currentStepId` 指向待办步骤，完成度按必做步骤计算，可选步骤可跳过。课程详情可清除单条路线状态，不删除活动记录。
 - 用户目标、引导状态和路线进度分别保存在 `ma_user_goal`、`ma_onboarding_done`、`ma_course_progress`，均为本地数据，不上传。

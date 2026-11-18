@@ -56,14 +56,16 @@
   font-weight: var(--font-weight-semibold);
 }
 .goal-options {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 12rpx;
   margin-top: 20rpx;
 }
 .goal-option {
   min-width: 0;
-  flex: 1;
-  height: 76rpx;
+  width: 100%;
+  min-height: 76rpx;
+  height: auto;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -76,7 +78,7 @@
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-semibold);
   line-height: normal;
-  white-space: nowrap;
+  white-space: normal;
 }
 .goal-option::after,
 .primary-action::after,

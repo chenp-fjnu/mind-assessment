@@ -154,7 +154,14 @@ describe('首页 index', () => {
     global.wx.setStorageSync = () => {}
     try {
       const ctx = loadPage('pages/index/index.js')
-      ;[['self', 'self-intro'], ['focus', 'focus'], ['emotion', 'emotion']].forEach(([goal, courseId]) => {
+      ;[
+        ['self', 'self-intro'],
+        ['focus', 'focus'],
+        ['emotion', 'emotion'],
+        ['action', 'action-start'],
+        ['relax', 'relaxation'],
+        ['communication', 'communication-practice'],
+      ].forEach(([goal, courseId]) => {
         ctx.chooseGoal({ currentTarget: { dataset: { goal } } })
         expect(nav).toBe('/pages/course/detail?id=' + courseId)
       })
