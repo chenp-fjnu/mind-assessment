@@ -5,6 +5,7 @@
  */
 const { loadPage } = require('./page-helper')
 const { getMetaList } = require('../utils/registry')
+const { fmt } = require('../utils/format')
 
 describe('方法页 methods', () => {
   test('onLoad 列出全部方法并按分类分组', () => {
@@ -383,6 +384,183 @@ describe('结果页 result（交互分支 + 兜底可见）', () => {
     const ctx = loadPage('pages/result/result.js', { id: 'sds' })
     mod.getResultView = orig
     expect(ctx.data.viewError).toBe(true)
+  })
+})
+
+describe('历史页 history（进行中测评时间回归 N3）', () => {
+  let store
+  beforeEach(() => {
+    const now = Date.now()
+    store = {
+      ma_history: [],
+      ma_practices: {},
+      // 新格式进度：答题页写入 updatedAt
+      ma_progress_sds: { answers: [0, 1, null, null, null], current: 2, startedAt: now - 3600000, updatedAt: now - 120000 },
+      // 旧格式进度：既无 updatedAt 也无 startedAt，只有题号 current
+      ma_progress_gad7: { answers: [1, null, null], current: 1 },
+    }
+    global.wx.getStorageSync = (k) => (k in store ? store[k] : undefined)
+    global.wx.getStorageInfoSync = () => ({ keys: Object.keys(store) })
+  })
+  afterEach(() => {
+    global.wx.getStorageSync = () => []
+    global.wx.getStorageInfoSync = undefined
+  })
+
+  test('进行中使用 updatedAt 而非题号 current；旧数据无时间戳显示「进行中」而不是 1970', () => {
+    const ctx = loadPage('pages/history/history.js')
+    const list = ctx.data.inProgressAssess
+    expect(list.length).toBe(2)
+    const sds = list.find((x) => x.id === 'sds')
+    // 时间戳取 updatedAt（不是题号 current=2 这种秒级小值）
+    expect(sds.updated).toBe(store.ma_progress_sds.updatedAt)
+    expect(sds.updatedText).not.toContain('1970')
+    const gad7 = list.find((x) => x.id === 'gad7')
+    // 旧数据无 updatedAt/startedAt => 显示「进行中」，而不是 1970 年
+    expect(gad7.updatedText).toBe('进行中')
+    expect(gad7.updated).toBe(0)
+    // 排序按 updated 降序：有时间戳的在前
+    expect(list[0].id).toBe('sds')
+  })
+})
+
+describe('结果页 result（选中旧记录时间回归 N4）', () => {
+  const OLD_T = 1600000000000 // 2020-09-13
+  const NEW_T = OLD_T + 361 * 86400000 // 361 天后
+  const hist = [
+    { id: 'sds', rid: 'r1', summary: '50', time: OLD_T, answers: new Array(20).fill(0) },
+    { id: 'sds', rid: 'r2', summary: '55', time: NEW_T, answers: new Array(20).fill(0) },
+  ]
+  let fakeApp
+  beforeEach(() => {
+    fakeApp = { globalData: {} }
+    global.getApp = () => fakeApp
+    global.wx.getStorageSync = (k) => (k === 'ma_history' ? hist : undefined)
+  })
+  afterEach(() => {
+    global.getApp = () => ({ globalData: { lastResult: null, history: [] } })
+    global.wx.getStorageSync = () => []
+  })
+
+  test('最新记录：测评时间/重测间隔取最新一条（原行为不变）', () => {
+    fakeApp.globalData.lastResult = { id: 'sds', answers: hist[1].answers, time: NEW_T, rid: 'r2' }
+    const ctx = loadPage('pages/result/result.js', { id: 'sds' })
+    expect(ctx.data.testedTime).toBe(fmt(NEW_T))
+    expect(ctx.data.retestGap).toBe('361 天前')
+    expect(ctx.data.retakeHint).toBe('距上次测评 361 天')
+  })
+
+  test('从历史打开旧记录：按所选记录的时间计算，而不是最新一条', () => {
+    fakeApp.globalData.lastResult = { id: 'sds', answers: hist[0].answers, time: OLD_T, rid: 'r1' }
+    const ctx = loadPage('pages/result/result.js', { id: 'sds' })
+    expect(ctx.data.testedTime).toBe(fmt(OLD_T))
+    expect(ctx.data.testedTime).not.toBe(fmt(NEW_T))
+    // 所选记录是最早一条：无更早记录 => 无重测间隔、提示首次测评
+    expect(ctx.data.retestGap).toBe('')
+    expect(ctx.data.retakeHint).toBe('首次测评')
+  })
+
+  test('_computeTestTimes 选中最早记录 => 首次测评；不传 selectedTime => 回退最新一条', () => {
+    const ctx = loadPage('pages/result/result.js', { id: 'sds' })
+    const first = ctx._computeTestTimes(hist, 'sds', OLD_T)
+    expect(first.testedTime).toBe(fmt(OLD_T))
+    expect(first.retakeHint).toBe('首次测评')
+    const latest = ctx._computeTestTimes(hist, 'sds')
+    expect(latest.testedTime).toBe(fmt(NEW_T))
+  })
+})
+
+describe('测评页 test（doSubmit 稳健性回归 N2/N8）', () => {
+  const q = {
+    select: () => q,
+    fields: () => q,
+    exec: (cb) => {
+      cb([{ node: { getContext: () => global.__mockCtx, width: 200, height: 200 }, width: 200, height: 200 }])
+    },
+  }
+  beforeEach(() => {
+    global.wx.createSelectorQuery = () => q
+    global.wx.getStorageSync = (k) => (k === 'ma_history' ? [] : undefined)
+    global.wx.showModal = (o) => o && o.success && o.success({ confirm: true })
+  })
+  afterEach(() => {
+    global.wx.createSelectorQuery = undefined
+    global.wx.getStorageSync = () => []
+    global.wx.showModal = () => {}
+    global.wx.setStorageSync = () => {}
+    global.wx.removeStorageSync = () => {}
+    global.wx.reLaunch = () => {}
+  })
+
+  test('N8 评分异常 => 不删答题进度、不 reLaunch，提示交卷失败且可重试', () => {
+    const removed = []
+    const relaunched = []
+    let failModal = 0
+    const progressWrites = []
+    global.wx.removeStorageSync = (k) => removed.push(k)
+    global.wx.reLaunch = (o) => relaunched.push(o)
+    global.wx.setStorageSync = (k, v) => {
+      if (k === 'ma_progress_sds') progressWrites.push(v)
+    }
+    global.wx.showModal = (o) => {
+      if (o && o.title === '交卷失败') failModal++
+    }
+    const ctx = loadPage('pages/test/test.js', { id: 'sds' })
+    ctx.data.answers = ctx.data.questions.map(() => 0)
+    const removedBefore = removed.length // onLoad 恢复流程本身可能已删进度，只关注 doSubmit 是否新增删除
+    const orig = ctx.mod.computeResult
+    ctx.mod.computeResult = () => {
+      throw new Error('boom')
+    }
+    ctx.doSubmit()
+    ctx.mod.computeResult = orig
+    expect(failModal).toBe(1)
+    expect(relaunched.length).toBe(0) // 未跳转结果页
+    // 评分异常时不得删除答题进度（修复前：先删进度后算分，异常后进度丢失、无法恢复）
+    expect(removed.length).toBe(removedBefore)
+    // 进度仍可写回（_finished 未置位，onHide 兜底保存依然有效）
+    ctx.saveProgressForce()
+    expect(progressWrites.length).toBeGreaterThan(0)
+    expect(progressWrites[0].answers.length).toBe(ctx.data.questions.length)
+    // 评分恢复后可重新交卷
+    ctx.doSubmit()
+    expect(relaunched.length).toBe(1)
+    expect(removed).toContain('ma_progress_sds')
+  })
+
+  test('N2 存储配额不足 => 逐级丢弃最旧记录直至写入成功，当前记录不丢失', () => {
+    const old = []
+    for (let i = 0; i < 30; i++) old.push({ rid: 'old_' + i, id: 'sds', time: i, answers: [] })
+    global.wx.getStorageSync = (k) => (k === 'ma_history' ? old : undefined)
+    const writes = []
+    let attempts = 0
+    global.wx.setStorageSync = (k, v) => {
+      if (k !== 'ma_history') return
+      attempts++
+      if (attempts === 1) throw new Error('quota exceeded') // 首次写入模拟超配额
+      writes.push(v)
+    }
+    const relaunched = []
+    global.wx.reLaunch = (o) => relaunched.push(o)
+    let toast = ''
+    global.wx.showToast = (o) => {
+      toast = o.title
+    }
+    const ctx = loadPage('pages/test/test.js', { id: 'sds' })
+    ctx.data.answers = ctx.data.questions.map(() => 0)
+    // 修复前：`const trimmed` 重新赋值直接抛 TypeError，交卷中断
+    expect(() => ctx.doSubmit()).not.toThrow()
+    // 首次超配额失败后，丢弃最旧记录重试成功（记录数组最新在前，最旧在尾部）
+    expect(attempts).toBe(2)
+    expect(writes.length).toBe(1)
+    expect(writes[0].length).toBe(29) // 30 旧 + 1 新，先截到 30；首次写入失败再丢 1 条 => 29
+    expect(writes[0][0].id).toBe('sds') // 当前新记录保留在最前
+    const rids = writes[0].map((r) => r.rid)
+    expect(rids).toContain('old_0') // 较新的旧记录仍在
+    expect(rids).not.toContain('old_28') // 最旧两条（LIMIT 截断 + 配额兜底）被丢弃
+    expect(rids).not.toContain('old_29')
+    expect(toast).toContain('仅保留最近 30 条记录')
+    expect(relaunched.length).toBe(1)
   })
 })
 
