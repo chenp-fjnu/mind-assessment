@@ -92,8 +92,8 @@ assess（分类/搜索）→ detail（详解/来源/关联/历史）
 2. `computeResult` 与 `getResultView` 均有 try/catch 兜底，异常时显示「结果解析失败」，避免白屏。
 3. 统一视图模型 `{ groups, dims, subtests, interpretations, showBipolar }` 直接渲染。
 4. `computeTrend(allHist, id)` 计算同量表趋势；数值型画折线，类型型展示历史 chips。
-5. `onReady` 统一绘制趋势图与分享卡片（避免重复绘制）。
-6. `saveCard` 用 canvas 生成长图并保存相册；分享使用同一张卡片。
+5. `onReady` 统一绘制趋势图与结果卡片（避免重复绘制）。
+6. `saveCard` 用 canvas 生成长图并保存相册；转发链接只指向公开测评介绍，不自动附带个人结果。
 7. 关联推荐：`relations.relatedMethods/relatedGames`。
 
 ### 3.2 方法闭环
@@ -130,6 +130,12 @@ assess（分类/搜索）→ detail（详解/来源/关联/历史）
 - `utils/course-progress.js` 管理进度。活动成功保存后才标记对应步骤完成，不将课程开始前的旧记录回填为路线完成；`currentStepId` 指向待办步骤，完成度按必做步骤计算，可选步骤可跳过。课程详情可清除单条路线状态，不删除活动记录。
 - 用户目标、引导状态和路线进度分别保存在 `ma_user_goal`、`ma_onboarding_done`、`ma_course_progress`，均为本地数据，不上传。
 - 测评通过答题 URL 将 `courseId/stepId` 传给结果页（答题后使用 `wx.reLaunch`）；结果、方法练习和训练保存成功后更新课程进度。
+
+### 3.6 分享与转发
+
+- `app.json` 注册的每个页面都实现 `onShareAppMessage` 和 `onShareTimeline`；通过微信右上角菜单分享，测评详情、方法详情、结果和课程详情另提供明确的分享按钮。
+- 列表分享回到对应内容库，测评/方法/训练/课程详情只携带公开内容 id，不携带答题、成绩或课程进度。
+- 结果页分享测评介绍而非个人结果；结果卡片需由用户主动保存。历史、档案和个人页分享回首页，不暴露本机记录或个人资料；朋友圈入口也会回到首页。
 
 ---
 
@@ -266,7 +272,7 @@ module.exports = {
 | --- | --- | --- |
 | 主题 | `theme-store.js` + `app.wxss` CSS 变量 | 跟随系统/浅色/深色；`theme-wrapper` 根节点；同步原生 tabBar/导航栏 |
 | 隐私 | `privacy.js` + `app.json __usePrivacyCheck__` | 启动注册全局弹窗；相册/剪贴板用 `withPrivacy` 包裹；关于页打开官方协议 |
-| 分享 | `share.js` / `canvas.js` | 详情/方法生成内容卡；结果生成完整长图；`onShareTimeline` 同步 |
+| 分享 | `share.js` / `canvas.js` + 页面分享钩子 | 全部页面支持好友转发与朋友圈；详情/方法可生成内容卡；结果卡片需主动保存，分享链接不包含个人分数 |
 | 无障碍 | 页面 `role`/`aria-label` + `figure.js` 纹理/徽标 | `test/a11y.test.js` 静态断言交互元素标签 |
 | 设备 | `device.js` | DPR、基础库版本、chooseAvatar 能力检测 |
 | 音效 | `sound.js` | 训练游戏点击/错误反馈，跟随系统音量 |

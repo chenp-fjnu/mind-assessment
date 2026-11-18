@@ -170,6 +170,8 @@
 
     <view class="bottom-bar">
       <button class="btn save" bindtap="saveCard" aria-label="保存结果卡片到相册">保存结果卡片</button>
+      <button class="btn share" open-type="share" aria-label="分享测评入口，不包含个人得分">分享测评入口</button>
+      <text class="share-note">分享链接只包含测评介绍，不包含你的分数；如需分享结果卡片，请先保存到相册。</text>
       <button wx:if="{{courseId}}" class="btn ghost" bindtap="goCourse" aria-label="返回课程继续下一步">返回课程继续下一步</button>
       <view class="btn-row">
         <button class="btn ghost" bindtap="retest" aria-label="重新测评">重新测评</button>

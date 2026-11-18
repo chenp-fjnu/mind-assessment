@@ -201,25 +201,28 @@ Page({
   onShareAppMessage() {
     if (this.data.mode === 'hub') {
       return {
-        title: '互动练习 - 选一个方法，马上开始填写练习',
+        title: '挑一个心智方法，开始互动练习 - 心智探索局',
         path: '/pages/methods/practice',
       }
     }
     if (this.data.method) {
       return {
-        title: '互动练习：「' + this.data.method.name + '」- 来一起练习吧',
-        path: '/pages/methods/practice?id=' + this._id,
+        title: '一起练习「' + this.data.method.name + '」- 心智探索局',
+        path: '/pages/methods/practice?id=' + encodeURIComponent(this._id),
       }
     }
-    return {}
+    return { title: '开始一次心智方法练习 - 心智探索局', path: '/pages/methods/practice' }
   },
   onShareTimeline() {
     if (this.data.mode === 'hub') {
-      return { title: '互动练习 - 选一个方法，马上开始填写练习' }
+      return { title: '挑一个心智方法，开始互动练习 - 心智探索局' }
     }
     if (this.data.method) {
-      return { title: '互动练习：「' + this.data.method.name + '」- 来一起练习吧' }
+      return {
+        title: '一起练习「' + this.data.method.name + '」- 心智探索局',
+        query: 'id=' + encodeURIComponent(this._id),
+      }
     }
-    return {}
+    return { title: '开始一次心智方法练习 - 心智探索局' }
   },
 })

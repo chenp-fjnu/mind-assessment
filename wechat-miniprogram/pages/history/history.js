@@ -106,6 +106,10 @@ Page({
     inProgressAssess: [],
   },
   onLoad(query) {
+    if (query && query.share === 'home') {
+      wx.reLaunch({ url: '/pages/index/index' })
+      return
+    }
     useTheme(this)
     if (query && ['assess', 'method', 'train'].indexOf(query.tab) >= 0) {
       this.setData({ tab: query.tab })
@@ -304,13 +308,14 @@ clearAll() {
   },
   onShareAppMessage() {
     return {
-      title: '我的心智探索记录 - 测评、方法练习与训练成果',
-      path: '/pages/history/history',
+      title: '开始记录测评、方法练习与训练 - 心智探索局',
+      path: '/pages/index/index',
     }
   },
   onShareTimeline() {
     return {
-      title: '我的心智探索记录 - 测评、方法练习与训练成果',
+      title: '开始记录测评、方法练习与训练 - 心智探索局',
+      query: 'share=home',
     }
   },
 })

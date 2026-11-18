@@ -38,7 +38,11 @@ Page({
     canUseChooseAvatar: false,
     showPrivacy: false,
   },
-  onLoad() {
+  onLoad(query) {
+    if (query && query.share === 'home') {
+      wx.reLaunch({ url: '/pages/index/index' })
+      return
+    }
     useTheme(this)
     this.checkSDKVersion()
     this.refresh()
@@ -98,6 +102,18 @@ Page({
     this._privacyResolve = null
     this.setData({ showPrivacy: false })
     if (resolve) resolve({ event: 'disagree' })
+  },
+  onShareAppMessage() {
+    return {
+      title: '用心智探索局记录自己的成长 - 测评、方法与训练',
+      path: '/pages/index/index',
+    }
+  },
+  onShareTimeline() {
+    return {
+      title: '用心智探索局记录自己的成长 - 测评、方法与训练',
+      query: 'share=home',
+    }
   },
   onChooseAvatar(e) {
     console.log('[Profile] chooseAvatar triggered', e)

@@ -46,13 +46,13 @@ Page({
   },
   onShareAppMessage() {
     return {
-      title: '关于心智探索局 - 数据来源、隐私与致谢',
+      title: '了解心智探索局｜内容与隐私说明',
       path: '/pages/about/about',
     }
   },
   onShareTimeline() {
     return {
-      title: '关于心智探索局 - 数据来源、隐私与致谢',
+      title: '了解心智探索局｜内容与隐私说明',
     }
   },
 })

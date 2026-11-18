@@ -121,15 +121,22 @@ Page({
     }, (p) => { this._shareImage = p })
   },
   onShareAppMessage() {
+    const meta = this.data.meta
+    if (!meta || !meta.name) {
+      return { title: '浏览测评内容 - 心智探索局', path: '/pages/assess/assess' }
+    }
     return {
-      title: this.data.meta.name + ' - 心智探索局',
-      path: '/pages/detail/detail?id=' + this.data.id,
+      title: '了解「' + meta.name + '」测评 - 心智探索局',
+      path: '/pages/detail/detail?id=' + encodeURIComponent(this.data.id),
       imageUrl: this._shareImage || '',
     }
   },
   onShareTimeline() {
+    const meta = this.data.meta
+    if (!meta || !meta.name) return { title: '浏览测评内容 - 心智探索局' }
     return {
-      title: this.data.meta.name + ' - 心智探索局',
+      title: '了解「' + meta.name + '」测评 - 心智探索局',
+      query: 'id=' + encodeURIComponent(this.data.id),
       imageUrl: this._shareImage || '',
     }
   },

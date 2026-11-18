@@ -148,13 +148,13 @@ Page({
   },
   onShareAppMessage() {
     return {
-      title: '脑力训练营 - 科学训练注意力、记忆力与反应力',
+      title: '脑力训练｜试试注意力、记忆与反应小游戏',
       path: '/pages/train/train',
     }
   },
   onShareTimeline() {
     return {
-      title: '脑力训练营 - 科学训练注意力、记忆力与反应力',
+      title: '脑力训练｜试试注意力、记忆与反应小游戏',
     }
   },
 })

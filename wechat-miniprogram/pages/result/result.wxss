@@ -314,6 +314,19 @@
   background: var(--color-brand-700);
   color: var(--text-inverse);
 }
+.btn.share {
+  margin-top: 16rpx;
+  border: 1rpx solid var(--border-light);
+  background: var(--bg-tertiary);
+  color: var(--text-brand);
+}
+.share-note {
+  margin-top: 8rpx;
+  color: var(--text-tertiary);
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-normal);
+  text-align: center;
+}
 .btn.ghost {
   background: var(--bg-tertiary);
   color: var(--text-secondary);

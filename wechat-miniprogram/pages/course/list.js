@@ -45,6 +45,17 @@ Page({
     if (!coursesData.getCourse(id)) return
     wx.navigateTo({ url: '/pages/course/detail?id=' + id })
   },
+  onShareAppMessage() {
+    return {
+      title: '找到适合自己的课程路线 - 心智探索局',
+      path: '/pages/course/list',
+    }
+  },
+  onShareTimeline() {
+    return {
+      title: '找到适合自己的课程路线 - 心智探索局',
+    }
+  },
   goBack() {
     wx.navigateBack({ delta: 1, fail: () => wx.switchTab({ url: '/pages/index/index' }) })
   },

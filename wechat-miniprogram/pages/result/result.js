@@ -36,6 +36,14 @@ Page({
   },
 
   onLoad(query) {
+    if (query && query.share === 'assessment' && query.id) {
+      wx.redirectTo({ url: '/pages/detail/detail?id=' + encodeURIComponent(query.id) })
+      return
+    }
+    if (query && query.share === 'home') {
+      wx.reLaunch({ url: '/pages/index/index' })
+      return
+    }
     useTheme(this)
     this.setData({ courseId: (query && query.courseId) || '' })
     const app = getApp()
@@ -406,16 +414,23 @@ Page({
   },
 
   onShareAppMessage() {
+    const meta = this.data.meta
+    if (!meta || !meta.id) {
+      return { title: '开始一次自我探索 - 心智探索局', path: '/pages/index/index' }
+    }
     return {
-      title: this.data.meta.name + '测评结果 - 心智探索局',
-      path: '/pages/index/index',
-      imageUrl: this._shareImage || '',
+      title: '来了解「' + meta.name + '」测评 - 心智探索局',
+      path: '/pages/detail/detail?id=' + encodeURIComponent(meta.id),
     }
   },
   onShareTimeline() {
+    const meta = this.data.meta
+    if (!meta || !meta.id) {
+      return { title: '开始一次自我探索 - 心智探索局', query: 'share=home' }
+    }
     return {
-      title: this.data.meta.name + '测评结果 - 心智探索局',
-      imageUrl: this._shareImage || '',
+      title: '来了解「' + meta.name + '」测评 - 心智探索局',
+      query: 'id=' + encodeURIComponent(meta.id) + '&share=assessment',
     }
   },
 })

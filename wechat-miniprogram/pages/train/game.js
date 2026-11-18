@@ -242,17 +242,20 @@ Page({
   preventScroll() {},
   onShareAppMessage() {
     const { meta } = this.data
-    if (!meta) return {}
+    if (!meta) {
+      return { title: '体验脑力训练 - 心智探索局', path: '/pages/train/train' }
+    }
     return {
-      title: '来挑战『' + meta.name + '』，锻炼' + (meta.dimLabel || '脑力') + '！',
-      path: '/pages/train/game?gameId=' + this.data.gameId,
+      title: '来体验「' + meta.name + '」训练 - 心智探索局',
+      path: '/pages/train/game?gameId=' + encodeURIComponent(this.data.gameId),
     }
   },
   onShareTimeline() {
     const { meta } = this.data
-    if (!meta) return {}
+    if (!meta) return { title: '体验脑力训练 - 心智探索局' }
     return {
-      title: '来挑战『' + meta.name + '』，锻炼' + (meta.dimLabel || '脑力') + '！',
+      title: '来体验「' + meta.name + '」训练 - 心智探索局',
+      query: 'gameId=' + encodeURIComponent(this.data.gameId),
     }
   },
 })

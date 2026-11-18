@@ -132,18 +132,19 @@ Page({
   },
   onShareAppMessage() {
     const m = this.data.method
-    if (!m) return {}
+    if (!m) return { title: '浏览心智方法 - 心智探索局', path: '/pages/methods/methods' }
     return {
-      title: '推荐一个方法：' + m.name,
-      path: '/pages/methods/detail?id=' + this._id,
+      title: '分享一个实用方法：「' + m.name + '」',
+      path: '/pages/methods/detail?id=' + encodeURIComponent(this._id),
       imageUrl: this._shareImage || '',
     }
   },
   onShareTimeline() {
     const m = this.data.method
-    if (!m) return {}
+    if (!m) return { title: '浏览心智方法 - 心智探索局' }
     return {
-      title: '推荐一个方法：' + m.name,
+      title: '分享一个实用方法：「' + m.name + '」',
+      query: 'id=' + encodeURIComponent(this._id),
       imageUrl: this._shareImage || '',
     }
   },

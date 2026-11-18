@@ -136,13 +136,13 @@ Page({
   },
   onShareAppMessage() {
     return {
-      title: '心理测评库 - 专业量表助你自我探索',
+      title: '测评库｜从心理测评开始自我探索 - 心智探索局',
       path: '/pages/assess/assess',
     }
   },
   onShareTimeline() {
     return {
-      title: '心理测评库 - 专业量表助你自我探索',
+      title: '测评库｜从心理测评开始自我探索 - 心智探索局',
     }
   },
 })

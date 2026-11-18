@@ -833,14 +833,21 @@ Page({
   },
 
   onShareAppMessage() {
+    const meta = this.data.meta
+    if (!meta || !meta.id) {
+      return { title: '开始一次自我探索 - 心智探索局', path: '/pages/index/index' }
+    }
     return {
-      title: this.data.meta.name + ' - 心智探索局',
-      path: '/pages/detail/detail?id=' + this.data.meta.id,
+      title: '来体验「' + meta.name + '」测评 - 心智探索局',
+      path: '/pages/detail/detail?id=' + encodeURIComponent(meta.id),
     }
   },
   onShareTimeline() {
+    const meta = this.data.meta
+    if (!meta || !meta.id) return { title: '开始一次自我探索 - 心智探索局' }
     return {
-      title: this.data.meta.name + ' - 心智探索局',
+      title: '来体验「' + meta.name + '」测评 - 心智探索局',
+      query: 'id=' + encodeURIComponent(meta.id),
     }
   },
 })

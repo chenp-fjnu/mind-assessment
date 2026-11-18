@@ -281,7 +281,7 @@ module.exports = {
 - **历史趋势对比**：同量表多次测评的数值折线 / 类型记录。
 - **深色模式**：全站 CSS 变量 + `@media (prefers-color-scheme: dark)`。
 - **无障碍**：交互元素 `role="button"` + `aria-label`，图形 canvas `role="img"`。
-- **分享**：详情/答题/结果页均可转发。
+- **分享**：全部页面均支持微信好友转发与朋友圈分享；内容详情分享对应内容，结果页只分享测评入口、不带个人分数，历史/档案页分享回首页。
 
 ---
 
@@ -294,7 +294,7 @@ module.exports = {
 | 工具单测 | Jest `utils.test.js` / `scale-scoring.test.js` | jest | `color`/`scoring`/`trend`/`result-view`/`registry`/`figure`/`train-store`/`methods-data`、反向计分与通用量表评分 |
 | 游戏单测 | Jest `games.test.js` | jest | 36 个游戏的生成/计分/边界/单调性 |
 | 页面单测 | Jest `pages.test.js` / `index.page.test.js` / `train.page.test.js` / `course.page.test.js` / `user.test.js` | jest | 详情、结果、首页、课程、答题、训练列表/播放器等页面 `onLoad` 与关键交互 |
-| 专项单测 | Jest `a11y` / `cue` / `privacy` / `share` / `sound` | jest | 无障碍标签、提示音、隐私授权、分享卡、音效 |
+| 专项单测 | Jest `a11y` / `cue` / `privacy` / `share` / `page-share` / `sound` | jest | 无障碍标签、提示音、隐私授权、分享卡及全部页面分享入口、音效 |
 | 全量 | `npm run test:all` | jest | `validate` + 冒烟 + Jest 覆盖率（CI 同款） |
 
 当前基线：**14 个 Jest 套件 / 308 项测试**；覆盖率门槛（`jest.config.js`）为语句 60%、分支 45%、函数/行 65%，实际 **66.43% 语句 / 47.82% 分支 / 71.79% 函数 / 67.97% 行**。

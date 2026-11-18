@@ -124,13 +124,13 @@ Page({
   },
   onShareAppMessage() {
     return {
-      title: '精选方法库 - 实用心智工具与思维模型',
+      title: '心智方法库｜找到一个可以马上尝试的方法',
       path: '/pages/methods/methods',
     }
   },
   onShareTimeline() {
     return {
-      title: '精选方法库 - 实用心智工具与思维模型',
+      title: '心智方法库｜找到一个可以马上尝试的方法',
     }
   },
 })

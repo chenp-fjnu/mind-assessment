@@ -99,6 +99,7 @@
       <button class="secondary-button" bindtap="goList" aria-label="返回课程列表">其他课程</button>
       <button class="text-button" bindtap="goHome" aria-label="返回首页">返回首页</button>
     </view>
+    <button class="secondary-button share-course-button" open-type="share" aria-label="分享这条课程路线">分享这条课程路线</button>
     <button wx:if="{{started}}" class="reset-button" bindtap="resetProgress" aria-label="清除这条课程的进度">清除课程进度</button>
     <view class="footer">路线进度与课程回顾仅保存在本机；内容用于自我探索与练习，不构成医学诊断或治疗建议。</view>
   </view>

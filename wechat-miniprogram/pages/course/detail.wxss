@@ -348,6 +348,10 @@
 .bottom-actions button {
   flex: 1;
 }
+.share-course-button {
+  width: calc(100% - 64rpx);
+  margin: 16rpx 32rpx 0;
+}
 .text-button {
   border: 1rpx solid var(--border-focus);
   background: var(--color-brand-50);

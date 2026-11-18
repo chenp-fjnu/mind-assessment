@@ -112,4 +112,22 @@ Page({
   goHome() {
     wx.switchTab({ url: '/pages/index/index' })
   },
+  onShareAppMessage() {
+    const course = this.data.course
+    if (!course) {
+      return { title: '浏览课程路线 - 心智探索局', path: '/pages/course/list' }
+    }
+    return {
+      title: '试试「' + course.name + '」路线 - 心智探索局',
+      path: '/pages/course/detail?id=' + encodeURIComponent(course.id),
+    }
+  },
+  onShareTimeline() {
+    const course = this.data.course
+    if (!course) return { title: '浏览课程路线 - 心智探索局' }
+    return {
+      title: '试试「' + course.name + '」路线 - 心智探索局',
+      query: 'id=' + encodeURIComponent(course.id),
+    }
+  },
 })

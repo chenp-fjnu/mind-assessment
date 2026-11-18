@@ -22,7 +22,11 @@ Page({
     themeMode: THEME_MODES.AUTO,
     currentTheme: THEME_MODES.LIGHT,
   },
-  onLoad() {
+  onLoad(query) {
+    if (query && query.share === 'home') {
+      wx.reLaunch({ url: '/pages/index/index' })
+      return
+    }
     useTheme(this)
   },
   onShow() {
@@ -68,13 +72,14 @@ Page({
 
   onShareAppMessage() {
     return {
-      title: '我的心智探索档案 - 记录成长轨迹',
-      path: '/pages/mine/mine',
+      title: '用心智探索局记录自己的成长 - 测评、方法与训练',
+      path: '/pages/index/index',
     }
   },
   onShareTimeline() {
     return {
-      title: '我的心智探索档案 - 记录成长轨迹',
+      title: '用心智探索局记录自己的成长 - 测评、方法与训练',
+      query: 'share=home',
     }
   },
 })
