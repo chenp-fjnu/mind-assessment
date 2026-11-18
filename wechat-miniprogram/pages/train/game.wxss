@@ -116,8 +116,6 @@
   width: 94vw;
   max-width: 760rpx;
   min-height: 680rpx;
-  max-height: 88vh;
-  overflow-y: auto;
   margin: 24rpx auto 0;
   padding: 32rpx 24rpx calc(env(safe-area-inset-bottom) + 40rpx);
   box-sizing: border-box;
@@ -138,10 +136,11 @@
   z-index: 1000;
   border-radius: 0;
   padding: calc(env(safe-area-inset-top) + 24rpx) 0 calc(env(safe-area-inset-bottom) + 40rpx);
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   background: var(--card-bg);
 }
 /* 固定在顶部的操作按钮：全屏/普通模式都可见，z-index 最高 */

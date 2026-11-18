@@ -8,7 +8,7 @@
       <text class="hero-tag">{{meta.dimLabel}} · {{bestText}}</text>
     </view>
 
-    <view wx:if="{{!finished}}" class="board card {{fullscreen ? 'fullscreen' : ''}}" catchtouchmove="preventScroll">
+    <view wx:if="{{!finished}}" class="board card {{fullscreen ? 'fullscreen' : ''}}">
       <!-- 难度选择在游戏区域顶部，全屏时也可切换 -->
       <view class="levels-in-board">
         <text class="lv-title">难度</text>
@@ -32,7 +32,7 @@
       <include src="games-block.wxml" />
     </view>
 
-    <view wx:if="{{finished && result}}" class="board card {{fullscreen ? 'fullscreen' : ''}}" catchtouchmove="preventScroll">
+    <view wx:if="{{finished && result}}" class="board card {{fullscreen ? 'fullscreen' : ''}}">
       <!-- 难度选择在游戏区域顶部，全屏时也可切换 -->
       <view class="levels-in-board">
         <text class="lv-title">难度</text>
