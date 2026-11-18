@@ -206,6 +206,15 @@ describe('N-Back', () => {
     expect(g.isMatch(seq, 2, 3)).toBe(false) // idx < n
     expect(g.isMatch(seq, 5, 3)).toBe(true) // seq[5] === seq[2]
   })
+  test('入门难度默认仅视觉，降低新手上手门槛（双重模式仍可在游戏内切换）', () => {
+    expect(g.levels[0].mode).toBe('visual')
+    // 更高难度保持经典双重模式作为进阶挑战
+    expect(g.levels[1].mode).toBe('dual')
+    const seed = g.generate(g.levels[0])
+    expect(seed.mode).toBe('visual')
+    // 三种模式均保留，用户可自由切换
+    expect(g.modes.map((m) => m.value)).toEqual(['dual', 'visual', 'auditory'])
+  })
 })
 
 describe('Flanker', () => {

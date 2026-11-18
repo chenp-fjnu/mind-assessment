@@ -27,6 +27,8 @@ describe('N-Back 游戏流程', () => {
 
   test('双重模式需要分别作答，且反馈会展示后再进入下一轮', () => {
     const game = createGame()
+    // 入门难度默认 visual，本用例专门验证 dual 模式，需显式切换
+    game.onModeChange({ currentTarget: { dataset: { mode: 'dual' } } })
     game.data.visualSeq = [4, 4].concat(Array(19).fill(2))
     game.data.auditorySeq = [3, 5].concat(Array(19).fill(1))
     game.start()

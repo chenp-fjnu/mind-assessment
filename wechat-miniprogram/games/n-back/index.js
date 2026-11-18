@@ -85,7 +85,7 @@ module.exports = {
   reference: 'Jaeggi et al. (2008) PNAS - Dual N-Back 改善流体智力',
   hot: true,
   levels: [
-    { value: 1, label: 'N=1 入门', n: 1, trials: 20, mode: 'dual', gridSize: 'small' },
+    { value: 1, label: 'N=1 入门', n: 1, trials: 20, mode: 'visual', gridSize: 'small' },
     { value: 2, label: 'N=2 进阶', n: 2, trials: 20, mode: 'dual', gridSize: 'small' },
     { value: 3, label: 'N=3 挑战', n: 3, trials: 20, mode: 'dual', gridSize: 'small' },
     { value: 4, label: 'N=4 大师', n: 4, trials: 20, mode: 'dual', gridSize: 'small' },

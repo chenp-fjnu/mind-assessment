@@ -148,6 +148,51 @@ describe('course data and progress', () => {
       global.wx.setStorageSync = originalSet
     }
   })
+
+  test('markStepDone 标记完成并推进，且吞掉异常不向外抛', () => {
+    const storage = {}
+    const originalGet = global.wx.getStorageSync
+    const originalSet = global.wx.setStorageSync
+    global.wx.getStorageSync = (key) => storage[key]
+    global.wx.setStorageSync = (key, value) => { storage[key] = value }
+    try {
+      courseProgress.start('focus')
+      // 正常：标记 schulte 完成并推进到下一步 n-back
+      expect(courseProgress.markStepDone('focus', 'schulte')).not.toBeNull()
+      expect(courseProgress.read('focus').completedStepIds).toContain('schulte')
+      expect(courseProgress.read('focus').currentStepId).toBe('n-back')
+      // 幂等：重复标记不产生重复记录
+      courseProgress.markStepDone('focus', 'schulte')
+      expect(courseProgress.read('focus').completedStepIds.filter((id) => id === 'schulte')).toHaveLength(1)
+    } finally {
+      global.wx.getStorageSync = originalGet
+      global.wx.setStorageSync = originalSet
+    }
+  })
+
+  test('markStepDone 对非课程上下文/未知步骤静默返回，不抛错', () => {
+    const storage = {}
+    const originalGet = global.wx.getStorageSync
+    const originalSet = global.wx.setStorageSync
+    global.wx.getStorageSync = (key) => storage[key]
+    global.wx.setStorageSync = (key, value) => { storage[key] = value }
+    try {
+      // 页面在非课程入口调用时传空 id（_courseId 为 ''）
+      expect(courseProgress.markStepDone('', 'schulte')).toBeNull()
+      expect(courseProgress.markStepDone('focus', '')).toBeNull()
+      // 步骤不属于该课程
+      expect(courseProgress.markStepDone('focus', 'gses')).toBeNull()
+      // 未知课程
+      expect(courseProgress.markStepDone('no-such-course', 'schulte')).toBeNull()
+      // 写库异常被吞掉，调用方页面（交卷/成绩/打卡）不被中断
+      global.wx.setStorageSync = () => { throw new Error('quota exceeded') }
+      expect(() => courseProgress.markStepDone('focus', 'schulte')).not.toThrow()
+      expect(courseProgress.read('focus').completedStepIds).not.toContain('schulte')
+    } finally {
+      global.wx.getStorageSync = originalGet
+      global.wx.setStorageSync = originalSet
+    }
+  })
 })
 
 describe('course pages', () => {

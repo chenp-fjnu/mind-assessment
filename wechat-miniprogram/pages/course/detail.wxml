@@ -44,7 +44,7 @@
 
     <view class="section-heading">
       <text class="section-title">路线步骤</text>
-      <text class="section-sub">可以按顺序进行，也可以自由选择。</text>
+      <text class="section-sub">可以按顺序进行，也可以自由选择；标「可选」的步骤跳过不影响路线完成。</text>
     </view>
     <view class="timeline">
       <view wx:for="{{steps}}" wx:key="id" wx:for-item="step" wx:for-index="stepIndex" class="timeline-item">

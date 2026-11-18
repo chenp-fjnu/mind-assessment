@@ -151,9 +151,13 @@ Page({
     })
     if (list.length > 50) list.length = 50
     stored[id] = list
-    wx.setStorageSync(STORE_KEY, stored)
-    if (this._courseId && this._courseStepId) {
-      courseProgress.completeStep(this._courseId, this._courseStepId)
+    try {
+      wx.setStorageSync(STORE_KEY, stored)
+    } catch (error) {
+      wx.showToast({ title: '打卡记录未能保存', icon: 'none' })
+    }
+    // 步骤完成与打卡落盘解耦：提交即标记完成，避免存储异常卡住路线
+    if (courseProgress.markStepDone(this._courseId, this._courseStepId)) {
       this.setData({ courseSaved: true })
     }
     const practices = list.map((entry) => this.decorate(entry, schema))

@@ -149,10 +149,9 @@ Page({
     } catch (error) {
       wx.showToast({ title: '训练成绩未能保存', icon: 'none' })
     }
+    // 步骤完成与成绩落盘解耦：本局结束即标记完成，避免成绩写入异常卡住路线
+    courseProgress.markStepDone(this._courseId, this._courseStepId)
     if (saved) {
-      if (this._courseId && this._courseStepId) {
-        courseProgress.completeStep(this._courseId, this._courseStepId)
-      }
       trainStore.setLast(this.data.gameId, level, {
         levelLabel: this.data.levelLabel,
         name: g.name,
@@ -181,6 +180,10 @@ Page({
       const ag = schulte.ageGroupFromBirthday(u && u.birthday) || '18+'
       const cmp = schulte.compare(this.data.level, r.time, ag)
       if (cmp) this.setData({ ['result.refComparison']: cmp })
+      // 未填生日时按 18+ 常模对比，提示去「我的」补生日可得更准的年龄组对照
+      if (!u || !u.birthday) {
+        this.setData({ 'result.refComparisonNote': '未填写生日，暂按 18+ 组对比；在「我的」里补全生日可获得更准的年龄组对照。' })
+      }
     }
     this.refreshTrend(this.data.gameId, g, level)
   },

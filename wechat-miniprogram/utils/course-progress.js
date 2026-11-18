@@ -77,6 +77,21 @@ function completeStep(courseId, stepId) {
   return write(courseId, progress)
 }
 
+function markStepDone(courseId, stepId) {
+  // 统一守卫：步骤完成判定与「本地存储是否保存成功」解耦——动作已做完即应标记完成，
+  // 不因某页 setStorageSync 抛错而漏标记。校验失败/写库异常一律吞掉并返回 null，
+  // 绝不让调用方页面因进度记账而中断主流程（交卷/成绩/打卡）。
+  if (!courseId || !stepId) return null
+  const course = getCourse(courseId)
+  if (!course || !course.steps.some((step) => step.id === stepId)) return null
+  try {
+    return completeStep(courseId, stepId)
+  } catch (error) {
+    console.error('[course] 标记步骤完成失败:', courseId + '/' + stepId, error)
+    return null
+  }
+}
+
 function saveReflection(courseId, stepId, value) {
   const course = getCourse(courseId)
   const step = course && course.steps.find((item) => item.id === stepId && item.kind === 'reflect')
@@ -141,4 +156,4 @@ function getCourseState(course) {
   }
 }
 
-module.exports = { read, hasStep, start, setCurrentStep, completeStep, saveReflection, skipStep, reset, getCourseState }
+module.exports = { read, hasStep, start, setCurrentStep, completeStep, markStepDone, saveReflection, skipStep, reset, getCourseState }

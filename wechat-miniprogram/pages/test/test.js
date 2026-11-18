@@ -802,9 +802,9 @@ Page({
     }
     if (!saved || trimmed.indexOf(record) === -1) {
       wx.showToast({ title: '存储空间不足，本次记录未保存', icon: 'none' })
-    } else if (this._courseId && this._courseStepId) {
-      courseProgress.completeStep(this._courseId, this._courseStepId)
     }
+    // 步骤完成与记录落盘解耦：评分成功即视为该步完成，避免存储超配额/写入异常时卡住路线
+    courseProgress.markStepDone(this._courseId, this._courseStepId)
 
     const app = getApp()
     app.globalData.lastResult = {
