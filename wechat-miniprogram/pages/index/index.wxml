@@ -9,12 +9,18 @@
       <text class="goal-title">你现在最想做什么？</text>
       <text class="goal-sub">选一个方向看看短课程，或先浏览全部内容。</text>
       <view class="goal-options">
-        <button class="goal-option" data-goal="self" bindtap="chooseGoal" aria-label="选择想更了解自己">了解自己</button>
-        <button class="goal-option" data-goal="focus" bindtap="chooseGoal" aria-label="选择提升专注">提升专注</button>
-        <button class="goal-option" data-goal="emotion" bindtap="chooseGoal" aria-label="选择调节压力或情绪">调节压力</button>
-        <button class="goal-option" data-goal="action" bindtap="chooseGoal" aria-label="选择减少拖延、开始行动">减少拖延</button>
-        <button class="goal-option" data-goal="relax" bindtap="chooseGoal" aria-label="选择练习放松">练习放松</button>
-        <button class="goal-option" data-goal="communication" bindtap="chooseGoal" aria-label="选择提升沟通">提升沟通</button>
+        <view class="goal-row">
+          <button class="goal-option" data-goal="self" bindtap="chooseGoal" aria-label="选择想更了解自己">了解自己</button>
+          <button class="goal-option" data-goal="focus" bindtap="chooseGoal" aria-label="选择提升专注">提升专注</button>
+        </view>
+        <view class="goal-row">
+          <button class="goal-option" data-goal="emotion" bindtap="chooseGoal" aria-label="选择理清压力、寻找应对">理清压力</button>
+          <button class="goal-option" data-goal="action" bindtap="chooseGoal" aria-label="选择减少拖延、开始行动">减少拖延</button>
+        </view>
+        <view class="goal-row">
+          <button class="goal-option" data-goal="relax" bindtap="chooseGoal" aria-label="选择尝试放松练习">放松练习</button>
+          <button class="goal-option" data-goal="communication" bindtap="chooseGoal" aria-label="选择提升沟通">提升沟通</button>
+        </view>
       </view>
       <button class="text-action browse-action" data-goal="browse" bindtap="chooseGoal" aria-label="先随便看看">先随便看看</button>
       <text wx:if="{{selectedGoal}}" class="text-action browse-action" bindtap="toggleGoalForm" role="button" aria-label="取消更换目标">取消更换</text>

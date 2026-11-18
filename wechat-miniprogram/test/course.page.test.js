@@ -26,6 +26,7 @@ describe('course data and progress', () => {
   test('new goals recommend their required course content in the matching library', () => {
     const cases = [
       ['action', 'method', ['woop', 'tinyhabits', 'pomodoro']],
+      ['emotion', 'method', ['abc']],
       ['relax', 'train', ['mindfulness']],
       ['communication', 'method', ['nvc', 'grow']],
     ]
@@ -35,6 +36,25 @@ describe('course data and progress', () => {
       const recommendations = getListRecommendations(kind, items, goal, [], [], 10)
       expect(recommendations.recommended.map((item) => item.id)).toEqual(expectedIds)
     })
+  })
+
+  test('pressure coping and relaxation routes focus on different practices', () => {
+    const pressure = coursesData.getCourseForGoal('emotion')
+    const relaxation = coursesData.getCourseForGoal('relax')
+    expect(pressure.name).toBe('压力梳理与应对')
+    expect(pressure.steps.map((step) => step.id)).toEqual([
+      'pss',
+      'abc',
+      'eisenhower',
+      'stress-action-plan',
+    ])
+    expect(pressure.steps.filter((step) => !step.optional).map((step) => step.id)).toEqual([
+      'abc',
+      'stress-action-plan',
+    ])
+    expect(relaxation.steps.map((step) => step.id)).toContain('mindful')
+    expect(pressure.steps.map((step) => step.id)).not.toContain('mindful')
+    expect(pressure.steps.some((step) => step.kind === 'train')).toBe(false)
   })
 
   test('optional reflection is saved locally and does not change required progress', () => {
@@ -66,16 +86,38 @@ describe('course data and progress', () => {
     global.wx.setStorageSync = (key, value) => { storage[key] = value }
     try {
       courseProgress.start('emotion')
-      courseProgress.skipStep('emotion', 'gad7')
-      expect(courseProgress.read('emotion').currentStepId).toBe('box-breathing')
-      courseProgress.completeStep('emotion', 'box-breathing')
+      courseProgress.skipStep('emotion', 'pss')
+      expect(courseProgress.read('emotion').currentStepId).toBe('abc')
       courseProgress.completeStep('emotion', 'abc')
-      courseProgress.completeStep('emotion', 'threegood')
-      courseProgress.completeStep('emotion', 'mindful')
+      courseProgress.skipStep('emotion', 'eisenhower')
+      expect(courseProgress.read('emotion').currentStepId).toBe('stress-action-plan')
+      courseProgress.saveReflection('emotion', 'stress-action-plan', '先确认交付范围')
       const state = courseProgress.getCourseState(coursesData.getCourse('emotion'))
       expect(state.complete).toBe(true)
       expect(state.percent).toBe(100)
-      expect(state.steps.find((step) => step.id === 'gad7').skipped).toBe(true)
+      expect(state.steps.find((step) => step.id === 'pss').skipped).toBe(true)
+    } finally {
+      global.wx.getStorageSync = originalGet
+      global.wx.setStorageSync = originalSet
+    }
+  })
+
+  test('starting a changed course recovers from a removed current step', () => {
+    const storage = {
+      ma_course_progress: {
+        emotion: {
+          currentStepId: 'box-breathing',
+          completedStepIds: ['box-breathing', 'abc'],
+        },
+      },
+    }
+    const originalGet = global.wx.getStorageSync
+    const originalSet = global.wx.setStorageSync
+    global.wx.getStorageSync = (key) => storage[key]
+    global.wx.setStorageSync = (key, value) => { storage[key] = value }
+    try {
+      courseProgress.start('emotion')
+      expect(courseProgress.read('emotion').currentStepId).toBe('pss')
     } finally {
       global.wx.getStorageSync = originalGet
       global.wx.setStorageSync = originalSet
@@ -121,8 +163,8 @@ describe('course pages', () => {
     global.wx.navigateTo = (options) => { url = options.url }
     try {
       const ctx = loadPage('pages/course/detail.js', { id: 'emotion' })
-      ctx.openStep({ currentTarget: { dataset: { id: 'gad7' } } })
-      expect(url).toBe('/pages/detail/detail?id=gad7&courseId=emotion&stepId=gad7')
+      ctx.openStep({ currentTarget: { dataset: { id: 'pss' } } })
+      expect(url).toBe('/pages/detail/detail?id=pss&courseId=emotion&stepId=pss')
     } finally {
       global.wx.navigateTo = originalNavigateTo
     }
@@ -165,7 +207,7 @@ describe('content list recommendations', () => {
     expect(assess.data.recommendedModules).toEqual([])
   })
 
-  test('optional anxiety screening is not promoted as a goal-based assessment pick', () => {
+  test('optional pressure self-observation is not promoted as a goal-based assessment pick', () => {
     const originalGet = global.wx.getStorageSync
     global.wx.getStorageSync = (key) => key === 'ma_user_goal' ? 'emotion' : []
     try {

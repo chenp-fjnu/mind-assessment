@@ -56,14 +56,19 @@
   font-weight: var(--font-weight-semibold);
 }
 .goal-options {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12rpx;
   margin-top: 20rpx;
 }
+.goal-row {
+  display: flex;
+  justify-content: space-between;
+}
+.goal-row + .goal-row {
+  margin-top: 12rpx;
+}
 .goal-option {
+  flex: 1;
   min-width: 0;
-  width: 100%;
+  width: auto;
   min-height: 76rpx;
   height: auto;
   display: flex;
@@ -79,6 +84,9 @@
   font-weight: var(--font-weight-semibold);
   line-height: normal;
   white-space: normal;
+}
+.goal-option + .goal-option {
+  margin-left: 12rpx;
 }
 .goal-option::after,
 .primary-action::after,

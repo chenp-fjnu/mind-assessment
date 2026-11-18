@@ -45,7 +45,7 @@ function start(courseId) {
   if (!course) throw new Error('课程不存在: ' + courseId)
   const progress = read(courseId)
   if (!progress.startedAt) progress.startedAt = Date.now()
-  if (!progress.currentStepId) {
+  if (!course.steps.some((step) => step.id === progress.currentStepId)) {
     const next = getNextStep(course, progress)
     progress.currentStepId = next ? next.id : ''
   }
