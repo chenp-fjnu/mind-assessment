@@ -106,9 +106,54 @@ function buildMethods(lastMap) {
 
 function buildGames(lastMap) {
   const all = gameReg.getMetaList().map((g) => ({
-    id: g.id, name: g.name, icon: g.icon, color: g.color, tint: hexToRgba(g.color, 0.12), dimLabel: g.dimLabel,
+    id: g.id, name: g.name, desc: g.desc, icon: g.icon, color: g.color, tint: hexToRgba(g.color, 0.12), dimLabel: g.dimLabel,
   }))
   return { all, featuredGames: orderByRecent(all, lastMap.train).slice(0, 5) }
+}
+
+function buildSearchIndex(modules, methods, games) {
+  const moduleItems = modules.map((item) => ({
+    id: item.id,
+    key: 'assess:' + item.id,
+    kind: 'assess',
+    kindLabel: '测评',
+    name: item.name,
+    icon: item.icon,
+    tint: item.tint,
+    desc: item.desc,
+    searchText: [item.name, item.shortName, item.typeLabel, item.desc].join(' ').toLowerCase(),
+  }))
+  const methodItems = methods.map((item) => ({
+    id: item.id,
+    key: 'method:' + item.id,
+    kind: 'method',
+    kindLabel: '方法',
+    name: item.name,
+    icon: item.icon,
+    tint: item.tint,
+    desc: item.summary,
+    searchText: [
+      item.name,
+      item.summary,
+      item.category,
+      (item.content || []).map((section) => section.title + ' ' + section.text).join(' '),
+      (item.steps || []).join(' '),
+      (item.tips || []).join(' '),
+      item.example || '',
+    ].join(' ').toLowerCase(),
+  }))
+  const gameItems = games.map((item) => ({
+    id: item.id,
+    key: 'train:' + item.id,
+    kind: 'train',
+    kindLabel: '训练',
+    name: item.name,
+    icon: item.icon,
+    tint: item.tint,
+    desc: item.desc,
+    searchText: [item.name, item.desc, item.dimLabel].join(' ').toLowerCase(),
+  }))
+  return moduleItems.concat(methodItems, gameItems)
 }
 
 // 跨板块「最近探索」：取最近有过记录的项（去重后按时间倒序），避免与底部 Tab 功能重叠
@@ -156,6 +201,8 @@ Page({
     hotPicks: [],
     recentItems: [],
     homeKeyword: '',
+    homeSearchActive: false,
+    homeSearchResults: [],
     hotBatchIndex: 0,
     visibleHotPicks: [],
     selectedGoal: '',
@@ -181,6 +228,7 @@ Page({
     const mod = buildModules(lastMap)
     const met = buildMethods(lastMap)
     const gam = buildGames(lastMap)
+    this._homeSearchIndex = buildSearchIndex(mod.all, met.all, gam.all)
     const hotPicks = buildHotPicks()
     const hotBatch = getHotBatch(hotPicks, this.data.hotBatchIndex)
     this.setData({
@@ -289,16 +337,33 @@ Page({
     this.setData({ hotBatchIndex: batch.batchIndex, visibleHotPicks: batch.items })
   },
   onHomeSearchInput(e) {
-    this.setData({ homeKeyword: e.detail.value })
+    this.updateHomeSearch(e.detail.value)
   },
   onHomeSearch(e) {
-    const kw = (e.detail.value || this.data.homeKeyword || '').trim()
-    if (!kw) return
-    getApp().globalData.searchKeyword = kw
-    wx.switchTab({ url: '/pages/assess/assess' })
+    const value = e && e.detail ? e.detail.value : this.data.homeKeyword
+    this.updateHomeSearch(value)
+  },
+  updateHomeSearch(value) {
+    const keyword = typeof value === 'string' ? value : ''
+    const query = keyword.trim().toLowerCase()
+    const results = query
+      ? this._homeSearchIndex.filter((item) => item.searchText.includes(query))
+      : []
+    this.setData({
+      homeKeyword: keyword,
+      homeSearchActive: !!query,
+      homeSearchResults: results,
+    })
   },
   goHot(e) {
     const item = e.currentTarget.dataset.item
+    this.openContent(item)
+  },
+  goSearchResult(e) {
+    const item = e.currentTarget.dataset.item
+    this.openContent(item)
+  },
+  openContent(item) {
     if (!item) return
     if (item.kind === 'assess') {
       wx.navigateTo({ url: `/pages/detail/detail?id=${item.id}` })

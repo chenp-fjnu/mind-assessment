@@ -106,6 +106,46 @@ describe('首页 index', () => {
     expect(nav).toContain('/pages/assess/assess')
   })
 
+  test('home search finds assessments, methods, and training', () => {
+    const ctx = loadPage('pages/index/index.js')
+
+    ctx.onHomeSearchInput({ detail: { value: 'MBTI' } })
+    expect(ctx.data.homeSearchResults.some((item) => item.kind === 'assess' && item.id === 'mbti')).toBe(true)
+
+    ctx.onHomeSearchInput({ detail: { value: '番茄钟' } })
+    expect(ctx.data.homeSearchResults.some((item) => item.kind === 'method' && item.id === 'pomodoro')).toBe(true)
+
+    ctx.onHomeSearchInput({ detail: { value: '工作记忆' } })
+    expect(ctx.data.homeSearchResults.some((item) => item.kind === 'train')).toBe(true)
+    expect(ctx.data.homeSearchActive).toBe(true)
+
+    ctx.onHomeSearchInput({ detail: { value: '' } })
+    expect(ctx.data.homeSearchResults).toEqual([])
+    expect(ctx.data.homeSearchActive).toBe(false)
+  })
+
+  test('search results open the matching content detail', () => {
+    const routes = []
+    const originalNavigateTo = global.wx.navigateTo
+    global.wx.navigateTo = (options) => routes.push(options.url)
+    try {
+      const ctx = loadPage('pages/index/index.js')
+      ;[
+        { kind: 'assess', id: 'mbti' },
+        { kind: 'method', id: 'pomodoro' },
+        { kind: 'train', id: 'visual-search' },
+      ].forEach((item) => ctx.goSearchResult({ currentTarget: { dataset: { item } } }))
+
+      expect(routes).toEqual([
+        '/pages/detail/detail?id=mbti',
+        '/pages/methods/detail?id=pomodoro',
+        '/pages/train/game?gameId=visual-search',
+      ])
+    } finally {
+      global.wx.navigateTo = originalNavigateTo
+    }
+  })
+
   test('choosing a concrete goal opens its course detail directly', () => {
     let nav = ''
     const originalNavigateTo = global.wx.navigateTo

@@ -84,7 +84,38 @@
       />
     </view>
 
-    <view wx:if="{{visibleHotPicks.length}}" class="section hot-section">
+    <view wx:if="{{homeSearchActive}}" class="section search-results-section">
+      <view class="section-head">
+        <text class="section-title">搜索结果</text>
+        <text class="search-result-count">{{homeSearchResults.length}} 项</text>
+      </view>
+      <view wx:if="{{homeSearchResults.length}}" class="search-result-list">
+        <view
+          class="card search-result-card"
+          wx:for="{{homeSearchResults}}"
+          wx:key="key"
+          bindtap="goSearchResult"
+          data-item="{{item}}"
+          role="button"
+          aria-label="{{item.name}}，{{item.kindLabel}}"
+        >
+          <view class="search-result-icon" style="background-color: {{item.tint}};">
+            <text>{{item.icon}}</text>
+          </view>
+          <view class="search-result-copy">
+            <view class="search-result-heading">
+              <text class="search-result-name">{{item.name}}</text>
+              <text class="search-result-kind">{{item.kindLabel}}</text>
+            </view>
+            <text class="search-result-desc">{{item.desc}}</text>
+          </view>
+          <text class="search-result-arrow">›</text>
+        </view>
+      </view>
+      <view wx:else class="recent-empty">没有找到相关内容，试试其他关键词。</view>
+    </view>
+
+    <view wx:if="{{!homeSearchActive && visibleHotPicks.length}}" class="section hot-section">
       <view class="section-head">
         <text class="section-title">精选推荐</text>
         <text class="section-more" bindtap="rotateHot" role="button" aria-label="查看下一组精选推荐">换一组</text>
@@ -111,7 +142,7 @@
       </view>
     </view>
 
-    <view class="section recent-section">
+    <view wx:if="{{!homeSearchActive}}" class="section recent-section">
       <view class="section-head">
         <text class="section-title">最近探索</text>
         <text class="section-more" bindtap="goHistory" role="button" aria-label="查看全部记录">全部记录 ›</text>
