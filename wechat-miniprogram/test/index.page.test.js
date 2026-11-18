@@ -105,6 +105,24 @@ describe('首页 index', () => {
     ctx.goAssess()
     expect(nav).toContain('/pages/assess/assess')
   })
+
+  test('choosing a concrete goal opens its course detail directly', () => {
+    let nav = ''
+    const originalNavigateTo = global.wx.navigateTo
+    const originalSetStorageSync = global.wx.setStorageSync
+    global.wx.navigateTo = (options) => { nav = options.url }
+    global.wx.setStorageSync = () => {}
+    try {
+      const ctx = loadPage('pages/index/index.js')
+      ;[['self', 'self-intro'], ['focus', 'focus'], ['emotion', 'emotion']].forEach(([goal, courseId]) => {
+        ctx.chooseGoal({ currentTarget: { dataset: { goal } } })
+        expect(nav).toBe('/pages/course/detail?id=' + courseId)
+      })
+    } finally {
+      global.wx.navigateTo = originalNavigateTo
+      global.wx.setStorageSync = originalSetStorageSync
+    }
+  })
 })
 
 describe('答题页 test', () => {

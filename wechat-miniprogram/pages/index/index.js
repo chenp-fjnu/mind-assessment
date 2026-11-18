@@ -258,11 +258,17 @@ Page({
   chooseGoal(e) {
     const goal = e.currentTarget.dataset.goal
     if (!coursesData.GOAL_LABELS[goal]) return
+    const course = goal === 'browse' ? null : coursesData.getCourseForGoal(goal)
+    if (goal !== 'browse' && !course) {
+      console.error('[index] 目标没有对应课程:', goal)
+      wx.showToast({ title: '暂时没有对应路线', icon: 'none' })
+      return
+    }
     wx.setStorageSync(SK.USER_GOAL, goal)
     wx.setStorageSync(SK.ONBOARDING, true)
     this.setData({ selectedGoal: goal, goalFormVisible: false, otherGoalsVisible: false }, () => {
       this.loadHomeState()
-      if (goal !== 'browse') this.goCourseList()
+      if (course) wx.navigateTo({ url: '/pages/course/detail?id=' + course.id })
     })
   },
   toggleGoalForm() {
