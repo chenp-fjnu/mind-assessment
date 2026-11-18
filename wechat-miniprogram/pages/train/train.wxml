@@ -37,7 +37,7 @@
 
     <view wx:if="{{!showAll && !keyword && !activeDim}}" class="recommendations">
       <view class="group" wx:if="{{newcomerGames.length}}">
-        <view class="group-title">新人首选</view>
+        <view class="group-title">适合上手</view>
         <view wx:for="{{newcomerGames}}" wx:key="id" wx:for-item="g" class="item card" bindtap="goGame" data-id="{{g.id}}" role="button" aria-label="{{g.name}}">
           <view class="item-icon" style="background:{{g.tint}};">{{g.icon}}</view>
           <view class="item-body">
@@ -48,7 +48,7 @@
         </view>
       </view>
       <view class="group" wx:if="{{recommendedGames.length}}">
-        <view class="group-title">为你推荐</view>
+        <view class="group-title">{{recommendationTitle}}</view>
         <view wx:for="{{recommendedGames}}" wx:key="id" wx:for-item="g" class="item card" bindtap="goGame" data-id="{{g.id}}" role="button" aria-label="{{g.name}}">
           <view class="item-icon" style="background:{{g.tint}};">{{g.icon}}</view>
           <view class="item-body">

@@ -30,6 +30,7 @@ Page({
     methodRecordCount: 0,
     newcomerMethods: [],
     recommendedMethods: [],
+    recommendationTitle: '',
     showAll: false,
   },
   onLoad() {
@@ -71,11 +72,15 @@ Page({
       'method',
       this.data.allMethods,
       goal,
-      ['pomodoro', 'mindful', 'smart', 'abc'],
-      ['flow', 'threegood', 'grow'],
+      ['pomodoro', 'mindful', 'smart', 'threegood'],
+      ['flow', 'abc', 'grow'],
       3
     )
-    this.setData({ newcomerMethods: picks.newcomer, recommendedMethods: picks.recommended })
+    this.setData({
+      newcomerMethods: picks.newcomer,
+      recommendedMethods: picks.recommended,
+      recommendationTitle: picks.recommendationTitle,
+    })
   },
   applyFilter() {
     const { allMethods, keyword, activeCategory } = this.data

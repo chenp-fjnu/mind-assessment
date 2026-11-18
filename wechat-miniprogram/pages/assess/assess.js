@@ -45,6 +45,7 @@ Page({
     assessRecordCount: 0,
     newcomerModules: [],
     recommendedModules: [],
+    recommendationTitle: '',
     showAll: false,
   },
   onLoad(query) {
@@ -86,11 +87,15 @@ Page({
       'assess',
       this.data.allModules,
       goal,
-      ['gses', 'holland', 'mind6', 'mbti'],
-      ['gad7', 'big5', 'n808'],
+      ['gses', 'big5', 'holland', 'mbti'],
+      [],
       3
     )
-    this.setData({ newcomerModules: picks.newcomer, recommendedModules: picks.recommended })
+    this.setData({
+      newcomerModules: picks.newcomer,
+      recommendedModules: picks.recommended,
+      recommendationTitle: picks.recommendationTitle,
+    })
   },
   applyFilter() {
     const { allModules, keyword, activeType } = this.data

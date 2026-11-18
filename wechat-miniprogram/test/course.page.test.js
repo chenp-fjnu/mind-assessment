@@ -109,15 +109,16 @@ describe('course pages', () => {
 })
 
 describe('content list recommendations', () => {
-  test('recommendations are capped, deduplicated and follow the selected course', () => {
+  test('course recommendations take priority over non-duplicate beginner picks', () => {
     const games = coursesData.getCourseList()
       .find((course) => course.id === 'focus')
-      .steps.filter((step) => step.kind === 'train')
+      .steps.filter((step) => step.kind === 'train' && !step.optional)
       .map((step) => ({ id: step.id }))
-    const picks = getListRecommendations('train', games, 'focus', ['schulte'], ['n-back'], 3)
-    expect(picks.newcomer.map((item) => item.id)).toEqual(['schulte'])
-    expect(picks.recommended.map((item) => item.id)).toEqual(['n-back', 'cps'])
-    expect(picks.recommended).toHaveLength(2)
+    games.push({ id: 'memory-match' })
+    const picks = getListRecommendations('train', games, 'focus', ['schulte', 'memory-match'], ['reaction-time'], 3)
+    expect(picks.newcomer.map((item) => item.id)).toEqual(['memory-match'])
+    expect(picks.recommended.map((item) => item.id)).toEqual(['schulte', 'n-back'])
+    expect(picks.recommendationTitle).toBe('与你的目标相关')
   })
 
   test('all three libraries start with a short curated view and expose the full list on request', () => {
@@ -130,10 +131,28 @@ describe('content list recommendations', () => {
       const ctx = loadPage(path)
       expect(ctx.data.showAll).toBe(false)
       expect(ctx.data.newcomerModules || ctx.data.newcomerMethods || ctx.data.newcomerGames).toHaveLength(4)
-      expect(ctx.data.recommendedModules || ctx.data.recommendedMethods || ctx.data.recommendedGames).toHaveLength(3)
+      const recommended = ctx.data.recommendedModules || ctx.data.recommendedMethods || ctx.data.recommendedGames
+      expect(recommended.length).toBeLessThanOrEqual(3)
       ctx[showAllMethod]()
       expect(ctx.data.showAll).toBe(true)
     })
+  })
+
+  test('assessment beginner picks exclude clinical screening and use a clearer label', () => {
+    const assess = loadPage('pages/assess/assess.js')
+    expect(assess.data.newcomerModules.map((item) => item.id)).toEqual(['gses', 'big5', 'holland', 'mbti'])
+    expect(assess.data.recommendedModules).toEqual([])
+  })
+
+  test('optional anxiety screening is not promoted as a goal-based assessment pick', () => {
+    const originalGet = global.wx.getStorageSync
+    global.wx.getStorageSync = (key) => key === 'ma_user_goal' ? 'emotion' : []
+    try {
+      const assess = loadPage('pages/assess/assess.js')
+      expect(assess.data.recommendedModules).toEqual([])
+    } finally {
+      global.wx.getStorageSync = originalGet
+    }
   })
 
   test('selected goal changes library recommendations without hiding the full catalog', () => {
@@ -145,7 +164,7 @@ describe('content list recommendations', () => {
       const train = loadPage('pages/train/train.js')
       expect(assess.data.recommendedModules).toHaveLength(0)
       expect(methods.data.recommendedMethods.map((item) => item.id)).toContain('flow')
-      expect(train.data.recommendedGames.map((item) => item.id)).toEqual(['n-back', 'cps'])
+      expect(train.data.recommendedGames.map((item) => item.id)).toEqual(['schulte', 'n-back'])
       expect(assess.data.allModules.length).toBeGreaterThan(4)
       expect(methods.data.allMethods.length).toBeGreaterThan(4)
       expect(train.data.gameCount).toBeGreaterThan(4)

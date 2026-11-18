@@ -8,7 +8,7 @@ module.exports = [
     "shortName": "MBTI",
     "icon": "🧠",
     "color": "#7c3aed",
-    "desc": "基于荣格类型论的 16 型人格测试，了解你的思维与行为偏好。",
+    "desc": "基于荣格类型论的 16 型人格测试，了解你的思维与行为偏好；结果仅供自我探索参考，无临床常模。",
     "questionCount": 70,
     "duration": 20,
     "tag": [

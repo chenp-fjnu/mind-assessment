@@ -38,7 +38,7 @@
 
     <view wx:if="{{!showAll && !keyword && !activeCategory}}" class="recommendations">
       <view class="group" wx:if="{{newcomerMethods.length}}">
-        <view class="group-title">新人首选</view>
+        <view class="group-title">适合上手</view>
         <view class="card item" wx:for="{{newcomerMethods}}" wx:key="id" wx:for-item="m" bindtap="goDetail" data-id="{{m.id}}" role="button" aria-label="{{m.name}}，{{m.summary}}">
           <view class="item-icon" style="background:{{m.tint}};">{{m.icon}}</view>
           <view class="item-body">
@@ -49,7 +49,7 @@
         </view>
       </view>
       <view class="group" wx:if="{{recommendedMethods.length}}">
-        <view class="group-title">为你推荐</view>
+        <view class="group-title">{{recommendationTitle}}</view>
         <view class="card item" wx:for="{{recommendedMethods}}" wx:key="id" wx:for-item="m" bindtap="goDetail" data-id="{{m.id}}" role="button" aria-label="{{m.name}}，{{m.summary}}">
           <view class="item-icon" style="background:{{m.tint}};">{{m.icon}}</view>
           <view class="item-body">

@@ -86,8 +86,8 @@
 
     <view wx:if="{{visibleHotPicks.length}}" class="section hot-section">
       <view class="section-head">
-        <text class="section-title">热门推荐</text>
-        <text class="section-more" bindtap="rotateHot" role="button" aria-label="换一批推荐">换一批</text>
+        <text class="section-title">精选推荐</text>
+        <text class="section-more" bindtap="rotateHot" role="button" aria-label="查看下一组精选推荐">换一组</text>
       </view>
       <view class="hot-grid">
         <view

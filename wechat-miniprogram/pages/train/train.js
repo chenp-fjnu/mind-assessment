@@ -24,6 +24,7 @@ Page({
     recordCount: 0,
     newcomerGames: [],
     recommendedGames: [],
+    recommendationTitle: '',
     showAll: false,
   },
   onLoad() {
@@ -89,11 +90,15 @@ Page({
       'train',
       allGames,
       goal,
-      ['schulte', 'memory-match', 'whack', 'box-breathing'],
+      ['schulte', 'memory-match', 'whack', 'visual-search'],
       ['n-back', 'reaction-time', 'cps'],
       3
     )
-    this.setData({ newcomerGames: picks.newcomer, recommendedGames: picks.recommended })
+    this.setData({
+      newcomerGames: picks.newcomer,
+      recommendedGames: picks.recommended,
+      recommendationTitle: picks.recommendationTitle,
+    })
   },
   onSearch(e) {
     this.setData({ keyword: e.detail.value })

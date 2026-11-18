@@ -14,15 +14,20 @@ function selectByIds(items, ids, excluded, limit) {
 }
 
 function getListRecommendations(kind, items, goal, newcomerIds, fallbackIds, limit) {
-  const newcomer = selectByIds(items, newcomerIds, null, 4)
-  const excluded = {}
-  newcomer.forEach((item) => { excluded[item.id] = true })
   const course = coursesData.getCourseForGoal(goal)
   const courseIds = course
-    ? course.steps.filter((step) => step.kind === kind).map((step) => step.id)
-    : fallbackIds
-  const recommended = selectByIds(items, courseIds, excluded, limit || 3)
-  return { newcomer, recommended }
+    ? course.steps.filter((step) => step.kind === kind && !step.optional).map((step) => step.id)
+    : []
+  const recommendationIds = course ? courseIds : fallbackIds
+  const recommended = selectByIds(items, recommendationIds, null, limit || 3)
+  const recommendedIds = {}
+  recommended.forEach((item) => { recommendedIds[item.id] = true })
+  const newcomer = selectByIds(items, newcomerIds, recommendedIds, 4)
+  return {
+    newcomer,
+    recommended,
+    recommendationTitle: course ? '与你的目标相关' : '精选内容',
+  }
 }
 
 module.exports = { getListRecommendations }

@@ -65,13 +65,35 @@ describe('结果页 result', () => {
 })
 
 describe('首页 index', () => {
-  test('onLoad 汇总量表数量与精选/热门列表', () => {
+  test('onLoad 汇总量表数量与首页精选列表', () => {
     const ctx = loadPage('pages/index/index.js')
     expect(ctx.data.moduleCount).toBe(IDS.length)
     expect(ctx.data.featuredAssess.length).toBe(5)
     expect(ctx.data.hotPicks.length).toBe(10)
-    expect(ctx.data.visibleHotPicks).toHaveLength(3)
+    expect(ctx.data.visibleHotPicks).toHaveLength(4)
     expect(ctx.data.goalFormVisible).toBe(true)
+  })
+
+  test('featured batches do not overlap and cycle after every item has appeared', () => {
+    const ctx = loadPage('pages/index/index.js')
+    const batches = [ctx.data.visibleHotPicks.map((item) => item.id)]
+    ctx.rotateHot()
+    batches.push(ctx.data.visibleHotPicks.map((item) => item.id))
+    ctx.rotateHot()
+    batches.push(ctx.data.visibleHotPicks.map((item) => item.id))
+
+    expect(batches.map((batch) => batch.length)).toEqual([4, 4, 2])
+    expect(new Set([].concat(...batches)).size).toBe(ctx.data.hotPicks.length)
+    ctx.rotateHot()
+    expect(ctx.data.visibleHotPicks.map((item) => item.id)).toEqual(batches[0])
+  })
+
+  test('returning to the home page preserves the current featured batch', () => {
+    const ctx = loadPage('pages/index/index.js')
+    ctx.rotateHot()
+    const visibleIds = ctx.data.visibleHotPicks.map((item) => item.id)
+    ctx.onShow()
+    expect(ctx.data.visibleHotPicks.map((item) => item.id)).toEqual(visibleIds)
   })
 
   test('goAssess 跳转到测评 tab', () => {

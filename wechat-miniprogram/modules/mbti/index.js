@@ -172,7 +172,7 @@ module.exports = {
   type: 'personality',
   name: 'MBTI 人格测试',
   shortName: 'MBTI',
-  desc: '基于荣格类型论的 16 型人格测试，了解你的思维与行为偏好。',
+  desc: '基于荣格类型论的 16 型人格测试，了解你的思维与行为偏好；结果仅供自我探索参考，无临床常模。',
   reference: "Myers, I.B. & Briggs, K.C. — MBTI® 类型指标；本题源为公开领域 70 题标准化版整理（简体中文译）",
   scoring: "四维度二分计分（E/I、S/N、T/F、J/P），按题项倾向归类型，无临床常模",
   icon: '🧠',

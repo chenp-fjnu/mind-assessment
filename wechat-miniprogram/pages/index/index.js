@@ -8,22 +8,20 @@ const SK = require('../../utils/storage-keys')
 const coursesData = require('../../utils/courses-data')
 const courseProgress = require('../../utils/course-progress')
 
-// 热门推荐配置：跨板块精选，按当前热度排序
+// 首页编辑精选：跨测评、方法与训练板块配置
+const HOT_BATCH_SIZE = 4
 const HOT_CONFIG = [
-  // 测评类
-  { kind: 'assess', id: 'mbti' },       // 社交破冰全民热点
-  // 方法与训练类交错呈现，避免首屏推荐被单一内容类型占满
+  // 按测评、方法、训练交错配置，避免推荐集中在单一类型
+  { kind: 'assess', id: 'gses' },
   { kind: 'method', id: 'smart' },
   { kind: 'train', id: 'schulte' },
-  { kind: 'assess', id: 'holland' },    // 高考志愿/职业规划权威首选
-  { kind: 'assess', id: 'big5' },       // 学术界黄金标准
-  { kind: 'assess', id: 'hbdi' },       // 全脑优势 思维风格/职场自我探索
-  { kind: 'assess', id: 'n808' },       // 808神测 限时图形多选/观察推理
-  // 方法类
-  { kind: 'method', id: 'pomodoro' },   // 番茄工作法 国民级时间管理
-  // 训练类
-  { kind: 'train', id: 'whack' },       // 打地鼠 反应速度/手眼协调
-  { kind: 'train', id: 'cps' },         // 连点测试 点击速度/手指灵活度
+  { kind: 'assess', id: 'big5' },
+  { kind: 'method', id: 'pomodoro' },
+  { kind: 'train', id: 'memory-match' },
+  { kind: 'assess', id: 'holland' },
+  { kind: 'method', id: 'mindful' },
+  { kind: 'train', id: 'whack' },
+  { kind: 'assess', id: 'mbti' },
 ]
 
 // 渐变映射：匹配各页面的 Hero 渐变
@@ -55,6 +53,16 @@ function buildHotPicks() {
       gradient: GRADIENT_MAP[cfg.kind],
     }
   }).filter(Boolean)
+}
+
+function getHotBatch(picks, batchIndex) {
+  const batchCount = Math.max(1, Math.ceil(picks.length / HOT_BATCH_SIZE))
+  const normalizedIndex = ((batchIndex % batchCount) + batchCount) % batchCount
+  const start = normalizedIndex * HOT_BATCH_SIZE
+  return {
+    batchIndex: normalizedIndex,
+    items: picks.slice(start, start + HOT_BATCH_SIZE),
+  }
 }
 
 function lastTimes() {
@@ -148,7 +156,7 @@ Page({
     hotPicks: [],
     recentItems: [],
     homeKeyword: '',
-    hotOffset: 0,
+    hotBatchIndex: 0,
     visibleHotPicks: [],
     selectedGoal: '',
     goalLabel: '',
@@ -174,7 +182,7 @@ Page({
     const met = buildMethods(lastMap)
     const gam = buildGames(lastMap)
     const hotPicks = buildHotPicks()
-    const hotAssessCount = hotPicks.filter((h) => h.kind === 'assess').length
+    const hotBatch = getHotBatch(hotPicks, this.data.hotBatchIndex)
     this.setData({
       moduleCount: mod.all.length,
       methodCount: met.all.length,
@@ -186,8 +194,8 @@ Page({
       featuredGames: gam.featuredGames,
       hotPicks,
       recentItems: buildRecent(lastMap),
-      hotAssessCount,
-      visibleHotPicks: hotPicks.slice(0, 3),
+      hotBatchIndex: hotBatch.batchIndex,
+      visibleHotPicks: hotBatch.items,
     }, () => this.loadHomeState())
   },
   loadHomeState() {
@@ -270,10 +278,9 @@ Page({
   },
   rotateHot() {
     const picks = this.data.hotPicks
-    if (picks.length <= 3) return
-    const offset = (this.data.hotOffset + 3) % picks.length
-    const rotated = picks.slice(offset).concat(picks.slice(0, offset))
-    this.setData({ hotOffset: offset, visibleHotPicks: rotated.slice(0, 3) })
+    if (picks.length <= HOT_BATCH_SIZE) return
+    const batch = getHotBatch(picks, this.data.hotBatchIndex + 1)
+    this.setData({ hotBatchIndex: batch.batchIndex, visibleHotPicks: batch.items })
   },
   onHomeSearchInput(e) {
     this.setData({ homeKeyword: e.detail.value })
