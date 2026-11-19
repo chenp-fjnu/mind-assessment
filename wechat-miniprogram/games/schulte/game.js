@@ -73,7 +73,7 @@ Component({
     onToggleMarks() {
       const next = !this.data.showMarks
       this.setData({ showMarks: next })
-      try { wx.setStorageSync('schulte_showMarks', next) } catch (e) {}
+      try { wx.setStorageSync('schulte_showMarks', next) } catch (e) { /* ignore storage error */ }
     },
     preventScroll() {},
     onTap(e) {

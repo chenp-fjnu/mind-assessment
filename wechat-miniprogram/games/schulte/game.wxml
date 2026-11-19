@@ -1,15 +1,16 @@
 <view class="schulte">
   <view class="opts">
     <view
-      class="mark-toggle {{showMarks ? 'on' : ''}}"
+      class="mark-row"
       bindtap="onToggleMarks"
       role="switch"
       aria-checked="{{showMarks}}"
       aria-label="进度标记，当前{{showMarks ? '开启' : '关闭'}}"
     >
-      <text class="mark-dot"></text>
       <text class="mark-label">进度标记</text>
-      <text class="mark-state">{{showMarks ? '开' : '关'}}</text>
+      <view class="ios-switch {{showMarks ? 'on' : ''}}">
+        <view class="ios-thumb"></view>
+      </view>
     </view>
   </view>
   <view

@@ -14,35 +14,42 @@
   justify-content: flex-end;
   margin-bottom: 12rpx;
 }
-.mark-toggle {
+.mark-row {
   display: flex;
   align-items: center;
-  padding: 8rpx 20rpx;
-  border: 2rpx solid var(--border-light);
-  border-radius: 999rpx;
-  background: var(--card-bg);
-}
-.mark-toggle.on {
-  border-color: var(--border-light);
-}
-.mark-dot {
-  width: 16rpx;
-  height: 16rpx;
-  border-radius: 50%;
-  background: var(--text-tertiary);
-  margin-right: 10rpx;
-}
-.mark-toggle.on .mark-dot {
-  background: #7c3aed;
+  padding: 8rpx 0;
 }
 .mark-label {
   color: var(--text-secondary);
   font-size: 24rpx;
+  margin-right: 16rpx;
 }
-.mark-state {
-  color: var(--text-tertiary);
-  font-size: 24rpx;
-  margin-left: 8rpx;
+/* 仿 iOS 风格拨动开关 */
+.ios-switch {
+  position: relative;
+  width: 96rpx;
+  height: 56rpx;
+  border-radius: 28rpx;
+  background: rgba(120, 120, 128, 0.32);
+  transition: background 0.25s ease;
+  box-sizing: border-box;
+}
+.ios-switch.on {
+  background: #34c759;
+}
+.ios-thumb {
+  position: absolute;
+  top: 2rpx;
+  left: 2rpx;
+  width: 52rpx;
+  height: 52rpx;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.25);
+  transition: transform 0.25s cubic-bezier(0.2, 0, 0.2, 1);
+}
+.ios-switch.on .ios-thumb {
+  transform: translateX(40rpx);
 }
 .cell {
   aspect-ratio: 1 / 1;
