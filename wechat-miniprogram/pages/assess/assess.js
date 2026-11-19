@@ -87,8 +87,10 @@ Page({
       'assess',
       this.data.allModules,
       goal,
-      ['gses', 'big5', 'holland', 'mbti'],
-      [],
+      // 适合上手：轻量、非临床的热门量表（≤10 分钟）
+      ['gses', 'big5', 'disc', 'enneagram'],
+      // 精选内容（无目标时）：更知名/更深入的可浏览项，与上手组不重叠
+      ['mbti', 'holland', 'epq'],
       3
     )
     this.setData({

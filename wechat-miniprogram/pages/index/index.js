@@ -8,20 +8,21 @@ const SK = require('../../utils/storage-keys')
 const coursesData = require('../../utils/courses-data')
 const courseProgress = require('../../utils/course-progress')
 
-// 首页编辑精选：跨测评、方法与训练板块配置
+// 首页「精选推荐」是高光/曝光位：挑最知名、最能吸引新客的项（如 MBTI/大五），
+// 与测评栏「适合上手」（那里只放轻量量表）是不同定位，二者可不同。
 const HOT_BATCH_SIZE = 4
 const HOT_CONFIG = [
-  // 按测评、方法、训练交错配置，避免推荐集中在单一类型
-  { kind: 'assess', id: 'gses' },
+  // 按测评、方法、训练交错配置，避免推荐集中在单一类型；MBTI 放首屏第一组做最强曝光
+  { kind: 'assess', id: 'mbti' },
   { kind: 'method', id: 'smart' },
   { kind: 'train', id: 'schulte' },
   { kind: 'assess', id: 'big5' },
   { kind: 'method', id: 'pomodoro' },
   { kind: 'train', id: 'memory-match' },
-  { kind: 'assess', id: 'holland' },
+  { kind: 'assess', id: 'disc' },
   { kind: 'method', id: 'mindful' },
   { kind: 'train', id: 'whack' },
-  { kind: 'assess', id: 'mbti' },
+  { kind: 'assess', id: 'gses' },
 ]
 
 // 渐变映射：匹配各页面的 Hero 渐变

@@ -248,8 +248,10 @@ describe('content list recommendations', () => {
 
   test('assessment beginner picks exclude clinical screening and use a clearer label', () => {
     const assess = loadPage('pages/assess/assess.js')
-    expect(assess.data.newcomerModules.map((item) => item.id)).toEqual(['gses', 'big5', 'holland', 'mbti'])
-    expect(assess.data.recommendedModules).toEqual([])
+    // 「适合上手」挑轻量、非临床的量表（≤10 分钟），不放 20 分钟的 MBTI / 霍兰德
+    expect(assess.data.newcomerModules.map((item) => item.id)).toEqual(['gses', 'big5', 'disc', 'enneagram'])
+    // 「精选内容」：更知名/更深入的可浏览项，与上手组不重叠
+    expect(assess.data.recommendedModules.map((item) => item.id)).toEqual(['mbti', 'holland', 'epq'])
   })
 
   test('optional pressure self-observation is not promoted as a goal-based assessment pick', () => {
@@ -257,6 +259,7 @@ describe('content list recommendations', () => {
     global.wx.getStorageSync = (key) => key === 'ma_user_goal' ? 'emotion' : []
     try {
       const assess = loadPage('pages/assess/assess.js')
+      // emotion 课程无测评步骤 → 测评精选为空（回退列表仅在无目标时出现）
       expect(assess.data.recommendedModules).toEqual([])
     } finally {
       global.wx.getStorageSync = originalGet
@@ -270,6 +273,7 @@ describe('content list recommendations', () => {
       const assess = loadPage('pages/assess/assess.js')
       const methods = loadPage('pages/methods/methods.js')
       const train = loadPage('pages/train/train.js')
+      // focus 课程无测评步骤 → 测评精选为空（回退列表仅在无目标时出现）
       expect(assess.data.recommendedModules).toHaveLength(0)
       expect(methods.data.recommendedMethods.map((item) => item.id)).toContain('flow')
       expect(train.data.recommendedGames.map((item) => item.id)).toEqual(['schulte', 'n-back'])
