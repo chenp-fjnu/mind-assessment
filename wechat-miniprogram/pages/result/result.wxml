@@ -114,8 +114,8 @@
     </view>
 
     <view wx:if="{{recommend.length || recommendGames.length}}" class="card sec">
-      <text class="sec-title">🔗 测评 · 方法 · 训练 关联</text>
-      <text class="sec-text link-intro">测评帮你「认识自己」，方法论给出「怎么用」，训练提供「练起来」——三者构成「认知 → 方法 → 练习」的闭环。基于本次测评主题推荐：</text>
+      <text class="sec-title">相关推荐</text>
+      <text class="sec-text link-intro">基于本次测评主题推荐：</text>
 
       <view wx:if="{{recommend.length}}" class="link-group">
         <text class="link-label">🧰 相关方法论</text>
@@ -171,7 +171,7 @@
     <view class="bottom-bar">
       <button class="btn save" bindtap="saveCard" aria-label="保存结果卡片到相册">保存结果卡片</button>
       <button class="btn share" open-type="share" aria-label="分享测评入口，不包含个人得分">分享测评入口</button>
-      <text class="share-note">分享链接只包含测评介绍，不包含你的分数；如需分享结果卡片，请先保存到相册。</text>
+      <text class="share-note">分享仅含测评介绍，不含你的分数。</text>
       <button wx:if="{{courseId}}" class="btn ghost" bindtap="goCourse" aria-label="返回课程继续下一步">返回课程继续下一步</button>
       <view class="btn-row">
         <button class="btn ghost" bindtap="retest" aria-label="重新测评">重新测评</button>

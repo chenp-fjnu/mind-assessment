@@ -17,8 +17,6 @@
     <view class="card section outcome-card">
       <text class="section-title">路线目标</text>
       <text class="section-text">{{course.objective}}</text>
-      <text class="outcome-label">为什么这样安排</text>
-      <text class="section-text">{{course.why}}</text>
       <text class="outcome-label">完成后带走</text>
       <text class="section-text">{{course.outcome}}</text>
     </view>
@@ -44,7 +42,7 @@
 
     <view class="section-heading">
       <text class="section-title">路线步骤</text>
-      <text class="section-sub">可以按顺序进行，也可以自由选择；标「可选」的步骤跳过不影响路线完成。</text>
+      <text class="section-sub">可按顺序，也可自由选择。</text>
     </view>
     <view class="timeline">
       <view wx:for="{{steps}}" wx:key="id" wx:for-item="step" wx:for-index="stepIndex" class="timeline-item">
@@ -78,7 +76,7 @@
               bindinput="updateReflection"
               aria-label="{{step.title}}的个人记录"
             />
-            <text class="reflection-note">记录仅保存在本机；不必填写敏感信息，留下一项小行动即可。</text>
+            <text class="reflection-note">仅保存在本机。</text>
           </view>
           <text wx:if="{{step.completed}}" class="step-status is-complete">已完成</text>
           <text wx:elif="{{step.skipped}}" class="step-status">已跳过 · 可补做</text>

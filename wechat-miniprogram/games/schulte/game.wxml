@@ -1,4 +1,17 @@
 <view class="schulte">
+  <view class="opts">
+    <view
+      class="mark-toggle {{showMarks ? 'on' : ''}}"
+      bindtap="onToggleMarks"
+      role="switch"
+      aria-checked="{{showMarks}}"
+      aria-label="进度标记，当前{{showMarks ? '开启' : '关闭'}}"
+    >
+      <text class="mark-dot"></text>
+      <text class="mark-label">进度标记</text>
+      <text class="mark-state">{{showMarks ? '开' : '关'}}</text>
+    </view>
+  </view>
   <view
     class="board"
     style="display:grid;grid-template-columns:repeat({{size}},1fr);gap:8rpx;justify-content:center;"
@@ -7,7 +20,7 @@
     <view
       wx:for="{{cells}}"
       wx:key="idx"
-      class="cell {{item.found ? 'found' : ''}}"
+      class="cell {{showMarks && item.found ? 'found' : ''}}"
       data-n="{{item.n}}"
       data-idx="{{index}}"
       bindtap="onTap"
@@ -15,7 +28,7 @@
       aria-label="数字 {{item.n}}"
       style="width:100%;height:{{cellH}}rpx;font-size:{{fontSize}}rpx;"
     >
-      <text wx:if="{{!item.found}}">{{item.n}}</text>
+      <text>{{item.n}}</text>
     </view>
   </view>
   <view class="hint">下一个：{{next}} / {{total}}　错误：{{errors}}</view>

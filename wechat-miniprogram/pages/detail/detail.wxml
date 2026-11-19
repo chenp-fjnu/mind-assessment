@@ -75,7 +75,7 @@
 
     <view class="card section tip">
       <text class="tip-title">温馨提示</text>
-      <text class="tip-text">本测评结果基于自陈量表，仅供自我探索与娱乐参考，不构成任何医学诊断或专业建议。请凭第一直觉作答。</text>
+      <text class="tip-text">凭第一直觉作答；结果仅供自我探索，不构成医学诊断。</text>
     </view>
 
     <view class="bottom-bar">
@@ -83,8 +83,8 @@
     </view>
 
     <view wx:if="{{relatedMethods.length || relatedGames.length}}" class="card section">
-      <text class="sec-title">🔗 测评 · 方法 · 训练 关联</text>
-      <text class="sec-text link-intro">测评帮你「认识自己」，方法论给出「怎么用」，训练提供「练起来」——三者构成「认知 → 方法 → 练习」的闭环。以下基于本量表主题推荐：</text>
+      <text class="sec-title">相关推荐</text>
+      <text class="sec-text link-intro">基于本量表主题推荐：</text>
 
       <view wx:if="{{relatedMethods.length}}" class="link-group">
         <text class="link-label">🧰 相关方法论</text>

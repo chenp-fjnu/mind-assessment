@@ -18,9 +18,15 @@ Component({
     cellSize: 0,
     fontSize: 0,
     cellH: 0,
+    // 进度标记：是否高亮已点中的格子（关闭后棋盘保持纯数字，难度更高）
+    showMarks: true,
   },
   lifetimes: {
-    attached() { this.reset() },
+    attached() {
+      const saved = wx.getStorageSync('schulte_showMarks')
+      if (saved === false) this.setData({ showMarks: false })
+      this.reset()
+    },
   },
   methods: {
     reset() {
@@ -63,6 +69,11 @@ Component({
     applySizing() {
       const { cellSize, cellH, fontSize } = this.computeCellSize(this.data.size)
       this.setData({ cellSize, cellH, fontSize })
+    },
+    onToggleMarks() {
+      const next = !this.data.showMarks
+      this.setData({ showMarks: next })
+      try { wx.setStorageSync('schulte_showMarks', next) } catch (e) {}
     },
     preventScroll() {},
     onTap(e) {
